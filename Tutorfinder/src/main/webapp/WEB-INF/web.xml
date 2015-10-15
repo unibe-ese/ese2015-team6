@@ -24,7 +24,7 @@
 		</init-param>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>ch.unibeESE.Tutorfinder</param-value>
+			<param-value>ch.unibe.ese.Tutorfinder</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
