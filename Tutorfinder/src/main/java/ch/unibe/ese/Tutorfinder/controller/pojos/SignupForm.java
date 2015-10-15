@@ -1,4 +1,4 @@
-package ch.unibe.ese.controller.pojos;
+package ch.unibe.ese.Tutorfinder.controller.pojos;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,10 +19,10 @@ public class SignupForm {
 	@NotNull
 	private String email;
 	
-	@NotNull
+	
 	private String password;
 	
-	@NotNull
+	
 	private boolean tutor;
 	
 	

@@ -1,13 +1,15 @@
-package ch.unibe.ese.controller.service;
+package ch.unibe.ese.Tutorfinder.controller.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
+import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
-import ch.unibe.ese.controller.exceptions.InvalidUserException;
-import ch.unibe.ese.controller.pojos.SignupForm;
 
+@Service
 public class RegisterServiceImpl implements RegisterService {
 
 	 @Autowired    UserDao userDao;

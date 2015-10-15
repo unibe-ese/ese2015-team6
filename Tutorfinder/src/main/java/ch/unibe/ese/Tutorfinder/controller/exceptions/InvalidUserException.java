@@ -1,4 +1,4 @@
-package ch.unibe.ese.controller.exceptions;
+package ch.unibe.ese.Tutorfinder.controller.exceptions;
 
 public class InvalidUserException extends RuntimeException {
 
