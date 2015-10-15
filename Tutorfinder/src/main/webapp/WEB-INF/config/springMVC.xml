@@ -13,14 +13,14 @@
 
 	<!-- search for controllers (@Controller)  -->
     <mvc:annotation-driven />
-    <context:component-scan base-package="org.sample"/> 
+    <context:component-scan base-package="ch.unibe.ese"/> 
 	
     <!-- handler  -->
     <mvc:default-servlet-handler/>     
 	
   	<!-- view resolver  -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/pages/"/>
+        <property name="prefix" value="/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
      
