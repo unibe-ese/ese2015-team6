@@ -25,6 +25,7 @@ public class RegisterServiceImpl implements RegisterService {
 		user.setLastName(signupForm.getLastName());
 		user.setEmail(signupForm.getEmail());
 		user.setPassword(signupForm.getPassword());
+		user.setTutor(signupForm.isTutor());
 		
 		user = userDao.save(user);   // save object to DB
 		

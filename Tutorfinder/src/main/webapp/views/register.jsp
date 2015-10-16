@@ -10,7 +10,7 @@
 <title>Tutorfinder register</title>
 </head>
 <body>
-<form:form method="post" modelAttribute="signupForm" action="create" id="signupForm" cssClass="form-horizontal"  autocomplete="off">
+<form:form method="post" modelAttribute="signupForm" action="create" id="signupForm" autocomplete="off">
     <fieldset>
         <legend>Enter Your Information</legend>
 
@@ -37,12 +37,32 @@
             <div class="controls">
                 <form:input path="lastName" id="field-lastName" tabindex="3" maxlength="35" placeholder="Last Name"/>
                 <form:errors path="lastName" cssClass="help-inline" element="span"/>
+            </div> 
+        </div>
+        
+        <c:set var="passwordErrors"><form:errors path="password"/></c:set>
+        <div class="control-group<c:if test="${not empty passwordErrors}"> error</c:if>">
+            <label class="control-label" for="field-password">Password</label>
+            <div class="controls">
+                <form:input path="password" id="field-password" tabindex="3" maxlength="35" placeholder="Password" type="password"/>
+                <form:errors path="password" cssClass="help-inline" element="span"/>
+            </div> 
+        </div>
+        
+        <div class="control-group<c:if test="${not empty tutorErrors}"> error</c:if>">
+            <label class="control-label" for="field-tutor">Sign up as a Tutor:</label>
+            <div class="controls">
+            	
+                <form:select path="tutor">
+                	<form:option value="true">Yes</form:option>
+                  	<form:option value="false">No</form:option>
+                </form:select>
+                <form:errors path="tutor" cssClass="help-inline" element="span"/>
             </div>
         </div>
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Sign up</button>
-            <button type="button" class="btn">Cancel</button>
         </div>
     </fieldset>
 </form:form>
