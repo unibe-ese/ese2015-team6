@@ -30,9 +30,9 @@ public class RegisterServiceImpl implements RegisterService {
 		Role role = new Role();
 		role.setEmail(signupForm.getEmail());
 		if (signupForm.isTutor()) {
-			role.setRole("TUTOR");
+			role.setRole("ROLE_TUTOR");
 		} else {
-			role.setRole("STUDENT");
+			role.setRole("ROLE_STUDENT");
 		}
 		user.setRole(role);
 		;
