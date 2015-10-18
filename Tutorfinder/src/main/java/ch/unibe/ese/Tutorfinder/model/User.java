@@ -21,6 +21,9 @@ public class User {
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Role role;
 	
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Profile profile;
+	
 	public long getId() {
 		return id;
 	}
@@ -69,6 +72,12 @@ public class User {
 		this.role = tutor;
 	}
 
-	
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}	
 	
 }
