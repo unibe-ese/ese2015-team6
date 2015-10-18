@@ -1,8 +1,10 @@
 package ch.unibe.ese.Tutorfinder.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -16,7 +18,8 @@ public class User {
 	private String email;
 	private String password;
 	
-	private boolean tutor;
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Role role;
 	
 	public long getId() {
 		return id;
@@ -58,12 +61,12 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isTutor() {
-		return tutor;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setTutor(boolean tutor) {
-		this.tutor = tutor;
+	public void setRole(Role tutor) {
+		this.role = tutor;
 	}
 
 	
