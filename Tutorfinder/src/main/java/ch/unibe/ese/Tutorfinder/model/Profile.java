@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Profile {
@@ -18,11 +19,13 @@ public class Profile {
 	private String imgPath;
 	private double wage;
 	
+	/*
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Appointment appointment;
 	
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Subject subject;
+	*/
 
 	public long getId() {
 		return id;
@@ -63,7 +66,8 @@ public class Profile {
 	public void setWage(double wage) {
 		this.wage = wage;
 	}
-
+	
+	/*
 	public Appointment getAppointment() {
 		return appointment;
 	}
@@ -79,5 +83,6 @@ public class Profile {
 	public void setSubject(Subject subject) {
 		this.subject = subject;
 	}
+	*/
 	
 }
