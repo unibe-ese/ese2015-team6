@@ -18,9 +18,9 @@ public class UpdateProfileForm {
 	private String region;
 	private String imgPath;
 	
-	
-	@Pattern(regexp = "([0-9]+)(\\.)([0-9]?)([05]?)", 
-		    message = "Must be valid wage in CHF")
+	/*TODO does not work, regex is correct
+	@Pattern(regex = "([0-9]+)(\\.)([0-9]?)([05]?)", 
+		    message = "Must be valid wage in CHF")*/
 	private double wage;
 	
 	public long getId() {
