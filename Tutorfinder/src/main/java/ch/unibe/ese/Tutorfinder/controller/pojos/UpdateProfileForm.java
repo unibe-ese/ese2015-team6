@@ -2,11 +2,17 @@ package ch.unibe.ese.Tutorfinder.controller.pojos;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Email;
+
 public class UpdateProfileForm {
 
 	@NotNull
 	private long id;
 	
+	@Email
+	@NotNull
+	private String email;
+
 	private String biography;
 	private String region;
 	private String imgPath;
@@ -18,6 +24,14 @@ public class UpdateProfileForm {
 	
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public String getBiography() {

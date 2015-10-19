@@ -4,12 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+
 @Entity
 public class Profile {
 
 	@Id
 	@GeneratedValue
 	private long id;
+	
+	private String email;
+
 	
 	private String biography;
 	private String region;
@@ -24,6 +28,17 @@ public class Profile {
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Subject subject;
 	*/
+	
+	public Profile() {
+		super();
+	}
+	
+	
+	public Profile(String email) {
+		super();
+		this.email = email;
+	}
+
 
 	public long getId() {
 		return id;
@@ -31,6 +46,14 @@ public class Profile {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getBiography() {

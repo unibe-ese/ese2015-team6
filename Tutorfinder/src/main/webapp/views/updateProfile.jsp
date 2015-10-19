@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<form:form method="post" modelAttribute="updateProfileForm" action="/update" id="updateProfileForm" autocomplete="off">
+	<form:form method="post" modelAttribute="updateProfileForm" action="update" id="updateProfileForm" autocomplete="off">
 		<fieldset>
 			
 				

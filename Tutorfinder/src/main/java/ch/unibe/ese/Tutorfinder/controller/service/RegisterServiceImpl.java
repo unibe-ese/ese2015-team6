@@ -36,7 +36,7 @@ public class RegisterServiceImpl implements RegisterService {
 			role.setRole("STUDENT");
 		}
 		user.setRole(role);
-		Profile profile = new Profile();
+		Profile profile = new Profile(user.getEmail());
 		user.setProfile(profile);
 
 		user = userDao.save(user); // save object to DB

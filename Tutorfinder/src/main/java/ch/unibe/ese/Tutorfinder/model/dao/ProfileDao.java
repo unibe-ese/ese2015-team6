@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 
 public interface ProfileDao extends CrudRepository<Profile, Long>{
+	
+	Profile findByEmail(String emailAddress);
 
 	@Modifying
 	@Query("update Profile p set p.biography = ?1 where p.id = ?2")

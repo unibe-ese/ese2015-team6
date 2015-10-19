@@ -36,22 +36,22 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("updateProfile");
+		model.addObject("updateProfileForm", new UpdateProfileForm());
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		User tmpUser = userDao.findByEmail(user.getName());
 		long profileId = tmpUser.getId();
 		model.addObject("Profile", profileDao.findOne(profileId));
-		model.addObject("updateProfileForm", new UpdateProfileForm());
 		
 		return model;
 	}
 	
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
-	public ModelAndView update(@Valid UpdateProfileForm updateProfileForm, BindingResult result,
+	public ModelAndView update(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model;
 		if (!result.hasErrors()) {
             try {
-            	updateProfileService.saveFrom(updateProfileForm);
+            	updateProfileService.saveFrom(updateProfileForm, user);
             	model = new ModelAndView("home");
             } catch (InvalidUserException e) {
             	model = new ModelAndView("updateProfile");
