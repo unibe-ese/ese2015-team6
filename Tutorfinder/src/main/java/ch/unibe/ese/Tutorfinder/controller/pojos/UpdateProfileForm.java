@@ -18,9 +18,9 @@ public class UpdateProfileForm {
 	private String region;
 	private String imgPath;
 	
-	/*TODO correct regex for valid exchange
-	@Pattern(regexp = "([0-9]{1,3})\.([0-9]?[05]?)", 
-		    message = "Must be valid email address")*/
+	
+	@Pattern(regexp = "([0-9]+)(\\.)([0-9]?)([05]?)", 
+		    message = "Must be valid wage in CHF")
 	private double wage;
 	
 	public long getId() {
