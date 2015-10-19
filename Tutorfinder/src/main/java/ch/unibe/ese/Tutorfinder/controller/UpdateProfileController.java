@@ -36,11 +36,12 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("updateProfile");
+		
 		model.addObject("updateProfileForm", new UpdateProfileForm());
+		
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		User tmpUser = userDao.findByEmail(user.getName());
-		long profileId = tmpUser.getId();
-		model.addObject("Profile", profileDao.findOne(profileId));
+		
+		model.addObject("Profile", profileDao.findOne(getUsersProfile(user)));
 		
 		return model;
 	}
@@ -62,9 +63,13 @@ public class UpdateProfileController {
         }
 		model.addObject("updateProfileForm", new UpdateProfileForm());
 		model.addObject("User", userDao.findByEmail(user.getName()));
+		model.addObject("Profile", profileDao.findOne(getUsersProfile(user)));
+		return model;
+	}
+
+	private long getUsersProfile(Principal user) {
 		User tmpUser = userDao.findByEmail(user.getName());
 		long profileId = tmpUser.getId();
-		model.addObject("Profile", profileDao.findOne(profileId));
-		return model;
+		return profileId;
 	}
 }

@@ -76,6 +76,8 @@
 	
 		</fieldset>
 	</form:form>
-
+	
+	<button type="button" onClick="window.location.href='showProfile'" >MyProfile</button>
+	
 </body>
 </html>

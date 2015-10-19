@@ -1,8 +1,8 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
 public class UpdateProfileForm {
@@ -21,7 +21,7 @@ public class UpdateProfileForm {
 	/*TODO does not work, regex is correct
 	@Pattern(regex = "([0-9]+)(\\.)([0-9]?)([05]?)", 
 		    message = "Must be valid wage in CHF")*/
-	private double wage;
+	private BigDecimal wage;
 	
 	public long getId() {
 		return id;
@@ -63,11 +63,11 @@ public class UpdateProfileForm {
 		this.imgPath = imgPath;
 	}
 	
-	public double getWage() {
+	public BigDecimal getWage() {
 		return wage;
 	}
 	
-	public void setWage(double wage) {
+	public void setWage(BigDecimal wage) {
 		this.wage = wage;
 	}
 

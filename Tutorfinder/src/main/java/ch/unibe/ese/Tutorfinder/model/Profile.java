@@ -1,5 +1,8 @@
 package ch.unibe.ese.Tutorfinder.model;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,16 +21,9 @@ public class Profile {
 	private String biography;
 	private String region;
 	private String imgPath;
-	private double wage;
 	
-	/*
-	TODO
-	@OneToMany(cascade = {CascadeType.ALL})
-	private Appointment appointment;
-	
-	@OneToMany(cascade = {CascadeType.ALL})
-	private Subject subject;
-	*/
+	@Column(precision=6, scale=2)
+	private BigDecimal wage;
 	
 	public Profile() {
 		super();
@@ -80,30 +76,12 @@ public class Profile {
 		this.imgPath = imgPath;
 	}
 
-	public double getWage() {
+	public BigDecimal getWage() {
 		return wage;
 	}
 
-	public void setWage(double wage) {
+	public void setWage(BigDecimal wage) {
 		this.wage = wage;
 	}
-	
-	/*
-	public Appointment getAppointment() {
-		return appointment;
-	}
-
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
-
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
-	*/
 	
 }
