@@ -14,15 +14,59 @@
 	<form:form method="post" modelAttribute="updateProfileForm" action="update" id="updateProfileForm" autocomplete="off">
 		<fieldset>
 			
-				
+			<!-- Hidden input for pass email -->
+			<c:set var="emailErrors"><form:errors path="email"/></c:set>
+	       	<div class="control-group<c:if test="${not empty emailErrors}"> error</c:if>">
+	
+	            <div class="controls">
+	                <form:hidden path="email" id="field-email" tabindex="0" maxlength="45" placeholder="Email" value="${User.email}"/>
+	                <form:errors path="email" cssClass="help-inline" element="span"/>
+	            </div>
+	        </div>
+        	
+        	<!--
+	        	Biography field
+	        	Placeholder loads the saved value on the server connected to the user's profile.
+        	-->
 			<c:set var="biographyErrors"><form:errors path="biography"/></c:set>
 	        <div class="control-group">
 	            <label class="control-label" for="field-biography">Biography</label>
 	
 		         <div class="controls">
-		             <form:input path="biography" id="field-biography" tabindex="1" maxlength="300" 
+		         	 <!-- TODO change in textarea input for better reading -->
+		             <form:input path="biography" id="field-biography" tabindex="1" maxlength="255" 
 		             placeholder="${Profile.biography}" value="${Profile.biography}"/>
 		             <form:errors path="biography" cssClass="help-inline" element="span"/>
+		        </div>
+	        </div>
+	        
+	        <!-- 
+	        	Region field 
+	        	Placeholder loads the saved value on the server connected to the user's profile
+	        -->
+	        <c:set var="regionErrors"><form:errors path="region"/></c:set>
+	        <div class="control-group">
+	            <label class="control-label" for="field-region">Region</label>
+	
+		         <div class="controls">
+		             <form:input path="region" id="field-region" tabindex="1" maxlength="100" 
+		             placeholder="${Profile.region}" value="${Profile.region}"/>
+		             <form:errors path="region" cssClass="help-inline" element="span"/>
+		        </div>
+	        </div>
+	        
+	        <!-- 
+	        	Wage field 
+	        	Placeholder loads the saved value on the server connected to the user's profile
+	        -->
+	        <c:set var="wageErrors"><form:errors path="wage"/></c:set>
+	        <div class="control-group">
+	            <label class="control-label" for="field-wage">Wage</label>
+	
+		         <div class="controls">
+		             <form:input path="wage" id="field-wage" tabindex="1" maxlength="6" 
+		             placeholder="${Profile.wage}" value="${Profile.wage}"/>
+		             <form:errors path="wage" cssClass="help-inline" element="span"/>
 		        </div>
 	        </div>
 	

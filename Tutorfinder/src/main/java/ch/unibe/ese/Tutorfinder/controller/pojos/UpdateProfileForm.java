@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -16,6 +17,10 @@ public class UpdateProfileForm {
 	private String biography;
 	private String region;
 	private String imgPath;
+	
+	/*TODO correct regex for valid exchange
+	@Pattern(regexp = "([0-9]{1,3})\.([0-9]?[05]?)", 
+		    message = "Must be valid email address")*/
 	private double wage;
 	
 	public long getId() {

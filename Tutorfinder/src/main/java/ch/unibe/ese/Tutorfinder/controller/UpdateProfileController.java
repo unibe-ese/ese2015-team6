@@ -52,7 +52,7 @@ public class UpdateProfileController {
 		if (!result.hasErrors()) {
             try {
             	updateProfileService.saveFrom(updateProfileForm, user);
-            	model = new ModelAndView("home");
+            	model = new ModelAndView("updateProfile");
             } catch (InvalidUserException e) {
             	model = new ModelAndView("updateProfile");
             	model.addObject("page_error", e.getMessage());
@@ -60,6 +60,11 @@ public class UpdateProfileController {
         } else {
         	model = new ModelAndView("updateProfile");
         }
+		model.addObject("updateProfileForm", new UpdateProfileForm());
+		model.addObject("User", userDao.findByEmail(user.getName()));
+		User tmpUser = userDao.findByEmail(user.getName());
+		long profileId = tmpUser.getId();
+		model.addObject("Profile", profileDao.findOne(profileId));
 		return model;
 	}
 }
