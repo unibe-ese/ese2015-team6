@@ -1,14 +1,10 @@
-package ch.unibe.ese.Tutorfinder.model;
+package ch.unibe.ese.Tutorfinder.controller.pojos;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-@Entity
-public class Profile {
+public class UpdateProfileForm {
 
-	@Id
-	@GeneratedValue
+	@NotNull
 	private long id;
 	
 	private String biography;
@@ -16,71 +12,44 @@ public class Profile {
 	private String imgPath;
 	private double wage;
 	
-	/*
-	TODO
-	@OneToMany(cascade = {CascadeType.ALL})
-	private Appointment appointment;
-	
-	@OneToMany(cascade = {CascadeType.ALL})
-	private Subject subject;
-	*/
-
 	public long getId() {
 		return id;
 	}
-
+	
 	public void setId(long id) {
 		this.id = id;
 	}
-
+	
 	public String getBiography() {
 		return biography;
 	}
-
+	
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
-
+	
 	public String getRegion() {
 		return region;
 	}
-
+	
 	public void setRegion(String region) {
 		this.region = region;
 	}
-
+	
 	public String getImgPath() {
 		return imgPath;
 	}
-
+	
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
-
+	
 	public double getWage() {
 		return wage;
 	}
-
+	
 	public void setWage(double wage) {
 		this.wage = wage;
 	}
-	
-	/*
-	public Appointment getAppointment() {
-		return appointment;
-	}
 
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
-
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
-	*/
-	
 }

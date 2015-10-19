@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
+import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Role;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
@@ -35,7 +36,8 @@ public class RegisterServiceImpl implements RegisterService {
 			role.setRole("STUDENT");
 		}
 		user.setRole(role);
-		;
+		Profile profile = new Profile();
+		user.setProfile(profile);
 
 		user = userDao.save(user); // save object to DB
 
