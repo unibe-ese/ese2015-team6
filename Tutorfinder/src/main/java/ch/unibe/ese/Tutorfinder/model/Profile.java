@@ -7,10 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
+/**
+ * Entity for Profile holding following values:<br>
+ * {@code id} is the id of the profile and is generated automatically<br>
+ * {@code email} is used for referencing between user and profile(same for id)<br>
+ * {@code biography} holds an String of 255 characters for the biography of the user<br>
+ * {@code region} holds an String of 255 characters for the region of the user<br>
+ * {@code imgPath} holds the path where the image of the user is saved<br>
+ * 
+ * @author Antonio
+ *
+ */
 @Entity
 public class Profile {
-
+	
 	@Id
 	@GeneratedValue
 	private long id;
@@ -22,20 +32,22 @@ public class Profile {
 	private String region;
 	private String imgPath;
 	
-	@Column(precision=6, scale=2)
+	@Column(precision=8, scale=2)
 	private BigDecimal wage;
 	
+	
+	/* Constructors */
 	public Profile() {
 		super();
 	}
-	
 	
 	public Profile(String email) {
 		super();
 		this.email = email;
 	}
 
-
+	
+	/* Getters and setters */
 	public long getId() {
 		return id;
 	}

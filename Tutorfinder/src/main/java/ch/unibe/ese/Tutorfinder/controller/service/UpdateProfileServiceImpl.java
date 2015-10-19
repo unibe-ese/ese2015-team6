@@ -22,7 +22,7 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 	@Transactional
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, Principal user) throws InvalidUserException {
 		Profile profile;
-		profile = profileDao.findByEmail(user.getName());//TODO getId doesn't work correct
+		profile = profileDao.findByEmail(user.getName());
 		profile.setBiography(updateProfileForm.getBiography());
 		profile.setRegion(updateProfileForm.getRegion());
 		profile.setWage(updateProfileForm.getWage());
