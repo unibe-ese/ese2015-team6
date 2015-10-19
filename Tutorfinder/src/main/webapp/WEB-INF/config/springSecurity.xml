@@ -6,13 +6,17 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
+	<http pattern="/" security="none" />
+	<http pattern="/img/*" security="none" />
+	<http pattern="/css/*" security="none" />
+	<http pattern="/register" security="none" />
+	<http pattern="/create" security="none" />
+	
 	<!-- enable use-expressions -->
 	<http auto-config="true" use-expressions="true">
+	
 
 		<!-- URLs to intercept for access -->
-		<intercept-url pattern="/" access="permitAll" />
-		<intercept-url pattern="/register" access="permitAll" />
-		<intercept-url pattern="/create" access="permitAll" />
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/403" access="permitAll" />
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_STUDENT','ROLE_TUTOR')" />
