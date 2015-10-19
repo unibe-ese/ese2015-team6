@@ -40,12 +40,13 @@ public class UpdateProfileController {
 		User tmpUser = userDao.findByEmail(user.getName());
 		long profileId = tmpUser.getId();
 		model.addObject("Profile", profileDao.findOne(profileId));
+		model.addObject("updateProfileForm", new UpdateProfileForm());
 		
 		return model;
 	}
 	
-	@RequestMapping(value ="/updateProfile", method = RequestMethod.POST)
-	public ModelAndView editBiography(@Valid UpdateProfileForm updateProfileForm, BindingResult result,
+	@RequestMapping(value ="/update", method = RequestMethod.POST)
+	public ModelAndView update(@Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model;
 		if (!result.hasErrors()) {

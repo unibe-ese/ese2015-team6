@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<form:form method="post" modelAttribute="updateProfileForm" action="/updateProfile" id="biographyForm" autocomplete="off">
+	<form:form method="post" modelAttribute="updateProfileForm" action="/update" id="updateProfileForm" autocomplete="off">
 		<fieldset>
 			
 				
@@ -21,7 +21,7 @@
 	
 		         <div class="controls">
 		             <form:input path="biography" id="field-biography" tabindex="1" maxlength="300" 
-		             placeholder="${Profile.biography }" value="${Profile.biography }"/>
+		             placeholder="${Profile.biography}" value="${Profile.biography}"/>
 		             <form:errors path="biography" cssClass="help-inline" element="span"/>
 		        </div>
 	        </div>
