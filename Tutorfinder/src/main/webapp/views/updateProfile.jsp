@@ -10,22 +10,28 @@
 	<title>Update profile</title>
 </head>
 <body>
-<!-- 
-<textarea id="field-biography" tabindex="1" rows="4" cols="50"></textarea>
 
-<button type="button" onclick="/editBiography">Try it</button>
--->
-
-<form:form method="get" action="/updateProfile" id="biographyForm" autocomplete="off">
-	<fieldset>
-
-
-		<div class="form-actions">
-            <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-
-	</fieldset>
-</form:form>
+	<form:form method="post" modelAttribute="updateProfileForm" action="/updateProfile" id="biographyForm" autocomplete="off">
+		<fieldset>
+			
+				
+			<c:set var="biographyErrors"><form:errors path="biography"/></c:set>
+	        <div class="control-group">
+	            <label class="control-label" for="field-biography">Biography</label>
+	
+		         <div class="controls">
+		             <form:input path="biography" id="field-biography" tabindex="1" maxlength="300" 
+		             placeholder="${Profile.biography }" value="${Profile.biography }"/>
+		             <form:errors path="biography" cssClass="help-inline" element="span"/>
+		        </div>
+	        </div>
+	
+			<div class="form-actions">
+	            <button type="submit" class="btn btn-primary">Save</button>
+	        </div>
+	
+		</fieldset>
+	</form:form>
 
 </body>
 </html>
