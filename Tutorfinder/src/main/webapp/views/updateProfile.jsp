@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE>
 <html>
@@ -44,37 +45,40 @@
 			             <form:errors path="biography" cssClass="help-inline" element="span"/>
 			        </div>
 		        </div>
-	        
-	        <!-- 
-	        	Region field 
-	        	Placeholder loads the saved value on the server connected to the user's profile
-	        -->
-		        <c:set var="regionErrors"><form:errors path="region"/></c:set>
-		        <div class="control-group">
-		            <label class="control-label" for="field-region">Region</label>
-		
-			         <div class="controls">
-			             <form:input path="region" id="field-region" tabindex="1" maxlength="255" 
-			             placeholder="${Profile.region}" value="${Profile.region}"/>
-			             <form:errors path="region" cssClass="help-inline" element="span"/>
+		        
+		     <!-- The follow form-tags are only shown if it is the profile from an tutor -->   
+	        <sec:authorize access="hasAnyRole('ROLE_TUTOR')">
+		        <!-- 
+		        	Region field 
+		        	Placeholder loads the saved value on the server connected to the user's profile
+		        -->
+			        <c:set var="regionErrors"><form:errors path="region"/></c:set>
+			        <div class="control-group">
+			            <label class="control-label" for="field-region">Region</label>
+			
+				         <div class="controls">
+				             <form:input path="region" id="field-region" tabindex="1" maxlength="255" 
+				             placeholder="${Profile.region}" value="${Profile.region}"/>
+				             <form:errors path="region" cssClass="help-inline" element="span"/>
+				        </div>
 			        </div>
-		        </div>
-	        
-	        <!-- 
-	        	Wage field 
-	        	Placeholder loads the saved value on the server connected to the user's profile
-	        -->
-		        <c:set var="wageErrors"><form:errors path="wage"/></c:set>
-		        <div class="control-group">
-		            <label class="control-label" for="field-wage">Wage in CHF (Format: 00.00)</label>
-		
-			         <div class="controls">
-			             <form:input path="wage" id="field-wage" tabindex="1" maxlength="6" 
-			             placeholder="${Profile.wage}" value="${Profile.wage}"/>
-			             <form:errors path="wage" cssClass="help-inline" element="span"/>
+			        
+				<!-- 
+		        	Wage field 
+		        	Placeholder loads the saved value on the server connected to the user's profile
+		        -->   
+			        <c:set var="wageErrors"><form:errors path="wage"/></c:set>
+			        <div class="control-group">
+			            <label class="control-label" for="field-wage">Wage in CHF (Format: 00.00)</label>
+			
+				         <div class="controls">
+				             <form:input path="wage" id="field-wage" tabindex="1" maxlength="6" 
+				             placeholder="${Profile.wage}" value="${Profile.wage}"/>
+				             <form:errors path="wage" cssClass="help-inline" element="span"/>
+				        </div>
 			        </div>
-		        </div>
-	
+			</sec:authorize>
+
 			
 			<div class="form-actions">
 				

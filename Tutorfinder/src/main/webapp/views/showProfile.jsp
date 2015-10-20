@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE>
 <html>
@@ -30,19 +31,22 @@
 			<c:out value="${Profile.biography}"/>
 		</p>	
 	
-	<!-- 
-		Region 
-	-->
-		<p>
-			<b>Region:</b> <c:out value="${Profile.region}"/>
-		</p>
-		
-	<!-- 
-		Wage 
-	-->
-		<p>
-			<b>Wage:</b> <c:out value="${Profile.wage}"/> CHF per hour
-		</p>
+	<!-- The following information are only shown if it is the profile from an tutor -->   
+	<sec:authorize access="hasAnyRole('ROLE_TUTOR')">
+		<!-- 
+			Region 
+		-->
+			<p>
+				<b>Region:</b> <c:out value="${Profile.region}"/>
+			</p>
+			
+		<!-- 
+			Wage 
+		-->
+			<p>
+				<b>Wage:</b> <c:out value="${Profile.wage}"/> CHF per hour
+			</p>
+	</sec:authorize>
 	
 </body>
 
