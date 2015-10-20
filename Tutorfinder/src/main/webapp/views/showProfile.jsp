@@ -16,7 +16,7 @@
 		Profile picture 
 	-->
 		<img src=<c:out value="${Profile.imgPath}"/> alt="Profile picture" width="192" height="192" 
-		onerror="this.onerror=null; this.src='../img/default-avatar.png;'">
+		onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'">
 	
 	<!-- 
 		Profile name 
