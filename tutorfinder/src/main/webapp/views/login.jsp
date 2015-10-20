@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
+<link rel="stylesheet" href="/css/style.css" />
 </head>
 <body onload='document.loginForm.email.focus();'>
 

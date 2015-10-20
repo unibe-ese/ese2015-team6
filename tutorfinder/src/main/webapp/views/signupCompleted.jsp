@@ -11,6 +11,7 @@ window.setTimeout(function() {
     window.location.href = '/editProfile';
 }, 5000);
 </script>
+<link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 <h1>Sign Up Complete!</h1>
