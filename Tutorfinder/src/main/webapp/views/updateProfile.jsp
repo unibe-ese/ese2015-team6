@@ -11,10 +11,14 @@
 </head>
 <body>
 
+
+
 	<form:form method="post" modelAttribute="updateProfileForm" action="update" id="updateProfileForm" autocomplete="off">
 		<fieldset>
 			
-			<!-- Hidden input for pass email -->
+			<!-- 
+				Hidden input for pass email 
+			-->
 				<c:set var="emailErrors"><form:errors path="email"/></c:set>
 		       	<div class="control-group<c:if test="${not empty emailErrors}"> error</c:if>">
 		
@@ -61,7 +65,7 @@
 	        -->
 		        <c:set var="wageErrors"><form:errors path="wage"/></c:set>
 		        <div class="control-group">
-		            <label class="control-label" for="field-wage">Wage</label>
+		            <label class="control-label" for="field-wage">Wage in CHF (Format: 00.00)</label>
 		
 			         <div class="controls">
 			             <form:input path="wage" id="field-wage" tabindex="1" maxlength="6" 
@@ -70,14 +74,25 @@
 			        </div>
 		        </div>
 	
+			
 			<div class="form-actions">
-	            <button type="submit" class="btn btn-primary">Save</button>
-	        </div>
+				
+				<!-- 
+					Button to save the changes, loads again the uploadProfile page with the new information.
+				-->
+		            <button type="submit" class="btn btn-primary">Save</button>
+		            
+		        <!-- 
+					Button to redirect to showProfile and close the edit.
+					Does not save the last changes!
+				-->
+					<button type="button" onClick="window.location.href='showProfile'" >Cancel</button>
+			</div>
+
 	
 		</fieldset>
 	</form:form>
 	
-	<button type="button" onClick="window.location.href='showProfile'" >MyProfile</button>
 	
 </body>
 </html>

@@ -1,8 +1,5 @@
 package ch.unibe.ese.Tutorfinder.model;
 
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,8 +29,7 @@ public class Profile {
 	private String region;
 	private String imgPath;
 	
-	@Column(precision=8, scale=2)
-	private BigDecimal wage;
+	private double wage;
 	
 	
 	/* Constructors */
@@ -88,11 +84,11 @@ public class Profile {
 		this.imgPath = imgPath;
 	}
 
-	public BigDecimal getWage() {
+	public double getWage() {
 		return wage;
 	}
 
-	public void setWage(BigDecimal wage) {
+	public void setWage(double wage) {
 		this.wage = wage;
 	}
 	
