@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -18,8 +19,8 @@ public class User {
 	private String email;
 	private String password;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Role role;
+	@NotNull
+	private String role;
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Profile profile;
@@ -64,12 +65,12 @@ public class User {
 		this.password = password;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role tutor) {
-		this.role = tutor;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public Profile getProfile() {

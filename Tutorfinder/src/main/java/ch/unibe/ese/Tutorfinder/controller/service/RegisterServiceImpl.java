@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
-import ch.unibe.ese.Tutorfinder.model.Role;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
@@ -30,14 +29,11 @@ public class RegisterServiceImpl implements RegisterService {
 		user.setLastName(signupForm.getLastName());
 		user.setEmail(signupForm.getEmail());
 		user.setPassword(signupForm.getPassword());
-		Role role = new Role();
-		role.setEmail(signupForm.getEmail());
 		if (signupForm.isTutor()) {
-			role.setRole("TUTOR");
+			user.setRole("TUTOR");
 		} else {
-			role.setRole("STUDENT");
+			user.setRole("STUDENT");
 		}
-		user.setRole(role);
 		Profile profile = new Profile(user.getEmail());
 		profile.setWage(BigDecimal.ZERO);
 		user.setProfile(profile);

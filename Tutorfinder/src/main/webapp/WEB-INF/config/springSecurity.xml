@@ -42,7 +42,7 @@
 			<jdbc-user-service data-source-ref="mainDataSource"
 			role-prefix="ROLE_"
 			authorities-by-username-query=
-			"select email, role from role where email =? "
+			"select email, role from user where email =? "
 			users-by-username-query=
 			"select email,password, TRUE from user where email=?"
 			/>
