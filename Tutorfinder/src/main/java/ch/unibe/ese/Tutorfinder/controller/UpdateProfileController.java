@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
+import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
@@ -36,12 +37,16 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("updateProfile");
+		Profile tmpProfile = profileDao.findOne(getUsersProfile(user));
 		
-		model.addObject("updateProfileForm", new UpdateProfileForm());
+		UpdateProfileForm tmpForm = new UpdateProfileForm();
+		tmpForm.setBiography(tmpProfile.getBiography());
+		
+		model.addObject("updateProfileForm", tmpForm);
 		
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		
-		model.addObject("Profile", profileDao.findOne(getUsersProfile(user)));
+		model.addObject("Profile", tmpProfile);
 		
 		return model;
 	}
@@ -61,9 +66,14 @@ public class UpdateProfileController {
         } else {
         	model = new ModelAndView("updateProfile");
         }
-		model.addObject("updateProfileForm", new UpdateProfileForm());
+		Profile tmpProfile = profileDao.findOne(getUsersProfile(user));
+		
+		UpdateProfileForm tmpForm = new UpdateProfileForm();
+		tmpForm.setBiography(tmpProfile.getBiography());
+		
+		model.addObject("updateProfileForm", tmpForm);
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Profile", profileDao.findOne(getUsersProfile(user)));
+		model.addObject("Profile", tmpProfile);
 		return model;
 	}
 
