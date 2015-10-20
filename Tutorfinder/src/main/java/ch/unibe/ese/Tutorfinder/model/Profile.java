@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 /**
  * Entity for Profile holding following values:<br>
  * {@code id} is the id of the profile and is generated automatically<br>
@@ -32,7 +35,7 @@ public class Profile {
 	private String region;
 	private String imgPath;
 	
-	@Column(precision=8, scale=2)
+	@NumberFormat(style=Style.CURRENCY)
 	private BigDecimal wage;
 	
 	
