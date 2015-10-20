@@ -1,8 +1,13 @@
 package ch.unibe.ese.Tutorfinder.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 /**
  * Entity for Profile holding following values:<br>
@@ -29,7 +34,9 @@ public class Profile {
 	private String region;
 	private String imgPath;
 	
-	private double wage;
+	@NumberFormat(style=Style.CURRENCY)
+	private BigDecimal wage;
+
 	
 	
 	/* Constructors */
@@ -84,11 +91,11 @@ public class Profile {
 		this.imgPath = imgPath;
 	}
 
-	public double getWage() {
+	public BigDecimal getWage() {
 		return wage;
 	}
 
-	public void setWage(double wage) {
+	public void setWage(BigDecimal wage) {
 		this.wage = wage;
 	}
 	

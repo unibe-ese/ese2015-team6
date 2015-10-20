@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
@@ -16,7 +18,7 @@ public class UpdateProfileForm {
 	private String region;
 	private String imgPath;
 	
-	private double wage;
+	private BigDecimal wage;
 	
 	public long getId() {
 		return id;
@@ -58,11 +60,11 @@ public class UpdateProfileForm {
 		this.imgPath = imgPath;
 	}
 	
-	public double getWage() {
+	public BigDecimal getWage() {
 		return wage;
 	}
 	
-	public void setWage(double wage) {
+	public void setWage(BigDecimal wage) {
 		this.wage = wage;
 	}
 

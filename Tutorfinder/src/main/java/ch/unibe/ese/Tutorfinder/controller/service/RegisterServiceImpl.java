@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,7 @@ public class RegisterServiceImpl implements RegisterService {
 		}
 		user.setRole(role);
 		Profile profile = new Profile(user.getEmail());
+		profile.setWage(BigDecimal.ZERO);
 		user.setProfile(profile);
 
 		user = userDao.save(user); // save object to DB
