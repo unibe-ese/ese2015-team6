@@ -37,16 +37,10 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("updateProfile");
-		Profile tmpProfile = profileDao.findOne(getUsersProfile(user));
 		
-		UpdateProfileForm tmpForm = new UpdateProfileForm();
-		tmpForm.setBiography(tmpProfile.getBiography());
-		
-		model.addObject("updateProfileForm", tmpForm);
-		
+		model.addObject("updateProfileForm", getFormWithBiography(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		
-		model.addObject("Profile", tmpProfile);
+		model.addObject("Profile", getUsersProfile(user));
 		
 		return model;
 	}
@@ -65,21 +59,25 @@ public class UpdateProfileController {
             }
         } else {
         	model = new ModelAndView("updateProfile");
-        }
-		Profile tmpProfile = profileDao.findOne(getUsersProfile(user));
-		
-		UpdateProfileForm tmpForm = new UpdateProfileForm();
-		tmpForm.setBiography(tmpProfile.getBiography());
-		
-		model.addObject("updateProfileForm", tmpForm);
+        }				
+		model.addObject("updateProfileForm", getFormWithBiography(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Profile", tmpProfile);
+		model.addObject("Profile", getUsersProfile(user));
+		
 		return model;
 	}
 
-	private long getUsersProfile(Principal user) {
+	private UpdateProfileForm getFormWithBiography(Principal user) {
+		UpdateProfileForm tmpForm = new UpdateProfileForm();
+		tmpForm.setBiography(getUsersProfile(user).getBiography());
+		
+		return tmpForm;
+	}
+
+	private Profile getUsersProfile(Principal user) {
 		User tmpUser = userDao.findByEmail(user.getName());
-		long profileId = tmpUser.getId();
-		return profileId;
+		Profile tmpProfile = profileDao.findOne(tmpUser.getId());
+		
+		return tmpProfile;
 	}
 }
