@@ -1,11 +1,14 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
+import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Role;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
@@ -35,7 +38,9 @@ public class RegisterServiceImpl implements RegisterService {
 			role.setRole("STUDENT");
 		}
 		user.setRole(role);
-		;
+		Profile profile = new Profile(user.getEmail());
+		profile.setWage(BigDecimal.ZERO);
+		user.setProfile(profile);
 
 		user = userDao.save(user); // save object to DB
 

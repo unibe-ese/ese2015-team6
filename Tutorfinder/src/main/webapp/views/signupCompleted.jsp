@@ -5,6 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
+<script type="text/javascript">
+//redirect to editprofile
+window.setTimeout(function() {
+    window.location.href = '/editProfile';
+}, 5000);
+</script>
 </head>
 <body>
 <h1>Sign Up Complete!</h1>
