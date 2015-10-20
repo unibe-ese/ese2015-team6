@@ -27,7 +27,15 @@ public class RegisterServiceImpl implements RegisterService {
 		User user = new User();
 		user.setFirstName(signupForm.getFirstName());
 		user.setLastName(signupForm.getLastName());
-		user.setEmail(signupForm.getEmail());
+		
+		//checks whether input email address is already in the database
+		if(userDao.findByEmail(signupForm.getEmail()) == null){ 
+		user.setEmail(signupForm.getEmail());				
+		} else {
+			throw new InvalidUserException("Invalid Emailadress");
+		}
+		
+		
 		user.setPassword(signupForm.getPassword());
 		if (signupForm.isTutor()) {
 			user.setRole("TUTOR");
