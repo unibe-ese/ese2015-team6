@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Tutorfinder register</title>
+<link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 <form:form method="post" modelAttribute="signupForm" action="create" id="signupForm" autocomplete="off">

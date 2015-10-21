@@ -5,6 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>403</title>
+
+<link rel="stylesheet" href="/css/style.css" />
+
 </head>
 <body>
 	<h1>HTTP Status 403 - Access is denied</h1>

@@ -32,6 +32,8 @@ public class LoginController {
 	 * @param logout displays successful logout message
 	 * @return ModelAndView for Springframework
 	 */
+
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
@@ -81,7 +83,7 @@ public class LoginController {
 	 * @param user authenticated user object
 	 * @return
 	 */
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView accesssDenied(Principal user) {
 
 		ModelAndView model = new ModelAndView();
@@ -90,6 +92,16 @@ public class LoginController {
 		}
 
 		model.setViewName("403");
+		return model;
+
+	}
+	
+	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
+	public ModelAndView home() {
+
+		ModelAndView model = new ModelAndView();
+		model.setViewName("home");
+
 		return model;
 
 	}

@@ -9,6 +9,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login successful</title>
+
+
+<script type="text/javascript">
+//redirect to showprofile
+window.setTimeout(function() {
+    window.location.href = '/showProfile';
+}, 5000);
+</script>
+
+<link rel="stylesheet" href="/css/style.css" />
+
 </head>
 <body>
 	<sec:authorize access="hasAnyRole('ROLE_STUDENT','ROLE_TUTOR')">

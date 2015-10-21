@@ -45,7 +45,9 @@ public class UpdateProfileController {
 		return model;
 	}
 	
+
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
+
 	public ModelAndView update(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model;

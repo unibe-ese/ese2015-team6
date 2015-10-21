@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidEmailException;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
@@ -35,6 +36,7 @@ public class RegisterServiceImpl implements RegisterService {
 		} else {
 			throw new InvalidEmailException("Email address already used");
 		}
+
 
 		user.setPassword(signupForm.getPassword());
 		if (signupForm.isTutor()) {
