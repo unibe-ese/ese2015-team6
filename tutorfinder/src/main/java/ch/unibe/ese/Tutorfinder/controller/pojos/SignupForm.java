@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -15,8 +16,10 @@ public class SignupForm {
 	@NotNull
 	private String lastName;
 	
-	@Email
+	
 	@NotNull
+	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", 
+    message = "Must be valid email address")
 	private String email;
 	
 	

@@ -34,10 +34,15 @@ public class RegisterController {
             try {
             	registerService.saveFrom(signupForm);
             	model = new ModelAndView("signupCompleted");
-            } catch (InvalidUserException e) {
+            } catch (InvalidEmailException e) {
+            	model = new ModelAndView("register");
+            	model.addObject("email_error", e.getMessage());
+            }
+            catch (InvalidUserException e) {
             	model = new ModelAndView("register");
             	model.addObject("page_error", e.getMessage());
             }
+           
         } else {
         	model = new ModelAndView("register");
         }   	

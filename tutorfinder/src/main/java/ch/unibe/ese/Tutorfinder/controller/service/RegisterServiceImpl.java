@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidEmailException;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
@@ -32,7 +33,7 @@ public class RegisterServiceImpl implements RegisterService {
 		if(userDao.findByEmail(signupForm.getEmail()) == null){ 
 		user.setEmail(signupForm.getEmail());				
 		} else {
-			throw new InvalidUserException("Invalid Emailadress");
+			throw new InvalidEmailException("Email address already used");
 		}
 		
 		user.setPassword(signupForm.getPassword());
