@@ -6,9 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
 <script type="text/javascript">
-//redirect to editprofile
+//redirect to login
 window.setTimeout(function() {
-    window.location.href = '/editProfile';
+    window.location.href = '/';
 }, 5000);
 </script>
 <link rel="stylesheet" href="/css/style.css" />

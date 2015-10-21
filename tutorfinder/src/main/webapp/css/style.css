@@ -1,5 +1,19 @@
 body {
-	background-color: #dadada;
-	margin-left: 10%;
-	margin-top: 5%;
+	background-color: #aaaaaa;
+    margin: 0px;
+}
+
+
+#logo {
+    align-self:center;
+}
+#login-box {
+    align-self: center;
+}
+
+
+#logoutButton {
+	position: absolute;
+	top: 0px;
+	right: 0px;
 }
