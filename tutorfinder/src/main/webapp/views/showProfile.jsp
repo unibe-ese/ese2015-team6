@@ -58,6 +58,7 @@
 		Logout Button
 	 -->
 	 <div id="logoutButton"><button type="button" onClick="window.location.href='/logout'">Logout</button></div>
+
 	
 </body>
 

@@ -6,12 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
 <script type="text/javascript">
+
 //redirect to login
 window.setTimeout(function() {
-    window.location.href = '/';
+    window.location.href = '/login';
 }, 5000);
 </script>
 <link rel="stylesheet" href="/css/style.css" />
+
 </head>
 <body>
 <h1>Sign Up Complete!</h1>

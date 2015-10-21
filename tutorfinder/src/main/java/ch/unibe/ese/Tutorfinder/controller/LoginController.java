@@ -33,6 +33,7 @@ public class LoginController {
 	 * @return ModelAndView for Springframework
 	 */
 
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
@@ -100,6 +101,7 @@ public class LoginController {
 
 		ModelAndView model = new ModelAndView();
 		model.setViewName("home");
+
 		return model;
 
 	}

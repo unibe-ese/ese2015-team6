@@ -19,9 +19,11 @@
         <div class="control-group<c:if test="${not empty emailErrors}"> error</c:if>">
             <label class="control-label" for="field-email">Email</label>
 
+
             <div class="controls">
                 <form:input path="email" id="field-email" tabindex="1" maxlength="45" placeholder="Email"/>
                 <form:errors path="email" cssClass="help-inline" element="span"/>
+                <c:if test="${not empty email_error}"> ${email_error}</c:if>
             </div>
         </div>
         <c:set var="firstNameErrors"><form:errors path="firstName"/></c:set>
@@ -67,5 +69,7 @@
         </div>
     </fieldset>
 </form:form>
+
+
 </body>
 </html>
