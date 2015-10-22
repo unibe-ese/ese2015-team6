@@ -16,8 +16,8 @@
 			<div class="controls">
 				<input type="text" th:value="*{email}" th:name="email" tabindex="1"
 					maxlength="45" required="required" />
-				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Invalid email address</span>
-				<span th:text="${email_error}">Address already used</span>
+				<span th:if="${#fields.hasErrors('email')}" th:errors=" *{email}"> Invalid email address</span>
+				<span th:text=" ${email_error}"> Address already used</span>
 			</div>
 
 			<label class="control-label" for="firstName">First Name</label>
