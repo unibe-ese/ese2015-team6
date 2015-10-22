@@ -5,6 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ page session="false" %>
 
 <!DOCTYPE>
 <html>
@@ -39,7 +40,23 @@
 					<form:errors path="email" cssClass="help-inline" element="span" />
 				</div>
 			</div>
-
+			
+			
+			<!-- 
+				ProfilePicture form
+				Shows the actual picture and allows the user to upload an new picture
+			 -->
+			<div id="profilePicture">
+				<img src=<c:out value="${Profile.imgPath}"/> alt="Profile picture" width="192" height="192" 
+				onerror="this.onerror=null; this.src='../img/test-avatar.png;'"><br>
+				
+				<form method="POST" action="uploadImage" enctype="multipart/form-data">
+					Upload new profile picture: <br>
+					<input type="file" name="file" accept="image/*"><br> 
+					<input type="submit" value="Upload">
+				</form>
+			</div><br>
+			
 			<!--
 	        	Biography field
 	        	Placeholder loads the saved value on the server connected to the user's profile.
