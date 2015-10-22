@@ -38,7 +38,7 @@ public class LoginController {
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
 
-		ModelAndView model = new ModelAndView("login");
+		ModelAndView model = new ModelAndView("html/login");
 		if (error != null) {
 			model.addObject("error", "Invalid username or password!");
 		}
@@ -83,7 +83,7 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView accesssDenied(Principal user) {
 
-		ModelAndView model = new ModelAndView("403");
+		ModelAndView model = new ModelAndView("html/403");
 		if (user != null) {
 			model.addObject("msg", "Name: " + user.getName());
 		}

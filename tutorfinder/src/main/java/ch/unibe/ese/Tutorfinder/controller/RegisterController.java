@@ -22,7 +22,7 @@ public class RegisterController {
 	
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView index() {
-    	ModelAndView model = new ModelAndView("register");
+    	ModelAndView model = new ModelAndView("html/register");
     	model.addObject("signupForm", new SignupForm());
         return model;
     }
@@ -33,19 +33,19 @@ public class RegisterController {
     	if (!result.hasErrors()) {
             try {
             	registerService.saveFrom(signupForm);
-            	model = new ModelAndView("signupCompleted");
+            	model = new ModelAndView("html/signupCompleted");
 
             } catch (InvalidEmailException e) {
-            	model = new ModelAndView("register");
+            	model = new ModelAndView("html/register");
             	model.addObject("email_error", e.getMessage());
             }
             catch (InvalidUserException e) {
-            	model = new ModelAndView("register");
+            	model = new ModelAndView("html/register");
             	model.addObject("page_error", e.getMessage());
             }
 
         } else {
-        	model = new ModelAndView("register");
+        	model = new ModelAndView("html/register");
         }   	
     	return model;
     }

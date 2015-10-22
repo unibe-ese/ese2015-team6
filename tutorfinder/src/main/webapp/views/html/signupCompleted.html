@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<title></title>
+<script type="text/javascript">
+
+//redirect to login
+window.setTimeout(function() {
+    window.location.href = '/login';
+},3000);
+</script>
+<link rel="stylesheet" href="/css/style.css" />
+
+</head>
+<body>
+<h1>Sign Up Complete!</h1>
+<p>Wait for redirection or click <a th:href="@{/editProfile}">here</a></p>
+</body>
+</html>

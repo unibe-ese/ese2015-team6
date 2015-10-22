@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Tutorfinder register</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<form action="#" th:object="${signupForm}" th:action="@{/create}"
+		th:autocomplete="off" method="post" th:name="signupForm">
+		<fieldset>
+			<legend>Enter Your Information</legend>
+
+			<label class="control-label" for="email">Email</label>
+			<div class="controls">
+				<input type="text" th:value="*{email}" th:name="email" tabindex="1"
+					maxlength="45" required="required" />
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Invalid email address</span>
+				<span th:text="${email_error}">Address already used</span>
+			</div>
+
+			<label class="control-label" for="firstName">First Name</label>
+			<div class="controls">
+				<input type="text" th:value="*{firstName}" th:name="firstName"
+					tabindex="2" maxlength="35" required="required" />
+			</div>
+
+			<label class="control-label" for="lastName">Last Name</label>
+			<div class="controls">
+				<input type="text" th:value="*{lastName}" th:name="lastName"
+					tabindex="3" maxlength="35" required="required" />
+			</div>
+
+			<label class="control-label" for="field-password">Password</label>
+			<div class="controls">
+				<input type="password" th:value="*{password}" th:name="password"
+					tabindex="3" maxlength="35" required="required" />
+			</div>
+
+			<label class="control-label" for="field-tutor">Sign up as:</label>
+			<div class="controls">
+
+				<select th:value="*{tutor}" th:name="tutor">
+					<option th:value="false">Student</option>
+					<option th:value="true">Tutor</option>
+				</select>
+			</div>
+
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Sign up</button>
+			</div>
+		</fieldset>
+	</form>
+</body>
+</html>

@@ -36,7 +36,7 @@ public class UpdateProfileController {
 
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
-		ModelAndView model = new ModelAndView("updateProfile");
+		ModelAndView model = new ModelAndView("html/updateProfile");
 		
 		model.addObject("updateProfileForm", getFormWithBiography(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
@@ -54,13 +54,13 @@ public class UpdateProfileController {
 		if (!result.hasErrors()) {
             try {
             	updateProfileService.saveFrom(updateProfileForm, user);
-            	model = new ModelAndView("updateProfile");
+            	model = new ModelAndView("html/updateProfile");
             } catch (InvalidUserException e) {
-            	model = new ModelAndView("updateProfile");
+            	model = new ModelAndView("html/updateProfile");
             	model.addObject("page_error", e.getMessage());
             }
         } else {
-        	model = new ModelAndView("updateProfile");
+        	model = new ModelAndView("html/updateProfile");
         }				
 		model.addObject("updateProfileForm", getFormWithBiography(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
