@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
-import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.Profile;
+import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 
 @Service
 public class UpdateProfileServiceImpl implements UpdateProfileService {
@@ -26,7 +26,6 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 		profile.setBiography(updateProfileForm.getBiography());
 		profile.setRegion(updateProfileForm.getRegion());
 		profile.setWage(updateProfileForm.getWage());
-		profile.setImgPath(updateProfileForm.getImgPath());
 		
 		profile = profileDao.save(profile); //save object to DB
 		

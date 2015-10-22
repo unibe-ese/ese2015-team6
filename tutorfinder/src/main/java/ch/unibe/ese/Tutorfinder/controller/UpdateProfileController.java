@@ -8,7 +8,6 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +63,7 @@ public class UpdateProfileController {
             }
         } else {
         	model = new ModelAndView("html/updateProfile");
-        }				
+        }	
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		model.addObject("Profile", getUsersProfile(user));
@@ -86,7 +85,7 @@ public class UpdateProfileController {
 				String rootPath = System.getProperty("user.dir");
 				User tmpUser = userDao.findByEmail(user.getName());
 				File dir = new File(rootPath + File.separator + "src" + File.separator + "main" 
-									+ File.separator + "ProfilePictures");
+									+ File.separator + "webapp" + File.separator + "img" + File.separator + "profPic");
 				if (!dir.exists())
 					dir.mkdirs();
 
@@ -100,14 +99,15 @@ public class UpdateProfileController {
 				
 				//To get the absolute path use this
 				//serverFile.getAbsolutePath()
-				model = new ModelAndView("updateProfile");
+				model = new ModelAndView("html/updateProfile");
 				
 			} catch (Exception e) {
-				model = new ModelAndView("updateProfile");
+				model = new ModelAndView("html/updateProfile");
 			}
 		} else {
-			model = new ModelAndView("updateProfile");
+			model = new ModelAndView("html/updateProfile");
 		}
+		
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		return model;

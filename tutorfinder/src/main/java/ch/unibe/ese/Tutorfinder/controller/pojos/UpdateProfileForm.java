@@ -13,7 +13,6 @@ public class UpdateProfileForm {
 	@Email
 	@NotNull
 	private String email;
-	private String imgPath;
 	private String biography;
 	private String region;
 	
@@ -57,14 +56,6 @@ public class UpdateProfileForm {
 	
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
-	}
-
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 
 }

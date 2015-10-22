@@ -32,7 +32,6 @@ public class Profile {
 	
 	private String biography;
 	private String region;
-	private String imgPath;
 	
 	@NumberFormat(style=Style.CURRENCY)
 	private BigDecimal wage;
@@ -81,14 +80,6 @@ public class Profile {
 
 	public void setRegion(String region) {
 		this.region = region;
-	}
-
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 
 	public BigDecimal getWage() {

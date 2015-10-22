@@ -13,14 +13,16 @@
 	<!-- 
 		Profile picture 
 	-->
-	<img th:src="${Profile.imgPath}"
-		onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'"
+	<img th:src="@{|/img/profPic/${User.id}.png|}"
+		onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
 		alt="Profile picture" width="192" height="192"
 		src="../../img/default-avatar.jpg" />
+	
 
 	<!-- 
 		Profile name 
 	-->
+	
 	<h1 th:text="|${User.firstName} ${User.lastName}|">Vorname
 		Nachname</h1>
 

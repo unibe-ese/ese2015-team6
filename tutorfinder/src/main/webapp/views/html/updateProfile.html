@@ -10,9 +10,21 @@
 </head>
 <body>
 
-	<!-- TODO change completely -->
+	<!-- 	ProfilePicture form
+			Shows the actual picture and allows the user to upload an new picture
+			 -->
 
+	<form action="#" method="POST" th:action="@{/uploadImage}"
+		enctype="multipart/form-data">
+		<img th:src="@{|/img/profPic/${User.id}.png|}"
+			onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'"
+			alt="Profile picture" width="192" height="192"
+			src="../../img/default-avatar.jpg" /><br /> Upload new profile
+		picture: <br /> <input type="file" name="file" accept="image/*" /> <br />
+		<input type="submit" value="Upload" />
 
+	</form>
+	<br />
 	<form action="#" th:object="${updateProfileForm}"
 		th:action="@{/update}" th:name="updateProfileForm"
 		th:autocomplete="off" method="post">
@@ -89,7 +101,8 @@
 				<button type="button" onClick="window.location.href='showProfile'">Cancel</button>
 			</div>
 
-
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
 		</fieldset>
 	</form>
 
