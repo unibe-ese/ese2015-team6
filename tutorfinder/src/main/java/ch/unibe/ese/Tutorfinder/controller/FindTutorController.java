@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
+import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.FindTutorForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 
@@ -32,12 +32,13 @@ public class FindTutorController {
     	ModelAndView model;    	
     	if (!result.hasErrors()) {
             try {
-            	findTutorService.getUsersFrom(findTutorForm);
+            	
             	model = new ModelAndView("html/searchResults");
+            	model.addObject("Users" , findTutorService.getUsersFrom(findTutorForm));
 
             } 
             
-            catch (InvalidUserException e) {
+            catch (NoTutorsForSubjectException e) {
             	model = new ModelAndView("html/findTutor");
             	model.addObject("page_error", e.getMessage());
             }
