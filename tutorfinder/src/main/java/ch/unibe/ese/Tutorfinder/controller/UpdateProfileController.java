@@ -40,8 +40,6 @@ public class UpdateProfileController {
 		
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Profile", getUsersProfile(user));
-		
 		return model;
 	}
 	
