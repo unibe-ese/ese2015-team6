@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Find Tutor</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<form action="#" th:object="${findTutorForm}" th:action="@{/searchResults}"
+		th:autocomplete="off" method="post" th:name="findTutorForm">
+		<fieldset>
+			<legend>Enter subject you need help with:</legend>
+
+			<label class="control-label" for="subject">First Name</label>
+			<div class="controls">
+				<input type="text" th:name="subject"
+					tabindex="2" maxlength="45" required="required" />
+			</div>	
+			
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Search</button>
+			</div>
+		</fieldset>
+	</form>
+</body>
+</html>
