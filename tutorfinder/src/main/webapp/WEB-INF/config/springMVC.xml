@@ -36,6 +36,7 @@
 		<property name="prefix" value="/views/" />
 		<property name="suffix" value=".html" />
 		<property name="templateMode" value="HTML5" />
+		<property name="cacheable" value="false"/><!-- for debug, allows edit html without server restart -->
 	</bean>
 
 	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
