@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:hdiv="http://www.hdiv.org/schema/hdiv"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hdiv="http://www.hdiv.org/schema/hdiv"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd 
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
        http://www.hdiv.org/schema/hdiv http://www.hdiv.org/schema/hdiv/hdiv.xsd">
 
-	<!-- context configuration: how to instantiate beans to bind to DispatcherServlet  -->
+	<!-- context configuration: how to instantiate beans to bind to DispatcherServlet -->
 
-	<!-- search for controllers (@Controller)  -->
-    <mvc:annotation-driven />
-    <context:component-scan base-package="ch.unibe.ese"/> 
+	<!-- search for controllers (@Controller) -->
+	<mvc:annotation-driven />
+	<context:component-scan base-package="ch.unibe.ese" />
+
+	<!-- handler -->
+	<mvc:default-servlet-handler />
+
+	<!-- view resolver -->
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine"></property>
+		<property name="viewNames" value="html/**"/>
+		<property name="order" value="1"/>
+	</bean>
 	
-    <!-- handler  -->
-    <mvc:default-servlet-handler/>     
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/views/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2"/>
+	</bean>
+	<bean id="templateResolver"
+		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/views/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML5" />
+		<property name="cacheable" value="false"/><!-- for debug, allows edit html without server restart -->
+	</bean>
+
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+		<property name="additionalDialects">
+        <set>
+            <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+        </set>
+      </property>
+	</bean>
 	
-  	<!-- view resolver  -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/views/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
     
     <!-- setting maximum upload size -->
     <bean id="filterMultipartResolver"
@@ -30,10 +54,7 @@
     	
     	<property name="maxUploadSize" value="100000" />	
     </bean>
-     
     
-    <!-- resources  -->
-    <mvc:resources mapping="/resources/**" location="/" />
-		
-	
+	<!-- resources -->
+	<mvc:resources mapping="/resources/**" location="/" />
 </beans>

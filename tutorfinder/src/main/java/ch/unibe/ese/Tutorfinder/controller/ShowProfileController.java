@@ -27,7 +27,7 @@ public class ShowProfileController {
 	
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView showProfile(Principal user) {
-		ModelAndView model = new ModelAndView("showProfile");
+		ModelAndView model = new ModelAndView("html/showProfile");
 		
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		

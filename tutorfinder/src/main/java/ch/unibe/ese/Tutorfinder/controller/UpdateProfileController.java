@@ -42,12 +42,10 @@ public class UpdateProfileController {
 
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
-		ModelAndView model = new ModelAndView("updateProfile");
+		ModelAndView model = new ModelAndView("html/updateProfile");
 		
-		model.addObject("updateProfileForm", getFormWithBiography(user));
+		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Profile", getUsersProfile(user));
-		
 		return model;
 	}
 	
@@ -59,15 +57,15 @@ public class UpdateProfileController {
 		if (!result.hasErrors()) {
             try {
             	updateProfileService.saveFrom(updateProfileForm, user);
-            	model = new ModelAndView("updateProfile");
+            	model = new ModelAndView("html/updateProfile");
             } catch (InvalidUserException e) {
-            	model = new ModelAndView("updateProfile");
+            	model = new ModelAndView("html/updateProfile");
             	model.addObject("page_error", e.getMessage());
             }
         } else {
-        	model = new ModelAndView("updateProfile");
+        	model = new ModelAndView("html/updateProfile");
         }				
-		model.addObject("updateProfileForm", getFormWithBiography(user));
+		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		model.addObject("Profile", getUsersProfile(user));
 		
@@ -110,15 +108,16 @@ public class UpdateProfileController {
 		} else {
 			model = new ModelAndView("updateProfile");
 		}
-		model.addObject("updateProfileForm", getFormWithBiography(user));
+		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Profile", getUsersProfile(user));
 		return model;
 	}
 
-	private UpdateProfileForm getFormWithBiography(Principal user) {
+	private UpdateProfileForm getFormWithValues(Principal user) {
 		UpdateProfileForm tmpForm = new UpdateProfileForm();
 		tmpForm.setBiography(getUsersProfile(user).getBiography());
+		tmpForm.setRegion(getUsersProfile(user).getRegion());
+		tmpForm.setWage(getUsersProfile(user).getWage());
 		
 		return tmpForm;
 	}

@@ -40,10 +40,7 @@
 					<form:errors path="email" cssClass="help-inline" element="span" />
 				</div>
 			</div>
-			
-			<input type="hidden" 
-		  		name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
+			<form:form></form:form>
 			
 			
 			<!-- 
@@ -54,11 +51,11 @@
 				<img src=<c:out value="${Profile.imgPath}"/> alt="Profile picture" width="192" height="192" 
 				onerror="this.onerror=null; this.src='../img/test-avatar.png;'"><br>
 				
-				<form method="POST" action="uploadImage" enctype="multipart/form-data">
+				<form:form method="POST" action="uploadImage" enctype="multipart/form-data">
 					Upload new profile picture: <br>
 					<input type="file" name="file" accept="image/*"><br> 
 					<input type="submit" value="Upload">
-				</form>
+				</form:form>
 			</div><br>
 			
 			<!--
