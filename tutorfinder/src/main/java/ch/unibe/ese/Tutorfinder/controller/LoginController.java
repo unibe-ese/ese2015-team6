@@ -38,7 +38,7 @@ public class LoginController {
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
 
-		ModelAndView model = new ModelAndView();
+		ModelAndView model = new ModelAndView("login");
 		if (error != null) {
 			model.addObject("error", "Invalid username or password!");
 		}
@@ -46,8 +46,6 @@ public class LoginController {
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
-		model.setViewName("login");
-
 		model.addObject("loginUrl", "/login");
 
 		return model;
@@ -55,8 +53,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
 	public ModelAndView success() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("success");
+		ModelAndView model = new ModelAndView("success");
 		model.addObject("logoutUrl", "/login?logout");
 		return model;
 
@@ -86,24 +83,11 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView accesssDenied(Principal user) {
 
-		ModelAndView model = new ModelAndView();
+		ModelAndView model = new ModelAndView("403");
 		if (user != null) {
 			model.addObject("msg", "Name: " + user.getName());
 		}
-
-		model.setViewName("403");
 		return model;
 
 	}
-	
-	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
-	public ModelAndView home() {
-
-		ModelAndView model = new ModelAndView();
-		model.setViewName("home");
-
-		return model;
-
-	}
-
 }
