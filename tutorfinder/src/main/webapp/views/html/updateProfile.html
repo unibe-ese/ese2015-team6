@@ -2,11 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Update profile</title>
-
-<link rel="stylesheet" href="/css/style.css" />
-
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Update profile</title>
+	
+	<link rel="stylesheet" href="/css/style.css" />
+	
+	<script>
+		function createRemoveCell(index) {
+			var newInput = document.createElement("input");
+			newInput.setAttribute("type", "button");
+			newInput.setAttribute("value", "remove");
+			index = index - 1;
+			newInput.setAttribute("onclick", "deleteRow('subjectTable', " + index + " )");
+			return newInput;
+		}
+		
+		function createNoteCell() {
+			var x = document.createElement("input");
+			x.setAttribute("type", "text");
+			x.setAttribute("value", "0.0");
+			x.setAttribute("size", "4");
+			x.setAttribute("th:name", "note"); 
+			x.setAttribute("th:value", "*{note}");
+			
+			return x;
+		}
+		
+		function createSubjectCell() {
+			var x = document.createElement("input");
+			x.setAttribute("type", "text");
+			x.setAttribute("value", "new subject");
+			x.setAttribute("size", "45");
+			x.setAttribute("th:name", "subject"); 
+			x.setAttribute("th:value", "*{subject}");
+			return x;
+		}
+		
+		function getRows(id) {
+			var x = document.getElementById(id)
+			x = x.getElementsByTagName("tr");
+			x = x.length;
+			return x;
+		}
+		
+		function insRow(id) {
+		    var a = document.getElementById(id).insertRow(getRows(id));
+		
+		    var x = a.insertCell(0);
+		    var y = a.insertCell(1);
+		    var z = a.insertCell(2);
+		
+		    x.appendChild(createSubjectCell());
+			y.appendChild(createNoteCell());
+			z.appendChild(createRemoveCell(getRows(id)));
+		
+		}
+		
+		function deleteRow(id, row) {
+		    document.getElementById(id).deleteRow(row);
+		}
+	</script>
+	
 </head>
 <body>
 
@@ -107,7 +163,30 @@
 				value="${_csrf.token}" />
 		</fieldset>
 	</form>
+	
+	
+	<form action="#" method="GET" th:action="@{/editProfile}"
+		enctype="multipart/form-data">
+	<!-- The follow form-tags are only shown if it is the profile from an tutor -->
+	<div sec:authorize="hasRole('ROLE_TUTOR')">
+		<!-- 
+			Teaching Subjects 
+		-->
+		<h3>Teaching Subjects</h3>
+		<table id="subjectTable" >
+			<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Note</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<button type="button" onclick="insRow('subjectTable')">Add subject</button>
 
-
+	</div>
+	</form>
+	
 </body>
 </html>

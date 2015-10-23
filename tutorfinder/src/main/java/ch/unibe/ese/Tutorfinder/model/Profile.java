@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
@@ -37,9 +36,6 @@ public class Profile {
 	
 	@NumberFormat(style=Style.CURRENCY)
 	private BigDecimal wage;
-
-	@OneToMany
-	private Subject subject;
 	
 	
 	/* Constructors */
@@ -92,14 +88,6 @@ public class Profile {
 
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
-	}
-
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
 	}
 	
 }
