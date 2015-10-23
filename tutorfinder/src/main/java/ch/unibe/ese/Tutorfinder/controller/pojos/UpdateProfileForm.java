@@ -5,6 +5,12 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
+/**
+ * Class for validating the users input in the {@code updateProfile.jsp}.
+ * 
+ * @author Antonio
+ *
+ */
 public class UpdateProfileForm {
 
 	@NotNull

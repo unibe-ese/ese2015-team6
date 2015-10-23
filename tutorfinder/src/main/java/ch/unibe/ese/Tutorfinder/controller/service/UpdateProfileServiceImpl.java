@@ -11,6 +11,14 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 
+/**
+ * Service to save the information from the {@code UpdateProfileForm}
+ * to the profile-table on the database. This service is used for
+ * update the users information.
+ * 
+ * @author Antonio
+ *
+ */
 @Service
 public class UpdateProfileServiceImpl implements UpdateProfileService {
 

@@ -5,17 +5,17 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 /**
- * Entity for Profile holding following values:<br>
+ * Entity for profile, holding following values:<br>
  * {@code id} is the id of the profile and is generated automatically<br>
- * {@code email} is used for referencing between user and profile(same for id)<br>
+ * {@code email} is used for referencing between user and profile (same for id)<br>
  * {@code biography} holds an String of 255 characters for the biography of the user<br>
  * {@code region} holds an String of 255 characters for the region of the user<br>
- * {@code imgPath} holds the path where the image of the user is saved<br>
  * 
  * @author Antonio
  *
@@ -27,6 +27,7 @@ public class Profile {
 	@GeneratedValue
 	private long id;
 	
+	@NotNull
 	private String email;
 
 	

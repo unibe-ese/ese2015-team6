@@ -39,6 +39,13 @@ public class UpdateProfileController {
 	@Autowired	ProfileDao profileDao;
 	@Autowired	UserDao userDao;
 
+	/**
+	 * Maps the /editProfile page to the {@code updateProfile.jsp}.
+	 * 
+	 * @param user actually logged in user, is used to get the users profile information
+	 * and shows it to the user to allow editing the information.
+	 * @return ModelAndView for Springframework with the users editable profile.
+	 */
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("html/updateProfile");
@@ -48,7 +55,18 @@ public class UpdateProfileController {
 		return model;
 	}
 	
-
+	/**
+	 * Handles users form input with let it validate by the {@code UpdarProfileForm}
+	 * class and passing it to the {@code UpdateProfileServiceImpl} class which saves
+	 * the new information to the database.
+	 * 
+	 * @param user actually logged in user, is used to get the users profile information
+	 * and shows it to the user to allow editing the information.
+	 * @param updateProfileForm class to validate the users form input.
+	 * @param result
+	 * @param redirectAttributes
+	 * @return ModelAndView for Springframework with the users new and editable profile.
+	 */
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
 	public ModelAndView update(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
@@ -57,12 +75,14 @@ public class UpdateProfileController {
             try {
             	updateProfileService.saveFrom(updateProfileForm, user);
             	model = new ModelAndView("html/updateProfile");
+            	//TODO show success message to the user
             } catch (InvalidUserException e) {
             	model = new ModelAndView("html/updateProfile");
             	model.addObject("page_error", e.getMessage());
             }
         } else {
         	model = new ModelAndView("html/updateProfile");
+        	//TODO show error massage to the user
         }	
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
@@ -97,15 +117,15 @@ public class UpdateProfileController {
 				stream.write(bytes);
 				stream.close();
 				
-				//To get the absolute path use this
-				//serverFile.getAbsolutePath()
 				model = new ModelAndView("html/updateProfile");
-				
+				//TODO show success massage to the user
 			} catch (Exception e) {
 				model = new ModelAndView("html/updateProfile");
+				model.addObject("page_error", e.getMessage());
 			}
 		} else {
 			model = new ModelAndView("html/updateProfile");
+			//TODO show error massage to the user
 		}
 		
 		model.addObject("updateProfileForm", getFormWithValues(user));
@@ -113,6 +133,12 @@ public class UpdateProfileController {
 		return model;
 	}
 
+	/**
+	 * Gets an form with the users new information
+	 * 
+	 * @param user
+	 * @return form with the users input values
+	 */
 	private UpdateProfileForm getFormWithValues(Principal user) {
 		UpdateProfileForm tmpForm = new UpdateProfileForm();
 		tmpForm.setBiography(getUsersProfile(user).getBiography());
@@ -122,6 +148,12 @@ public class UpdateProfileController {
 		return tmpForm;
 	}
 
+	/**
+	 * Gets the profile which belongs to the actually logged in user
+	 * 
+	 * @param user is needed to get the right profile
+	 * @return profile of the actually logged in user
+	 */
 	private Profile getUsersProfile(Principal user) {
 		User tmpUser = userDao.findByEmail(user.getName());
 		Profile tmpProfile = profileDao.findOne(tmpUser.getId());

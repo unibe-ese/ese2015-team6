@@ -25,6 +25,14 @@ public class ShowProfileController {
 	@Autowired	ProfileDao profileDao;
 	@Autowired	UserDao userDao;
 	
+	
+	/**
+	 * Maps the /showProfile page to the {@code showProfile.jsp}.
+	 * 
+	 * @param user
+	 * @return ModelAndView for Springframework with the users profile.
+	 */
+	//TODO don't use Principal user, it allows only access to the actually logged in profile!!
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView showProfile(Principal user) {
 		ModelAndView model = new ModelAndView("html/showProfile");
@@ -36,6 +44,12 @@ public class ShowProfileController {
 		return model;
 	}
 	
+	/**
+	 * Gets the profile which belongs to the actually logged in user
+	 * 
+	 * @param user is needed to get the right profile
+	 * @return profile of the actually logged in user
+	 */
 	private long getUsersProfile(Principal user) {
 		User tmpUser = userDao.findByEmail(user.getName());
 		long profileId = tmpUser.getId();
