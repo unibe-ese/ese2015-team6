@@ -1,0 +1,36 @@
+package ch.unibe.ese.Tutorfinder.controller.service;
+
+import java.util.LinkedList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ch.unibe.ese.Tutorfinder.controller.pojos.FindTutorForm;
+import ch.unibe.ese.Tutorfinder.model.User;
+import ch.unibe.ese.Tutorfinder.model.UserSubject;
+import ch.unibe.ese.Tutorfinder.model.dao.UserSubjectDao;
+
+@Service
+public class FindTutorServiceImpl implements FindTutorService {
+	
+	@Autowired
+	UserSubjectDao userSubjectDao;
+	
+	
+	/**
+	 * Finds all Users that have passed an given subject
+	 * @param findTutorForm - Form that lets user enter a subject 
+	 */
+	@Override
+	public Iterable<User> getUsersFrom(FindTutorForm findTutorForm) {
+		LinkedList<UserSubject> tmpUserSubject = userSubjectDao.findBySubject(findTutorForm.getSubject());
+		
+		LinkedList<User> tmpUsers = new LinkedList<User>();
+		
+		for(UserSubject userSubject : tmpUserSubject) {
+			tmpUsers.add(userSubject.getUser());
+		}
+		return tmpUsers;
+	}
+
+}
