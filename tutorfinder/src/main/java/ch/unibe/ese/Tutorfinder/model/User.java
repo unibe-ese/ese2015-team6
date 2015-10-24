@@ -1,13 +1,17 @@
 package ch.unibe.ese.Tutorfinder.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name="user", uniqueConstraints=@UniqueConstraint(columnNames = { "email" }))
 public class User {
 	
 	@Id
@@ -16,7 +20,10 @@ public class User {
 	
 	private String firstName;
 	private String lastName;
+	
+	@Column(name="email")
 	private String email;
+	
 	private String password;
 	
 	@NotNull
