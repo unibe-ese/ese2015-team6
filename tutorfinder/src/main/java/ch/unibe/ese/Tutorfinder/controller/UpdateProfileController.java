@@ -31,6 +31,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
  * the edit or update profile process
  * 
  * @author Antonio
+ * @author Nicola
  *
  */
 @Controller
@@ -46,7 +47,7 @@ public class UpdateProfileController {
 	 * 
 	 * @param user actually logged in user, is used to get the users profile information
 	 * and shows it to the user to allow editing the information.
-	 * @return ModelAndView for Springframework with the users editable profile.
+	 * @return ModelAndView for Spring framework with the users editable profile.
 	 */
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
@@ -54,7 +55,7 @@ public class UpdateProfileController {
 		
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Subject", subjectDao.findAllByEmail(user.getName()));
+		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
 		return model;
 	}
 	
@@ -68,7 +69,7 @@ public class UpdateProfileController {
 	 * @param updateProfileForm class to validate the users form input.
 	 * @param result
 	 * @param redirectAttributes
-	 * @return ModelAndView for Springframework with the users new and editable profile.
+	 * @return ModelAndView for Spring framework with the users new and editable profile.
 	 */
 	@RequestMapping(value ="/update", method = RequestMethod.POST)
 	public ModelAndView update(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
@@ -90,7 +91,7 @@ public class UpdateProfileController {
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		model.addObject("Profile", getUsersProfile(user));
-		model.addObject("Subject", subjectDao.findAllByEmail(user.getName()));
+		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
 		
 		return model;
 	}
@@ -134,7 +135,18 @@ public class UpdateProfileController {
 		
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Subject", subjectDao.findAllByEmail(user.getName()));
+		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
+		return model;
+	}
+	
+	@RequestMapping(value ="/updateSubjects", method = RequestMethod.POST)
+	public ModelAndView updateSubjects(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView model = new ModelAndView("html/updateProfile");
+		
+		model.addObject("updateProfileForm", getFormWithValues(user));
+		model.addObject("User", userDao.findByEmail(user.getName()));
+		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
 		return model;
 	}
 
