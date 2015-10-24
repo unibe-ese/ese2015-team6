@@ -19,7 +19,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 	
 	/**
 	 * Finds all Users that have passed an given subject
-	 * @param subject -  String containing the name of the subject that user must have passed
+	 * @param findTutorForm - Form that lets user enter a subject 
 	 */
 	@Override
 	public Iterable<User> getUsersFrom(FindTutorForm findTutorForm) {
