@@ -27,6 +27,10 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 	public UpdateSubjectsServiceImpl() {
 	}
 
+	/**
+	 * Replaces all currently saved subjects for one tutor with a new subject
+	 */
+	// TODO Exception handling. An SQL exception causes an User to lose all his saved subjects
 	@Transactional
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
@@ -34,8 +38,8 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 		subjectDao.delete(subjectDao.findAllByUser(user));
 		List<Subject> subjects = new ArrayList<Subject>();
 		List<Row> rowList = updateSubjectsForm.getRows();
-		
-		for (Row row:rowList) {
+
+		for (Row row : rowList) {
 			Subject subject = new Subject();
 			subject.setUser(user);
 			subject.setName(row.getSubject());
