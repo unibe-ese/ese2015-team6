@@ -34,8 +34,8 @@ public class FindTutorController {
             try {
             	
             	model = new ModelAndView("html/searchResults");
-            	model.addObject("Users" , findTutorService.getUsersFrom(findTutorForm));
-
+            	model.addObject("Query", findTutorForm.getSubject());
+            	model.addObject("Result", findTutorService.getSubjectFrom(findTutorForm));
             } 
             
             catch (NoTutorsForSubjectException e) {

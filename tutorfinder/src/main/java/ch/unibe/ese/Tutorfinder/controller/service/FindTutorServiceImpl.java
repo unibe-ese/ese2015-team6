@@ -33,4 +33,9 @@ public class FindTutorServiceImpl implements FindTutorService {
 		return tmpUsers;
 	}
 
+	@Override
+	public LinkedList<Subject> getSubjectFrom(FindTutorForm findTutorForm) {
+		return subjectDao.findByName(findTutorForm.getSubject());
+	}
+
 }
