@@ -19,8 +19,9 @@
 		<img th:src="@{|/img/profPic/${User.id}.png|}"
 			onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'"
 			alt="Profile picture" width="192" height="192"
-			src="../../img/default-avatar.jpg" /><br /> Upload new profile
-		picture: <br /> <input type="file" name="file" accept="image/*" /> <br />
+			src="../../img/default-avatar.jpg" /><br /> 
+		Upload new profile picture: <br /> 
+		<input type="file" name="file" accept="image/*" /> <br />
 		<input type="submit" value="Upload" />
 	</form>
 	<br />
@@ -38,6 +39,66 @@
 				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
 					Something went wrong while getting your e-mail address </span>
 			</div>
+			
+			<!--
+	        	First name field
+	        	Placeholder loads the saved value on the server connected to the user's profile.
+        	-->
+			<div class="control-group">
+				<label class="control-label" for="firstName">First name</label>
+				<div class="controls">
+					<input type="text" th:name="firstName" tabindex="1" maxlength="255"
+						th:value="*{firstName}" /> 
+					<span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+						Invalid input
+					</span>
+				</div>
+			</div>
+
+			<!--
+	        	Last name field
+	        	Placeholder loads the saved value on the server connected to the user's profile.
+        	-->
+			<div class="control-group">
+				<label class="control-label" for="lastName">Last name</label>
+				<div class="controls">
+					<input type="text" th:name="lastName" tabindex="2" maxlength="255"
+						th:value="*{lastName}" /> 
+					<span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+						Invalid input
+					</span>
+				</div>
+			</div>
+			
+			<!-- 
+				Password field
+				Placeholder loads the saved value on the server connected to the user's profile.
+			 -->
+			<div class="control-group">
+				<label class="control-label" for="password">Password</label>
+				<div class="controls">
+					<input type="password" th:value="*{password}" th:name="password"
+						tabindex="3" maxlength="35"  />
+					<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+						Invalid input
+					</span>
+				</div>
+			</div>
+			
+			<!-- 
+				Confirm password field
+				Placeholder loads the saved value on the server connected to the user's profile.
+			 -->
+			<div class="control-group">
+				<label class="control-label" for="confirmPassword">Confirm password</label>
+				<div class="controls">
+					<input type="password" th:value="*{confirmPassword}" th:name="confirmPassword"
+						tabindex="4" maxlength="35"  />
+					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
+						Invalid input
+					</span>
+				</div>
+			</div>
 
 			<!--
 	        	Biography field
@@ -46,7 +107,7 @@
 			<div class="control-group">
 				<label class="control-label" for="biography">Biography</label>
 				<div class="controls">
-					<textarea rows="4" cols="50" tabindex="1" maxlength="255"
+					<textarea rows="5" cols="50" tabindex="1" maxlength="255"
 						th:value="*{biography}" th:field="*{biography}">
 					</textarea>
 					<span th:if="${#fields.hasErrors('biography')}"
@@ -64,7 +125,7 @@
 					<label class="control-label" for="region">Region</label>
 
 					<div class="controls">
-						<input type="text" th:name="region" tabindex="1" maxlength="255"
+						<input type="text" th:name="region" tabindex="6" maxlength="255"
 							th:value="*{region}" /> <span
 							th:if="${#fields.hasErrors('region')}" th:errors="*{region}">
 							Invalid input</span>
@@ -80,7 +141,7 @@
 
 					<div class="controls">
 						<input type="text" th:name="wage" th:value="*{wage}" tabindex="1"
-							maxlength="6" /> <span th:if="${#fields.hasErrors('wage')}"
+							maxlength="7" /> <span th:if="${#fields.hasErrors('wage')}"
 							th:errors="*{wage}"> Invalid input</span>
 					</div>
 				</div>

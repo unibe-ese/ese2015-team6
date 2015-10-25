@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
+import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
+import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 /**
  * Service to save the information from the {@code UpdateProfileForm}
@@ -23,6 +25,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 public class UpdateProfileServiceImpl implements UpdateProfileService {
 
 	@Autowired	ProfileDao profileDao;
+	@Autowired	UserDao userDao;
 	
 	public UpdateProfileServiceImpl() {
 	}
@@ -36,6 +39,14 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 		profile.setWage(updateProfileForm.getWage());
 		
 		profile = profileDao.save(profile); //save object to DB
+		
+		User tmpUser;
+		tmpUser = userDao.findByEmail(user.getName());
+		tmpUser.setFirstName(updateProfileForm.getFirstName());
+		tmpUser.setLastName(updateProfileForm.getLastName());
+		tmpUser.setPassword(updateProfileForm.getPassword());
+		
+		tmpUser = userDao.save(tmpUser);	//save object to DB
 		
 		updateProfileForm.setId(profile.getId());
 		

@@ -3,6 +3,7 @@ package ch.unibe.ese.Tutorfinder.controller.pojos;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class SignupForm {
 	
@@ -21,7 +22,8 @@ public class SignupForm {
     message = "Must be valid email address")
 	private String email;
 	
-	
+	@NotNull
+	@Size(min=8, max=25, message="The length must be between {min} and {max}")
 	private String password;
 	
 	
