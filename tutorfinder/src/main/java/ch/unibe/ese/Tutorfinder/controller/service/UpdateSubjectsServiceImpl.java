@@ -30,7 +30,7 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 	/**
 	 * Replaces all currently saved subjects for one tutor with a new subject
 	 */
-	// TODO Exception handling. An SQL exception causes an User to lose all his saved subjects
+	// FIXME Exception handling. An SQL exception causes an User to lose all his saved subjects
 	@Transactional
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
