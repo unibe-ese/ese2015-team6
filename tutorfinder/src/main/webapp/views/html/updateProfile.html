@@ -2,67 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Update profile</title>
-	
-	<link rel="stylesheet" href="/css/style.css" />
-	
-	<script>
-		function createRemoveCell(index) {
-			var newInput = document.createElement("input");
-			newInput.setAttribute("type", "button");
-			newInput.setAttribute("value", "remove");
-			index = index - 1;
-			newInput.setAttribute("onclick", "deleteRow('subjectTable', " + index + " )");
-			return newInput;
-		}
-		
-		function createNoteCell() {
-			var x = document.createElement("input");
-			x.setAttribute("type", "text");
-			x.setAttribute("value", "0.0");
-			x.setAttribute("size", "4");
-			x.setAttribute("th:name", "note"); 
-			x.setAttribute("th:value", "*{note}");
-			
-			return x;
-		}
-		
-		function createSubjectCell() {
-			var x = document.createElement("input");
-			x.setAttribute("type", "text");
-			x.setAttribute("value", "new subject");
-			x.setAttribute("size", "45");
-			x.setAttribute("th:name", "subject"); 
-			x.setAttribute("th:value", "*{subject}");
-			return x;
-		}
-		
-		function getRows(id) {
-			var x = document.getElementById(id)
-			x = x.getElementsByTagName("tr");
-			x = x.length;
-			return x;
-		}
-		
-		function insRow(id) {
-		    var a = document.getElementById(id).insertRow(getRows(id));
-		
-		    var x = a.insertCell(0);
-		    var y = a.insertCell(1);
-		    var z = a.insertCell(2);
-		
-		    x.appendChild(createSubjectCell());
-			y.appendChild(createNoteCell());
-			z.appendChild(createRemoveCell(getRows(id)));
-		
-		}
-		
-		function deleteRow(id, row) {
-		    document.getElementById(id).deleteRow(row);
-		}
-	</script>
-	
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Update profile</title>
+
+<link rel="stylesheet" href="/css/style.css" />
+
 </head>
 <body>
 
@@ -75,14 +19,12 @@
 		<img th:src="@{|/img/profPic/${User.id}.png|}"
 			onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'"
 			alt="Profile picture" width="192" height="192"
-			src="../../img/default-avatar.jpg" /><br /> 
-			
-		Upload new profile picture: <br /> 
-		<input type="file" name="file" accept="image/*" /> <br />
+			src="../../img/default-avatar.jpg" /><br /> Upload new profile
+		picture: <br /> <input type="file" name="file" accept="image/*" /> <br />
 		<input type="submit" value="Upload" />
 	</form>
 	<br />
-	
+
 	<form action="#" th:object="${updateProfileForm}"
 		th:action="@{/update}" th:name="updateProfileForm"
 		th:autocomplete="off" method="post">
@@ -163,31 +105,41 @@
 				value="${_csrf.token}" />
 		</fieldset>
 	</form>
-	
-	
-	<form action="#" method="post" th:action="@{/updateSubjects}"
-		enctype="multipart/form-data">
-	<!-- The follow form-tags are only shown if it is the profile from an tutor -->
-	<div sec:authorize="hasRole('ROLE_TUTOR')">
-		<!-- 
+
+
+	<form action="#" method="post" th:action="@{/editSubjects}"
+		th:object="${updateSubjectsForm}" name="updateSubjectsForm">
+		<!-- The follow form-tags are only shown if it is the profile from an tutor -->
+		<div sec:authorize="hasRole('ROLE_TUTOR')">
+			<!-- 
 			Teaching Subjects 
 		-->
-		<h3>Teaching Subjects</h3>
-		<table id="subjectTable" >
-			<thead>
-				<tr>
-					<th>Subject</th>
-					<th>Note</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<button type="button" onclick="insRow('subjectTable')">Add subject</button>
-		<button type="submit" class="btn btn-primary">Save</button>
+			<h3>Teaching Subjects</h3>
+			<table id="subjectTable">
+				<thead>
+					<tr>
+						<th>Subject</th>
+						<th>Grade</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="row,rowStat : *{rows}">
+						<td><input type="text"
+							th:field="*{rows[__${rowStat.index}__].subject}" value="Subject name"/></td>
+						<td><input type="text"
+							th:field="*{rows[__${rowStat.index}__].grade}" value="5.0"/></td>
+						<td>
+							<button type="submit" name="remRow" th:value="${rowStat.index}">Remove</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-	</div>
+			<button type="submit" name="addRow">Add subject</button>
+			<button type="submit" name="save" class="btn btn-primary">Save</button>
+
+		</div>
 	</form>
-	
+
 </body>
 </html>

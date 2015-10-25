@@ -4,7 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +20,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
+import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
+import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -38,6 +46,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 public class UpdateProfileController {
 	
 	@Autowired	UpdateProfileService updateProfileService;
+	@Autowired	UpdateSubjectsService updateSubjectsService;
 	@Autowired	ProfileDao profileDao;
 	@Autowired	UserDao userDao;
 	@Autowired	SubjectDao subjectDao;
@@ -53,9 +62,7 @@ public class UpdateProfileController {
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("html/updateProfile");
 		
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
+		model = prepareForm(user, model);
 		return model;
 	}
 	
@@ -88,10 +95,7 @@ public class UpdateProfileController {
         	model = new ModelAndView("html/updateProfile");
         	//TODO show error massage to the user
         }	
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Profile", getUsersProfile(user));
-		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
+		model = prepareForm(user, model);
 		
 		return model;
 	}
@@ -133,20 +137,54 @@ public class UpdateProfileController {
 			//TODO show error massage to the user
 		}
 		
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
+		model = prepareForm(user, model);
 		return model;
 	}
 	
-	@RequestMapping(value ="/updateSubjects", method = RequestMethod.POST)
-	public ModelAndView updateSubjects(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
+	@RequestMapping(value ="/editSubjects", params="save", method = RequestMethod.POST)
+	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		ModelAndView model = new ModelAndView("html/updateProfile");
+		ModelAndView model;
 		
+		if (!result.hasErrors()) {
+            try {
+            	updateSubjectsService.saveFrom(updateSubjectsForm, user);
+            	model = new ModelAndView("html/updateProfile");
+            	//TODO show success message to the user
+            } catch (InvalidSubjectException e) {
+            	model = new ModelAndView("html/updateProfile");
+            	model.addObject("page_error", e.getMessage());
+            }
+        } else {
+        	model = new ModelAndView("html/updateProfile");
+        	//TODO show error massage to the user
+        }
+		
+		model = prepareForm(user, model);
+		return model;
+	}
+	
+	@RequestMapping(value = "/editSubjects", params="addRow")
+	public ModelAndView addRow(@Valid UpdateSubjectsForm updateSubjectsForm, BindingResult result, Principal user) {
+		ModelAndView model = new ModelAndView("html/updateProfile");
+		updateSubjectsForm.getRows().add(new Row());
+		model = prepareForm(user, model, updateSubjectsForm);
+		return model;
+	}
+
+	@RequestMapping(value = "/editSubjects", params="remRow")
+	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm, BindingResult result, final HttpServletRequest req,Principal user) {
+		ModelAndView model = new ModelAndView("html/updateProfile");
+		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
+		updateSubjectsForm.getRows().remove(rowId.intValue());
+		model = prepareForm(user, model, updateSubjectsForm);
+		return model;
+	}
+	
+	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm) {
+		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("User", userDao.findByEmail(user.getName()));
-		model.addObject("Subject", subjectDao.findAllByUser(userDao.findByEmail(user.getName())));
 		return model;
 	}
 
@@ -176,5 +214,28 @@ public class UpdateProfileController {
 		Profile tmpProfile = profileDao.findOne(tmpUser.getId());
 		
 		return tmpProfile;
+	}
+	
+	/**
+	 * Injects needed objects into ModelAndView
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	private ModelAndView prepareForm(Principal user, ModelAndView model) {
+		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+		model.addObject("updateProfileForm", getFormWithValues(user));
+		model.addObject("User", userDao.findByEmail(user.getName()));
+		return model;
+	}
+
+	private UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList) {
+		UpdateSubjectsForm tempForm = new UpdateSubjectsForm();
+		List<Row> rowList = new ArrayList<Row>();
+		for (Subject subject:subjectList) {
+			rowList.add(new Row(subject.getName(), subject.getGrade()));
+		}
+		tempForm.setRows(rowList);
+		return tempForm;
 	}
 }

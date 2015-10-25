@@ -11,7 +11,7 @@
 	<!-- context configuration: how to instantiate beans to bind to DispatcherServlet -->
 
 	<!-- search for controllers (@Controller) -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven conversion-service="conversionService" />
 	<context:component-scan base-package="ch.unibe.ese" />
 
 	<!-- handler -->
@@ -20,33 +20,39 @@
 	<!-- view resolver -->
 	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine"></property>
-		<property name="viewNames" value="html/**"/>
-		<property name="order" value="1"/>
+		<property name="viewNames" value="html/**" />
+		<property name="order" value="1" />
 	</bean>
-	
+
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/views/" />
 		<property name="suffix" value=".jsp" />
-		<property name="order" value="2"/>
+		<property name="order" value="2" />
 	</bean>
 	<bean id="templateResolver"
 		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
 		<property name="prefix" value="/views/" />
 		<property name="suffix" value=".html" />
 		<property name="templateMode" value="HTML5" />
-		<property name="cacheable" value="false"/><!-- for debug, allows edit html without server restart -->
+		<property name="cacheable" value="false" /><!-- for debug, allows 
+			edit html without server restart -->
 	</bean>
 
 	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 		<property name="additionalDialects">
-        <set>
-            <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
-        </set>
-      </property>
+			<set>
+				<bean
+					class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+			</set>
+		</property>
 	</bean>
-    
+
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	</bean>
+	
 	<!-- resources -->
 	<mvc:resources mapping="/resources/**" location="/" />
 </beans>
