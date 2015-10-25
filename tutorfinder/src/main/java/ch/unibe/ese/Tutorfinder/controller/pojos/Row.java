@@ -1,5 +1,10 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
+/**
+ * Is used to make up an {@link UpdateSubjectsForm} and contains it's subject and respective grading values
+ * @author Nicola
+ *
+ */
 public class Row {
 	private String subject;
 	private double grade;

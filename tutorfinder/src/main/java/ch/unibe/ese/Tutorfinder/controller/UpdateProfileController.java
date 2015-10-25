@@ -44,62 +44,75 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
  */
 @Controller
 public class UpdateProfileController {
-	
-	@Autowired	UpdateProfileService updateProfileService;
-	@Autowired	UpdateSubjectsService updateSubjectsService;
-	@Autowired	ProfileDao profileDao;
-	@Autowired	UserDao userDao;
-	@Autowired	SubjectDao subjectDao;
+
+	@Autowired
+	UpdateProfileService updateProfileService;
+	@Autowired
+	UpdateSubjectsService updateSubjectsService;
+	@Autowired
+	ProfileDao profileDao;
+	@Autowired
+	UserDao userDao;
+	@Autowired
+	SubjectDao subjectDao;
 
 	/**
 	 * Maps the /editProfile page to the {@code updateProfile.jsp}.
 	 * 
-	 * @param user actually logged in user, is used to get the users profile information
-	 * and shows it to the user to allow editing the information.
-	 * @return ModelAndView for Spring framework with the users editable profile.
+	 * @param user
+	 *            actually logged in user, is used to get the users profile
+	 *            information and shows it to the user to allow editing the
+	 *            information.
+	 * @return ModelAndView for Spring framework with the users editable
+	 *         profile.
 	 */
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("html/updateProfile");
-		
+
 		model = prepareForm(user, model);
 		return model;
 	}
-	
+
 	/**
-	 * Handles users form input with let it validate by the {@code UpdarProfileForm}
-	 * class and passing it to the {@code UpdateProfileServiceImpl} class which saves
-	 * the new information to the database.
+	 * Handles users form input with let it validate by the
+	 * {@code UpdarProfileForm} class and passing it to the
+	 * {@code UpdateProfileServiceImpl} class which saves the new information to
+	 * the database.
 	 * 
-	 * @param user actually logged in user, is used to get the users profile information
-	 * and shows it to the user to allow editing the information.
-	 * @param updateProfileForm class to validate the users form input.
+	 * @param user
+	 *            actually logged in user, is used to get the users profile
+	 *            information and shows it to the user to allow editing the
+	 *            information.
+	 * @param updateProfileForm
+	 *            class to validate the users form input.
 	 * @param result
 	 * @param redirectAttributes
-	 * @return ModelAndView for Spring framework with the users new and editable profile.
+	 * @return ModelAndView for Spring framework with the users new and editable
+	 *         profile.
 	 */
-	@RequestMapping(value ="/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView update(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model;
 		if (!result.hasErrors()) {
-            try {
-            	updateProfileService.saveFrom(updateProfileForm, user);
-            	model = new ModelAndView("html/updateProfile");
-            	//TODO show success message to the user
-            } catch (InvalidUserException e) {
-            	model = new ModelAndView("html/updateProfile");
-            	model.addObject("page_error", e.getMessage());
-            }
-        } else {
-        	model = new ModelAndView("html/updateProfile");
-        	//TODO show error massage to the user
-        }	
+			try {
+				updateProfileService.saveFrom(updateProfileForm, user);
+				model = new ModelAndView("html/updateProfile");
+				// TODO show success message to the user
+			} catch (InvalidUserException e) {
+				model = new ModelAndView("html/updateProfile");
+				model.addObject("page_error", e.getMessage());
+			}
+		} else {
+			model = new ModelAndView("html/updateProfile");
+			// TODO show error massage to the user
+		}
 		model = prepareForm(user, model);
-		
+
 		return model;
 	}
-	
+
 	/**
 	 * Upload single file using Spring Controller
 	 */
@@ -109,78 +122,158 @@ public class UpdateProfileController {
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
-				
+
 				// Creating the directory to store file
 				String rootPath = System.getProperty("user.dir");
 				User tmpUser = userDao.findByEmail(user.getName());
-				File dir = new File(rootPath + File.separator + "src" + File.separator + "main" 
-									+ File.separator + "webapp" + File.separator + "img" + File.separator + "profPic");
+				File dir = new File(rootPath + File.separator + "src" + File.separator + "main" + File.separator
+						+ "webapp" + File.separator + "img" + File.separator + "profPic");
 				if (!dir.exists())
 					dir.mkdirs();
 
 				// Create the file on server
-				File serverFile = new File(dir.getAbsolutePath()
-						+ File.separator + tmpUser.getId() + ".png");
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(serverFile));
+				File serverFile = new File(dir.getAbsolutePath() + File.separator + tmpUser.getId() + ".png");
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-				
+
 				model = new ModelAndView("html/updateProfile");
-				//TODO show success massage to the user
+				// TODO show success massage to the user
 			} catch (Exception e) {
 				model = new ModelAndView("html/updateProfile");
 				model.addObject("page_error", e.getMessage());
 			}
 		} else {
 			model = new ModelAndView("html/updateProfile");
-			//TODO show error massage to the user
+			// TODO show error massage to the user
 		}
-		
+
 		model = prepareForm(user, model);
 		return model;
 	}
-	
-	@RequestMapping(value ="/editSubjects", params="save", method = RequestMethod.POST)
-	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm, BindingResult result,
-			RedirectAttributes redirectAttributes) {
+
+	/**
+	 * Handles the action to save the subjects which currently are in the form.
+	 * 
+	 * @param user
+	 * @param updateSubjectsForm
+	 * @param result
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping(value = "/editSubjects", params = "save", method = RequestMethod.POST)
+	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm,
+			BindingResult result, RedirectAttributes redirectAttributes) {
 		ModelAndView model;
-		
+
 		if (!result.hasErrors()) {
-            try {
-            	updateSubjectsService.saveFrom(updateSubjectsForm, user);
-            	model = new ModelAndView("html/updateProfile");
-            	//TODO show success message to the user
-            } catch (InvalidSubjectException e) {
-            	model = new ModelAndView("html/updateProfile");
-            	model.addObject("page_error", e.getMessage());
-            }
-        } else {
-        	model = new ModelAndView("html/updateProfile");
-        	//TODO show error massage to the user
-        }
-		
+			try {
+				updateSubjectsService.saveFrom(updateSubjectsForm, user);
+				model = new ModelAndView("html/updateProfile");
+				// TODO show success message to the user
+			} catch (InvalidSubjectException e) {
+				model = new ModelAndView("html/updateProfile");
+				model.addObject("page_error", e.getMessage());
+			}
+		} else {
+			model = new ModelAndView("html/updateProfile");
+			// TODO show error massage to the user
+		}
+
 		model = prepareForm(user, model);
 		return model;
 	}
-	
-	@RequestMapping(value = "/editSubjects", params="addRow")
-	public ModelAndView addRow(@Valid UpdateSubjectsForm updateSubjectsForm, BindingResult result, Principal user) {
+
+	/**
+	 * Handles action to add a new {@link Row} to the ArrayList of rows and preserves
+	 * the currently entered values
+	 * 
+	 * @param updateSubjectsForm
+	 * @param user {@link Principal}
+	 * @return
+	 */
+	@RequestMapping(value = "/editSubjects", params = "addRow")
+	public ModelAndView addRow(@Valid UpdateSubjectsForm updateSubjectsForm, Principal user) {
 		ModelAndView model = new ModelAndView("html/updateProfile");
 		updateSubjectsForm.getRows().add(new Row());
 		model = prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
 
-	@RequestMapping(value = "/editSubjects", params="remRow")
-	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm, BindingResult result, final HttpServletRequest req,Principal user) {
+	/**
+	 * Handles action to remove a {@link Row} by the index passed as the value of the
+	 * clicked button while preserving the other values
+	 * 
+	 * @param updateSubjectsForm
+	 * @param req used to get RowId of Row to remove
+	 * @param user {@link Principal}
+	 * @return
+	 */
+	@RequestMapping(value = "/editSubjects", params = "remRow")
+	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm,
+			final HttpServletRequest req, Principal user) {
 		ModelAndView model = new ModelAndView("html/updateProfile");
 		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
 		updateSubjectsForm.getRows().remove(rowId.intValue());
 		model = prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
-	
+
+	/**
+	 * Gets an form with the users new information
+	 * 
+	 * @param user {@link Principal}
+	 * @return form with the users input values
+	 */
+	private UpdateProfileForm getFormWithValues(Principal user) {
+		UpdateProfileForm tmpForm = new UpdateProfileForm();
+		tmpForm.setBiography(getUsersProfile(user).getBiography());
+		tmpForm.setRegion(getUsersProfile(user).getRegion());
+		tmpForm.setWage(getUsersProfile(user).getWage());
+
+		return tmpForm;
+	}
+
+	/**
+	 * Gets the profile which belongs to the actually logged in user
+	 * 
+	 * @param user {@link Principal}
+	 *            is needed to get the right profile
+	 * @return profile of the actually logged in user
+	 */
+	private Profile getUsersProfile(Principal user) {
+		User tmpUser = userDao.findByEmail(user.getName());
+		Profile tmpProfile = profileDao.findOne(tmpUser.getId());
+
+		return tmpProfile;
+	}
+
+	/**
+	 * Injects needed objects into a given {@link ModelAndView} and gets the
+	 * {@link Subjects} for the {@link UpdateSubjectsForm} from the DB
+	 * essentially discarding the form's current state.
+	 * 
+	 * @param user {@link Principal}
+	 * @param model {@link ModelAndView}
+	 * @return
+	 */
+	private ModelAndView prepareForm(Principal user, ModelAndView model) {
+		model.addObject("updateSubjectsForm",
+				getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+		model.addObject("updateProfileForm", getFormWithValues(user));
+		model.addObject("User", userDao.findByEmail(user.getName()));
+		return model;
+	}
+
+	/**
+	 * Injects needed objects into a given {@link ModelAndView} while preserving
+	 * the current rows of the {@link UpdateSubjectsForm}
+	 * 
+	 * @param user {@link Principal}
+	 * @param model {@link ModelAndView}
+	 * @param updateSubjectsForm {@link UpdateSubjectsForm}
+	 * @return
+	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm) {
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		model.addObject("updateProfileForm", getFormWithValues(user));
@@ -189,50 +282,17 @@ public class UpdateProfileController {
 	}
 
 	/**
-	 * Gets an form with the users new information
+	 * Converts an ArrayList<Subject> into a {@link UpdateSubjectsForm} filled
+	 * with rows containing all the information from the given subjects
 	 * 
-	 * @param user
-	 * @return form with the users input values
+	 * @param subjectList
+	 *            Subject array list (from db)
+	 * @return UpdateSubjectForm filled with rows
 	 */
-	private UpdateProfileForm getFormWithValues(Principal user) {
-		UpdateProfileForm tmpForm = new UpdateProfileForm();
-		tmpForm.setBiography(getUsersProfile(user).getBiography());
-		tmpForm.setRegion(getUsersProfile(user).getRegion());
-		tmpForm.setWage(getUsersProfile(user).getWage());
-		
-		return tmpForm;
-	}
-
-	/**
-	 * Gets the profile which belongs to the actually logged in user
-	 * 
-	 * @param user is needed to get the right profile
-	 * @return profile of the actually logged in user
-	 */
-	private Profile getUsersProfile(Principal user) {
-		User tmpUser = userDao.findByEmail(user.getName());
-		Profile tmpProfile = profileDao.findOne(tmpUser.getId());
-		
-		return tmpProfile;
-	}
-	
-	/**
-	 * Injects needed objects into ModelAndView
-	 * @param user
-	 * @param model
-	 * @return
-	 */
-	private ModelAndView prepareForm(Principal user, ModelAndView model) {
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
-		return model;
-	}
-
 	private UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList) {
 		UpdateSubjectsForm tempForm = new UpdateSubjectsForm();
 		List<Row> rowList = new ArrayList<Row>();
-		for (Subject subject:subjectList) {
+		for (Subject subject : subjectList) {
 			rowList.add(new Row(subject.getName(), subject.getGrade()));
 		}
 		tempForm.setRows(rowList);

@@ -123,7 +123,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="row,rowStat : *{rows}">
+					<tr th:each="row,rowStat : *{rows}"> <!-- for each row in rows -->
 						<td><input type="text"
 							th:field="*{rows[__${rowStat.index}__].subject}" value="Subject name"/></td>
 						<td><input type="text"
