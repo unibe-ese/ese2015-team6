@@ -31,7 +31,8 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
 		User user = userDao.findByEmail(authUser.getName());
-		ArrayList<Subject> subjects = subjectDao.findAllByUser(user);
+		subjectDao.delete(subjectDao.findAllByUser(user));
+		List<Subject> subjects = new ArrayList<Subject>();
 		List<Row> rowList = updateSubjectsForm.getRows();
 		
 		for (Row row:rowList) {
