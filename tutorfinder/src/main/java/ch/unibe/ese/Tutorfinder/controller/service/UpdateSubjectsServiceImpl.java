@@ -41,6 +41,7 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 			subject.setGrade(row.getGrade());
 			subjects.add(subject);
 		}
+		subjectDao.save(subjects);
 		updateSubjectsForm.setId(user.getId());
 		return updateSubjectsForm;
 	}
