@@ -44,7 +44,10 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 		tmpUser = userDao.findByEmail(user.getName());
 		tmpUser.setFirstName(updateProfileForm.getFirstName());
 		tmpUser.setLastName(updateProfileForm.getLastName());
-		tmpUser.setPassword(updateProfileForm.getPassword());
+		if (updateProfileForm.getPassword() != null || 
+				tmpUser.getPassword() != updateProfileForm.getPassword()) {
+			tmpUser.setPassword(updateProfileForm.getPassword());
+		}
 		
 		tmpUser = userDao.save(tmpUser);	//save object to DB
 		

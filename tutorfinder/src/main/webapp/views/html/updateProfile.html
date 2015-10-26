@@ -77,8 +77,8 @@
 			<div class="control-group">
 				<label class="control-label" for="password">Password</label>
 				<div class="controls">
-					<input type="password" th:value="*{password}" th:name="password"
-						tabindex="3" maxlength="35"  />
+					<input type="password" th:name="password"
+						tabindex="3" maxlength="25" />
 					<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
 						Invalid input
 					</span>
@@ -92,8 +92,8 @@
 			<div class="control-group">
 				<label class="control-label" for="confirmPassword">Confirm password</label>
 				<div class="controls">
-					<input type="password" th:value="*{confirmPassword}" th:name="confirmPassword"
-						tabindex="4" maxlength="35"  />
+					<input type="password" th:name="confirmPassword"
+						tabindex="4" maxlength="25" />
 					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
 						Invalid input
 					</span>

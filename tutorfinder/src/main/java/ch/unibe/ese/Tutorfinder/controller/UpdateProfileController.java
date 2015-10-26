@@ -108,7 +108,6 @@ public class UpdateProfileController {
 		} else {
 			model = new ModelAndView("html/updateProfile");
 		}
-		//FIXME password should not be loaded into the form and only be saved if the user has entered a new one
 		model = prepareForm(user, model);
 
 		return model;
@@ -230,8 +229,6 @@ public class UpdateProfileController {
 		UpdateProfileForm tmpForm = new UpdateProfileForm();
 		tmpForm.setFirstName((userDao.findByEmail(user.getName())).getFirstName());
 		tmpForm.setLastName((userDao.findByEmail(user.getName())).getLastName());
-		tmpForm.setPassword((userDao.findByEmail(user.getName())).getPassword());
-		tmpForm.setConfirmPassword((userDao.findByEmail(user.getName())).getPassword());
 		tmpForm.setBiography(getUsersProfile(user).getBiography());
 		tmpForm.setRegion(getUsersProfile(user).getRegion());
 		tmpForm.setWage(getUsersProfile(user).getWage());

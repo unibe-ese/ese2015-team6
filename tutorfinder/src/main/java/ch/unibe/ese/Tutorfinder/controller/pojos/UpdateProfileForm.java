@@ -32,11 +32,9 @@ public class UpdateProfileForm {
 	@NotNull
 	private String lastName;
 	
-	@NotNull
 	@Size(min=8, max=25, message="The length must be between {min} and {max}")
 	private String password;
 	
-	@NotNull
 	@Size(min=8, max=25, message="The length must be between {min} and {max}")
 	private String confirmPassword;
 	
