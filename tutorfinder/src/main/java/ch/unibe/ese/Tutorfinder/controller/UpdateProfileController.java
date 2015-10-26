@@ -103,11 +103,12 @@ public class UpdateProfileController {
 			} catch (InvalidUserException e) {
 				model = new ModelAndView("html/updateProfile");
 				model.addObject("page_error", e.getMessage());
+				// TODO show error massage to the user
 			}
 		} else {
 			model = new ModelAndView("html/updateProfile");
-			// TODO show error massage to the user
 		}
+		//FIXME password should not be loaded into the form and only be saved if the user has entered a new one
 		model = prepareForm(user, model);
 
 		return model;

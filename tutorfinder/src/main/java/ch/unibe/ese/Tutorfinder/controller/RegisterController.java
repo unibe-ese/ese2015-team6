@@ -27,6 +27,7 @@ public class RegisterController {
         return model;
     }
     
+    //TODO Checkbox for agreeing on Terms of Service?
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView create(@Valid SignupForm signupForm, BindingResult result, RedirectAttributes redirectAttributes) {
     	ModelAndView model;    	
@@ -43,6 +44,7 @@ public class RegisterController {
             	model = new ModelAndView("html/register");
             	model.addObject("page_error", e.getMessage());
             }
+            //TODO exception for invalid password with message
 
         } else {
         	model = new ModelAndView("html/register");
