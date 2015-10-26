@@ -23,6 +23,7 @@ public class SignupForm {
 	private String email;
 	
 	@NotNull
+	//TODO message should be shown by wrong input
 	@Size(min=8, max=25, message="The length must be between {min} and {max}")
 	private String password;
 	

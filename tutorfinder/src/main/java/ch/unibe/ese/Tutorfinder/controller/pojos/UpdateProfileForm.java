@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.ScriptAssert;
  */
 @ScriptAssert(lang="javascript", script = "_this.password.equals(_this.confirmPassword)",
 		message="Password and password confirmation does not match")
-//TODO message is not shown
+//TODO message should be shown by wrong input
 public class UpdateProfileForm {
 
 	@NotNull
@@ -32,9 +32,11 @@ public class UpdateProfileForm {
 	@NotNull
 	private String lastName;
 	
+	//TODO message should be shown by wrong input
 	@Size(min=8, max=25, message="The length must be between {min} and {max}")
 	private String password;
 	
+	//TODO message should be shown by wrong input
 	@Size(min=8, max=25, message="The length must be between {min} and {max}")
 	private String confirmPassword;
 	
