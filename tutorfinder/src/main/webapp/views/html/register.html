@@ -16,7 +16,7 @@
 			<div class="controls">
 				<input type="text" th:value="*{email}" th:name="email" tabindex="1"
 					maxlength="45" required="required" />
-				<span th:if="${#fields.hasErrors('email')}" th:errors=" *{email}"> Invalid email address</span>
+				<span th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid email address</span>
 				<span th:text=" ${email_error}"> Address already used</span>
 			</div>
 
@@ -36,6 +36,7 @@
 			<div class="controls">
 				<input type="password" th:value="*{password}" th:name="password"
 					tabindex="3" maxlength="35" required="required" />
+				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password too short</span>
 			</div>
 
 			<label class="control-label" for="field-tutor">Sign up as:</label>

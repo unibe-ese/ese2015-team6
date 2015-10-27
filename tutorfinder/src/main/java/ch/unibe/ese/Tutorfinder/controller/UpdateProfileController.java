@@ -42,6 +42,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
  * @author Nicola
  *
  */
+//TODO Refactor this class, has some code smells
 @Controller
 public class UpdateProfileController {
 
@@ -107,6 +108,10 @@ public class UpdateProfileController {
 			}
 		} else {
 			model = new ModelAndView("html/updateProfile");
+			model.addObject("User", userDao.findByEmail(user.getName()));
+			model.addObject("updateSubjectsForm",
+					getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+			return model;
 		}
 		model = prepareForm(user, model);
 
