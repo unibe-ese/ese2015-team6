@@ -6,7 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 /**
- * Builds the base of a Form containing a lit of {@link Row} objects.
+ * Builds the base of a Form containing a list of {@link Row} objects.
  * @author Nicola
  *
  */

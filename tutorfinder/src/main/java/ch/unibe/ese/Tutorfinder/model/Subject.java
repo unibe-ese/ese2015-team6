@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Entity for subject, holding following values:<br>
  * {@code id} is the id of the subject and is generated automatically<br>
- * {@code email} is used for referencing between user and subject (same for id)
+ * {@code user} is used for referencing between user and subject (same for id)
  * <br>
  * {@code name} name of the subject, is the value referenced to search tutors
  * <br>
