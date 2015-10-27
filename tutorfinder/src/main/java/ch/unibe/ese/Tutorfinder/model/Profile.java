@@ -16,6 +16,7 @@ import org.springframework.format.annotation.NumberFormat.Style;
  * {@code email} is used for referencing between user and profile (same for id)<br>
  * {@code biography} holds an String of 255 characters for the biography of the user<br>
  * {@code region} holds an String of 255 characters for the region of the user<br>
+ * {@code wage} holds the actual wage from the tutor<br>
  * 
  * @author Antonio
  *

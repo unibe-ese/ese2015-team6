@@ -1,6 +1,9 @@
 package ch.unibe.ese.Tutorfinder.model;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,54 +15,134 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
+import ch.unibe.ese.Tutorfinder.util.Availability;
 /**
- * Entity for appointment, holding following values:<br>
+ * Entity for timetable, holding following values:<br>
  * {@code id} is the id of the appointment and is generated automatically<br>
- * {@code user} is used for referencing between user and subject (same for id)<br>
+ * {@code tutor} is used for referencing between tutor and appointment<br>
+ * {@code student} is used for referencing between student and appointment<br>
+ * {@code date} is necessary to know on which date an appointment takes place<br>
  * {@code day} of the week (monday, tuesday, etc.)<br>
+ * {@code time} of the day (00:00-23:59:59.999999999)<br>
+ * {@code availability} enumeration to difference between the tutors availability<br>
+ * {@code wage} holds the wage at this date from the tutor<br>
  * 
  * @author Antonio
  *
  */
 @Entity
-@Table(name = "appointment", uniqueConstraints = @UniqueConstraint(columnNames = {"day", "user"}) )
+@Table(name = "appointment", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "time", "user"}) )
 public class Appointment {
-
 	@Id
 	@GeneratedValue
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name="user")
-	private User user;
+	@JoinColumn(name="tutor")
+	private User tutor;
+	
+	@ManyToOne
+	@JoinColumn(name="student")
+	private User student;
+	
+	@NotNull
+	@Column(name="date")
+	private LocalDate date;
 	
 	@NotNull
 	@Column(name="day")
 	private DayOfWeek day;
 	
+	@NotNull
+	@Column(name="time")
+	private LocalTime time;
+	
+	@NotNull
+	private Availability availability;
+	
+	@NumberFormat(style=Style.CURRENCY)
+	private BigDecimal wage;
+
+	/* Constructors */
+	public Appointment() {
+		super();
+	}
+	
+	public Appointment(User tutor, DayOfWeek day, LocalTime time, Availability availability, BigDecimal wage) {
+		super();
+		this.tutor = tutor;
+		this.day = day;
+		this.time = time;
+		this.availability = availability;
+		this.wage = wage;
+	}
+
 	/* Getters and Setters */
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public User getUser() {
-		return user;
+
+	public User getTutor() {
+		return tutor;
 	}
-	
-	public void setUser(User user) {
-		this.user = user;
+
+	public void setTutor(User tutor) {
+		this.tutor = tutor;
 	}
-	
+
+	public User getStudent() {
+		return student;
+	}
+
+	public void setStudent(User student) {
+		this.student = student;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
 	public DayOfWeek getDay() {
 		return day;
 	}
-	
+
 	public void setDay(DayOfWeek day) {
 		this.day = day;
+	}
+
+	public LocalTime getTime() {
+		return time;
+	}
+
+	public void setTime(LocalTime time) {
+		this.time = time;
+	}
+
+	public Availability getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(Availability availability) {
+		this.availability = availability;
+	}
+
+	public BigDecimal getWage() {
+		return wage;
+	}
+
+	public void setWage(BigDecimal wage) {
+		this.wage = wage;
 	}
 	
 }

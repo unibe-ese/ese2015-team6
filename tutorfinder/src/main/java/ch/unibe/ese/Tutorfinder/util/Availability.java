@@ -3,7 +3,7 @@ package ch.unibe.ese.Tutorfinder.util;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.AvailabilityException;
 
 /**
- * Enumeration for the availability of an Appointment
+ * Enumeration for the availability of an Timetable
  * 
  * @author Antonio
  * 
