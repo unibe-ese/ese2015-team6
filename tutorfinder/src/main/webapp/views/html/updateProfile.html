@@ -80,7 +80,7 @@
 					<input type="password" th:name="password"
 						tabindex="3" maxlength="25" />
 					<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-						Invalid input
+						The length must be between 8 and 25
 					</span>
 				</div>
 			</div>
@@ -95,8 +95,9 @@
 					<input type="password" th:name="confirmPassword"
 						tabindex="4" maxlength="25" />
 					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
-						Invalid input
+						Invalid Input
 					</span>
+					<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}"> Password and password confirmation does not match</span>
 				</div>
 			</div>
 
