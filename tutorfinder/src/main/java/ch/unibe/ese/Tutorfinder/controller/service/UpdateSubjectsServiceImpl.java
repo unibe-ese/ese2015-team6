@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,13 +32,12 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 	 * Replaces all currently saved subjects for one tutor with the subjects
 	 * currently in the form by deleting and re-adding them
 	 */
-	// FIXME Exception handling. An SQL exception causes an User to lose all his
-	// saved subjects
 	@Transactional
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
 		User user = userDao.findByEmail(authUser.getName());
-		subjectDao.delete(subjectDao.findAllByUser(user));
+		List<Subject> tmpSubjList = subjectDao.findAllByUser(user);
+		subjectDao.delete(tmpSubjList);
 		List<Subject> subjects = new ArrayList<Subject>();
 		List<Row> rowList = updateSubjectsForm.getRows();
 
@@ -48,7 +48,12 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 			subject.setGrade(row.getGrade());
 			subjects.add(subject);
 		}
-		subjectDao.save(subjects);
+		try {
+			subjectDao.save(subjects);
+		} catch (DataIntegrityViolationException e) {
+			subjectDao.save(tmpSubjList);
+			//TODO Inject some error message into form or similar
+		}
 		updateSubjectsForm.setId(user.getId());
 		return updateSubjectsForm;
 	}
