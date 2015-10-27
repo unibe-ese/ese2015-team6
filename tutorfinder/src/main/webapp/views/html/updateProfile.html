@@ -36,8 +36,7 @@
 			-->
 			<input type="hidden" th:value="*{email}" th:name="email" />
 			<div class="controls">
-				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-					Something went wrong while getting your e-mail address </span>
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 			</div>
 			
 			<!--
@@ -50,7 +49,6 @@
 					<input type="text" th:name="firstName" tabindex="1" maxlength="255"
 						th:value="*{firstName}" /> 
 					<span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
-						Invalid input
 					</span>
 				</div>
 			</div>
@@ -65,7 +63,6 @@
 					<input type="text" th:name="lastName" tabindex="2" maxlength="255"
 						th:value="*{lastName}" /> 
 					<span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
-						Invalid input
 					</span>
 				</div>
 			</div>
@@ -80,7 +77,7 @@
 					<input type="password" th:name="password"
 						tabindex="3" maxlength="25" />
 					<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-						Invalid input
+						Password must have at least 8 characters
 					</span>
 				</div>
 			</div>
@@ -95,7 +92,7 @@
 					<input type="password" th:name="confirmPassword"
 						tabindex="4" maxlength="25" />
 					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
-						Invalid input
+						Passwords do not match
 					</span>
 				</div>
 			</div>
@@ -111,7 +108,7 @@
 						th:value="*{biography}" th:field="*{biography}">
 					</textarea>
 					<span th:if="${#fields.hasErrors('biography')}"
-						th:errors="*{biography}"> Invalid input</span>
+						th:errors="*{biography}"></span>
 				</div>
 			</div>
 
@@ -127,8 +124,7 @@
 					<div class="controls">
 						<input type="text" th:name="region" tabindex="6" maxlength="255"
 							th:value="*{region}" /> <span
-							th:if="${#fields.hasErrors('region')}" th:errors="*{region}">
-							Invalid input</span>
+							th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></span>
 					</div>
 				</div>
 
@@ -142,7 +138,7 @@
 					<div class="controls">
 						<input type="text" th:name="wage" th:value="*{wage}" tabindex="1"
 							maxlength="7" /> <span th:if="${#fields.hasErrors('wage')}"
-							th:errors="*{wage}"> Invalid input</span>
+							th:errors="*{wage}"></span>
 					</div>
 				</div>
 			</div>
