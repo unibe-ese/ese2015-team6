@@ -36,7 +36,23 @@
 			<div class="controls">
 				<input type="password" th:value="*{password}" th:name="password"
 					tabindex="3" maxlength="35" required="required" />
-				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password too short</span>
+				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The length must be between 8 and 25</span>
+			</div>
+			
+			<!-- 
+				Confirm password field
+				Placeholder loads the saved value on the server connected to the user's profile.
+			 -->
+			<div class="control-group">
+				<label class="control-label" for="confirmPassword">Confirm password</label>
+				<div class="controls">
+					<input type="password" th:name="confirmPassword"
+						tabindex="4" maxlength="25" />
+					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
+						Invalid Input
+					</span>
+					<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}"> Password and password confirmation does not match</span>
+				</div>
 			</div>
 
 			<label class="control-label" for="field-tutor">Sign up as:</label>

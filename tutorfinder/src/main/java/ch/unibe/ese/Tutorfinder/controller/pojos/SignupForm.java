@@ -5,6 +5,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.ScriptAssert;
+
+@ScriptAssert(lang="javascript", script = "_this.password.equals(_this.confirmPassword)",
+message="Password and password confirmation does not match")
 public class SignupForm {
 	
 	@NotNull
@@ -23,10 +27,10 @@ public class SignupForm {
 	private String email;
 	
 	@NotNull
-	//TODO message should be shown by wrong input
 	@Size(min=8, max=25, message="The length must be between {min} and {max}")
 	private String password;
 	
+	private String confirmPassword;
 	
 	private boolean tutor;
 	
@@ -79,6 +83,12 @@ public class SignupForm {
 		this.tutor = tutor;
 	}
 
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
 
-
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	
 }
