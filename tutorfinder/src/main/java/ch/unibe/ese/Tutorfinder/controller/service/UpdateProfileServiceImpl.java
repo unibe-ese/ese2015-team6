@@ -14,7 +14,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 /**
- * Service to save the information from the {@code UpdateProfileForm}
+ * Service to save the information from the {@link UpdateProfileForm}
  * to the profile-table on the database. This service is used for
  * update the users information.
  * 

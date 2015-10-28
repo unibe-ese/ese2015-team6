@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.ScriptAssert;
 
 /**
- * Class for validating the users input in the {@code updateProfile.jsp}.
+ * Class for validating the users input in the {@code updateProfile}.
  * 
  * @author Antonio
  *

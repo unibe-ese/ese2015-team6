@@ -25,7 +25,7 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  * {@code tutor} is used for referencing between tutor and appointment<br>
  * {@code student} is used for referencing between student and appointment<br>
  * {@code date} is necessary to know on which date an appointment takes place<br>
- * {@code day} of the week (monday, tuesday, etc.)<br>
+ * {@code day} of the week (Monday, Tuesday, etc.)<br>
  * {@code time} of the day (00:00-23:59:59.999999999)<br>
  * {@code availability} enumeration to difference between the tutors availability<br>
  * {@code wage} holds the wage at this date from the tutor<br>

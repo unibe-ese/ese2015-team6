@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  * Entity for timetable, holding following values:<br>
  * {@code id} is the id of the appointment and is generated automatically<br>
  * {@code user} is used for referencing between user and timetable)<br>
- * {@code day} of the week (monday, tuesday, etc.)<br>
+ * {@code day} of the week (Monday, Tuesday, etc.)<br>
  * {@code time} of the day (00:00-23:59:59.999999999)<br>
  * {@code availability} true if the tutor is available, else false<br>
  * 

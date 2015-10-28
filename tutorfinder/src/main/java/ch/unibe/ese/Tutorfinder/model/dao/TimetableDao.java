@@ -18,4 +18,6 @@ public interface TimetableDao extends CrudRepository<Timetable, Long> {
 	ArrayList<Timetable> findAllByUser (User user);
 	
 	LinkedList<Timetable> findByDay(DayOfWeek day);
+	
+	LinkedList<Timetable> findByAvailability (Boolean availability);
 }
