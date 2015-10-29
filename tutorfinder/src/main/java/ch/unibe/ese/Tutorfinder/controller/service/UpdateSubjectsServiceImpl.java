@@ -32,6 +32,7 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 	 * Replaces all currently saved subjects for one tutor with the subjects
 	 * currently in the form by deleting and re-adding them
 	 */
+	//FIXME Prohibit negative grades (limit to 1-6)
 	@Transactional
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
@@ -42,11 +43,14 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 		List<Row> rowList = updateSubjectsForm.getRows();
 
 		for (Row row : rowList) {
-			Subject subject = new Subject();
-			subject.setUser(user);
-			subject.setName(row.getSubject());
-			subject.setGrade(row.getGrade());
-			subjects.add(subject);
+			String name = row.getSubject();
+			if (name != null) {
+				Subject subject = new Subject();
+				subject.setUser(user);
+				subject.setName(name);
+				subject.setGrade(row.getGrade());
+				subjects.add(subject);
+			}
 		}
 		try {
 			subjectDao.save(subjects);

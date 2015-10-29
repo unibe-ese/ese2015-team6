@@ -30,6 +30,7 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 	public UpdateProfileServiceImpl() {
 	}
 	
+	//FIXME Prohibit negative wages
 	@Transactional
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, Principal user) throws InvalidUserException {
 		Profile profile;
@@ -44,7 +45,7 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 		tmpUser = userDao.findByEmail(user.getName());
 		tmpUser.setFirstName(updateProfileForm.getFirstName());
 		tmpUser.setLastName(updateProfileForm.getLastName());
-		if (updateProfileForm.getPassword() != null || 
+		if (updateProfileForm.getPassword() != null && 
 				tmpUser.getPassword() != updateProfileForm.getPassword()) {
 			tmpUser.setPassword(updateProfileForm.getPassword());
 		}
