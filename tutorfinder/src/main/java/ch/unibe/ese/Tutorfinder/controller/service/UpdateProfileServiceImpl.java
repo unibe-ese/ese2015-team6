@@ -30,7 +30,6 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 	public UpdateProfileServiceImpl() {
 	}
 	
-	//FIXME Prohibit negative wages
 	@Transactional
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, Principal user) throws InvalidUserException {
 		Profile profile;

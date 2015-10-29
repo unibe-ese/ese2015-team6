@@ -2,10 +2,10 @@ package ch.unibe.ese.Tutorfinder.controller.pojos;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.ScriptAssert;
 
 /**
@@ -36,7 +36,8 @@ public class UpdateProfileForm {
 	private String biography;
 
 	private String region;
-
+	
+	@Min(value=0 , message="The wage must be positiv")
 	private BigDecimal wage;
 
 	public long getId() {
