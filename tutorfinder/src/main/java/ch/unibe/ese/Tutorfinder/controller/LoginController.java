@@ -49,6 +49,7 @@ public class LoginController {
 		return model;
 	}
 
+	//FIXME error, create success html or change showpage to search or users profile
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
 	public ModelAndView success() {
 		ModelAndView model = new ModelAndView("success");
