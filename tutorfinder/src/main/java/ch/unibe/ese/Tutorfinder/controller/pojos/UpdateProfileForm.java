@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.ScriptAssert;
 
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
+
 /**
  * Class for validating the users input in the {@code updateProfile}.
  * 
@@ -28,7 +30,9 @@ public class UpdateProfileForm {
 	@NotNull
 	private String lastName;
 
-	@Size(min = 8, max = 25, message = "The length must be between {min} and {max}")
+	@Size(min = ConstantVariables.MIN_PASSWORD_LENGHT, 
+			max = ConstantVariables.MAX_PASSWORD_LENGHT, 
+			message = "The length must be between {min} and {max}")
 	private String password;
 
 	private String confirmPassword;
@@ -37,7 +41,8 @@ public class UpdateProfileForm {
 
 	private String region;
 	
-	@Min(value=0 , message="The wage must be positiv")
+	@Min(value = ConstantVariables.MIN_WAGE , 
+			message="The wage must be positiv")
 	private BigDecimal wage;
 
 	public long getId() {

@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.ScriptAssert;
 
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
+
 @ScriptAssert(lang="javascript", script = "_this.password.equals(_this.confirmPassword)",
 message="Password and password confirmation does not match")
 public class SignupForm {
@@ -27,7 +29,9 @@ public class SignupForm {
 	private String email;
 	
 	@NotNull
-	@Size(min=8, max=25, message="The length must be between {min} and {max}")
+	@Size(min = ConstantVariables.MIN_PASSWORD_LENGHT, 
+			max = ConstantVariables.MAX_PASSWORD_LENGHT, 
+			message = "The length must be between {min} and {max}")
 	private String password;
 	
 	private String confirmPassword;
