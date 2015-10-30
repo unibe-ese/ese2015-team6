@@ -1,14 +1,20 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
 /**
- * Is used to make up an {@link UpdateSubjectsForm} and contains it's subject and respective grading values
- * @author Nicola
+ * Is used to make up an {@link UpdateSubjectsForm} and contains it's subject 
+ * and respective grading values
+ * 
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 public class Row {
+	
 	private String subject;
+	
 	private double grade;
 	
+	
+	/* Constructors */
 	public Row() {
 		subject = "";
 		grade = 0.0;
@@ -19,6 +25,8 @@ public class Row {
 		this.grade = grade;
 	}
 
+	
+	/* Getters and Setters */
 	public String getSubject() {
 		return subject;
 	}

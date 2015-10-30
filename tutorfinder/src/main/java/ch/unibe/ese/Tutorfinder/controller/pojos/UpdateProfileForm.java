@@ -11,14 +11,14 @@ import org.hibernate.validator.constraints.ScriptAssert;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 /**
- * Class for validating the users input in the {@code updateProfile}.
+ * Class for validating the users input in the {@code updateProfile.html}.
  * 
- * @author Antonio
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @ScriptAssert(lang = "javascript", 
 script = "if(_this.password !== null) {_this.password.equals(_this.confirmPassword)} else {true}", 
-message = "Password and password confirmation does not match")
+message = ConstantVariables.CONFIRMPASSWORD_ERRORMESSAGE)
 public class UpdateProfileForm {
 
 	@NotNull
@@ -30,9 +30,9 @@ public class UpdateProfileForm {
 	@NotNull
 	private String lastName;
 
-	@Size(min = ConstantVariables.MIN_PASSWORD_LENGHT, 
-			max = ConstantVariables.MAX_PASSWORD_LENGHT, 
-			message = "The length must be between {min} and {max}")
+	@Size(min = ConstantVariables.PASSWORD_MIN_LENGHT, 
+			max = ConstantVariables.PASSWORD_MAX_LENGHT, 
+			message = ConstantVariables.PASSWORD_ERRORMESSAGE)
 	private String password;
 
 	private String confirmPassword;
@@ -41,10 +41,12 @@ public class UpdateProfileForm {
 
 	private String region;
 	
-	@Min(value = ConstantVariables.MIN_WAGE , 
-			message="The wage must be positiv")
+	@Min(value = ConstantVariables.WAGE_VALUE, 
+			message = ConstantVariables.WAGE_ERRORMESSAGE)
 	private BigDecimal wage;
 
+	
+	/* Getters and Setters */
 	public long getId() {
 		return id;
 	}

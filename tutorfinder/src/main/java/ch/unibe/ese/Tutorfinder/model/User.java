@@ -9,7 +9,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-
+/**
+ * Entity for user, holding following values:<br>
+ * {@code id} is the id of the subject and is generated automatically<br>
+ * {@code firstName} the users first name<br>
+ * {@code lastName} the users last name<br>
+ * {@code email} is used for referencing between user and subject (same for id)<br>
+ * {@code password} is need to identify the right user to the right email<br>
+ * {@code role} to difference between students and tutors
+ * 
+ * @author  Antonio, Florian, Nicola, Lukas
+ *
+ */
 @Entity
 @Table(name="user", uniqueConstraints=@UniqueConstraint(columnNames = { "email" }))
 public class User {
@@ -18,12 +29,17 @@ public class User {
 	@GeneratedValue
 	private long id;
 	
+	@NotNull
 	private String firstName;
+	
+	@NotNull
 	private String lastName;
 	
+	@NotNull
 	@Column(name="email")
 	private String email;
 	
+	@NotNull
 	private String password;
 	
 	@NotNull
@@ -32,6 +48,8 @@ public class User {
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Profile profile;
 	
+	
+	/* Getters and Setters */
 	public long getId() {
 		return id;
 	}

@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidSubjectException;
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateSubjectsForm;
@@ -41,8 +41,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the edit or update profile process
  * 
- * @author Antonio
- * @author Nicola
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 //TODO Refactor this class, has some code smells
@@ -104,7 +103,7 @@ public class UpdateProfileController {
 				updateProfileService.saveFrom(updateProfileForm, user);
 				model = new ModelAndView("html/updateProfile");
 				// TODO show success message to the user
-			} catch (InvalidUserException e) {
+			} catch (InvalidProfileException e) {
 				model = new ModelAndView("html/updateProfile");
 				model.addObject("page_error", e.getMessage());
 				// TODO show error massage to the user

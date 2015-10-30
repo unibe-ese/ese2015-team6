@@ -13,13 +13,11 @@ import javax.validation.constraints.NotNull;
 /**
  * Entity for subject, holding following values:<br>
  * {@code id} is the id of the subject and is generated automatically<br>
- * {@code user} is used for referencing between user and subject (same for id)
- * <br>
- * {@code name} name of the subject, is the value referenced to search tutors
- * <br>
+ * {@code email} is used for referencing between user and subject (same for id)<br>
+ * {@code name} name of the subject, is the value referenced to search tutors<br>
  * {@code grade} holds the final value of the subjects note
  * 
- * @author Antonio, Florian, Nicola
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @Entity
@@ -41,6 +39,8 @@ public class Subject {
 	@NotNull
 	private double grade;
 
+	
+	/* Getters and Setters */
 	public long getId() {
 		return id;
 	}

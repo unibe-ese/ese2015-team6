@@ -6,8 +6,9 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 /**
- * Builds the base of a Form containing a list of {@link Row} objects.
- * @author Nicola
+ * Builds the base of a Form containing a lit of {@link Row} objects.
+ * 
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 public class UpdateSubjectsForm {
@@ -17,6 +18,8 @@ public class UpdateSubjectsForm {
 	
 	private List<Row> rows = new ArrayList<Row>();
 	
+	
+	/* Getters and Setters */
 	public long getId() {
 		return id;
 	}
