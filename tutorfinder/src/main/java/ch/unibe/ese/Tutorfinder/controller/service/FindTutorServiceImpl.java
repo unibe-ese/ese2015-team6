@@ -10,6 +10,12 @@ import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 
+/**
+ * Service to find tutors with the selected subject.
+ * 
+ * @author Antonio, Florian, Nicola, Lukas
+ *
+ */
 @Service
 public class FindTutorServiceImpl implements FindTutorService {
 	

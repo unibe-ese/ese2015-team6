@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the login/logout process
  * 
- * @author Nicola
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @Controller
@@ -32,8 +32,6 @@ public class LoginController {
 	 * @param logout displays successful logout message
 	 * @return ModelAndView for Springframework
 	 */
-
-
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {

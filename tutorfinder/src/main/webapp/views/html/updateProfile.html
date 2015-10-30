@@ -60,7 +60,6 @@
 			
 			<!-- 
 				Password field
-				Placeholder loads the saved value on the server connected to the user's profile.
 			 -->
 			<div class="control-group">
 				<label class="control-label" for="password">Password</label>
@@ -75,7 +74,6 @@
 			
 			<!-- 
 				Confirm password field
-				Placeholder loads the saved value on the server connected to the user's profile.
 			 -->
 			<div class="control-group">
 				<label class="control-label" for="confirmPassword">Confirm password</label>
@@ -139,7 +137,8 @@
 			<div class="form-actions">
 
 				<!-- 
-					Button to save the changes, loads again the uploadProfile page with the new information.
+					Button to save the changes, 
+					loads again the uploadProfile page with the new information.
 				-->
 				<button type="submit" class="btn btn-primary">Save</button>
 
@@ -161,8 +160,8 @@
 		<!-- The follow form-tags are only shown if it is the profile from an tutor -->
 		<div sec:authorize="hasRole('ROLE_TUTOR')">
 			<!-- 
-			Teaching Subjects 
-		-->
+				Teaching Subjects 
+			-->
 			<h3>Teaching Subjects</h3>
 			<table id="subjectTable">
 				<thead>
