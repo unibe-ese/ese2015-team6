@@ -60,7 +60,6 @@
 			
 			<!-- 
 				Password field
-				Placeholder loads the saved value on the server connected to the user's profile.
 			 -->
 			<div class="control-group">
 				<label class="control-label" for="password">Password</label>
@@ -75,7 +74,6 @@
 			
 			<!-- 
 				Confirm password field
-				Placeholder loads the saved value on the server connected to the user's profile.
 			 -->
 			<div class="control-group">
 				<label class="control-label" for="confirmPassword">Confirm password</label>
@@ -89,23 +87,23 @@
 				</div>
 			</div>
 
-			<!--
-	        	Biography field
-	        	Placeholder loads the saved value on the server connected to the user's profile.
-        	-->
-			<div class="control-group">
-				<label class="control-label" for="biography">Biography</label>
-				<div class="controls">
-					<textarea rows="5" cols="50" tabindex="1" maxlength="255"
-						th:value="*{biography}" th:field="*{biography}">
-					</textarea>
-					<span th:if="${#fields.hasErrors('biography')}"
-						th:errors="*{biography}"></span>
-				</div>
-			</div>
-
 			<!-- The follow form-tags are only shown if it is the profile from an tutor -->
 			<div sec:authorize="hasRole('ROLE_TUTOR')">
+				<!--
+		        	Biography field
+		        	Placeholder loads the saved value on the server connected to the user's profile.
+	        	-->
+				<div class="control-group">
+					<label class="control-label" for="biography">Biography</label>
+					<div class="controls">
+						<textarea rows="5" cols="50" tabindex="1" maxlength="255"
+							th:value="*{biography}" th:field="*{biography}">
+						</textarea>
+						<span th:if="${#fields.hasErrors('biography')}"
+							th:errors="*{biography}"></span>
+					</div>
+				</div>
+			
 				<!-- 
 		        	Region field 
 		        	Placeholder loads the saved value on the server connected to the user's profile
@@ -139,7 +137,8 @@
 			<div class="form-actions">
 
 				<!-- 
-					Button to save the changes, loads again the uploadProfile page with the new information.
+					Button to save the changes, 
+					loads again the uploadProfile page with the new information.
 				-->
 				<button type="submit" class="btn btn-primary">Save</button>
 
@@ -161,10 +160,9 @@
 		<!-- The follow form-tags are only shown if it is the profile from an tutor -->
 		<div sec:authorize="hasRole('ROLE_TUTOR')">
 			<!-- 
-			Teaching Subjects 
-		-->
+				Teaching Subjects 
+			-->
 			<h3>Teaching Subjects</h3>
-			<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}">Subject can't be added twice</span>
 			<table id="subjectTable">
 				<thead>
 					<tr>

@@ -19,3 +19,20 @@ body {
 	right: 0px;
 }
 
+#homeButton {
+	position: absolute;
+	top: 0px;
+	right: 60px;
+}
+
+#editButton {
+	position: absolute;
+	top: 0px;
+	right: 120px;
+}
+
+#searchButton {
+	position: absolute;
+	top: 0px;
+	right: 210px;
+}

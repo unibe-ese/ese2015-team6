@@ -17,7 +17,7 @@ import org.springframework.format.annotation.NumberFormat.Style;
  * {@code biography} holds an String of 255 characters for the biography of the user<br>
  * {@code region} holds an String of 255 characters for the region of the user<br>
  * 
- * @author Antonio
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @Entity
@@ -30,8 +30,8 @@ public class Profile {
 	@NotNull
 	private String email;
 
-	
 	private String biography;
+	
 	private String region;
 	
 	@NumberFormat(style=Style.CURRENCY)

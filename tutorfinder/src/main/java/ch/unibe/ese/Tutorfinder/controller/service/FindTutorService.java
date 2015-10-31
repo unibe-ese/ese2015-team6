@@ -9,6 +9,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
 public interface FindTutorService {
 	
 	public Iterable<User> getUsersFrom(FindTutorForm findTutorForm);
+	
 	public LinkedList<Subject> getSubjectFrom(FindTutorForm findTutorForm);
 
 }

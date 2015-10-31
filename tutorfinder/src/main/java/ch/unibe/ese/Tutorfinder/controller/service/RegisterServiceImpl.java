@@ -13,7 +13,17 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
+
+/**
+ * Service to save the information from the {@code SignupForm}
+ * to the user-table on the database. This service is used for
+ * create a new user.
+ * 
+ * @author Antonio, Florian, Nicola, Lukas
+ *
+ */
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
@@ -37,13 +47,14 @@ public class RegisterServiceImpl implements RegisterService {
 			throw new InvalidEmailException("Email address already used");
 		}
 
-
 		user.setPassword(signupForm.getPassword());
+		
 		if (signupForm.isTutor()) {
-			user.setRole("TUTOR");
+			user.setRole(ConstantVariables.TUTOR);
 		} else {
-			user.setRole("STUDENT");
+			user.setRole(ConstantVariables.STUDENT);
 		}
+		//adds an profile to the tutor connected by email
 		Profile profile = new Profile(user.getEmail());
 		profile.setWage(BigDecimal.ZERO);
 		user.setProfile(profile);

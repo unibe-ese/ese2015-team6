@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -18,21 +18,25 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
  * to the profile-table on the database. This service is used for
  * update the users information.
  * 
- * @author Antonio
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @Service
 public class UpdateProfileServiceImpl implements UpdateProfileService {
 
-	@Autowired	ProfileDao profileDao;
-	@Autowired	UserDao userDao;
+	@Autowired	
+	ProfileDao profileDao;
+	@Autowired	
+	UserDao userDao;
 	
 	public UpdateProfileServiceImpl() {
 	}
 	
-	//FIXME Prohibit negative wages
 	@Transactional
-	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, Principal user) throws InvalidUserException {
+	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, Principal user) 
+			throws InvalidProfileException {
+		
+		//Updates the users profile information
 		Profile profile;
 		profile = profileDao.findByEmail(user.getName());
 		profile.setBiography(updateProfileForm.getBiography());
@@ -41,6 +45,8 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 		
 		profile = profileDao.save(profile); //save object to DB
 		
+		
+		//Updates the users main information
 		User tmpUser;
 		tmpUser = userDao.findByEmail(user.getName());
 		tmpUser.setFirstName(updateProfileForm.getFirstName());
@@ -52,8 +58,8 @@ public class UpdateProfileServiceImpl implements UpdateProfileService {
 		
 		tmpUser = userDao.save(tmpUser);	//save object to DB
 		
-		updateProfileForm.setId(profile.getId());
 		
+		updateProfileForm.setId(profile.getId());
 		
 		return updateProfileForm;
 	}

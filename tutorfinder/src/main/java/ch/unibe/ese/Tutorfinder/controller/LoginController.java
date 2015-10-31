@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the login/logout process
  * 
- * @author Nicola
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @Controller
@@ -32,13 +32,11 @@ public class LoginController {
 	 * @param logout displays successful logout message
 	 * @return ModelAndView for Springframework
 	 */
-
-
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
 
-		ModelAndView model = new ModelAndView("html/login");
+		ModelAndView model = new ModelAndView("login");
 		if (error != null) {
 			model.addObject("error", "Invalid username or password!");
 		}
@@ -83,7 +81,7 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView accesssDenied(Principal user) {
 
-		ModelAndView model = new ModelAndView("html/403");
+		ModelAndView model = new ModelAndView("403");
 		if (user != null) {
 			model.addObject("msg", "Name: " + user.getName());
 		}

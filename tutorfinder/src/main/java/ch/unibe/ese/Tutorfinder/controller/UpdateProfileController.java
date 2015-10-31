@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidSubjectException;
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateSubjectsForm;
@@ -41,8 +41,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the edit or update profile process
  * 
- * @author Antonio
- * @author Nicola
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 //TODO Refactor this class, has some code smells
@@ -72,7 +71,7 @@ public class UpdateProfileController {
 	 */
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public ModelAndView editProfile(Principal user) {
-		ModelAndView model = new ModelAndView("html/updateProfile");
+		ModelAndView model = new ModelAndView("updateProfile");
 
 		model = prepareForm(user, model);
 		return model;
@@ -102,15 +101,15 @@ public class UpdateProfileController {
 		if (!result.hasErrors()) {
 			try {
 				updateProfileService.saveFrom(updateProfileForm, user);
-				model = new ModelAndView("html/updateProfile");
+				model = new ModelAndView("updateProfile");
 				// TODO show success message to the user
-			} catch (InvalidUserException e) {
-				model = new ModelAndView("html/updateProfile");
+			} catch (InvalidProfileException e) {
+				model = new ModelAndView("updateProfile");
 				model.addObject("page_error", e.getMessage());
 				// TODO show error massage to the user
 			}
 		} else {
-			model = new ModelAndView("html/updateProfile");
+			model = new ModelAndView("updateProfile");
 			model.addObject("User", userDao.findByEmail(user.getName()));
 			model.addObject("updateSubjectsForm",
 					getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
@@ -146,14 +145,14 @@ public class UpdateProfileController {
 				stream.write(bytes);
 				stream.close();
 
-				model = new ModelAndView("html/updateProfile");
+				model = new ModelAndView("updateProfile");
 				// TODO show success massage to the user
 			} catch (Exception e) {
-				model = new ModelAndView("html/updateProfile");
+				model = new ModelAndView("updateProfile");
 				model.addObject("page_error", e.getMessage());
 			}
 		} else {
-			model = new ModelAndView("html/updateProfile");
+			model = new ModelAndView("updateProfile");
 			// TODO show error massage to the user
 		}
 
@@ -200,7 +199,7 @@ public class UpdateProfileController {
 	 */
 	@RequestMapping(value = "/editSubjects", params = "addRow")
 	public ModelAndView addRow(@Valid UpdateSubjectsForm updateSubjectsForm, Principal user) {
-		ModelAndView model = new ModelAndView("html/updateProfile");
+		ModelAndView model = new ModelAndView("updateProfile");
 		updateSubjectsForm.getRows().add(new Row());
 		model = prepareForm(user, model, updateSubjectsForm);
 		return model;
@@ -218,7 +217,7 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editSubjects", params = "remRow")
 	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm,
 			final HttpServletRequest req, Principal user) {
-		ModelAndView model = new ModelAndView("html/updateProfile");
+		ModelAndView model = new ModelAndView("/updateProfile");
 		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
 		updateSubjectsForm.getRows().remove(rowId.intValue());
 		model = prepareForm(user, model, updateSubjectsForm);

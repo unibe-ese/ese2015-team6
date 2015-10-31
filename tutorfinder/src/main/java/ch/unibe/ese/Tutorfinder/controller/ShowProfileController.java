@@ -16,7 +16,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the show profile process
  * 
- * @author Antonio
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @Controller
@@ -32,10 +32,10 @@ public class ShowProfileController {
 	 * @param user
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
-	//TODO don't use Principal user, it allows only access to the actually logged in profile!!
+	//FIXME don't use Principal user, it allows only access to the actually logged in profile!!
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView showProfile(Principal user) {
-		ModelAndView model = new ModelAndView("html/showProfile");
+		ModelAndView model = new ModelAndView("showProfile");
 		
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		

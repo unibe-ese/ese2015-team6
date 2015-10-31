@@ -22,7 +22,7 @@ public class FindTutorController {
 	
     @RequestMapping(value = "/findTutor", method = RequestMethod.GET)
     public ModelAndView findTutor() {
-    	ModelAndView model = new ModelAndView("html/findTutor");
+    	ModelAndView model = new ModelAndView("findTutor");
     	model.addObject("findTutorForm", new FindTutorForm());
         return model;
     }
@@ -33,18 +33,18 @@ public class FindTutorController {
     	if (!result.hasErrors()) {
             try {
             	
-            	model = new ModelAndView("html/searchResults");
+            	model = new ModelAndView("searchResults");
             	model.addObject("Query", findTutorForm.getSubject());
             	model.addObject("Result", findTutorService.getSubjectFrom(findTutorForm));
             } 
             
             catch (NoTutorsForSubjectException e) {
-            	model = new ModelAndView("html/findTutor");
+            	model = new ModelAndView("findTutor");
             	model.addObject("page_error", e.getMessage());
             }
 
         } else {
-        	model = new ModelAndView("html/findTutor");
+        	model = new ModelAndView("findTutor");
         }   	
     	return model;
     }

@@ -7,8 +7,16 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.ScriptAssert;
 
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
+
+/**
+ * Class for validating the users input in the {@code register.html}.
+ * 
+ * @author Antonio, Florian, Nicola, Lukas
+ *
+ */
 @ScriptAssert(lang="javascript", script = "_this.password.equals(_this.confirmPassword)",
-message="Password and password confirmation does not match")
+message = ConstantVariables.CONFIRMPASSWORD_ERRORMESSAGE)
 public class SignupForm {
 	
 	@NotNull
@@ -20,21 +28,24 @@ public class SignupForm {
 	@NotNull
 	private String lastName;
 	
-	
 	@NotNull
-	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", 
-    message = "Must be valid email address")
+	@Pattern(regexp = ConstantVariables.EMAIL_REGEX_PATTERN, 
+    		message = ConstantVariables.EMAIL_ERRORMESSAGE)
 	private String email;
 	
 	@NotNull
-	@Size(min=8, max=25, message="The length must be between {min} and {max}")
+	@Size(min = ConstantVariables.PASSWORD_MIN_LENGHT, 
+			max = ConstantVariables.PASSWORD_MAX_LENGHT, 
+			message = ConstantVariables.PASSWORD_ERRORMESSAGE)
 	private String password;
 	
 	private String confirmPassword;
 	
+	@NotNull
 	private boolean tutor;
 	
 	
+	/* Getters and Setters */
 	public long getId() {
 		return id;
 	}

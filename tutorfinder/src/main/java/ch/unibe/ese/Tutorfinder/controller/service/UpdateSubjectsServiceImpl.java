@@ -17,6 +17,14 @@ import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
+/**
+ * Service to save the information from the {@code UpdateProfileForm}
+ * to the subject-table on the database. This service is used for
+ * update the users subjects.
+ * 
+ * @author Antonio, Florian, Nicola, Lukas
+ *
+ */
 @Service
 public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 
