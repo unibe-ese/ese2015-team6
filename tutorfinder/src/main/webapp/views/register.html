@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Tutorfinder register</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../../css/style.css"/>
+</head>
+<body>
+	<form action="#" th:object="${signupForm}" th:action="@{/create}"
+		th:autocomplete="off" method="post" th:name="signupForm">
+		<fieldset>
+			<legend>Enter Your Information</legend>
+
+			<!-- 
+				Email field
+			 -->
+			<label class="control-label" for="email">Email</label>
+			<div class="controls">
+				<input type="text" th:value="*{email}" th:name="email" tabindex="1"
+					maxlength="45" required="required" />
+				<span th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid email address</span>
+				<span th:text=" ${email_error}"> Address already used</span>
+			</div>
+			
+			<!-- 
+				First name field
+			 -->
+			<label class="control-label" for="firstName">First Name</label>
+			<div class="controls">
+				<input type="text" th:value="*{firstName}" th:name="firstName"
+					tabindex="2" maxlength="35" required="required" />
+			</div>
+
+			<!-- 
+				Last name field
+			 -->
+			<label class="control-label" for="lastName">Last Name</label>
+			<div class="controls">
+				<input type="text" th:value="*{lastName}" th:name="lastName"
+					tabindex="3" maxlength="35" required="required" />
+			</div>
+
+			<!-- 
+				Password field
+			 -->
+			<label class="control-label" for="field-password">Password</label>
+			<div class="controls">
+				<input type="password" th:value="*{password}" th:name="password"
+					tabindex="3" maxlength="35" required="required" />
+				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The length must be between 8 and 25</span>
+			</div>
+			
+			<!-- 
+				Confirm password field
+			 -->
+			<div class="control-group">
+				<label class="control-label" for="confirmPassword">Confirm password</label>
+				<div class="controls">
+					<input type="password" th:name="confirmPassword"
+						tabindex="4" maxlength="25" />
+					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
+						Invalid Input
+					</span>
+					<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}"> Password and password confirmation does not match</span>
+				</div>
+			</div>
+
+			<!-- 
+				Select Tutor or student bar
+			 -->
+			<label class="control-label" for="field-tutor">Sign up as:</label>
+			<div class="controls">
+
+				<select th:value="*{tutor}" th:name="tutor">
+					<option th:value="false">Student</option>
+					<option th:value="true">Tutor</option>
+				</select>
+			</div>
+
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Sign up</button>
+			</div>
+		</fieldset>
+	</form>
+</body>
+</html>

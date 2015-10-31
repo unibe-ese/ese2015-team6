@@ -20,14 +20,14 @@
 	<!-- view resolver -->
 	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine"></property>
-		<property name="viewNames" value="html/**" />
+		<property name="viewNames" value="**" />
 		<property name="order" value="1" />
 	</bean>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/views/" />
-		<property name="suffix" value=".jsp" />
+		<property name="suffix" value=".html" />
 		<property name="order" value="2" />
 	</bean>
 	<bean id="templateResolver"
