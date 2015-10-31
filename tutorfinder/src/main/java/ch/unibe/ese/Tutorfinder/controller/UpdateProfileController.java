@@ -115,10 +115,11 @@ public class UpdateProfileController {
 					getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
 			return model;
 		}
-		model = prepareForm(user, model);
+		model = prepareForm(user, model, updateProfileForm);
 
 		return model;
 	}
+
 
 	/**
 	 * Upload single file using Spring Controller
@@ -171,23 +172,20 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editSubjects", params = "save", method = RequestMethod.POST)
 	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm,
 			BindingResult result, RedirectAttributes redirectAttributes) {
-		ModelAndView model;
+		ModelAndView model = new ModelAndView("html/updateProfile");
 
 		if (!result.hasErrors()) {
 			try {
 				updateSubjectsService.saveFrom(updateSubjectsForm, user);
-				model = new ModelAndView("updateProfile");
 				// TODO show success message to the user
 			} catch (InvalidSubjectException e) {
-				model = new ModelAndView("updateProfile");
-				model.addObject("page_error", e.getMessage());
+				result.reject("error", e.getMessage());
+				model = new ModelAndView("html/updateProfile");
 			}
 		} else {
-			model = new ModelAndView("updateProfile");
-			// TODO show error massage to the user
 		}
 
-		model = prepareForm(user, model);
+		model = prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
 
@@ -281,7 +279,7 @@ public class UpdateProfileController {
 	 * @param user {@link Principal}
 	 * @param model {@link ModelAndView}
 	 * @param updateSubjectsForm {@link UpdateSubjectsForm}
-	 * @return
+	 * @return {@link ModelAndView} ready for return
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm) {
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
@@ -289,7 +287,22 @@ public class UpdateProfileController {
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		return model;
 	}
-
+	/**
+	 * Injects needed objects into a given {@link ModelAndView} while preserving
+	 * the current {@link UpdateProfileForm}
+	 * 
+	 * @param user {@link Principal}
+	 * @param model {@link ModelAndView}
+	 * @param updateSubjectsForm {@link UpdateSubjectsForm}
+	 * @return {@link ModelAndView} ready for return
+	 */
+	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateProfileForm updateProfileForm) {
+		model.addObject("updateSubjectsForm",
+				getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+		model.addObject("updateProfileForm", getFormWithValues(user));
+		model.addObject("User", userDao.findByEmail(user.getName()));
+		return model;
+	}
 	/**
 	 * Converts an ArrayList<Subject> into a {@link UpdateSubjectsForm} filled
 	 * with rows containing all the information from the given subjects

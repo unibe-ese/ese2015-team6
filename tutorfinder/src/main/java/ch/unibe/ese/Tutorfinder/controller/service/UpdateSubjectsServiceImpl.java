@@ -40,7 +40,7 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 	 * Replaces all currently saved subjects for one tutor with the subjects
 	 * currently in the form by deleting and re-adding them
 	 */
-	//FIXME Prohibit negative grades (limit to 1-6)
+	// FIXME Prohibit negative grades (limit to 1-6)
 	@Transactional
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
@@ -50,6 +50,7 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 		List<Subject> subjects = new ArrayList<Subject>();
 		List<Row> rowList = updateSubjectsForm.getRows();
 
+		// TODO Refactor: This could be in a separate class
 		for (Row row : rowList) {
 			String name = row.getSubject();
 			if (name != null) {
@@ -64,7 +65,8 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 			subjectDao.save(subjects);
 		} catch (DataIntegrityViolationException e) {
 			subjectDao.save(tmpSubjList);
-			//TODO Inject some error message into form or similar
+			// TODO Inject some error message into form or similar
+			throw new InvalidSubjectException("The same subject can't be added twice");
 		}
 		updateSubjectsForm.setId(user.getId());
 		return updateSubjectsForm;
