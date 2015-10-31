@@ -164,6 +164,7 @@
 			Teaching Subjects 
 		-->
 			<h3>Teaching Subjects</h3>
+			<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}">Subject can't be added twice</span>
 			<table id="subjectTable">
 				<thead>
 					<tr>
