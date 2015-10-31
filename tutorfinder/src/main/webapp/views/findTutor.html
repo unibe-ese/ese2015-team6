@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Find Tutor</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../../css/style.css"/>
+</head>
+<body>
+	<form action="#" th:object="${findTutorForm}" th:action="@{/searchResults}"
+		th:autocomplete="off" method="post" th:name="findTutorForm">
+		<fieldset>
+			<legend>Enter subject you need help with:</legend>
+
+			<label class="control-label" for="subject">Subject:</label>
+			<div class="controls">
+				<input type="text" th:name="subject"
+					tabindex="2" maxlength="45" required="required" />
+			</div>	
+			
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Search</button>
+			</div>
+		</fieldset>
+	</form>
+	
+	<!-- 
+    	Edit Button
+    -->
+    <div id="editButton">
+		<button type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
+	</div>
+
+	<!--  
+		Search Button
+	 -->
+	<div id="searchButton">
+		<button type="button" onClick="window.location.href='/findTutor'">Search</button>
+	</div>
+
+	<!--  
+		Home Button
+	 -->
+	<div id="homeButton">
+		<button type="button" onClick="window.location.href='/home'">Home</button>
+	</div>
+
+	<!--  
+		Logout Button
+	 -->
+	<div id="logoutButton">
+		<button type="button" onClick="window.location.href='/logout'">Logout</button>
+	</div>
+</body>
+</html>

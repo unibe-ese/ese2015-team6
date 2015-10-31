@@ -35,7 +35,7 @@ public class ShowProfileController {
 	//FIXME don't use Principal user, it allows only access to the actually logged in profile!!
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView showProfile(Principal user) {
-		ModelAndView model = new ModelAndView("html/showProfile");
+		ModelAndView model = new ModelAndView("showProfile");
 		
 		model.addObject("User", userDao.findByEmail(user.getName()));
 		
