@@ -36,12 +36,12 @@ public class RegisterController {
             	model = new ModelAndView("signupCompleted");
 
             } catch (InvalidEmailException e) {
+            	result.rejectValue("email", "", e.getMessage());
             	model = new ModelAndView("register");
-            	model.addObject("email_error", e.getMessage());
             }
             catch (InvalidUserException e) {
+            	result.reject("page_error", e.getMessage());
             	model = new ModelAndView("register");
-            	model.addObject("page_error", e.getMessage());
             }
             //TODO exception for invalid password with message
 
