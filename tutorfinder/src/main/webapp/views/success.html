@@ -19,10 +19,10 @@
 <body>
 	<div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
 		<!--  For login user -->
-		<span th:if="${#authentication.name != null}">
+		<div th:if="${#authentication.name != null}">
 			<h1 th:text="|Welcome, ${#authentication.name}|">Welcome, max@muster.ch</h1>
 			<button type="button" onClick="window.location.href='/logout'">Logout</button>
-		</span>
+		</div>
 	</div>
 
 </body>
