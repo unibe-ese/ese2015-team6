@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
  * {@code time} of the day (00:00-23:59:59.999999999)<br>
  * {@code availability} true if the tutor is available, else false<br>
  * 
- * @author Antonio
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 @Entity
@@ -46,6 +46,19 @@ public class Timetable {
 	
 	@NotNull
 	private Boolean availability;	
+	
+	/* Constructors */
+	public Timetable () {
+		super();
+	}
+	
+	public Timetable (User user, DayOfWeek day, LocalTime time, Boolean availability) {
+		super();
+		this.user = user;
+		this.day = day;
+		this.time = time;
+		this.availability = availability;
+	}
 	
 	/* Getters and Setters */
 	public long getId() {

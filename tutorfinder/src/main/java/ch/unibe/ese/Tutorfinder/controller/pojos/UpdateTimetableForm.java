@@ -1,16 +1,11 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
-
-import ch.unibe.ese.Tutorfinder.controller.pojos.TimetableRow;
 
 /**
  * Builds the base of a Form containing a list of {@link TimetableRow} objects.
  * 
- * @author Antonio
+ * @author Antonio, Florian, Nicola, Lukas
  *
  */
 public class UpdateTimetableForm {
@@ -18,7 +13,7 @@ public class UpdateTimetableForm {
 	@NotNull
 	private long id;
 	
-	private List<TimetableRow> timetableRows = new ArrayList<TimetableRow>();
+	private Boolean[][] timetable;
 	
 	/* Getters and Setters */
 	public long getId() {
@@ -29,11 +24,12 @@ public class UpdateTimetableForm {
 		this.id = id;
 	}
 
-	public List<TimetableRow> getTimetableRows() {
-		return timetableRows;
+	public Boolean[][] getTimetable() {
+		return timetable;
 	}
 
-	public void setTimetableRows(List<TimetableRow> timetableRows) {
-		this.timetableRows = timetableRows;
+	public void setTimetable(Boolean[][] timetable) {
+		this.timetable = timetable;
 	}
+	
 }

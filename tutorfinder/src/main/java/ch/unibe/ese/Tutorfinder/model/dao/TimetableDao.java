@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.model.dao;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -12,6 +13,8 @@ import ch.unibe.ese.Tutorfinder.model.User;
 public interface TimetableDao extends CrudRepository<Timetable, Long> {
 
 	Timetable findById (long id);
+	
+	Timetable findByUserAndDayAndTime (User user, DayOfWeek day, LocalTime time);
 	
 	ArrayList<Timetable> findAllById (long id);
 	
