@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org">
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -23,6 +24,16 @@
 			</div>
 		</fieldset>
 	</form>
+	
+	<div sec:authorize="hasAnyRole('ROLE_TUTOR')">
+		<!-- For tutor only -->
+		<!-- 
+	    	Edit Timetable Button
+	    -->
+	    <div id="editTimetableButton">
+			<button type="button" onClick="window.location.href='/timetable'">Edit Timetable</button>
+		</div>
+	</div>
 	
 	<!-- 
     	Edit Button

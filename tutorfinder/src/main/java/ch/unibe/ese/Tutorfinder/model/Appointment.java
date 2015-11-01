@@ -34,7 +34,7 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  *
  */
 @Entity
-@Table(name = "appointment", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "time", "user"}) )
+@Table(name = "appointment", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "time", "tutor"}) )
 public class Appointment {
 	@Id
 	@GeneratedValue

@@ -36,3 +36,68 @@ body {
 	top: 0px;
 	right: 210px;
 }
+
+#editTimetableButton {
+	position: absolute;
+	top: 0px;
+	right: 270px;
+}
+
+table.timetable-container {
+	display: flex;
+	flex-flow: column;
+	height: 10.5em;
+	width: 675px;
+}
+table.timetable-container thead {
+	/*head take the height it requires, and it's
+	not scaled when table is resized*/
+	flex: 0 0 auto;
+    width: 675px;
+}
+table.timetable-container tbody {
+	/*body takes all remaining available space*/
+	flex: 1 1 auto;
+	display: block;
+	overflow-y: scroll;
+}
+table.timetable-container tbody tr {
+	width: 100%;
+}
+table.timetable-container thead, table.timetable-container tbody tr {
+	display: table;
+	table-layout: fixed;
+}
+table.timetable-container th {
+	text-align: left;
+}
+table.timetable-container td{
+	text-align: center;
+}
+
+.black_overlay{
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index:1001;
+	-moz-opacity: 0.5;
+	opacity:.50;
+	filter: alpha(opacity=50);
+}
+.white_content {
+	display: none;
+	position: absolute;
+	top: 39%;
+	left: 31%;
+	width: 38%;
+	height: 22%;
+	padding: 16px;
+	border: 2px solid black;
+	background-color: white;
+	z-index:1002;
+	overflow: auto;
+}

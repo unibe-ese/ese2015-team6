@@ -188,6 +188,54 @@
 
 		</div>
 	</form>
+	
+	<div sec:authorize="hasRole('ROLE_TUTOR')">
+		<button type="button" onclick="document.getElementById('timetableBox').style.display='block';document.getElementById('fade').style.display='block'">Update availability</button>
+	</div>
 
+    <!-- PopupBox -->
+    <div id="timetableBox" class="white_content">
+        <form action="#" method="post" th:action="@{/editTimetable}"
+		th:object="${updateTimetableForm}" name="updateTimetableForm">
+			<!-- The follow form-tags are only shown if it is the profile from an tutor -->
+			<div sec:authorize="hasRole('ROLE_TUTOR')">
+				<!-- 
+					Timetable
+				-->
+				<table class="timetable-container" id="timeTable">
+					<caption>
+						Timetable for availability
+					</caption>
+					<thead>
+						<tr>
+							<th>Hour</th>
+							<th>Monday</th>
+							<th>Tuesday</th>
+							<th>Wednesday</th>
+							<th>Thursday</th>
+							<th>Friday</th>
+							<th>Saturday</th>
+							<th>Sunday</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="i : ${#numbers.sequence(0, 23)}"> <!-- for each hour in a day -->
+							<td><span th:text="${i} + ':00'">00:00</span></td>
+							<td th:each="j : ${#numbers.sequence(0, 6)}">
+								<!--  TODO name the field correctly and load the value -->
+								<input type="checkbox"
+									 value="false"/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="submit" name="save" class="btn btn-primary">Save</button>
+				<button type="button" onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'">Close</button>
+			</div>
+		</form>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+    
+    
 </body>
 </html>
