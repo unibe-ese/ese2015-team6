@@ -37,11 +37,6 @@ body {
 	right: 210px;
 }
 
-#editTimetableButton {
-	position: absolute;
-	top: 0px;
-	right: 270px;
-}
 
 table.timetable-container {
 	display: flex;

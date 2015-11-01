@@ -14,16 +14,6 @@
 
 	<div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
 		<!--  For login user -->
-	
-		<div sec:authorize="hasAnyRole('ROLE_TUTOR')">
-			<!-- For tutor only -->
-			<!-- 
-		    	Edit Timetable Button
-		    -->
-		    <div id="editTimetableButton">
-				<button type="button" onClick="window.location.href='/timetable'">Edit Timetable</button>
-			</div>
-		</div>
 		
 		<!-- 
 	    	Edit Button
