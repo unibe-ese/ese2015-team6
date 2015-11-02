@@ -223,7 +223,7 @@
 							<td><span th:text="${i} + ':00'">00:00</span></td>
 							<td th:each="j : ${#numbers.sequence(0, 6)}">
 								<!--  TODO name the field correctly and load the value -->
-								<input type="checkbox"
+								<input type="checkbox" th:field="*{timetable[__${i}__][__${j}__]}"
 									 value="false"/>
 							</td>
 						</tr>

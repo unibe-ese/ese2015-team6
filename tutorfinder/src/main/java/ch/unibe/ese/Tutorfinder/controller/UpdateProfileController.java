@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
+import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
@@ -48,7 +50,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
  * @author Antonio, Florian, Nicola, Lukas
  *
  */
-//TODO Refactor this class, has some code smells
+// TODO Refactor this class, has some code smells
 @Controller
 public class UpdateProfileController {
 
@@ -58,7 +60,7 @@ public class UpdateProfileController {
 	UpdateSubjectsService updateSubjectsService;
 	@Autowired
 	UpdateTimetableService updateTimetableService;
-	
+
 	@Autowired
 	ProfileDao profileDao;
 	@Autowired
@@ -129,7 +131,6 @@ public class UpdateProfileController {
 		return model;
 	}
 
-
 	/**
 	 * Upload single file using Spring Controller
 	 */
@@ -199,11 +200,12 @@ public class UpdateProfileController {
 	}
 
 	/**
-	 * Handles action to add a new {@link Row} to the ArrayList of rows and preserves
-	 * the currently entered values
+	 * Handles action to add a new {@link Row} to the ArrayList of rows and
+	 * preserves the currently entered values
 	 * 
 	 * @param updateSubjectsForm
-	 * @param user {@link Principal}
+	 * @param user
+	 *            {@link Principal}
 	 * @return
 	 */
 	@RequestMapping(value = "/editSubjects", params = "addRow")
@@ -215,52 +217,57 @@ public class UpdateProfileController {
 	}
 
 	/**
-	 * Handles action to remove a {@link Row} by the index passed as the value of the
-	 * clicked button while preserving the other values
+	 * Handles action to remove a {@link Row} by the index passed as the value
+	 * of the clicked button while preserving the other values
 	 * 
 	 * @param updateSubjectsForm
-	 * @param req used to get RowId of Row to remove
-	 * @param user {@link Principal}
+	 * @param req
+	 *            used to get RowId of Row to remove
+	 * @param user
+	 *            {@link Principal}
 	 * @return
 	 */
 	@RequestMapping(value = "/editSubjects", params = "remRow")
-	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm,
-			final HttpServletRequest req, Principal user) {
+	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm, final HttpServletRequest req,
+			Principal user) {
 		ModelAndView model = new ModelAndView("/updateProfile");
 		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
 		updateSubjectsForm.getRows().remove(rowId.intValue());
 		model = prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
-	
-	@RequestMapping(value="/updateTimetable", method=RequestMethod.POST)
-	public ModelAndView updateTimetable(@Valid UpdateTimetableForm updateTimetableForm, BindingResult result, Principal user) {
+
+	@RequestMapping(value = "/updateTimetable", method = RequestMethod.POST)
+	public ModelAndView updateTimetable(@Valid UpdateTimetableForm updateTimetableForm, BindingResult result,
+			Principal user) {
 		ModelAndView model = new ModelAndView("/updateProfile");
 		if (!result.hasErrors()) {
 			try {
 				updateTimetableService.saveFrom(updateTimetableForm, user);
 			} catch (InvalidTimetableException e) {
-				//TODO Handling
+				// TODO Handling
 				System.err.println("Timetable error");
 			}
 		}
-		
+
 		model = prepareForm(user, model, updateTimetableForm);
 		return model;
 	}
 
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateTimetableForm updateTimetableForm) {
-		model.addObject("updateSubjectsForm",
-				getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+		User dbUser = userDao.findByEmail(user.getName());
+		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
+		model.addObject("updateTimetableForm", updateTimetableForm);
+		model.addObject("User", dbUser);
 		return model;
 	}
 
 	/**
 	 * Gets an form with the users new information
 	 * 
-	 * @param user {@link Principal}
+	 * @param user
+	 *            {@link Principal}
 	 * @return form with the users input values
 	 */
 	private UpdateProfileForm getFormWithValues(Principal user) {
@@ -277,8 +284,8 @@ public class UpdateProfileController {
 	/**
 	 * Gets the profile which belongs to the actually logged in user
 	 * 
-	 * @param user {@link Principal}
-	 *            is needed to get the right profile
+	 * @param user
+	 *            {@link Principal} is needed to get the right profile
 	 * @return profile of the actually logged in user
 	 */
 	private Profile getUsersProfile(Principal user) {
@@ -293,52 +300,79 @@ public class UpdateProfileController {
 	 * {@link Subjects} for the {@link UpdateSubjectsForm} from the DB
 	 * essentially discarding the form's current state.
 	 * 
-	 * @param user {@link Principal}
-	 * @param model {@link ModelAndView}
+	 * @param user
+	 *            {@link Principal}
+	 * @param model
+	 *            {@link ModelAndView}
 	 * @return
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model) {
-		model.addObject("updateSubjectsForm",
-				getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+		User dbUser = userDao.findByEmail(user.getName());
+		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
+		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
+		model.addObject("User", dbUser);
 		return model;
+	}
+
+	private UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
+		UpdateTimetableForm tmpForm = new UpdateTimetableForm();
+		Boolean[][] tmpMatrix = new Boolean[7][24];
+		for(int i = 0; i <= tmpMatrix.length; i++) {
+			Boolean[] tmpArray = tmpMatrix[i];
+			for(int j = 0; j <= tmpArray.length; j++) {
+				DayOfWeek dow = DayOfWeek.of(i);
+				tmpArray[j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, j).getAvailability();
+			}
+		}
+		tmpForm.setTimetable(tmpMatrix);
+		return tmpForm;
 	}
 
 	/**
 	 * Injects needed objects into a given {@link ModelAndView} while preserving
 	 * the current rows of the {@link UpdateSubjectsForm}
 	 * 
-	 * @param user {@link Principal}
-	 * @param model {@link ModelAndView}
-	 * @param updateSubjectsForm {@link UpdateSubjectsForm}
+	 * @param user
+	 *            {@link Principal}
+	 * @param model
+	 *            {@link ModelAndView}
+	 * @param updateSubjectsForm
+	 *            {@link UpdateSubjectsForm}
 	 * @return {@link ModelAndView} ready for return
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm) {
+		User dbUser = userDao.findByEmail(user.getName());
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
+		model.addObject("updateTimetableForm", timetableDao.findAllByUser(dbUser));
+		model.addObject("User", dbUser);
 		return model;
 	}
+
 	/**
 	 * Injects needed objects into a given {@link ModelAndView} while preserving
 	 * the current {@link UpdateProfileForm}
 	 * 
-	 * @param user {@link Principal}
-	 * @param model {@link ModelAndView}
-	 * @param updateSubjectsForm {@link UpdateSubjectsForm}
+	 * @param user
+	 *            {@link Principal}
+	 * @param model
+	 *            {@link ModelAndView}
+	 * @param updateSubjectsForm
+	 *            {@link UpdateSubjectsForm}
 	 * @return {@link ModelAndView} ready for return
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateProfileForm updateProfileForm) {
-		model.addObject("updateSubjectsForm",
-				getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+		User dbUser = userDao.findByEmail(user.getName());
+		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("User", userDao.findByEmail(user.getName()));
+		model.addObject("User", dbUser);
 		return model;
 	}
+
 	/**
-	 * Converts an ArrayList of Subjects into a {@link UpdateSubjectsForm} filled
-	 * with rows containing all the information from the given subjects
+	 * Converts an ArrayList of Subjects into a {@link UpdateSubjectsForm}
+	 * filled with rows containing all the information from the given subjects
 	 * 
 	 * @param subjectList
 	 *            Subject array list (from db)
@@ -354,13 +388,14 @@ public class UpdateProfileController {
 		tempForm.setRows(rowList);
 		return tempForm;
 	}
-	
+
 	/**
 	 * Converts empty fields to null values
+	 * 
 	 * @param binder
 	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-	    binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 }
