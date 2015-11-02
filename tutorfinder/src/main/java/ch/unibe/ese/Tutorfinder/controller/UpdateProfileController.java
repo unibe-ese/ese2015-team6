@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.security.Principal;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,17 +32,16 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateTimetableForm;
-import ch.unibe.ese.Tutorfinder.model.Profile;
-import ch.unibe.ese.Tutorfinder.model.Subject;
-import ch.unibe.ese.Tutorfinder.model.Timetable;
-import ch.unibe.ese.Tutorfinder.model.User;
-import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
-import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
-import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
-import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
+import ch.unibe.ese.Tutorfinder.model.Profile;
+import ch.unibe.ese.Tutorfinder.model.Subject;
+import ch.unibe.ese.Tutorfinder.model.User;
+import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
+import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
+import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
+import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -317,13 +317,18 @@ public class UpdateProfileController {
 
 	private UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
 		UpdateTimetableForm tmpForm = new UpdateTimetableForm();
-		Boolean[][] tmpMatrix = new Boolean[7][24];
-		for(int i = 0; i <= tmpMatrix.length; i++) {
-			Boolean[] tmpArray = tmpMatrix[i];
-			for(int j = 0; j <= tmpArray.length; j++) {
-				DayOfWeek dow = DayOfWeek.of(i);
-				tmpArray[j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, j).getAvailability();
+		Boolean[][] tmpMatrix = new Boolean[24][7];
+		for (Boolean[] row:tmpMatrix)
+			Arrays.fill(row, false);
+		try {
+			for(int i = 0; i <= tmpMatrix.length; i++) {
+				for(int j = 0; j <= tmpMatrix[i].length; j++) {
+					DayOfWeek dow = DayOfWeek.of(i+1);
+					tmpMatrix[i][j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, j).getAvailability();
+				}
 			}
+		} catch (NullPointerException e) {
+			//Nothing to do, just couldn't get values
 		}
 		tmpForm.setTimetable(tmpMatrix);
 		return tmpForm;

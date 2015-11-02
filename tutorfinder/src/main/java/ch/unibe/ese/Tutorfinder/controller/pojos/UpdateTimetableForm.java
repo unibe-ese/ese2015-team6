@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
+import java.util.Arrays;
+
 import javax.validation.constraints.NotNull;
 
 /**
@@ -13,7 +15,13 @@ public class UpdateTimetableForm {
 	@NotNull
 	private long id;
 	
-	private Boolean[][] timetable;
+	private Boolean[][] timetable = new Boolean[24][7];
+	
+	public UpdateTimetableForm() {
+		for(Boolean[] row : timetable)
+			Arrays.fill(row, false);
+	}
+	
 	
 	/* Getters and Setters */
 	public long getId() {
