@@ -25,17 +25,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidSubjectException;
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateSubjectsForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
+import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
+import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -53,11 +57,16 @@ public class UpdateProfileController {
 	@Autowired
 	UpdateSubjectsService updateSubjectsService;
 	@Autowired
+	UpdateTimetableService updateTimetableService;
+	
+	@Autowired
 	ProfileDao profileDao;
 	@Autowired
 	UserDao userDao;
 	@Autowired
 	SubjectDao subjectDao;
+	@Autowired
+	TimetableDao timetableDao;
 
 	/**
 	 * Maps the /editProfile page to the {@code updateProfile.jsp}.
@@ -223,6 +232,30 @@ public class UpdateProfileController {
 		model = prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
+	
+	@RequestMapping(value="/updateTimetable", method=RequestMethod.POST)
+	public ModelAndView updateTimetable(@Valid UpdateTimetableForm updateTimetableForm, BindingResult result, Principal user) {
+		ModelAndView model = new ModelAndView("/updateProfile");
+		if (!result.hasErrors()) {
+			try {
+				updateTimetableService.saveFrom(updateTimetableForm, user);
+			} catch (InvalidTimetableException e) {
+				//TODO Handling
+				System.err.println("Timetable error");
+			}
+		}
+		
+		model = prepareForm(user, model, updateTimetableForm);
+		return model;
+	}
+
+	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateTimetableForm updateTimetableForm) {
+		model.addObject("updateSubjectsForm",
+				getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+		model.addObject("updateProfileForm", getFormWithValues(user));
+		model.addObject("User", userDao.findByEmail(user.getName()));
+		return model;
+	}
 
 	/**
 	 * Gets an form with the users new information
@@ -304,13 +337,14 @@ public class UpdateProfileController {
 		return model;
 	}
 	/**
-	 * Converts an ArrayList<Subject> into a {@link UpdateSubjectsForm} filled
+	 * Converts an ArrayList of Subjects into a {@link UpdateSubjectsForm} filled
 	 * with rows containing all the information from the given subjects
 	 * 
 	 * @param subjectList
 	 *            Subject array list (from db)
 	 * @return UpdateSubjectForm filled with rows
 	 */
+	// TODO Move to service
 	private UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList) {
 		UpdateSubjectsForm tempForm = new UpdateSubjectsForm();
 		List<Row> rowList = new ArrayList<Row>();

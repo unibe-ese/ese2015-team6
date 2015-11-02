@@ -195,7 +195,7 @@
 
     <!-- PopupBox -->
     <div id="timetableBox" class="white_content">
-        <form action="#" method="post" th:action="@{/editTimetable}"
+        <form action="#" method="post" th:action="@{/updateTimetable}"
 		th:object="${updateTimetableForm}" name="updateTimetableForm">
 			<!-- The follow form-tags are only shown if it is the profile from an tutor -->
 			<div sec:authorize="hasRole('ROLE_TUTOR')">
