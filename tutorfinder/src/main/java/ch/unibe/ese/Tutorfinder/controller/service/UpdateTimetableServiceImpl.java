@@ -2,7 +2,6 @@ package ch.unibe.ese.Tutorfinder.controller.service;
 
 import java.security.Principal;
 import java.time.DayOfWeek;
-import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,15 +40,15 @@ public class UpdateTimetableServiceImpl implements UpdateTimetableService{
 		for(int col=0; col<=6; col++) {
 			for(int row=0; row<=23; row++) {
 				DayOfWeek day = DayOfWeek.of(col + 1);
-				LocalTime time = LocalTime.of(row, 0);
+				int timeslot = row;
 				Timetable timetable;
 				
 				//if a timetable exists only change the availability, else create a new timetable
-				if(timetableDao.findByUserAndDayAndTime(user, day, time) != null) {
-					timetable = timetableDao.findByUserAndDayAndTime(user, day, time);
+				timetable = timetableDao.findByUserAndDayAndTimeslot(user, day, timeslot);
+				if(timetable != null) {
 					timetable.setAvailability(tmpTimetable[row][col]);
 				} else {
-					timetable = new Timetable(user, day, time,tmpTimetable[row][col]);
+					timetable = new Timetable(user, day, timeslot,tmpTimetable[row][col]);
 				}
 				timetable = timetableDao.save(timetable); //Save object to DB
 			}

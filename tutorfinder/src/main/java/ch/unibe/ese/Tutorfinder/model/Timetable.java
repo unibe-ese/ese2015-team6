@@ -1,7 +1,6 @@
 package ch.unibe.ese.Tutorfinder.model;
 
 import java.time.DayOfWeek;
-import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +24,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Entity
-@Table(name = "timetable", uniqueConstraints = @UniqueConstraint(columnNames = {"day", "time", "user"}) )
+@Table(name = "timetable", uniqueConstraints = @UniqueConstraint(columnNames = {"day", "timeslot", "user"}) )
 public class Timetable {
 
 	@Id
@@ -41,8 +40,8 @@ public class Timetable {
 	private DayOfWeek day;
 	
 	@NotNull
-	@Column(name="time")
-	private LocalTime time;
+	@Column(name="timeslot")
+	private int timeslot;
 	
 	@NotNull
 	private Boolean availability;	
@@ -52,11 +51,11 @@ public class Timetable {
 		super();
 	}
 	
-	public Timetable (User user, DayOfWeek day, LocalTime time, Boolean availability) {
+	public Timetable (User user, DayOfWeek day, int timeslot, Boolean availability) {
 		super();
 		this.user = user;
 		this.day = day;
-		this.time = time;
+		this.timeslot = timeslot;
 		this.availability = availability;
 	}
 	
@@ -85,12 +84,12 @@ public class Timetable {
 		this.day = day;
 	}
 	
-	public LocalTime getTime() {
-		return time;
+	public int getTime() {
+		return timeslot;
 	}
 	
-	public void setTime(LocalTime time) {
-		this.time = time;
+	public void setTime(int time) {
+		this.timeslot = time;
 	}
 	
 	public Boolean getAvailability() {

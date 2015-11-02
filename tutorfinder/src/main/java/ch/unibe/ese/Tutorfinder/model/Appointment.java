@@ -1,9 +1,8 @@
 package ch.unibe.ese.Tutorfinder.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +33,7 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  *
  */
 @Entity
-@Table(name = "appointment", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "time", "tutor"}) )
+@Table(name = "appointment", uniqueConstraints = @UniqueConstraint(columnNames = {"timestamp", "tutor"}) )
 public class Appointment {
 	@Id
 	@GeneratedValue
@@ -49,16 +48,12 @@ public class Appointment {
 	private User student;
 	
 	@NotNull
-	@Column(name="date")
-	private LocalDate date;
+	@Column(name="timestamp")
+	private Timestamp timestamp;
 	
 	@NotNull
 	@Column(name="day")
 	private DayOfWeek day;
-	
-	@NotNull
-	@Column(name="time")
-	private LocalTime time;
 	
 	@NotNull
 	private Availability availability;
@@ -71,11 +66,11 @@ public class Appointment {
 		super();
 	}
 	
-	public Appointment(User tutor, DayOfWeek day, LocalTime time, Availability availability, BigDecimal wage) {
+	public Appointment(User tutor, DayOfWeek day, Timestamp timestamp, Availability availability, BigDecimal wage) {
 		super();
 		this.tutor = tutor;
 		this.day = day;
-		this.time = time;
+		this.timestamp = timestamp;
 		this.availability = availability;
 		this.wage = wage;
 	}
@@ -105,12 +100,12 @@ public class Appointment {
 		this.student = student;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public Timestamp getDate() {
+		return timestamp;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setDate(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public DayOfWeek getDay() {
@@ -120,15 +115,7 @@ public class Appointment {
 	public void setDay(DayOfWeek day) {
 		this.day = day;
 	}
-
-	public LocalTime getTime() {
-		return time;
-	}
-
-	public void setTime(LocalTime time) {
-		this.time = time;
-	}
-
+	
 	public Availability getAvailability() {
 		return availability;
 	}

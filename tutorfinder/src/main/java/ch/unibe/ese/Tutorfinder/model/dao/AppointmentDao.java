@@ -1,6 +1,6 @@
 package ch.unibe.ese.Tutorfinder.model.dao;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -17,7 +17,7 @@ public interface AppointmentDao extends CrudRepository<Appointment, Long> {
 	
 	ArrayList<Appointment> findAllByStudent (User student);
 	
-	LinkedList<Appointment> findAllByDate (LocalDate date);
+	LinkedList<Appointment> findAllByTimestamp (Timestamp timestamp);
 	
 
 }
