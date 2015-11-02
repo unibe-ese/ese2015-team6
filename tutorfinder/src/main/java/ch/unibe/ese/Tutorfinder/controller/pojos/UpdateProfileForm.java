@@ -30,8 +30,8 @@ public class UpdateProfileForm {
 	@NotNull
 	private String lastName;
 
-	@Size(min = ConstantVariables.PASSWORD_MIN_LENGHT, 
-			max = ConstantVariables.PASSWORD_MAX_LENGHT, 
+	@Size(min = ConstantVariables.PASSWORD_MIN_LENGTH, 
+			max = ConstantVariables.PASSWORD_MAX_LENGTH, 
 			message = ConstantVariables.PASSWORD_ERRORMESSAGE)
 	private String password;
 

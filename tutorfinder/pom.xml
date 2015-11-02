@@ -205,15 +205,15 @@
 			<version>1.2.14</version>
 			<scope>runtime</scope>
 		</dependency>
-		
-		<!-- Apache Commons FileUpload --> 
+
+		<!-- Apache Commons FileUpload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.3.1</version>
 		</dependency>
-	 
-		<!-- Apache Commons IO --> 
+
+		<!-- Apache Commons IO -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -254,9 +254,9 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.5.v20151012</version>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.26</version>
 				<configuration>
 					<scanIntervalSeconds>2</scanIntervalSeconds>
 					<useTestClasspath>true</useTestClasspath>
