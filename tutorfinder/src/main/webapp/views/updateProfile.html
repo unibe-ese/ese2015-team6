@@ -126,8 +126,8 @@
 					<label class="control-label" for="wage">Wage in CHF</label>
 
 					<div class="controls">
-						<input type="text" th:name="wage" th:value="*{wage}" tabindex="1"
-							maxlength="7" /> <span th:if="${#fields.hasErrors('wage')}"
+						<input type="number" th:name="wage" th:value="*{wage}" tabindex="1"
+							min="0.00" max="200.00" step="0.05" value="5.0"/> <span th:if="${#fields.hasErrors('wage')}"
 							th:errors="*{wage}"></span>
 					</div>
 				</div>
@@ -174,10 +174,9 @@
 					<tr th:each="row,rowStat : *{rows}">
 						<!-- for each row in rows -->
 						<td><input type="text"
-							th:field="*{rows[__${rowStat.index}__].subject}"
-							value="Subject name" required="required" /></td>
-						<td><input type="text"
-							th:field="*{rows[__${rowStat.index}__].grade}" value="5.0" /></td>
+							th:field="*{rows[__${rowStat.index}__].subject}" value="Subject name" required="required"/></td>
+						<td><input type="number"
+							th:field="*{rows[__${rowStat.index}__].grade}" min="1.0" max="6.0" step="0.5" value="5.0"/></td>
 						<td>
 							<button type="submit" name="remRow" th:value="${rowStat.index}">Remove</button>
 						</td>
