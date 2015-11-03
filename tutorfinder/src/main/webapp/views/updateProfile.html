@@ -146,7 +146,7 @@
 					Button to redirect to showProfile and close the edit.
 					Does not save the last changes!
 				-->
-				<button type="button" onClick="window.location.href='showProfile'">Cancel</button>
+				<button type="button" onClick="window.location.href='/showProfile?userId=${User.id}'">Cancel</button>
 			</div>
 
 			<input type="hidden" name="${_csrf.parameterName}"
