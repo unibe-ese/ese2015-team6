@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Profile</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" href="../../css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
 </head>
 
 <body>
@@ -57,7 +57,15 @@
 		-->
 		<p>
 			<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
-		</p>		
+		</p>
+		<p><b th:if="${Subjects != null}">Teaching:</b><br/>
+		<span th:each="subject:${Subjects}" th:if="${subject != null}">
+			<small th:text="|${subject.name} (Grade ${subject.grade})|">
+				SubjectOne (Grade 5.0)<br/>
+				SubjectTwo (Grade 5.5)<br/>
+			</small><br/>
+		</span>
+		</p>
 	</div>
 
 	<!-- 

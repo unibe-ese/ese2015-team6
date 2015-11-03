@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
+import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 /**
@@ -23,6 +24,7 @@ public class ShowProfileController {
 
 	@Autowired	ProfileDao profileDao;
 	@Autowired	UserDao userDao;
+	@Autowired	SubjectDao subjectDao;
 	
 	
 	/**
@@ -31,14 +33,13 @@ public class ShowProfileController {
 	 * @param user
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
-	//FIXME don't use Principal user, it allows only access to the actually logged in profile!!
-	
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView profile(@RequestParam(value="userId",required= true)int userId) { 
 		ModelAndView model = new ModelAndView("showProfile");
 		
 		User tmpUser = userDao.findById(userId);
-		model.addObject("User", tmpUser) ;
+		model.addObject("User", tmpUser);
+		model.addObject("Subjects", subjectDao.findAllByUser(tmpUser));
 		
 		model.addObject("Profile", profileDao.findByEmail(tmpUser.getEmail()));
 		
