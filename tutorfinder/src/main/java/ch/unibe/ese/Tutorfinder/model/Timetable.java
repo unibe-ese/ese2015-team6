@@ -43,20 +43,16 @@ public class Timetable {
 	@Column(name="timeslot")
 	private int timeslot;
 	
-	@NotNull
-	private Boolean availability;	
-	
 	/* Constructors */
 	public Timetable () {
 		super();
 	}
 	
-	public Timetable (User user, DayOfWeek day, int timeslot, Boolean availability) {
+	public Timetable (User user, DayOfWeek day, int timeslot) {
 		super();
 		this.user = user;
 		this.day = day;
 		this.timeslot = timeslot;
-		this.availability = availability;
 	}
 	
 	/* Getters and Setters */
@@ -90,14 +86,6 @@ public class Timetable {
 	
 	public void setTime(int time) {
 		this.timeslot = time;
-	}
-	
-	public Boolean getAvailability() {
-		return availability;
-	}
-	
-	public void setAvailability(Boolean availability) {
-		this.availability = availability;
 	}
 	
 }

@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +36,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
+import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
@@ -320,17 +320,11 @@ public class UpdateProfileController {
 		Boolean[][] tmpMatrix = new Boolean[24][7];
 		for (Boolean[] row:tmpMatrix)
 			Arrays.fill(row, false);
-		try {
-			for(int i = 0; i < tmpMatrix.length; i++) {
-				for(int j = 0; j < tmpMatrix[i].length; j++) {
-					DayOfWeek dow = DayOfWeek.of(j+1);
-					if(timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, i) != null) {
-						tmpMatrix[i][j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, i).getAvailability();
-					}
-				}
-			}
-		} catch (NullPointerException e) {
-			//Nothing to do, just couldn't get values
+		List<Timetable> tempList = timetableDao.findAllByUser(dbUser);
+		for (Timetable element: tempList) {
+			int day = element.getDay().getValue() - 1;
+			int timeslot = element.getTime();
+			tmpMatrix[timeslot][day] = true;
 		}
 		tmpForm.setTimetable(tmpMatrix);
 		return tmpForm;
