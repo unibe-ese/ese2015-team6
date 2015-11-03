@@ -51,6 +51,11 @@
 
 	<bean id="conversionService"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+			<set>
+				<bean class="ch.unibe.ese.Tutorfinder.conversion.DateFormatter" />
+			</set>
+		</property>
 	</bean>
 	
 	<!-- resources -->

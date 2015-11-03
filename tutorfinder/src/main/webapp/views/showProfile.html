@@ -66,6 +66,10 @@
 			</small><br/>
 		</span>
 		</p>
+		
+		<form action="#" method="post" th:action="@{|/updateForm?userId=${User.id}|}" th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
+			<input type="date" th:field="*{date}" name="date"/> <button type="submit" name="getDate">Show Appointments</button>
+		</form>
 	</div>
 
 	<!-- 
