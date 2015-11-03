@@ -321,10 +321,10 @@ public class UpdateProfileController {
 		for (Boolean[] row:tmpMatrix)
 			Arrays.fill(row, false);
 		try {
-			for(int i = 0; i <= tmpMatrix.length; i++) {
-				for(int j = 0; j <= tmpMatrix[i].length; j++) {
-					DayOfWeek dow = DayOfWeek.of(i+1);
-					tmpMatrix[i][j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, j).getAvailability();
+			for(int i = 0; i < tmpMatrix.length; i++) {
+				for(int j = 0; j < tmpMatrix[i].length; j++) {
+					DayOfWeek dow = DayOfWeek.of(j+1);
+					tmpMatrix[i][j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, i).getAvailability();
 				}
 			}
 		} catch (NullPointerException e) {
@@ -350,7 +350,7 @@ public class UpdateProfileController {
 		User dbUser = userDao.findByEmail(user.getName());
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("updateTimetableForm", timetableDao.findAllByUser(dbUser));
+		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
 		model.addObject("User", dbUser);
 		return model;
 	}
@@ -371,6 +371,7 @@ public class UpdateProfileController {
 		User dbUser = userDao.findByEmail(user.getName());
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
+		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
 		model.addObject("User", dbUser);
 		return model;
 	}
