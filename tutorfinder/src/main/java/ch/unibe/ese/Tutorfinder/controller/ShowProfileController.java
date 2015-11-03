@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -33,13 +34,15 @@ public class ShowProfileController {
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	//FIXME don't use Principal user, it allows only access to the actually logged in profile!!
+	
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView showProfile(Principal user) {
+	public ModelAndView profile(@RequestParam(value="userId",required= true)int userId) { 
 		ModelAndView model = new ModelAndView("showProfile");
 		
-		model.addObject("User", userDao.findByEmail(user.getName()));
+		User tmpUser = userDao.findById(userId);
+		model.addObject("User", tmpUser) ;
 		
-		model.addObject("Profile", profileDao.findOne(getUsersProfile(user)));
+		model.addObject("Profile", profileDao.findByEmail(tmpUser.getEmail()));
 		
 		return model;
 	}

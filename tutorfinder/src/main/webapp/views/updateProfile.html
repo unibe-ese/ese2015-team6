@@ -146,7 +146,7 @@
 					Button to redirect to showProfile and close the edit.
 					Does not save the last changes!
 				-->
-				<button type="button" onClick="window.location.href='showProfile'">Cancel</button>
+				<a th:href="@{'/showProfile'(userId=${User.id})}">Cancel</a>
 			</div>
 
 			<input type="hidden" name="${_csrf.parameterName}"

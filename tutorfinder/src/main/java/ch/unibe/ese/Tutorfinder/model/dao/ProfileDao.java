@@ -8,4 +8,5 @@ public interface ProfileDao extends CrudRepository<Profile, Long>{
 	
 	Profile findByEmail(String emailAddress);
 	
+	
 }

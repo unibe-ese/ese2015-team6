@@ -17,8 +17,11 @@
 				th:text="${subject.grade}">6.0</span> <span
 				th:if="${subject != null}"
 				th:text="|${subject.user.firstName} ${subject.user.lastName}|">Max
-				Muster</span>
+				Muster
+				</span>
+				<a th:if="${subject != null}" th:href="@{'/showProfile'(userId=${subject.user.id})}">Profile</a>
 		</p>
+		
 	</div>
 	
 	<!-- 
