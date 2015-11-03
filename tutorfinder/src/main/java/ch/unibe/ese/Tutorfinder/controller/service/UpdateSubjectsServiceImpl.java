@@ -40,7 +40,6 @@ public class UpdateSubjectsServiceImpl implements UpdateSubjectsService {
 	 * Replaces all currently saved subjects for one tutor with the subjects
 	 * currently in the form by deleting and re-adding them
 	 */
-	// FIXME Prohibit negative grades (limit to 1-6)
 	@Transactional
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
