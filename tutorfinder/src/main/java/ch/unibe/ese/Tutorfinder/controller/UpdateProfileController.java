@@ -182,7 +182,7 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editSubjects", params = "save", method = RequestMethod.POST)
 	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm,
 			BindingResult result, RedirectAttributes redirectAttributes) {
-		ModelAndView model = new ModelAndView("html/updateProfile");
+		ModelAndView model = new ModelAndView("updateProfile");
 
 		if (!result.hasErrors()) {
 			try {
@@ -190,7 +190,7 @@ public class UpdateProfileController {
 				// TODO show success message to the user
 			} catch (InvalidSubjectException e) {
 				result.reject("error", e.getMessage());
-				model = new ModelAndView("html/updateProfile");
+				model = new ModelAndView("updateProfile");
 			}
 		} else {
 		}
@@ -230,7 +230,7 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/editSubjects", params = "remRow")
 	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm, final HttpServletRequest req,
 			Principal user) {
-		ModelAndView model = new ModelAndView("/updateProfile");
+		ModelAndView model = new ModelAndView("updateProfile");
 		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
 		updateSubjectsForm.getRows().remove(rowId.intValue());
 		model = prepareForm(user, model, updateSubjectsForm);
@@ -240,7 +240,7 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/updateTimetable", method = RequestMethod.POST)
 	public ModelAndView updateTimetable(@Valid UpdateTimetableForm updateTimetableForm, BindingResult result,
 			Principal user) {
-		ModelAndView model = new ModelAndView("/updateProfile");
+		ModelAndView model = new ModelAndView("updateProfile");
 		if (!result.hasErrors()) {
 			try {
 				updateTimetableService.saveFrom(updateTimetableForm, user);

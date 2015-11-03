@@ -226,9 +226,8 @@
 							<td><span th:text="${rowStat.index} + ':00'">00:00</span></td>
 							<td th:each="columns,colStat : ${rows}">
 								<!--  TODO name the field correctly and load the value --> <input
-								type="checkbox" th:field="*{timetable}"
-								th:value="*{timetable[__${rowStat.index}__][__${colStat.index}__]}"
-								value="false" />
+								type="checkbox" th:field="*{timetable[__${rowStat.index}__][__${colStat.index}__]}"
+								/>
 							</td>
 						</tr>
 					</tbody>
