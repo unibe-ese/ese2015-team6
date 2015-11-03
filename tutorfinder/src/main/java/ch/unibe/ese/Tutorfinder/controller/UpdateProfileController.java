@@ -324,7 +324,9 @@ public class UpdateProfileController {
 			for(int i = 0; i < tmpMatrix.length; i++) {
 				for(int j = 0; j < tmpMatrix[i].length; j++) {
 					DayOfWeek dow = DayOfWeek.of(j+1);
-					tmpMatrix[i][j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, i).getAvailability();
+					if(timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, i) != null) {
+						tmpMatrix[i][j] = timetableDao.findByUserAndDayAndTimeslot(dbUser, dow, i).getAvailability();
+					}
 				}
 			}
 		} catch (NullPointerException e) {

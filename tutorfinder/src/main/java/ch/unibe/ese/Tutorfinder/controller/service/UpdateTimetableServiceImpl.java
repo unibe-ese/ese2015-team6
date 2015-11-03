@@ -46,11 +46,18 @@ public class UpdateTimetableServiceImpl implements UpdateTimetableService{
 				//if a timetable exists only change the availability, else create a new timetable
 				timetable = timetableDao.findByUserAndDayAndTimeslot(user, day, timeslot);
 				if(timetable != null) {
-					timetable.setAvailability(tmpTimetable[row][col]);
+					if(tmpTimetable[row][col]) {
+						timetable.setAvailability(tmpTimetable[row][col]);
+						timetable = timetableDao.save(timetable); //Save object to DB
+					}else {
+						timetableDao.delete(timetable);
+					}
 				} else {
-					timetable = new Timetable(user, day, timeslot,tmpTimetable[row][col]);
+					if(tmpTimetable[row][col]) {
+						timetable = new Timetable(user, day, timeslot,tmpTimetable[row][col]);
+						timetable = timetableDao.save(timetable); //Save object to DB
+					}
 				}
-				timetable = timetableDao.save(timetable); //Save object to DB
 			}
 		}
 		
