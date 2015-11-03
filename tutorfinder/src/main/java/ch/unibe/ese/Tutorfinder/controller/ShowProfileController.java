@@ -1,7 +1,5 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,18 +43,6 @@ public class ShowProfileController {
 		model.addObject("Profile", profileDao.findByEmail(tmpUser.getEmail()));
 		
 		return model;
-	}
-	
-	/**
-	 * Gets the profile which belongs to the actually logged in user
-	 * 
-	 * @param user is needed to get the right profile
-	 * @return profile of the actually logged in user
-	 */
-	private long getUsersProfile(Principal user) {
-		User tmpUser = userDao.findByEmail(user.getName());
-		long profileId = tmpUser.getId();
-		return profileId;
 	}
 	
 }
