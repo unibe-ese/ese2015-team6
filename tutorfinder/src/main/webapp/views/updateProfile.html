@@ -205,35 +205,37 @@
 				<!-- 
 					Timetable
 				-->
-				<p>Timetable for availability</p>
-				<table class="timetable-container" id="timeTable">
-					<thead>
-						<tr>
-							<th>Hour</th>
-							<th>MON</th>
-							<th>TUE</th>
-							<th>WED</th>
-							<th>THU</th>
-							<th>FRI</th>
-							<th>SAT</th>
-							<th>SUN</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="rows,rowStat : *{timetable}">
+				<div class="Table">
+					<div class="Title">
+						<p>Timetable for availability</p>
+					</div>
+					<div class="Heading" id="timeTable">
+						<div class="Row">
+							<div class="Cell">Hour</div>
+							<div class="Cell">MON</div>
+							<div class="Cell">TUE</div>
+							<div class="Cell">WED</div>
+							<div class="Cell">THU</div>
+							<div class="Cell">FRI</div>
+							<div class="Cell">SAT</div>
+							<div class="Cell">SUN</div>
+						</div>
+					</div>
+					<div class="Body">
+						<div class="Row" th:each="rows,rowStat : *{timetable}">
 							<!-- for each hour in a day -->
-							<td><span th:text="${rowStat.index} + ':00'">00:00</span></td>
-							<td th:each="columns,colStat : ${rows}">
-								<!--  TODO name the field correctly and load the value --> <input
-								type="checkbox" th:field="*{timetable[__${rowStat.index}__][__${colStat.index}__]}"
-								/>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<button type="submit" name="save" class="btn btn-primary">Save</button>
-				<button type="button"
-					onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'">Close</button>
+							<div class="Cell"><span th:text="${rowStat.index} + ':00'">00:00</span></div>
+							<div class="Cell" th:each="columns,colStat : ${rows}">
+								<input type="checkbox" th:field="*{timetable[__${rowStat.index}__][__${colStat.index}__]}"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="Button">
+					<button type="submit" name="save" class="btn btn-primary">Save</button>
+					<button type="button"
+						onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'">Close</button>
+				</div>
 			</div>
 		</form>
 	</div>

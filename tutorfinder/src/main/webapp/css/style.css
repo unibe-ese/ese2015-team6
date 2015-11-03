@@ -39,36 +39,37 @@ body {
 }
 
 
-table.timetable-container {
-	display: flex;
-	flex-flow: column;
-	height: 10.5em;
-	width: 675px;
-}
-table.timetable-container thead {
-	/*head take the height it requires, and it's
-	not scaled when table is resized*/
-	flex: 0 0 auto;
-}
-table.timetable-container tbody {
-	/*body takes all remaining available space*/
-	flex: 1 1 auto;
-	display: block;
-	overflow-y: scroll;
-}
-table.timetable-container tbody tr {
-	width: 100%;
-}
-table.timetable-container thead, table.timetable-container tbody tr {
+.Table {
 	display: table;
-	table-layout: fixed;
 }
-table.timetable-container th {
+.Title {
+	display: table-caption;
 	text-align: center;
-	width: 78px;
+	font-weight: bold;
+	font-size: larger;
 }
-table.timetable-container td{
+.Heading {
+	display: table-header-group;
+	font-weight: bold;
 	text-align: center;
+}
+.Body {
+	display: table-row-group;
+}
+.Row {
+	display: table-row;
+}
+.Cell {
+	display: table-cell;
+	border: solid;
+	border-width: thin;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: center;
+}
+.Button {
+	float: right;
+	padding: 5px;
 }
 
 .black_overlay{
@@ -85,16 +86,15 @@ table.timetable-container td{
 	filter: alpha(opacity=50);
 }
 .white_content {
-	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	margin-left: -22em;
-	margin-top: -8em;
-	padding: 16px;
-	border: 2px solid black;
-	background-color: white;
-	z-index:1002;
-	
-	overflow: auto;
+        display: none;
+        position: fixed;
+        top: 25%;
+        left: 25%;
+        width: 380px;
+        height: 380px;
+        padding: 13px;
+        background-color: white;
+        z-index:1002;
+        overflow: auto;
+
 }
