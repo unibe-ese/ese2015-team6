@@ -115,6 +115,10 @@ body {
 }
 
 #cancelButton {
+    position: absolute;
+    top: calc(35% + 282px);
+    left: calc(50% + 130px);
+    
     width: 100px;
     height: 28px;    
     
@@ -126,6 +130,8 @@ body {
 
     margin: 5px;
     align-self: center;
+    
+    visibility: hidden;
 }
 
 

@@ -28,7 +28,7 @@
 			<input type='text' id="email" name='email' placeholder = "E-Mail"/><br /> 
 			<input type='password' id="password" name='password' placeholder = "*******"/><br />
 			<input id = "loginButton" name="submit" type="submit" value="Login" />
-			<button id = "registerButton" type="button" onClick="document.getElementById('registerPopUp').style.visibility='visible'">Register</button>
+			<button id = "registerButton" type="button" onClick="document.getElementById('registerPopUp').style.visibility='visible';document.getElementById('cancelButton').style.visibility='visible'">Register</button>
 
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
@@ -36,8 +36,13 @@
 
 	</div>
     
+    
+    
     <object id="registerPopUp" type="text/html" data="register.html">
     </object>
+    <div>
+        <button id = "cancelButton" type="button"   onClick="document.getElementById('registerPopUp').style.visibility='hidden';document.getElementById('cancelButton').style.visibility='hidden'">Cancel</button>
+    </div>
 
 
 </body>
