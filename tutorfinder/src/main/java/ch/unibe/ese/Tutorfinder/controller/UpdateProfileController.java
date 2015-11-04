@@ -180,6 +180,9 @@ public class UpdateProfileController {
 	 * @param redirectAttributes
 	 * @return
 	 */
+	//FIXME no error message show when to subjects are named equal, only the first one is saved but loaded are both after
+	//press on the save button, but when canceled and go again on editProfile page only one is saved
+	//Futhermore allowed subject after two same named are not saved!
 	@RequestMapping(value = "/editSubjects", params = "save", method = RequestMethod.POST)
 	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm,
 			BindingResult result, RedirectAttributes redirectAttributes) {
