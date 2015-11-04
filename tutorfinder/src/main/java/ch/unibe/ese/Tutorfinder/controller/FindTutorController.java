@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectException;
-import ch.unibe.ese.Tutorfinder.controller.pojos.FindTutorForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 
 @Controller

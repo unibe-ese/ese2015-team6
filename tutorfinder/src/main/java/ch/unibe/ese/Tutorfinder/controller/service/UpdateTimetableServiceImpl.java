@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
-import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateTimetableForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;

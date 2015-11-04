@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
 import ch.unibe.ese.Tutorfinder.controller.service.RegisterService;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.*;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.SignupForm;
 
 @Controller
 public class RegisterController {

@@ -3,7 +3,7 @@ package ch.unibe.ese.Tutorfinder.controller.service;
 import java.security.Principal;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidAppointmentException;
-import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateAppointmentsForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateAppointmentsForm;
 
 public interface UpdateAppointmentsService {
 

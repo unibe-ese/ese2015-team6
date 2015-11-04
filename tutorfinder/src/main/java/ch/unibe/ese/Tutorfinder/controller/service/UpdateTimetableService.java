@@ -3,7 +3,7 @@ package ch.unibe.ese.Tutorfinder.controller.service;
 import java.security.Principal;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
-import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateTimetableForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 
 public interface UpdateTimetableService {
 

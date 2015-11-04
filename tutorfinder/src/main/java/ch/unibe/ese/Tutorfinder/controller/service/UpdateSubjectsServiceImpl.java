@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
-import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateSubjectsForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;

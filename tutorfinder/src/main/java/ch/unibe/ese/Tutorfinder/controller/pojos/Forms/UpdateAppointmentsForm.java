@@ -1,4 +1,4 @@
-package ch.unibe.ese.Tutorfinder.controller.pojos;
+package ch.unibe.ese.Tutorfinder.controller.pojos.Forms;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;

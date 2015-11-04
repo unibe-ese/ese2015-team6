@@ -2,7 +2,7 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
-import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.SignupForm;
 
 public interface RegisterService {
 

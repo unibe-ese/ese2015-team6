@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.pojos;
 
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
+
 /**
  * Is used to make up an {@link UpdateSubjectsForm} and contains it's subject 
  * and respective grading values

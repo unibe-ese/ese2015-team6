@@ -1,8 +1,6 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
 import java.time.DayOfWeek;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ch.unibe.ese.Tutorfinder.controller.pojos.MakeAppointmentsForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
@@ -67,21 +65,14 @@ public class ShowProfileController {
 			MakeAppointmentsForm appForm, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
-			DayOfWeek dow = convertDateToDow(appForm.getDate());
+			DayOfWeek dow = appForm.getDate().getDayOfWeek();
 			List<Timetable> slots = timetableDao.findAllByUserAndDay(resolveUserId(userId), dow);
-			appForm.setAppointmentList(); //TODO generate list
+			appForm.setAppointmentList(null); //TODO generate list
 		}
 		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareModelByUserId(userId, model);
 		return model;
-	}
-
-	private DayOfWeek convertDateToDow(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int dow = cal.get(Calendar.DAY_OF_WEEK);
-		return DayOfWeek.of((dow == 1) ? 7 : dow-1);
-	}
+	}	
 
 	private ModelAndView prepareModelByUserId(int userId, ModelAndView model) {
 		User tmpUser = resolveUserId(userId);

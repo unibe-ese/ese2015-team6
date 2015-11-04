@@ -3,7 +3,7 @@ package ch.unibe.ese.Tutorfinder.controller.service;
 import java.security.Principal;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
-import ch.unibe.ese.Tutorfinder.controller.pojos.UpdateProfileForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 
 public interface UpdateProfileService {
 
