@@ -42,6 +42,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -317,7 +318,7 @@ public class UpdateProfileController {
 
 	private UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
 		UpdateTimetableForm tmpForm = new UpdateTimetableForm();
-		Boolean[][] tmpMatrix = new Boolean[24][7];
+		Boolean[][] tmpMatrix = new Boolean[ConstantVariables.TIMESLOTS][ConstantVariables.DAYS];
 		for (Boolean[] row:tmpMatrix)
 			Arrays.fill(row, false);
 		List<Timetable> tempList = timetableDao.findAllByUser(dbUser);

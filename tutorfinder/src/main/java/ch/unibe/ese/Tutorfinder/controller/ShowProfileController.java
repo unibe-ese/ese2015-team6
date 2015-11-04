@@ -1,18 +1,13 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.Tutorfinder.controller.pojos.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
-import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
@@ -74,9 +68,10 @@ public class ShowProfileController {
 		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
 			DayOfWeek dow = convertDateToDow(appForm.getDate());
-			//TODO
 			List<Timetable> slots = timetableDao.findAllByUserAndDay(resolveUserId(userId), dow);
+			appForm.setAppointmentList(); //TODO generate list
 		}
+		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareModelByUserId(userId, model);
 		return model;
 	}
@@ -84,8 +79,8 @@ public class ShowProfileController {
 	private DayOfWeek convertDateToDow(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		
-		return DayOfWeek.of(cal.get(Calendar.DAY_OF_WEEK)); //TODO Conversion
+		int dow = cal.get(Calendar.DAY_OF_WEEK);
+		return DayOfWeek.of((dow == 1) ? 7 : dow-1);
 	}
 
 	private ModelAndView prepareModelByUserId(int userId, ModelAndView model) {
