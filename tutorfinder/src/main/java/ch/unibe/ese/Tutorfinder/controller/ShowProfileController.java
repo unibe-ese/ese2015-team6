@@ -1,11 +1,14 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
+import ch.unibe.ese.Tutorfinder.controller.service.MakeAppointmentService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -47,6 +51,9 @@ public class ShowProfileController {
 	@Autowired
 	AppointmentDao appointmentDao;
 
+	@Autowired
+	MakeAppointmentService makeAppointmentService;
+
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.jsp}.
 	 * 
@@ -56,7 +63,6 @@ public class ShowProfileController {
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView profile(@RequestParam(value = "userId", required = true) int userId) {
 		ModelAndView model = new ModelAndView("showProfile");
-
 		model = prepareModelByUserId(userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
 
@@ -64,8 +70,22 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
-	public ModelAndView requestAppointment() {
-		ModelAndView model = null; // TODO
+	public ModelAndView requestAppointment(@RequestParam(value = "userId", required = true) int userId,
+			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal user, BindingResult result) {
+		ModelAndView model = new ModelAndView("showProfile");
+		final Integer slot = Integer.valueOf(req.getParameter("request"));
+		if (!result.hasErrors()) {
+			User student = userDao.findByEmail(user.getName());
+			User tutor = resolveUserId(userId);
+			makeAppointmentService.saveFrom(appForm, slot, tutor, student);
+			LocalDate date = appForm.getDate();
+			DayOfWeek dow = date.getDayOfWeek();
+			List<Timetable> slots = timetableDao.findAllByUserAndDay(tutor, dow);
+			appForm.setAppointments(loadAppointments(slots, userDao.findByEmail(user.getName()), date));
+		}
+		
+		model.addObject("makeAppointmentsForm", appForm);
+		model = prepareModelByUserId(userId, model);
 		return model;
 	}
 
@@ -78,35 +98,38 @@ public class ShowProfileController {
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableDao.findAllByUserAndDay(user, dow);
-			List<AppointmentPlaceholder> tmpList = new ArrayList<AppointmentPlaceholder>();
-			
-			for (Timetable slot : slots) {
-				int hours = slot.getTime();
-				
-				LocalDateTime dateTime = LocalDateTime.from(date.atStartOfDay());
-				dateTime.plusHours(hours);
-				Timestamp timestamp = Timestamp.valueOf(dateTime);
-				
-				Appointment tmpAppointment = appointmentDao.findByTutorAndTimestamp(user, timestamp);
-				AppointmentPlaceholder placeholder;
-				
-				if (tmpAppointment != null) {
-					placeholder = new AppointmentPlaceholder();
-					placeholder.setAvailability(tmpAppointment.getAvailability());
-					placeholder.setDow(dow);
-					placeholder.setTimeslot(hours);
-				} else {
-					placeholder = new AppointmentPlaceholder(dow, hours);
-				}
-				tmpList.add(placeholder);
-			}
-			
-			appForm.setAppointments(tmpList);
+			appForm.setAppointments(loadAppointments(slots, user, date));
 		}
 		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareModelByUserId(userId, model);
 		return model;
-	}	
+	}
+
+	//FIXME AFter unchecking a slot, even reserved slots are not displayed anymore
+	private List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date) {
+		List<AppointmentPlaceholder> tmpList = new ArrayList<AppointmentPlaceholder>();
+		for (Timetable slot : slots) {
+			int hours = slot.getTime();
+
+			LocalDateTime dateTime = LocalDateTime.from(date.atStartOfDay());
+			dateTime = dateTime.plusHours(hours);
+			Timestamp timestamp = Timestamp.valueOf(dateTime);
+
+			Appointment tmpAppointment = appointmentDao.findByTutorAndTimestamp(user, timestamp);
+			AppointmentPlaceholder placeholder;
+
+			if (tmpAppointment != null) {
+				placeholder = new AppointmentPlaceholder();
+				placeholder.setAvailability(tmpAppointment.getAvailability());
+				placeholder.setDow(date.getDayOfWeek());
+				placeholder.setTimeslot(hours);
+			} else {
+				placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
+			}
+			tmpList.add(placeholder);
+		}
+		return tmpList;
+	}
 
 	private ModelAndView prepareModelByUserId(int userId, ModelAndView model) {
 		User tmpUser = resolveUserId(userId);

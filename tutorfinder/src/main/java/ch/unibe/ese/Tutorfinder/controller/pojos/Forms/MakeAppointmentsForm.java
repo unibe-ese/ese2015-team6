@@ -14,12 +14,15 @@ public class MakeAppointmentsForm {
 	public List<AppointmentPlaceholder> getAppointments() {
 		return appointments;
 	}
+	
 	public void setAppointments(List<AppointmentPlaceholder> appointmentList) {
 		this.appointments = appointmentList;
 	}
+	
 	public LocalDate getDate() {
 		return date;
 	}
+	
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}

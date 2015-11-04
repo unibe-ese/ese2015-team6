@@ -66,8 +66,9 @@ public class Appointment {
 		super();
 	}
 	
-	public Appointment(User tutor, DayOfWeek day, Timestamp timestamp, Availability availability, BigDecimal wage) {
+	public Appointment(User tutor, User student, DayOfWeek day, Timestamp timestamp, Availability availability, BigDecimal wage) {
 		this.tutor = tutor;
+		this.student = student;
 		this.day = day;
 		this.timestamp = timestamp;
 		this.availability = availability;
