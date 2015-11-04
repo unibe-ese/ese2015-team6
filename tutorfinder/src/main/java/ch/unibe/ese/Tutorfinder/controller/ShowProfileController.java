@@ -1,6 +1,10 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
+import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
+import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
@@ -37,6 +44,8 @@ public class ShowProfileController {
 	SubjectDao subjectDao;
 	@Autowired
 	TimetableDao timetableDao;
+	@Autowired
+	AppointmentDao appointmentDao;
 
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.jsp}.
@@ -65,9 +74,34 @@ public class ShowProfileController {
 			MakeAppointmentsForm appForm, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
-			DayOfWeek dow = appForm.getDate().getDayOfWeek();
-			List<Timetable> slots = timetableDao.findAllByUserAndDay(resolveUserId(userId), dow);
-			appForm.setAppointmentList(null); //TODO generate list
+			User user = resolveUserId(userId);
+			LocalDate date = appForm.getDate();
+			DayOfWeek dow = date.getDayOfWeek();
+			List<Timetable> slots = timetableDao.findAllByUserAndDay(user, dow);
+			List<AppointmentPlaceholder> tmpList = new ArrayList<AppointmentPlaceholder>();
+			
+			for (Timetable slot : slots) {
+				int hours = slot.getTime();
+				
+				LocalDateTime dateTime = LocalDateTime.from(date.atStartOfDay());
+				dateTime.plusHours(hours);
+				Timestamp timestamp = Timestamp.valueOf(dateTime);
+				
+				Appointment tmpAppointment = appointmentDao.findByTutorAndTimestamp(user, timestamp);
+				AppointmentPlaceholder placeholder;
+				
+				if (tmpAppointment != null) {
+					placeholder = new AppointmentPlaceholder();
+					placeholder.setAvailability(tmpAppointment.getAvailability());
+					placeholder.setDow(dow);
+					placeholder.setTimeslot(hours);
+				} else {
+					placeholder = new AppointmentPlaceholder(dow, hours);
+				}
+				tmpList.add(placeholder);
+			}
+			
+			appForm.setAppointments(tmpList);
 		}
 		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareModelByUserId(userId, model);

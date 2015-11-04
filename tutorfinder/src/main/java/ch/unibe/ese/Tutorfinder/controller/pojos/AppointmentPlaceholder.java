@@ -19,6 +19,11 @@ public class AppointmentPlaceholder {
 		availability = Availability.AVAILABLE;
 	}
 	
+	@Override
+	public String toString() {
+		return "Day: " + dow + ", Time: " + timeslot;
+	}
+
 	public Availability getAvailability() {
 		return availability;
 	}

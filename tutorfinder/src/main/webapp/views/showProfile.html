@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Profile</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
 </head>
 
 <body>
@@ -17,12 +18,12 @@
 		onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
 		alt="Profile picture" width="192" height="192"
 		src="../../img/default-avatar.jpg" />
-	
+
 
 	<!-- 
 		Profile name 
 	-->
-	
+
 	<h1 th:text="|${User.firstName} ${User.lastName}|">Vorname
 		Nachname</h1>
 
@@ -43,8 +44,8 @@
 			magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
 			justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
 			takimata sanctus est Lorem ipsum dolor sit amet.</p>
-	
-	
+
+
 		<!-- 
 			Region 
 		-->
@@ -58,25 +59,37 @@
 		<p>
 			<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
 		</p>
-		<p><b th:if="${Subjects != null}">Teaching:</b><br/>
-		<span th:each="subject:${Subjects}" th:if="${subject != null}">
-			<small th:text="|${subject.name} (Grade ${subject.grade})|">
-				SubjectOne (Grade 5.0)<br/>
-				SubjectTwo (Grade 5.5)<br/>
-			</small><br/>
-		</span>
+		<p>
+			<b th:if="${Subjects != null}">Teaching:</b><br /> <span
+				th:each="subject:${Subjects}" th:if="${subject != null}"> <small
+				th:text="|${subject.name} (Grade ${subject.grade})|">
+					SubjectOne (Grade 5.0)<br /> SubjectTwo (Grade 5.5)<br />
+			</small><br />
+			</span>
 		</p>
-		
-		<form action="#" method="post" th:action="@{|/updateForm?userId=${User.id}|}" th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
-			<input type="date" th:field="*{date}" name="date"/> <button type="submit" name="getDate">Show Appointments</button>
+
+		<form action="#" method="post"
+			th:action="@{|/updateForm?userId=${User.id}|}"
+			th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
+			<input type="date" th:field="*{date}" name="date" />
+			<button type="submit" name="getDate">Get Appointments</button>
+			<div th:each="appointment:*{appointments}">
+				<span
+					th:text="|${appointment.timeslot}:00 Status: ${appointment.availability}|">18:00
+					Status: AVAILABLE </span>
+				<button type="submit" name="request"
+					th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
+					th:value="${appointment.timeslot}">Request</button>
+			</div>
 		</form>
 	</div>
 
 	<!-- 
     	Edit Button
     -->
-    <div id="editButton">
-		<button type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
+	<div id="editButton">
+		<button type="button" onClick="window.location.href='/editProfile'">Edit
+			Profile</button>
 	</div>
 
 	<!--  

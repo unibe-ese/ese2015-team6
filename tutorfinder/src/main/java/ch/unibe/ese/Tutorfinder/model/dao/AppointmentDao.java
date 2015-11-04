@@ -2,7 +2,6 @@ package ch.unibe.ese.Tutorfinder.model.dao;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,13 +10,9 @@ import ch.unibe.ese.Tutorfinder.model.User;
 
 public interface AppointmentDao extends CrudRepository<Appointment, Long> {
 	
-	Appointment findById (long id);
-	
 	ArrayList<Appointment> findAllByTutor (User tutor);
 	
 	ArrayList<Appointment> findAllByStudent (User student);
 	
-	LinkedList<Appointment> findAllByTimestamp (Timestamp timestamp);
-	
-
+	Appointment findByTutorAndTimestamp (User tutor, Timestamp timestamp);
 }

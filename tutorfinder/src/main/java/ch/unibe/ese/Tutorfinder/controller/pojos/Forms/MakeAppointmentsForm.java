@@ -9,13 +9,13 @@ public class MakeAppointmentsForm {
 	
 	private LocalDate date;
 	
-	private List<AppointmentPlaceholder> appointmentList;
+	private List<AppointmentPlaceholder> appointments;
 	
-	public List<AppointmentPlaceholder> getAppointmentList() {
-		return appointmentList;
+	public List<AppointmentPlaceholder> getAppointments() {
+		return appointments;
 	}
-	public void setAppointmentList(List<AppointmentPlaceholder> appointmentList) {
-		this.appointmentList = appointmentList;
+	public void setAppointments(List<AppointmentPlaceholder> appointmentList) {
+		this.appointments = appointmentList;
 	}
 	public LocalDate getDate() {
 		return date;
