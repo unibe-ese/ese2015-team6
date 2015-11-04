@@ -1,28 +1,64 @@
 
 body {
 	background-color: #666666;
-    margin: 40px;
+    margin: 0px;
     font-family: sans-serif;
 }
 
 
 #logo {
-    align-self:center;
-}
-#login-box {
-    
+    color: #ffffff;
+    font: bold 40px helvetica;
     text-align: center;
-    align-content: center;
     
     position: absolute;
     width: 100%;
+    bottom: 70%;
+    
+    align-self:center;
+}
+#info-box {
+    position: absolute;
+    left: 0%;
+    right: 50%;
+    align-content: center;
+    
+    margin: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+    
+    color: #ffffff;
+    font: bold 20px helvetica;
+    text-align: center;
+    
+    top: 35%;
+}
+
+#login-box {
+    position: absolute;
+    left: 50%;
+    right: 0%;
+    align-content: center;
+    text-align: center;
+    
+    
+    
     top: 35%;
 }
 #login-box > div{
     margin: 20px;
-    text-align: center;
+    
     color: #ffffff;
     font: bold 20px helvetica;
+}
+
+#registerPopUp {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    width: 650px;
+    height: 335px;
+    visibility: hidden;
 }
 
 #email {
@@ -78,11 +114,28 @@ body {
     align-self: center;
 }
 
+#cancelButton {
+    width: 100px;
+    height: 28px;    
+    
+    font-size: 18px;
+    color: darkslategray;
+    
+    background-color: white;
+    border-radius: 5px;
+
+    margin: 5px;
+    align-self: center;
+}
+
 
 #registerBox {
     
-    width: 700px;;
-    margin: 20px;
+    width: 650px;
+    height: 335px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
     color: #ffffff;
     font: bold 20px helvetica;
     white-space: nowrap;
@@ -92,27 +145,32 @@ body {
 
 .controls > input {
      width: 200px;
-    height: 25px;   
+    height: 27px;   
     
     font-size: 20px;
     text-align: left;
     
     border-radius: 5px;
+    border: 2px;
+    padding-left: 2px;
 
     margin: 5px;
 }
 
 .controls > select {
-     width: 200px;
-    height: 25px;   
+    width: 200px;
+    height: 27px;   
     
     font-size: 20px;
     text-align: center;
     color: darkslategray;
     
     border-radius: 5px;
-
-    margin: 5px;
+    border: 2px;
+    padding-left: 2px;
+    
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
 

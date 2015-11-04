@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Login</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../../css/style.css"/>
 </head>
 
 <body onload='document.loginForm.email.focus();'>
@@ -11,28 +11,33 @@
 	<div id="logo">
 		<h1>ESE Tutorfinder</h1>
 	</div>
-
-
+    <div id="info-box">
+        Welcome to the Tutorfinder-website of Team 6.
+        Here it is possible to find a tutor for a subject you 
+        want to improve or to offer your help, if you are already experienced
+        in a subject.
+        
+    </div>
+    
+    
 	<div id="login-box">
-
-		<h2></h2>
-
 		<div th:text="${error}">Invalid username and/or password</div>
 		<div th:text="${msg}">You have been logged out</div>
 
 		<form th:name='loginForm' th:action="${loginUrl}" method="post">
-			<label for="email">EMAIL</label>: 
-			<input type='text' id="email" name='email'/><br /> 
-			<label for="password">PASSWORD</label>:
-			<input type='password' id="password" name='password' /><br />
-			<input name="submit" type="submit" value="LOGIN" />
-			<button type="button" onClick="window.location.href='/register'">REGISTER</button>
+			<input type='text' id="email" name='email' placeholder = "E-Mail"/><br /> 
+			<input type='password' id="password" name='password' placeholder = "*******"/><br />
+			<input id = "loginButton" name="submit" type="submit" value="Login" />
+			<button id = "registerButton" type="button" onClick="document.getElementById('registerPopUp').style.visibility='visible'">Register</button>
 
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 		</form>
 
 	</div>
+    
+    <object id="registerPopUp" type="text/html" data="register.html">
+    </object>
 
 
 </body>
