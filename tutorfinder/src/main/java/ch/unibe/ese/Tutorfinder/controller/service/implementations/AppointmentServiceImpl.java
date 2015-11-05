@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
-import ch.unibe.ese.Tutorfinder.controller.service.MakeAppointmentService;
+import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.util.Availability;
 
 @Service
-public class MakeAppointmentServiceImpl implements MakeAppointmentService {
+public class AppointmentServiceImpl implements AppointmentService {
 	
 	@Autowired
 	AppointmentDao appointmentDao;
@@ -32,6 +32,14 @@ public class MakeAppointmentServiceImpl implements MakeAppointmentService {
 		
 		Appointment appointment = new Appointment(tutor,student,dow,timestamp,Availability.RESERVED, wage);
 		appointmentDao.save(appointment);
+	}
+
+	@Override
+	public Appointment findByTutorAndTimestamp(User user, Timestamp timestamp) {
+		assert (user != null && timestamp != null);
+		Appointment returnValue = appointmentDao.findByTutorAndTimestamp(user, timestamp);
+		assert (returnValue != null);
+		return returnValue;
 	}
 
 }
