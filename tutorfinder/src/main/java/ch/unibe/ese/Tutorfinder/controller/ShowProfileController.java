@@ -22,15 +22,13 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MakeAppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
-import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
+import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
-import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
-import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -42,10 +40,6 @@ import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 @Controller
 public class ShowProfileController {
 
-	@Autowired
-	SubjectDao subjectDao;
-	@Autowired
-	TimetableDao timetableDao;
 	@Autowired
 	AppointmentDao appointmentDao;
 
