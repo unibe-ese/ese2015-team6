@@ -119,7 +119,8 @@ public class UpdateProfileController {
 					prepareFormService.getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(userService.getUserByPrincipal(user))));
 			return model;
 		}
-		model = prepareFormService.prepareForm(user, model, updateProfileForm);
+		model = prepareFormService.prepareForm(user, model);
+		model.addObject("updateProfileForm", updateProfileForm);
 
 		return model;
 	}
@@ -190,7 +191,8 @@ public class UpdateProfileController {
 				result.reject("error", e.getMessage());
 				model = new ModelAndView("updateProfile");
 			}
-			model = prepareFormService.prepareForm(user, model, updateSubjectsForm);
+			model = prepareFormService.prepareForm(user, model);
+			model.addObject("updateSubjectsForm", updateSubjectsForm);
 		} else {
 		}
 
@@ -210,7 +212,8 @@ public class UpdateProfileController {
 	public ModelAndView addRow(@Valid UpdateSubjectsForm updateSubjectsForm, Principal user) {
 		ModelAndView model = new ModelAndView("updateProfile");
 		updateSubjectsForm.getRows().add(new Row());
-		model = prepareFormService.prepareForm(user, model, updateSubjectsForm);
+		model = prepareFormService.prepareForm(user, model);
+		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		return model;
 	}
 
@@ -231,7 +234,8 @@ public class UpdateProfileController {
 		ModelAndView model = new ModelAndView("updateProfile");
 		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
 		updateSubjectsForm.getRows().remove(rowId.intValue());
-		model = prepareFormService.prepareForm(user, model, updateSubjectsForm);
+		model = prepareFormService.prepareForm(user, model);
+		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		return model;
 	}
 
@@ -248,7 +252,8 @@ public class UpdateProfileController {
 			}
 		}
 
-		model = prepareFormService.prepareForm(user, model, updateTimetableForm);
+		model = prepareFormService.prepareForm(user, model);
+		model.addObject("updateTimetableForm", updateTimetableForm);
 		return model;
 	}
 

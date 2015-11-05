@@ -37,8 +37,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public Appointment findByTutorAndTimestamp(User user, Timestamp timestamp) {
 		assert (user != null && timestamp != null);
+		
 		Appointment returnValue = appointmentDao.findByTutorAndTimestamp(user, timestamp);
-		assert (returnValue != null);
+
 		return returnValue;
 	}
 

@@ -37,36 +37,6 @@ public interface PrepareFormService {
 	 */
 	public Profile getUsersProfile(Principal user);
 	
-	/**
-	 * Injects needed objects into a given {@link ModelAndView} while preserving
-	 * the current rows of the {@link UpdateSubjectsForm}
-	 * 
-	 * @param user
-	 *            {@link Principal}
-	 * @param model
-	 *            {@link ModelAndView}
-	 * @param updateSubjectsForm
-	 *            {@link UpdateSubjectsForm}
-	 * @return {@link ModelAndView} ready for return
-	 */
-	public ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm);
-	
-	/**
-	 * Injects needed objects into a given {@link ModelAndView} while preserving
-	 * the current {@link UpdateProfileForm}
-	 * 
-	 * @param user
-	 *            {@link Principal}
-	 * @param model
-	 *            {@link ModelAndView}
-	 * @param updateSubjectsForm
-	 *            {@link UpdateSubjectsForm}
-	 * @return {@link ModelAndView} ready for return
-	 */
-	public ModelAndView prepareForm(Principal user, ModelAndView model, UpdateProfileForm updateProfileForm);
-	
-	public ModelAndView prepareForm(Principal user, ModelAndView model, UpdateTimetableForm updateTimetableForm);
-	
 	public UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser);
 	
 	/**

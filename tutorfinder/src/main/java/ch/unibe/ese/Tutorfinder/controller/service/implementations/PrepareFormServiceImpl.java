@@ -46,6 +46,7 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		return model;
 	}
 
+
 	@Override
 	public UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
 		UpdateTimetableForm tmpForm = new UpdateTimetableForm();
@@ -91,36 +92,6 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		Profile tmpProfile = profileService.getProfileById(tmpUser.getId());
 
 		return tmpProfile;
-	}
-
-	@Override
-	public ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm) {
-		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", updateSubjectsForm);
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
-		model.addObject("User", dbUser);
-		return model;
-	}
-
-	@Override
-	public ModelAndView prepareForm(Principal user, ModelAndView model, UpdateProfileForm updateProfileForm) {
-		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
-		model.addObject("updateProfileForm", updateProfileForm);
-		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
-		model.addObject("User", dbUser);
-		return model;
-	}
-
-	@Override
-	public ModelAndView prepareForm(Principal user, ModelAndView model, UpdateTimetableForm updateTimetableForm) {
-		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("updateTimetableForm", updateTimetableForm);
-		model.addObject("User", dbUser);
-		return model;
 	}
 
 }
