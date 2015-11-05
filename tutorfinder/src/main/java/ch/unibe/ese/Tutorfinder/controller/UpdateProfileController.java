@@ -4,9 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -31,18 +28,15 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
-import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
+import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
+import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
-import ch.unibe.ese.Tutorfinder.model.Profile;
-import ch.unibe.ese.Tutorfinder.model.Subject;
-import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
-import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -69,6 +63,8 @@ public class UpdateProfileController {
 	ProfileService profileService;
 	@Autowired
 	SubjectService subjectService;
+	@Autowired
+	PrepareFormService prepareFormService;
 
 	/**
 	 * Maps the /editProfile page to the {@code updateProfile.jsp}.
@@ -84,7 +80,7 @@ public class UpdateProfileController {
 	public ModelAndView editProfile(Principal user) {
 		ModelAndView model = new ModelAndView("updateProfile");
 
-		model = prepareForm(user, model);
+		model = prepareFormService.prepareForm(user, model);
 		return model;
 	}
 
@@ -123,10 +119,10 @@ public class UpdateProfileController {
 			model = new ModelAndView("updateProfile");
 			model.addObject("User", userService.getUserByPrincipal(user));
 			model.addObject("updateSubjectsForm",
-					getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(userService.getUserByPrincipal(user))));
+					prepareFormService.getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(userService.getUserByPrincipal(user))));
 			return model;
 		}
-		model = prepareForm(user, model, updateProfileForm);
+		model = prepareFormService.prepareForm(user, model, updateProfileForm);
 
 		return model;
 	}
@@ -166,7 +162,7 @@ public class UpdateProfileController {
 			// TODO show error massage to the user
 		}
 
-		model = prepareForm(user, model);
+		model = prepareFormService.prepareForm(user, model);
 		return model;
 	}
 
@@ -197,7 +193,7 @@ public class UpdateProfileController {
 				result.reject("error", e.getMessage());
 				model = new ModelAndView("updateProfile");
 			}
-			model = prepareForm(user, model, updateSubjectsForm);
+			model = prepareFormService.prepareForm(user, model, updateSubjectsForm);
 		} else {
 		}
 
@@ -217,7 +213,7 @@ public class UpdateProfileController {
 	public ModelAndView addRow(@Valid UpdateSubjectsForm updateSubjectsForm, Principal user) {
 		ModelAndView model = new ModelAndView("updateProfile");
 		updateSubjectsForm.getRows().add(new Row());
-		model = prepareForm(user, model, updateSubjectsForm);
+		model = prepareFormService.prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
 
@@ -238,7 +234,7 @@ public class UpdateProfileController {
 		ModelAndView model = new ModelAndView("updateProfile");
 		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
 		updateSubjectsForm.getRows().remove(rowId.intValue());
-		model = prepareForm(user, model, updateSubjectsForm);
+		model = prepareFormService.prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
 
@@ -255,145 +251,8 @@ public class UpdateProfileController {
 			}
 		}
 
-		model = prepareForm(user, model, updateTimetableForm);
+		model = prepareFormService.prepareForm(user, model, updateTimetableForm);
 		return model;
-	}
-
-	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateTimetableForm updateTimetableForm) {
-		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("updateTimetableForm", updateTimetableForm);
-		model.addObject("User", dbUser);
-		return model;
-	}
-
-	/**
-	 * Gets an form with the users new information
-	 * 
-	 * @param user
-	 *            {@link Principal}
-	 * @return form with the users input values
-	 */
-	private UpdateProfileForm getFormWithValues(Principal user) {
-		UpdateProfileForm tmpForm = new UpdateProfileForm();
-		tmpForm.setFirstName((userService.getUserByPrincipal(user)).getFirstName());
-		tmpForm.setLastName((userService.getUserByPrincipal(user)).getLastName());
-		tmpForm.setBiography(getUsersProfile(user).getBiography());
-		tmpForm.setRegion(getUsersProfile(user).getRegion());
-		tmpForm.setWage(getUsersProfile(user).getWage());
-
-		return tmpForm;
-	}
-
-	/**
-	 * Gets the profile which belongs to the actually logged in user
-	 * 
-	 * @param user
-	 *            {@link Principal} is needed to get the right profile
-	 * @return profile of the actually logged in user
-	 */
-	private Profile getUsersProfile(Principal user) {
-		User tmpUser = userService.getUserByPrincipal(user);
-		Profile tmpProfile = profileService.getProfileById(tmpUser.getId());
-
-		return tmpProfile;
-	}
-
-	/**
-	 * Injects needed objects into a given {@link ModelAndView} and gets the
-	 * {@link Subjects} for the {@link UpdateSubjectsForm} from the DB
-	 * essentially discarding the form's current state.
-	 * 
-	 * @param user
-	 *            {@link Principal}
-	 * @param model
-	 *            {@link ModelAndView}
-	 * @return
-	 */
-	private ModelAndView prepareForm(Principal user, ModelAndView model) {
-		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
-		model.addObject("User", dbUser);
-		return model;
-	}
-
-	private UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
-		UpdateTimetableForm tmpForm = new UpdateTimetableForm();
-		Boolean[][] tmpMatrix = new Boolean[ConstantVariables.TIMESLOTS][ConstantVariables.DAYS];
-		for (Boolean[] row : tmpMatrix)
-			Arrays.fill(row, false);
-		List<Timetable> tempList = timetableService.findAllByUser(dbUser);
-		for (Timetable element : tempList) {
-			int day = element.getDay().getValue() - 1;
-			int timeslot = element.getTime();
-			tmpMatrix[timeslot][day] = true;
-		}
-		tmpForm.setTimetable(tmpMatrix);
-		return tmpForm;
-	}
-
-	/**
-	 * Injects needed objects into a given {@link ModelAndView} while preserving
-	 * the current rows of the {@link UpdateSubjectsForm}
-	 * 
-	 * @param user
-	 *            {@link Principal}
-	 * @param model
-	 *            {@link ModelAndView}
-	 * @param updateSubjectsForm
-	 *            {@link UpdateSubjectsForm}
-	 * @return {@link ModelAndView} ready for return
-	 */
-	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm) {
-		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", updateSubjectsForm);
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
-		model.addObject("User", dbUser);
-		return model;
-	}
-
-	/**
-	 * Injects needed objects into a given {@link ModelAndView} while preserving
-	 * the current {@link UpdateProfileForm}
-	 * 
-	 * @param user
-	 *            {@link Principal}
-	 * @param model
-	 *            {@link ModelAndView}
-	 * @param updateSubjectsForm
-	 *            {@link UpdateSubjectsForm}
-	 * @return {@link ModelAndView} ready for return
-	 */
-	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateProfileForm updateProfileForm) {
-		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
-		model.addObject("updateProfileForm", getFormWithValues(user));
-		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
-		model.addObject("User", dbUser);
-		return model;
-	}
-
-	/**
-	 * Converts an ArrayList of Subjects into a {@link UpdateSubjectsForm}
-	 * filled with rows containing all the information from the given subjects
-	 * 
-	 * @param subjectList
-	 *            Subject array list (from db)
-	 * @return UpdateSubjectForm filled with rows
-	 */
-	// TODO Move to service
-	private UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList) {
-		UpdateSubjectsForm tempForm = new UpdateSubjectsForm();
-		List<Row> rowList = new ArrayList<Row>();
-		for (Subject subject : subjectList) {
-			rowList.add(new Row(subject.getName(), subject.getGrade()));
-		}
-		tempForm.setRows(rowList);
-		return tempForm;
 	}
 
 	/**
