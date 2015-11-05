@@ -31,6 +31,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
+import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
@@ -39,7 +40,6 @@ import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
-import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
@@ -63,9 +63,9 @@ public class UpdateProfileController {
 	UpdateTimetableService updateTimetableService;
 	@Autowired
 	UserService userService;
-
 	@Autowired
-	ProfileDao profileDao;
+	ProfileService profileService;
+
 	@Autowired
 	SubjectDao subjectDao;
 	@Autowired
@@ -296,7 +296,7 @@ public class UpdateProfileController {
 	 */
 	private Profile getUsersProfile(Principal user) {
 		User tmpUser = userService.getUserByPrincipal(user);
-		Profile tmpProfile = profileDao.findOne(tmpUser.getId());
+		Profile tmpProfile = profileService.getProfileById(tmpUser.getId());
 
 		return tmpProfile;
 	}
