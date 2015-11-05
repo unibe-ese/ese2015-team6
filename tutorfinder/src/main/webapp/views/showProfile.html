@@ -10,6 +10,9 @@
 
 <body>
 
+    <div th:include="header::header"></div>
+    
+    <div class="content">
 	<!-- 
 		Profile picture 
 	-->
@@ -26,76 +29,9 @@
 	<h1 th:text="|${User.firstName} ${User.lastName}|">Vorname
 		Nachname</h1>
 
-
-	<!-- The following information are only shown if it is the profile from an tutor -->
-	<div sec:authorize="hasRole('ROLE_TUTOR')">
-		<!-- 
-	    	Biography 
-	    -->
-		<h3>Short biography</h3>
-		<p style="width: 700px" th:text="${Profile.biography}">Lorem ipsum
-			dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-			tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-			voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-			Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-			dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-			elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-			magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-			justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-			takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <button id="editButton" type="button" onClick="window.location.href='/showProfile'">Edit Profile</button>
+    </div>
 	
-	
-		<!-- 
-			Region 
-		-->
-		<p>
-			<b>Region:</b> <span th:text="${Profile.region}"> Bern</span>
-		</p>
-
-		<!-- 
-			Wage 
-		-->
-		<p>
-			<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
-		</p>
-		<p><b th:if="${Subjects != null}">Teaching:</b><br/>
-		<span th:each="subject:${Subjects}" th:if="${subject != null}">
-			<small th:text="|${subject.name} (Grade ${subject.grade})|">
-				SubjectOne (Grade 5.0)<br/>
-				SubjectTwo (Grade 5.5)<br/>
-			</small><br/>
-		</span>
-		</p>
-	</div>
-
-	<!-- 
-    	Edit Button
-    -->
-    <div id="editButton">
-		<button type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
-	</div>
-
-	<!--  
-		Search Button
-	 -->
-	<div id="searchButton">
-		<button type="button" onClick="window.location.href='/findTutor'">Search</button>
-	</div>
-
-	<!--  
-		Home Button
-	 -->
-	<div id="homeButton">
-		<button type="button" onClick="window.location.href='/home'">Home</button>
-	</div>
-
-	<!--  
-		Logout Button
-	 -->
-	<div id="logoutButton">
-		<button type="button" onClick="window.location.href='/logout'">Logout</button>
-	</div>
-
 
 </body>
 

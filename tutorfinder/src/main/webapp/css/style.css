@@ -3,9 +3,11 @@ body {
 	background-color: #666666;
     margin: 0px;
     font-family: sans-serif;
+    
 }
 
 
+/* Login and Register */
 #logo {
     color: #ffffff;
     font: bold 40px helvetica;
@@ -17,7 +19,7 @@ body {
     
     align-self:center;
 }
-#info-box {
+#infoBox {
     position: absolute;
     left: 0%;
     right: 50%;
@@ -34,32 +36,43 @@ body {
     top: 35%;
 }
 
-#login-box {
+#loginBox {
     position: absolute;
     left: 50%;
     right: 0%;
     align-content: center;
     text-align: center;
-    
-    
-    
     top: 35%;
+    
+    visibility: visible;
 }
-#login-box > div{
+#loginBox > div{
     margin: 20px;
     
     color: #ffffff;
     font: bold 20px helvetica;
 }
 
-#registerPopUp {
+#registerBox {
+    
     position: absolute;
-    top: 35%;
-    left: 50%;
     width: 650px;
     height: 335px;
-    visibility: hidden;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    color: #ffffff;
+    font: bold 20px helvetica;
+    white-space: nowrap;
+    overflow: hidden; 
+    visibility: hidden;    
+    top: 35%;
+    left: 50%;
+
+
 }
+
+
 
 #email {
     width: 200px;
@@ -115,10 +128,6 @@ body {
 }
 
 #cancelButton {
-    position: absolute;
-    top: calc(35% + 282px);
-    left: calc(50% + 130px);
-    
     width: 100px;
     height: 28px;    
     
@@ -129,23 +138,13 @@ body {
     border-radius: 5px;
 
     margin: 5px;
-    align-self: center;
-    
-    visibility: hidden;
 }
 
 
-#registerBox {
-    
-    width: 650px;
-    height: 335px;
+#registerBox > form > fieldset {
     margin: 0px;
-    padding: 0px;
     border: 0px;
-    color: #ffffff;
-    font: bold 20px helvetica;
-    white-space: nowrap;
-    overflow: hidden
+    padding: 0px;
     
 }
 
@@ -179,31 +178,118 @@ body {
     margin-left: 5px;
 }
 
+/* signupComplete and success */
 
+.redirectionPage {
+    
+    position: absolute;
+    margin:30px;
+    color: white;
+    font: bold 20px helvetica;    
+}
 
+.redirectionPage > p > a {
+    color:lightgreen;    
+}
+.redirectionPage > p > a:hover{
+    text-decoration:underline;
+}
+
+/*Home*/
+
+.content {
+    
+    position: absolute;
+    top: 70px;
+    margin: 30px;
+    color: #ffffff;
+    font: bold 20px helvetica;
+    
+}
+
+/*ShowProfile*/
+#editButton {
+	top: 10px;
+	right: 240px;
+    width: 100px;
+    height: 28px;  
+    
+    
+    background-color: white;
+    border-radius: 5px;
+    
+    font-size: 18px;
+    color: darkslategrey;
+    text-align: center;
+
+    margin: 5px;
+    padding: 0px;
+    
+}
+/*Header*/
+
+#headerLogo {
+    
+    position: absolute;
+    
+    margin: 10px;
+    
+    color: #ffffff;
+    font: bold 50px helvetica;
+        
+}
+
+.headerButton {
+    position: absolute;
+	width: 110px;
+    height: 28px;  
+    
+    
+    background-color: white;
+    border-radius: 5px;
+    
+    font-size: 18px;
+    color: darkslategrey;
+    text-align: center;
+
+    margin: 5px;
+
+}
 
 #logoutButton {
 	position: absolute;
-	top: 0px;
-	right: 0px;
+	width: 110px;
+    height: 28px;    
+    
+    background-color: red;
+    border-radius: 5px;
+    
+    font-size: 18px;
+    color: white;
+    text-align: center;
+
+    margin: 5px;
+    
+    top: 10px;
+    right: 0px;
+
 }
 
-#homeButton {
-	position: absolute;
-	top: 0px;
-	right: 60px;
-}
 
-#editButton {
+#showButton {
 	position: absolute;
-	top: 0px;
-	right: 120px;
+	top: 10px;
+	right: 240px;
+    
+    padding-left: 0px;
+    padding-right: 0px;
+    
 }
 
 #searchButton {
 	position: absolute;
-	top: 0px;
-	right: 210px;
+	top: 10px;
+	right: 120px;
 }
 
 

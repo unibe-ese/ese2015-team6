@@ -11,7 +11,7 @@
 	<div id="logo">
 		<h1>ESE Tutorfinder</h1>
 	</div>
-    <div id="info-box">
+    <div id="infoBox">
         Welcome to the Tutorfinder-website of Team 6.
         Here it is possible to find a tutor for a subject you 
         want to improve or to offer your help, if you are already experienced
@@ -20,7 +20,7 @@
     </div>
     
     
-	<div id="login-box">
+	<div id="loginBox">
 		<div th:text="${error}">Invalid username and/or password</div>
 		<div th:text="${msg}">You have been logged out</div>
 
@@ -28,7 +28,7 @@
 			<input type='text' id="email" name='email' placeholder = "E-Mail"/><br /> 
 			<input type='password' id="password" name='password' placeholder = "*******"/><br />
 			<input id = "loginButton" name="submit" type="submit" value="Login" />
-			<button id = "registerButton" type="button" onClick="document.getElementById('registerPopUp').style.visibility='visible';document.getElementById('cancelButton').style.visibility='visible'">Register</button>
+			<button id = "registerButton" type="button" onClick="document.getElementById('registerBox').style.visibility='visible'; document.getElementById('loginBox').style.visibility='hidden'">Register</button>
 
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
@@ -36,14 +36,79 @@
 
 	</div>
     
-    
-    
-    <object id="registerPopUp" type="text/html" data="register.html">
-    </object>
-    <div>
-        <button id = "cancelButton" type="button"   onClick="document.getElementById('registerPopUp').style.visibility='hidden';document.getElementById('cancelButton').style.visibility='hidden'">Cancel</button>
-    </div>
+    <div id = "registerBox">
+	   <form action="#" th:object="${signupForm}" th:action="@{/create}"
+		th:autocomplete="off" method="post" th:name="signupForm">
+		  <fieldset>			
 
+			<div class="controls">
+				<input type="text" th:value="*{email}" th:name="email" tabindex="1"
+					maxlength="45" required="required" placeholder = "E-Mail"/>
+				<span th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid email address</span>
+			</div>
+			
+			<!-- 
+				First name field
+			 -->
+			<div class="controls">
+				<input type="text" th:value="*{firstName}" th:name="firstName"
+					tabindex="2" maxlength="35" required="required" placeholder = "First Name"/>
+			</div>
+
+			<!-- 
+				Last name field
+			 -->
+			<div class="controls">
+				<input type="text" th:value="*{lastName}" th:name="lastName"
+					tabindex="3" maxlength="35" required="required" placeholder = "Last Name"/>
+			</div>
+
+			<!-- 
+				Password field
+			 -->
+			<div class="controls">
+				<input type="password" th:value="*{password}" th:name="password"
+					tabindex="3" maxlength="35" required="required" placeholder = "Password"/>
+				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The length must be between 8 and 25</span>
+			</div>
+			
+			<!-- 
+				Confirm password field
+			 -->
+			<div class="control-group">
+				
+				<div class="controls">
+					<input type="password" th:name="confirmPassword"
+						tabindex="4" maxlength="25" placeholder = "Confirm Password"/>
+					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
+						Invalid Input
+					</span>
+					<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}"> Passwords do not match</span>
+				</div>
+			</div>
+
+			<!-- 
+				Select Tutor or student bar
+			 -->
+			<div class="controls">
+
+				<select th:value="*{tutor}" th:name="tutor">
+					<option th:value="false">Student</option>
+					<option th:value="true">Tutor</option>
+				</select>
+			</div>
+            <br/><br/>
+			<div class="form-actions">
+				<button type="submit" id = "registerButton" class="btn btn-primary">Sign up</button>
+                <button id = "cancelButton" type="button"   onClick="document.getElementById('registerBox').style.visibility='hidden'; document.getElementById('loginBox').style.visibility='visible'">Cancel</button>
+                
+                
+			</div>
+		</fieldset>
+	</form>
+    </div>
+    
+  
 
 </body>
 </html>

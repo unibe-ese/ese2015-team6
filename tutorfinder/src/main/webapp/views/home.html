@@ -10,42 +10,16 @@
 
 </head>
 <body>
-	<h1>Welcome to tutorfinder</h1>
+	<div th:include="header::header"></div>
 
-	<div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
-		<!--  For login user -->
-		
-		<!-- 
-	    	Edit Button
-	    -->
-	    <div id="editButton">
-			<button type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
-		</div>
 	
-		<!--  
-			Search Button
-		 -->
-		<div id="searchButton">
-			<button type="button" onClick="window.location.href='/findTutor'">Search</button>
-		</div>
-		
-		<!--  
-			Home Button
-		 -->
-		<div id="homeButton">
-			<button type="button" onClick="window.location.href='/home'">Home</button>
-		</div>
-	
-		<!--  
-			Logout Button
-		 -->
-		<div id="logoutButton">
-			<button type="button" onClick="window.location.href='/logout'">Logout</button>
-		</div>
-	</div>
+	<div class="content">
+        
+        
 
 	<button type="button" onClick="window.location.href='/login'">Login</button>
 	<button type="button" onClick="window.location.href='/register'">Register</button>
 
+        </div>	
 </body>
 </html>

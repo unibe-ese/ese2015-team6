@@ -10,18 +10,18 @@
 		//redirect to showprofile
 		window.setTimeout(function() {
 		    window.location.href = '/home';
-		},5000);
+		},3000);
 	</script>
 	
 	<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
 
 </head>
 <body>
-	<div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
+	<div class="redirectionPage" sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
 		<!--  For login user -->
 		<div th:if="${#authentication.name != null}">
 			<h1 th:text="|Welcome, ${#authentication.name}|">Welcome, max@muster.ch</h1>
-			<button type="button" onClick="window.location.href='/logout'">Logout</button>
+			<button id="logoutButton" type="button" onClick="window.location.href='/logout'" style="top:auto; right:auto;">Logout</button>
 		</div>
 	</div>
 

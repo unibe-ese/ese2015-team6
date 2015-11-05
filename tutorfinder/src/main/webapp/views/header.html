@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+</head>
+    
+<body>
+    <div th:fragment="header" id="header">
+    <!-- Here, a logo could be placed -->
+        <a th:href="@{/home}"><div id = "headerLogo">ESE Tutorfinder</div>
+    
+    
+        <div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
+    
+    <!-- 
+	    	Edit Button
+	    -->
+	    
+			<button class="headerButton" id="editButton" type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
+		
+	
+		<!--  
+			Search Button
+		 -->
+		
+			<button class="headerButton" id="searchButton" type="button" onClick="window.location.href='/findTutor'">Search</button>
+		
+		
+			
+		<!--  
+			Logout Button
+		 -->
+		
+			<button class="headerButton" id="logoutButton" type="button"     onClick="window.location.href='/logout'">Logout</button>
+	   </div>	
+    </div>
+    
+</body>
+</html>

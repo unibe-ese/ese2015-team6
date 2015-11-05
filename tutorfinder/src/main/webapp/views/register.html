@@ -7,7 +7,9 @@
 <link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
 </head>
 <body>
-	<div id = "registerBox">
+	<div id = "registerBox" style="visibility: visible; top: 0px; left: 0px; margin: 30px;">
+        
+        Register a new Account here: <br/>
 	<form action="#" th:object="${signupForm}" th:action="@{/create}"
 		th:autocomplete="off" method="post" th:name="signupForm">
 		<fieldset>			
@@ -76,5 +78,6 @@
 			</div>
 		</fieldset>
 	</form>
+    </div>
 </body>
 </html>
