@@ -226,6 +226,25 @@ body {
     padding: 0px;
     
 }
+
+/*EditProfile*/
+#userAvatarBox {
+    width: 300px;
+    overflow: hidden;
+}
+
+#userInfoBox {
+    position: absolute;
+    width: 1008.15px;
+    height: 562px;
+    top: 0px;
+    left: 375px;
+}
+
+#tutorSubjectBox {
+    width: 375px;
+}
+
 /*Header*/
 
 #headerLogo {

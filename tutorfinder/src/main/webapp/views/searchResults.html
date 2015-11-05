@@ -8,6 +8,10 @@
 
 </head>
 <body>
+    <div th:include="header::header"></div>
+    
+    <div class="content">
+    
 	<h1>
 		Showing Tutors for <span th:text="${Query}">Subject</span>
 	</h1>
@@ -24,32 +28,6 @@
 		
 	</div>
 	
-	<!-- 
-    	Edit Button
-    -->
-    <div id="editButton">
-		<button type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
-	</div>
-
-	<!--  
-		Search Button
-	 -->
-	<div id="searchButton">
-		<button type="button" onClick="window.location.href='/findTutor'">Search</button>
-	</div>
-
-	<!--  
-		Home Button
-	 -->
-	<div id="homeButton">
-		<button type="button" onClick="window.location.href='/home'">Home</button>
-	</div>
-
-	<!--  
-		Logout Button
-	 -->
-	<div id="logoutButton">
-		<button type="button" onClick="window.location.href='/logout'">Logout</button>
-	</div>
+    </div>
 </body>
 </html>
