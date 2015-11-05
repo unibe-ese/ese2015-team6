@@ -32,7 +32,6 @@ import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
-import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
@@ -49,8 +48,6 @@ import ch.unibe.ese.Tutorfinder.model.User;
 @Controller
 public class UpdateProfileController {
 
-	@Autowired
-	UpdateProfileService updateProfileService;
 	@Autowired
 	UpdateSubjectsService updateSubjectsService;
 	@Autowired
@@ -107,7 +104,7 @@ public class UpdateProfileController {
 		ModelAndView model;
 		if (!result.hasErrors()) {
 			try {
-				updateProfileService.saveFrom(updateProfileForm, user);
+				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(user));
 				model = new ModelAndView("updateProfile");
 				// TODO show success message to the user
 			} catch (InvalidProfileException e) {
