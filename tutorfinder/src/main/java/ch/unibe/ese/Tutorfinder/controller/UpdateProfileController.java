@@ -31,6 +31,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
+import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
@@ -41,7 +42,6 @@ import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
-import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 /**
@@ -63,14 +63,14 @@ public class UpdateProfileController {
 	UpdateTimetableService updateTimetableService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	TimetableService timetableService;
 
 	@Autowired
 	ProfileDao profileDao;
 	@Autowired
 	SubjectDao subjectDao;
-	@Autowired
-	TimetableDao timetableDao;
-
+	
 	/**
 	 * Maps the /editProfile page to the {@code updateProfile.jsp}.
 	 * 
@@ -326,7 +326,7 @@ public class UpdateProfileController {
 		Boolean[][] tmpMatrix = new Boolean[ConstantVariables.TIMESLOTS][ConstantVariables.DAYS];
 		for (Boolean[] row : tmpMatrix)
 			Arrays.fill(row, false);
-		List<Timetable> tempList = timetableDao.findAllByUser(dbUser);
+		List<Timetable> tempList = timetableService.findAllByUser(dbUser);
 		for (Timetable element : tempList) {
 			int day = element.getDay().getValue() - 1;
 			int timeslot = element.getTime();
