@@ -57,7 +57,7 @@ public class ShowProfileController {
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView profile(@RequestParam(value = "userId", required = true) long userId) {
+	public ModelAndView profile(@RequestParam(value = "userId") long userId) {
 		ModelAndView model = new ModelAndView("showProfile");
 		model = prepareModelByUserId(userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
@@ -66,7 +66,7 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
-	public ModelAndView requestAppointment(@RequestParam(value = "userId", required = true) long userId,
+	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal user, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		final Integer slot = Integer.valueOf(req.getParameter("request"));
@@ -86,7 +86,7 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
-	public ModelAndView getDate(@RequestParam(value = "userId", required = true) long userId,
+	public ModelAndView getDate(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
