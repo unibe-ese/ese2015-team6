@@ -34,6 +34,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
+import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
@@ -41,7 +42,6 @@ import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
-import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 /**
@@ -61,11 +61,11 @@ public class UpdateProfileController {
 	UpdateSubjectsService updateSubjectsService;
 	@Autowired
 	UpdateTimetableService updateTimetableService;
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	ProfileDao profileDao;
-	@Autowired
-	UserDao userDao;
 	@Autowired
 	SubjectDao subjectDao;
 	@Autowired
@@ -122,9 +122,9 @@ public class UpdateProfileController {
 			}
 		} else {
 			model = new ModelAndView("updateProfile");
-			model.addObject("User", userDao.findByEmail(user.getName()));
+			model.addObject("User", userService.getUserByPrincipal(user));
 			model.addObject("updateSubjectsForm",
-					getUpdateSubjectWithValues(subjectDao.findAllByUser(userDao.findByEmail(user.getName()))));
+					getUpdateSubjectWithValues(subjectDao.findAllByUser(userService.getUserByPrincipal(user))));
 			return model;
 		}
 		model = prepareForm(user, model, updateProfileForm);
@@ -144,7 +144,7 @@ public class UpdateProfileController {
 
 				// Creating the directory to store file
 				String rootPath = System.getProperty("user.dir");
-				User tmpUser = userDao.findByEmail(user.getName());
+				User tmpUser = userService.getUserByPrincipal(user);
 				File dir = new File(rootPath + File.separator + "src" + File.separator + "main" + File.separator
 						+ "webapp" + File.separator + "img" + File.separator + "profPic");
 				if (!dir.exists())
@@ -261,7 +261,7 @@ public class UpdateProfileController {
 	}
 
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateTimetableForm updateTimetableForm) {
-		User dbUser = userDao.findByEmail(user.getName());
+		User dbUser = userService.getUserByPrincipal(user);
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("updateTimetableForm", updateTimetableForm);
@@ -278,8 +278,8 @@ public class UpdateProfileController {
 	 */
 	private UpdateProfileForm getFormWithValues(Principal user) {
 		UpdateProfileForm tmpForm = new UpdateProfileForm();
-		tmpForm.setFirstName((userDao.findByEmail(user.getName())).getFirstName());
-		tmpForm.setLastName((userDao.findByEmail(user.getName())).getLastName());
+		tmpForm.setFirstName((userService.getUserByPrincipal(user)).getFirstName());
+		tmpForm.setLastName((userService.getUserByPrincipal(user)).getLastName());
 		tmpForm.setBiography(getUsersProfile(user).getBiography());
 		tmpForm.setRegion(getUsersProfile(user).getRegion());
 		tmpForm.setWage(getUsersProfile(user).getWage());
@@ -295,7 +295,7 @@ public class UpdateProfileController {
 	 * @return profile of the actually logged in user
 	 */
 	private Profile getUsersProfile(Principal user) {
-		User tmpUser = userDao.findByEmail(user.getName());
+		User tmpUser = userService.getUserByPrincipal(user);
 		Profile tmpProfile = profileDao.findOne(tmpUser.getId());
 
 		return tmpProfile;
@@ -313,7 +313,7 @@ public class UpdateProfileController {
 	 * @return
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model) {
-		User dbUser = userDao.findByEmail(user.getName());
+		User dbUser = userService.getUserByPrincipal(user);
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
@@ -349,7 +349,7 @@ public class UpdateProfileController {
 	 * @return {@link ModelAndView} ready for return
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateSubjectsForm updateSubjectsForm) {
-		User dbUser = userDao.findByEmail(user.getName());
+		User dbUser = userService.getUserByPrincipal(user);
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
@@ -370,7 +370,7 @@ public class UpdateProfileController {
 	 * @return {@link ModelAndView} ready for return
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateProfileForm updateProfileForm) {
-		User dbUser = userDao.findByEmail(user.getName());
+		User dbUser = userService.getUserByPrincipal(user);
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MakeAppointmentService;
+import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -28,7 +29,6 @@ import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
-import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -43,8 +43,6 @@ public class ShowProfileController {
 	@Autowired
 	ProfileDao profileDao;
 	@Autowired
-	UserDao userDao;
-	@Autowired
 	SubjectDao subjectDao;
 	@Autowired
 	TimetableDao timetableDao;
@@ -53,6 +51,8 @@ public class ShowProfileController {
 
 	@Autowired
 	MakeAppointmentService makeAppointmentService;
+	@Autowired
+	UserService userService;
 
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.jsp}.
@@ -61,7 +61,7 @@ public class ShowProfileController {
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView profile(@RequestParam(value = "userId", required = true) int userId) {
+	public ModelAndView profile(@RequestParam(value = "userId", required = true) long userId) {
 		ModelAndView model = new ModelAndView("showProfile");
 		model = prepareModelByUserId(userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
@@ -70,18 +70,18 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
-	public ModelAndView requestAppointment(@RequestParam(value = "userId", required = true) int userId,
+	public ModelAndView requestAppointment(@RequestParam(value = "userId", required = true) long userId,
 			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal user, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		final Integer slot = Integer.valueOf(req.getParameter("request"));
 		if (!result.hasErrors()) {
-			User student = userDao.findByEmail(user.getName());
-			User tutor = resolveUserId(userId);
+			User student = userService.getUserByPrincipal(user);
+			User tutor = userService.getUserById(userId);
 			makeAppointmentService.saveFrom(appForm, slot, tutor, student);
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableDao.findAllByUserAndDay(tutor, dow);
-			appForm.setAppointments(loadAppointments(slots, userDao.findByEmail(user.getName()), date));
+			appForm.setAppointments(loadAppointments(slots, userService.getUserByPrincipal(user), date));
 		}
 		
 		model.addObject("makeAppointmentsForm", appForm);
@@ -90,11 +90,11 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
-	public ModelAndView getDate(@RequestParam(value = "userId", required = true) int userId,
+	public ModelAndView getDate(@RequestParam(value = "userId", required = true) long userId,
 			MakeAppointmentsForm appForm, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
-			User user = resolveUserId(userId);
+			User user = userService.getUserById(userId);
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableDao.findAllByUserAndDay(user, dow);
@@ -131,16 +131,12 @@ public class ShowProfileController {
 		return tmpList;
 	}
 
-	private ModelAndView prepareModelByUserId(int userId, ModelAndView model) {
-		User tmpUser = resolveUserId(userId);
+	private ModelAndView prepareModelByUserId(long userId, ModelAndView model) {
+		User tmpUser = userService.getUserById(userId);
 		model.addObject("User", tmpUser);
 		model.addObject("Subjects", subjectDao.findAllByUser(tmpUser));
 		model.addObject("Profile", profileDao.findByEmail(tmpUser.getEmail()));
 		return model;
-	}
-
-	private User resolveUserId(int userId) {
-		return userDao.findById(userId);
 	}
 
 }
