@@ -198,8 +198,9 @@ body {
 /*Home*/
 
 .content {
-    
+        
     position: absolute;
+    width: 100%;
     top: 70px;
     margin: 30px;
     color: #ffffff;

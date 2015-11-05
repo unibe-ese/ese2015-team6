@@ -22,6 +22,7 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidEmailException;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.SignupForm;
 import ch.unibe.ese.Tutorfinder.controller.service.RegisterService;
+import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -44,6 +45,8 @@ public class LoginController {
 	
 	@Autowired
 	RegisterService registerService;
+	
+	@Autowired	UserDao userDao;
 	
 	@RequestMapping(value={"/","/home"})
 	public String home() {

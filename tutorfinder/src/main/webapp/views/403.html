@@ -7,8 +7,14 @@
 <link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
 </head>
 <body>
-	<h1>HTTP Status 403 - Access is denied</h1>
-	<h2>You do not have permission to access this page!</h2>
-	<h2 th:text="${msg}">Name</h2>
+    <div th:include="header::header"></div>
+    
+    <div class="content">
+        <div class = "redirectionPage">
+	       <h1>HTTP Status 403 - Access is denied</h1>
+	       <h2>You do not have permission to access this page!</h2>
+	       <h2 th:text="${msg}"></h2>
+        </div>
+    </div>
 </body>
 </html>

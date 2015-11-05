@@ -9,23 +9,24 @@
 <body>
     <div th:fragment="header" id="header">
     <!-- Here, a logo could be placed -->
-        <a th:href="@{/home}"><div id = "headerLogo">ESE Tutorfinder</div></a>
+        <a sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/findTutor}" href="login.html"><div id = "headerLogo">ESE Tutorfinder</div></a>
+        <a sec:authorize="!hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/home}" href="login.html"><div id = "headerLogo">ESE Tutorfinder</div></a>
     
     
         <div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
     
     <!-- 
-	    	Edit Button
-	    -->
-	    
-			<button class="headerButton" id="editButton" type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
-		
+	    	Show Profile Button
+	    -->	    
+            
+            <a class="headerButton" id="showButton" th:href="@{'/showProfile'(userId=${User.id})}" href="showProfile.html">Show Profile</a>
 	
 		<!--  
 			Search Button
 		 -->
 		
-			<button class="headerButton" id="searchButton" type="button" onClick="window.location.href='/findTutor'">Search</button>
+            <a class="headerButton" id="searchButton" th:href="@{/findTutor}" href="/findTutor.html">Search</a>
+			
 		
 		
 			
@@ -33,7 +34,8 @@
 			Logout Button
 		 -->
 		
-			<button class="headerButton" id="logoutButton" type="button"     onClick="window.location.href='/logout'">Logout</button>
+            <a class="headerButton" id="logoutButton" th:href="@{/logout}" href="login.html">Logout</a>
+			
 	   </div>	
     </div>
     

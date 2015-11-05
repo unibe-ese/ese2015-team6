@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.FindTutorForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
+import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 @Controller
 public class FindTutorController {
@@ -20,16 +23,20 @@ public class FindTutorController {
 	@Autowired
 	FindTutorService findTutorService;
 	
+	@Autowired	UserDao userDao;
+	
     @RequestMapping(value = "/findTutor", method = RequestMethod.GET)
-    public ModelAndView findTutor() {
+    public ModelAndView findTutor(Principal user) {
     	ModelAndView model = new ModelAndView("findTutor");
     	model.addObject("findTutorForm", new FindTutorForm());
+    	model.addObject("User", userDao.findByEmail(user.getName()));
         return model;
     }
     
     @RequestMapping(value = "/searchResults", method = RequestMethod.POST)
-    public ModelAndView create(@Valid FindTutorForm findTutorForm, BindingResult result, RedirectAttributes redirectAttributes) {
-    	ModelAndView model;    	
+    public ModelAndView create(Principal user, @Valid FindTutorForm findTutorForm, BindingResult result, RedirectAttributes redirectAttributes) {
+    	ModelAndView model;
+    	
     	if (!result.hasErrors()) {
             try {
             	
@@ -46,6 +53,7 @@ public class FindTutorController {
         } else {
         	model = new ModelAndView("findTutor");
         }   	
+    	model.addObject("User", userDao.findByEmail(user.getName()));
     	return model;
     }
     
