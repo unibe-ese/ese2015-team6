@@ -180,9 +180,11 @@ public class UpdateProfileController {
 	 * @param redirectAttributes
 	 * @return
 	 */
-	//FIXME no error message show when to subjects are named equal, only the first one is saved but loaded are both after
-	//press on the save button, but when canceled and go again on editProfile page only one is saved
-	//Futhermore allowed subject after two same named are not saved!
+	// FIXME no error message show when to subjects are named equal, only the
+	// first one is saved but loaded are both after
+	// press on the save button, but when canceled and go again on editProfile
+	// page only one is saved
+	// Futhermore allowed subject after two same named are not saved!
 	@RequestMapping(value = "/editSubjects", params = "save", method = RequestMethod.POST)
 	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm,
 			BindingResult result, RedirectAttributes redirectAttributes) {
@@ -196,10 +198,10 @@ public class UpdateProfileController {
 				result.reject("error", e.getMessage());
 				model = new ModelAndView("updateProfile");
 			}
+			model = prepareForm(user, model, updateSubjectsForm);
 		} else {
 		}
 
-		model = prepareForm(user, model, updateSubjectsForm);
 		return model;
 	}
 
@@ -322,10 +324,10 @@ public class UpdateProfileController {
 	private UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
 		UpdateTimetableForm tmpForm = new UpdateTimetableForm();
 		Boolean[][] tmpMatrix = new Boolean[ConstantVariables.TIMESLOTS][ConstantVariables.DAYS];
-		for (Boolean[] row:tmpMatrix)
+		for (Boolean[] row : tmpMatrix)
 			Arrays.fill(row, false);
 		List<Timetable> tempList = timetableDao.findAllByUser(dbUser);
-		for (Timetable element: tempList) {
+		for (Timetable element : tempList) {
 			int day = element.getDay().getValue() - 1;
 			int timeslot = element.getTime();
 			tmpMatrix[timeslot][day] = true;

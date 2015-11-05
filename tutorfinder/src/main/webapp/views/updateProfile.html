@@ -186,6 +186,7 @@
 
 			<button type="submit" name="addRow">Add subject</button>
 			<button type="submit" name="save" class="btn btn-primary">Save</button>
+			<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}">Subject can't be added twice</span>
 
 		</div>
 	</form>

@@ -105,7 +105,7 @@ public class ShowProfileController {
 		return model;
 	}
 
-	//FIXME AFter unchecking a slot, even reserved slots are not displayed anymore
+	//FIXME After unchecking a slot, even reserved slots are not displayed anymore
 	private List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date) {
 		List<AppointmentPlaceholder> tmpList = new ArrayList<AppointmentPlaceholder>();
 		for (Timetable slot : slots) {
