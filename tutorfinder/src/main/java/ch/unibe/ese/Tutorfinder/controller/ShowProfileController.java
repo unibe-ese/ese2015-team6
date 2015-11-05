@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
-import ch.unibe.ese.Tutorfinder.controller.service.MakeAppointmentService;
+import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
@@ -28,7 +28,6 @@ import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
-import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -41,10 +40,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 public class ShowProfileController {
 
 	@Autowired
-	AppointmentDao appointmentDao;
-
-	@Autowired
-	MakeAppointmentService makeAppointmentService;
+	AppointmentService appointmentService;
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -61,7 +57,7 @@ public class ShowProfileController {
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView profile(@RequestParam(value = "userId", required = true) long userId) {
+	public ModelAndView profile(@RequestParam(value = "userId") long userId) {
 		ModelAndView model = new ModelAndView("showProfile");
 		model = prepareModelByUserId(userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
@@ -70,14 +66,14 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
-	public ModelAndView requestAppointment(@RequestParam(value = "userId", required = true) long userId,
+	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal user, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		final Integer slot = Integer.valueOf(req.getParameter("request"));
 		if (!result.hasErrors()) {
 			User student = userService.getUserByPrincipal(user);
 			User tutor = userService.getUserById(userId);
-			makeAppointmentService.saveFrom(appForm, slot, tutor, student);
+			appointmentService.saveFrom(appForm, slot, tutor, student);
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableService.findAllByUserAndDay(tutor, dow);
@@ -90,7 +86,7 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
-	public ModelAndView getDate(@RequestParam(value = "userId", required = true) long userId,
+	public ModelAndView getDate(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
@@ -115,7 +111,7 @@ public class ShowProfileController {
 			dateTime = dateTime.plusHours(hours);
 			Timestamp timestamp = Timestamp.valueOf(dateTime);
 
-			Appointment tmpAppointment = appointmentDao.findByTutorAndTimestamp(user, timestamp);
+			Appointment tmpAppointment = appointmentService.findByTutorAndTimestamp(user, timestamp);
 			AppointmentPlaceholder placeholder;
 
 			if (tmpAppointment != null) {
