@@ -71,7 +71,8 @@
 		<form action="#" method="post"
 			th:action="@{|/updateForm?userId=${User.id}|}"
 			th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
-			<input type="date" th:field="*{date}" name="date" />
+			<input type="date" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:field="*{date}" name="date" />
+			<!-- TODO Implement alternative picker for browsers without html5 support -->
 			<button type="submit" name="getDate">Get Appointments</button>
 			<div th:each="appointment:*{appointments}">
 				<span
