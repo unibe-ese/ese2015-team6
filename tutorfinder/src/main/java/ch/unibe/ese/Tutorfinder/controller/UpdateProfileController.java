@@ -33,6 +33,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
+import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
@@ -41,7 +42,6 @@ import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
-import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 /**
@@ -67,10 +67,9 @@ public class UpdateProfileController {
 	TimetableService timetableService;
 	@Autowired
 	ProfileService profileService;
-
 	@Autowired
-	SubjectDao subjectDao;
-	
+	SubjectService subjectService;
+
 	/**
 	 * Maps the /editProfile page to the {@code updateProfile.jsp}.
 	 * 
@@ -124,7 +123,7 @@ public class UpdateProfileController {
 			model = new ModelAndView("updateProfile");
 			model.addObject("User", userService.getUserByPrincipal(user));
 			model.addObject("updateSubjectsForm",
-					getUpdateSubjectWithValues(subjectDao.findAllByUser(userService.getUserByPrincipal(user))));
+					getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(userService.getUserByPrincipal(user))));
 			return model;
 		}
 		model = prepareForm(user, model, updateProfileForm);
@@ -262,7 +261,7 @@ public class UpdateProfileController {
 
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateTimetableForm updateTimetableForm) {
 		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
+		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("updateTimetableForm", updateTimetableForm);
 		model.addObject("User", dbUser);
@@ -314,7 +313,7 @@ public class UpdateProfileController {
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model) {
 		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
+		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
 		model.addObject("User", dbUser);
@@ -371,7 +370,7 @@ public class UpdateProfileController {
 	 */
 	private ModelAndView prepareForm(Principal user, ModelAndView model, UpdateProfileForm updateProfileForm) {
 		User dbUser = userService.getUserByPrincipal(user);
-		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectDao.findAllByUser(dbUser)));
+		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(user));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
 		model.addObject("User", dbUser);

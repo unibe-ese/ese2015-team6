@@ -1,11 +1,13 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 
+@Service
 public class ProfileServiceImpl implements ProfileService {
 
 	@Autowired
