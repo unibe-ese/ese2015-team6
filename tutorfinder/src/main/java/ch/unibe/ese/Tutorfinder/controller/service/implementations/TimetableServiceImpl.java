@@ -1,5 +1,6 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,14 @@ public class TimetableServiceImpl implements TimetableService {
 		List<Timetable> returnList = timetableDao.findAllByUser(user);
 		assert (returnList != null);
 		return returnList;
+	}
+
+	@Override
+	public List<Timetable> findAllByUserAndDay(User user, DayOfWeek dow) {
+		assert (user != null && dow != null);
+		List<Timetable> returnValue = timetableDao.findAllByUserAndDay(user, dow);
+		assert (returnValue != null);
+		return returnValue;
 	}
 
 }

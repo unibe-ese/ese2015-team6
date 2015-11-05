@@ -22,13 +22,13 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MakeAppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
+import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
-import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -43,8 +43,6 @@ public class ShowProfileController {
 	@Autowired
 	SubjectDao subjectDao;
 	@Autowired
-	TimetableDao timetableDao;
-	@Autowired
 	AppointmentDao appointmentDao;
 
 	@Autowired
@@ -53,6 +51,8 @@ public class ShowProfileController {
 	UserService userService;
 	@Autowired
 	ProfileService profileService;
+	@Autowired
+	TimetableService timetableService;
 
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.jsp}.
@@ -80,7 +80,7 @@ public class ShowProfileController {
 			makeAppointmentService.saveFrom(appForm, slot, tutor, student);
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
-			List<Timetable> slots = timetableDao.findAllByUserAndDay(tutor, dow);
+			List<Timetable> slots = timetableService.findAllByUserAndDay(tutor, dow);
 			appForm.setAppointments(loadAppointments(slots, userService.getUserByPrincipal(user), date));
 		}
 		
@@ -97,7 +97,7 @@ public class ShowProfileController {
 			User user = userService.getUserById(userId);
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
-			List<Timetable> slots = timetableDao.findAllByUserAndDay(user, dow);
+			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
 			appForm.setAppointments(loadAppointments(slots, user, date));
 		}
 		model.addObject("makeAppointmentsForm", appForm);
