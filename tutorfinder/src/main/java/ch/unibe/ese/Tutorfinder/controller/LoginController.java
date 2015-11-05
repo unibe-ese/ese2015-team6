@@ -45,6 +45,10 @@ public class LoginController {
 	@Autowired
 	RegisterService registerService;
 	
+	@RequestMapping(value={"/","/home"})
+	public String home() {
+		return "redirect:login";
+	}
     
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -54,42 +58,57 @@ public class LoginController {
             try {
             	registerService.saveFrom(signupForm);
             	model = new ModelAndView("signupCompleted");
+            	
 
             } catch (InvalidEmailException e) {
             	result.rejectValue("email", "", e.getMessage());
-            	model = new ModelAndView("register");
+            	model = new ModelAndView("login");
+            	model.addObject("loginBoxVisibility", "hidden");
+        		model.addObject("registerBoxVisibility", "visible");
             }
             catch (InvalidUserException e) {
             	result.reject("page_error", e.getMessage());
-            	model = new ModelAndView("register");
+            	model = new ModelAndView("login");
+            	model.addObject("loginBoxVisibility", "hidden");
+        		model.addObject("registerBoxVisibility", "visible");
             }
             //TODO exception for invalid password with message
 
         } else {
-        	model = new ModelAndView("register");
+        	model = new ModelAndView("login");
+        	model.addObject("loginBoxVisibility", "hidden");
+    		model.addObject("registerBoxVisibility", "visible");
         }   	
     	return model;
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView index() {
-    	ModelAndView model = new ModelAndView("register");
-    	model.addObject("signupForm", new SignupForm());
-        return model;
+    public String register() {
+    	return "redirect:/login?register";
     }
     
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout) {
+			@RequestParam(value = "logout", required = false) String logout, @RequestParam(value = "register", required = false) String register) {
 
+		String loginBoxVis = "visible";
+		String registerBoxVis = "hidden";
+		
 		ModelAndView model = new ModelAndView("login");
 		if (error != null) {
 			model.addObject("error", "Invalid username or password!");
+		}
+		
+		if (register != null){
+			loginBoxVis = "hidden";
+			registerBoxVis = "visible";
 		}
 
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
+		model.addObject("loginBoxVisibility", loginBoxVis);
+		model.addObject("registerBoxVisibility", registerBoxVis);
 		model.addObject("loginUrl", "/login");
 		model.addObject("signupForm", new SignupForm());
 
@@ -97,10 +116,8 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
-	public ModelAndView success() {
-		ModelAndView model = new ModelAndView("success");
-		model.addObject("logoutUrl", "/login?logout");
-		return model;
+	public String success() {
+		return "redirect:findTutor";
 
 	}
 

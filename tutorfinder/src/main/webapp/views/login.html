@@ -20,7 +20,7 @@
     </div>
     
     
-	<div id="loginBox">
+	<div id="loginBox" style = "" th:style="'visibility: ' + ${loginBoxVisibility} + ';'">
 		<div th:text="${error}">Invalid username and/or password</div>
 		<div th:text="${msg}">You have been logged out</div>
 
@@ -36,7 +36,7 @@
 
 	</div>
     
-    <div id = "registerBox">
+    <div id = "registerBox" th:style="'visibility: ' + ${registerBoxVisibility} + ';'">
 	   <form action="#" th:object="${signupForm}" th:action="@{/create}"
 		th:autocomplete="off" method="post" th:name="signupForm">
 		  <fieldset>			
