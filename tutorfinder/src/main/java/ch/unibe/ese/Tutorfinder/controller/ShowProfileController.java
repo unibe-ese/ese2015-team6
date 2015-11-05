@@ -22,12 +22,12 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MakeAppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
+import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
-import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 
 /**
@@ -41,8 +41,6 @@ import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 public class ShowProfileController {
 
 	@Autowired
-	SubjectDao subjectDao;
-	@Autowired
 	TimetableDao timetableDao;
 	@Autowired
 	AppointmentDao appointmentDao;
@@ -53,6 +51,8 @@ public class ShowProfileController {
 	UserService userService;
 	@Autowired
 	ProfileService profileService;
+	@Autowired
+	SubjectService subjectService;
 
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.jsp}.
@@ -134,7 +134,7 @@ public class ShowProfileController {
 	private ModelAndView prepareModelByUserId(long userId, ModelAndView model) {
 		User tmpUser = userService.getUserById(userId);
 		model.addObject("User", tmpUser);
-		model.addObject("Subjects", subjectDao.findAllByUser(tmpUser));
+		model.addObject("Subjects", subjectService.getAllSubjectsByUser(tmpUser));
 		model.addObject("Profile", profileService.getProfileByEmail(tmpUser.getEmail()));
 		return model;
 	}
