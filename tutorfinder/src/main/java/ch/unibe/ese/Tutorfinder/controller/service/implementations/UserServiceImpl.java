@@ -35,12 +35,4 @@ public class UserServiceImpl implements UserService {
 		return tmpUser;
 	}
 
-	@Override
-	public User save(User user) {
-		assert (user != null);
-		user = userDao.save(user);
-		assert (user != null);
-		return user;
-	}
-
 }

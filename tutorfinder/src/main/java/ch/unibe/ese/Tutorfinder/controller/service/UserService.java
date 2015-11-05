@@ -10,6 +10,4 @@ public interface UserService {
 	
 	public User getUserById(Long id);
 
-	public User save(User user);
-
 }
