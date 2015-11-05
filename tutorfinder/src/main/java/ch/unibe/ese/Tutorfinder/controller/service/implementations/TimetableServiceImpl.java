@@ -4,12 +4,14 @@ import java.time.DayOfWeek;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
 
+@Service
 public class TimetableServiceImpl implements TimetableService {
 
 	@Autowired TimetableDao timetableDao;
