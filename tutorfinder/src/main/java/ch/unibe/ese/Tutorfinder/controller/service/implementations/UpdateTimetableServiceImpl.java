@@ -1,4 +1,4 @@
-package ch.unibe.ese.Tutorfinder.controller.service;
+package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
 import java.security.Principal;
 import java.time.DayOfWeek;
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
+import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.TimetableDao;
