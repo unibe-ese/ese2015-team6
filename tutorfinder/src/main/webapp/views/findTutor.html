@@ -4,31 +4,44 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Find Tutor</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
 </head>
 <body>
-	<form action="#" th:object="${findTutorForm}" th:action="@{/searchResults}"
+	<form action="#" th:object="${findTutorForm}" th:action="@{/submit}"
 		th:autocomplete="off" method="post" th:name="findTutorForm">
 		<fieldset>
 			<legend>Enter subject you need help with:</legend>
 
 			<label class="control-label" for="subject">Subject:</label>
 			<div class="controls">
-				<input type="text" th:name="subject"
+				<input type="text" th:field="*{subject}"
 					tabindex="2" maxlength="45" required="required" />
-			</div>	
-			
+			</div>
+
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">Search</button>
 			</div>
 		</fieldset>
 	</form>
-	
+
+	<div th:if="${param.q != null}">
+		<h1>
+			Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
+		</h1>
+		<div th:each="subject : ${Result}">
+			<p><a th:if="${subject != null}" th:href="@{'/showProfile'(userId=${subject.user.id})}"
+				th:text="|${subject.user.firstName} ${subject.user.lastName} (Grade ${subject.grade})|">
+				Max Mustermann (Grade 5.0)</a></p>
+		</div>
+	</div>
+
 	<!-- 
     	Edit Button
     -->
-    <div id="editButton">
-		<button type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
+	<div id="editButton">
+		<button type="button" onClick="window.location.href='/editProfile'">Edit
+			Profile</button>
 	</div>
 
 	<!--  

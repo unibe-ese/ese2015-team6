@@ -10,6 +10,6 @@ public interface FindTutorService {
 	
 	public Iterable<User> getUsersFrom(FindTutorForm findTutorForm);
 	
-	public LinkedList<Subject> getSubjectFrom(FindTutorForm findTutorForm);
+	public LinkedList<Subject> getSubjectsFrom(String query);
 
 }

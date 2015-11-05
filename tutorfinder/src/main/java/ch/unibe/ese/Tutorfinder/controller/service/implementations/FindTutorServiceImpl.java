@@ -41,8 +41,9 @@ public class FindTutorServiceImpl implements FindTutorService {
 	}
 
 	@Override
-	public LinkedList<Subject> getSubjectFrom(FindTutorForm findTutorForm) {
-		return subjectDao.findByName(findTutorForm.getSubject());
+	public LinkedList<Subject> getSubjectsFrom(String query) {
+		//TODO (maybe) implement search engine
+		return subjectDao.findByName(query);
 	}
 
 }
