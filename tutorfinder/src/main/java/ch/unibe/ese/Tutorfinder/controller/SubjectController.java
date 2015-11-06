@@ -20,7 +20,7 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
-import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
+import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -34,7 +34,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
 public class SubjectController {
 	
 	@Autowired
-	UpdateSubjectsService updateSubjectsService;
+	SubjectService subjectService;
 	@Autowired
 	PrepareFormService prepareFormService;
 
@@ -59,7 +59,7 @@ public class SubjectController {
 
 		if (!result.hasErrors()) {
 			try {
-				updateSubjectsService.saveFrom(updateSubjectsForm, user);
+				subjectService.saveFrom(updateSubjectsForm, user);
 				// TODO show success message to the user
 			} catch (InvalidSubjectException e) {
 				result.reject("error", e.getMessage());

@@ -21,6 +21,10 @@ public class ProfileServiceImpl implements ProfileService {
 	@Autowired
 	ProfileDao profileDao;
 	
+	public ProfileServiceImpl() {
+		
+	}
+	
 	@Override
 	public Profile getProfileById(Long id) {
 		assert(id != null);

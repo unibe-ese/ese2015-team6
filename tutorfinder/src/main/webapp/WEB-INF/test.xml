@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	
+	<!-- MOCK data access classes (DAO) -->
+    <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.UserDao"/>
+    </bean>
+    <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao"/>
+    </bean>
+        <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.ProfileDao"/>
+    </bean>
+        <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.SubjectDao"/>
+    </bean>
+       <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.TimetableDao"/>
+    </bean>
+   
+   <!-- AUTOWIRE services -->
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.AppointmentServiceImpl" />
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.FindTutorServiceImpl" />
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.PrepareFormServiceImpl" />
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.ProfileServiceImpl" />
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.RegisterServiceImpl" />
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.SubjectServiceImpl" />
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.TimetableServiceImpl" />
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.UserServiceImpl" />
+    
+
+</beans>

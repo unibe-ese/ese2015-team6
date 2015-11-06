@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
-import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
+import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -28,7 +28,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
 public class TimetableController {
 	
 	@Autowired
-	UpdateTimetableService updateTimetableService;
+	TimetableService timetableService;
 	@Autowired
 	PrepareFormService prepareFormService;
 	
@@ -39,7 +39,7 @@ public class TimetableController {
 		ModelAndView model = new ModelAndView("updateProfile");
 		if (!result.hasErrors()) {
 			try {
-				updateTimetableService.saveFrom(updateTimetableForm, user);
+				timetableService.saveFrom(updateTimetableForm, user);
 			} catch (InvalidTimetableException e) {
 				// TODO Handling
 				System.err.println("Timetable error");

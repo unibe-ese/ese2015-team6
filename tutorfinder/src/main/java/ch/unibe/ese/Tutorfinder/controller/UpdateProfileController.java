@@ -21,8 +21,6 @@ import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
-import ch.unibe.ese.Tutorfinder.controller.service.UpdateSubjectsService;
-import ch.unibe.ese.Tutorfinder.controller.service.UpdateTimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 
 /**
@@ -35,10 +33,6 @@ import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 @Controller
 public class UpdateProfileController {
 
-	@Autowired
-	UpdateSubjectsService updateSubjectsService;
-	@Autowired
-	UpdateTimetableService updateTimetableService;
 	@Autowired
 	UserService userService;
 	@Autowired
