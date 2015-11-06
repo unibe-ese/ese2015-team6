@@ -6,6 +6,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -28,6 +29,19 @@ public class RegisterServiceImplTest {
 	@Autowired 
 	private UserDao userDao;   
 	
+	private SignupForm signupForm;
+	
+	@Before
+	public void setUp() {
+		this.signupForm = new SignupForm();
+		this.signupForm.setId(new Long(1));
+		this.signupForm.setEmail("form@test.ch");
+		this.signupForm.setFirstName("testFirstName");
+		this.signupForm.setLastName("testLastName");
+		this.signupForm.setPassword("testPassword");
+		this.signupForm.setConfirmPassword("testPassword");
+		this.signupForm.setTutor(true);
+	}
 	 
 	@Test
 	public void testSaveFormForTutor() {
@@ -35,16 +49,8 @@ public class RegisterServiceImplTest {
 		when(userDao.findByEmail(anyString())).thenReturn(null);
 		when(userDao.save(any(User.class))).then(returnsFirstArg());
 		
-		//WHEN
-		SignupForm signupForm = new SignupForm();
-		signupForm.setEmail("form@test.ch");
-		signupForm.setFirstName("testFirstName");
-		signupForm.setLastName("testLastName");
-		signupForm.setPassword("testPassword");
-		signupForm.setConfirmPassword("testPassword");
-		signupForm.setTutor(true);
-		
-		SignupForm tmpSignupForm = registerService.saveFrom(signupForm);
+		//WHEN		
+		SignupForm tmpSignupForm = registerService.saveFrom(this.signupForm);
 		
 		//THEN
 		assertEquals("testFirstName", tmpSignupForm.getFirstName());
@@ -58,15 +64,9 @@ public class RegisterServiceImplTest {
 		when(userDao.save(any(User.class))).then(returnsFirstArg());
 		
 		//WHEN
-		SignupForm signupForm = new SignupForm();
-		signupForm.setEmail("form@test.ch");
-		signupForm.setFirstName("testFirstName");
-		signupForm.setLastName("testLastName");
-		signupForm.setPassword("testPassword");
-		signupForm.setConfirmPassword("testPassword");
-		signupForm.setTutor(false);
+		this.signupForm.setTutor(false);
 		
-		SignupForm tmpSignupForm = registerService.saveFrom(signupForm);
+		SignupForm tmpSignupForm = registerService.saveFrom(this.signupForm);
 		
 		//THEN
 		assertEquals("testFirstName", tmpSignupForm.getFirstName());
@@ -74,19 +74,14 @@ public class RegisterServiceImplTest {
 
 	@Test(expected=InvalidEmailException.class) 
 	public void emailAlreadyUsed() {   
-		
+		//GIVEN
 		User mockUser = Mockito.mock(User.class);
 		when(userDao.findByEmail(anyString())).thenReturn(mockUser);
-		SignupForm testForm = new SignupForm();
-		testForm.setId(1);
-		testForm.setFirstName("testFirstName");
-		testForm.setLastName("testLastName");
-		testForm.setEmail("alreadyUsedEmail@test.test");
-		testForm.setPassword("testtest");
-		testForm.setConfirmPassword("testtest");
-		testForm.setTutor(true);
 		
-		registerService.saveFrom(testForm);
+		//WHEN
+		this.signupForm.setEmail("alreadyUsedEmail@test.test");
+		
+		registerService.saveFrom(this.signupForm);
 	
 	} 
 

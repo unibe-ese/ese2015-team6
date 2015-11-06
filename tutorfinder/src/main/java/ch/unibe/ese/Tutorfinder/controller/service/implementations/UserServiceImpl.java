@@ -15,6 +15,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 	
+	public UserServiceImpl() {
+	}
+	
 	@Override
 	public User getUserByPrincipal(Principal user) {
 		assert(user != null);

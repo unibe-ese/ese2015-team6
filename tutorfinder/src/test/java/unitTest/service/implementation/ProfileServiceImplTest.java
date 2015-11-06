@@ -1,14 +1,15 @@
 package unitTest.service.implementation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -34,28 +35,34 @@ public class ProfileServiceImplTest {
 	@Autowired
 	private ProfileDao profileDao;
 	
-	private Profile mockProfile = Mockito.mock(Profile.class);
+	private Profile mockProfile;
+	private User mockUser;
+	private UpdateProfileForm updateProfileForm;
 	
-	private User mockUser = Mockito.mock(User.class);
+	@Before
+	public void setUp() {
+		this.mockProfile = Mockito.mock(Profile.class);
+		this.mockUser = Mockito.mock(User.class);
+		
+		this.updateProfileForm = new UpdateProfileForm();
+		this.updateProfileForm.setFirstName("testFirstName");
+		this.updateProfileForm.setLastName("testLastName");
+		this.updateProfileForm.setPassword("testPassword");
+		this.updateProfileForm.setConfirmPassword("testPassword");
+		this.updateProfileForm.setBiography("This is a test biography");
+		this.updateProfileForm.setRegion("Bern");
+		this.updateProfileForm.setWage(new BigDecimal(50));
+	}
 	
 	@Test
 	public void testSaveFrom() {
 		//GIVEN
-		when(profileDao.findByEmail(anyString())).thenReturn(mockProfile);
+		when(profileDao.findByEmail(anyString())).thenReturn(this.mockProfile);
 		when(profileDao.save(any(Profile.class))).then(returnsFirstArg());
 		when(userDao.save(any(User.class))).then(returnsFirstArg());
-		
+
 		//WHEN
-		UpdateProfileForm updateProfileForm = new UpdateProfileForm();
-		updateProfileForm.setFirstName("testFirstName");
-		updateProfileForm.setLastName("testLastName");
-		updateProfileForm.setPassword("testPassword");
-		updateProfileForm.setConfirmPassword("testPassword");
-		updateProfileForm.setBiography("This is a test biography");
-		updateProfileForm.setRegion("Bern");
-		updateProfileForm.setWage(new BigDecimal(50));
-		
-		UpdateProfileForm tmpUpdateProfileForm = profileService.saveFrom(updateProfileForm, mockUser);
+		UpdateProfileForm tmpUpdateProfileForm = profileService.saveFrom(this.updateProfileForm, mockUser);
 		
 		//THEN
 		assertEquals("This is a test biography", tmpUpdateProfileForm.getBiography());
@@ -65,21 +72,15 @@ public class ProfileServiceImplTest {
 	@Test
 	public void testSaveFromWithNullPassword() {
 		//GIVEN
-		when(profileDao.findByEmail(anyString())).thenReturn(mockProfile);
+		when(profileDao.findByEmail(anyString())).thenReturn(this.mockProfile);
 		when(profileDao.save(any(Profile.class))).then(returnsFirstArg());
 		when(userDao.save(any(User.class))).then(returnsFirstArg());
 		
 		//WHEN
-		UpdateProfileForm updateProfileForm = new UpdateProfileForm();
-		updateProfileForm.setFirstName("testFirstName");
-		updateProfileForm.setLastName("testLastName");
-		updateProfileForm.setPassword(null);
-		updateProfileForm.setConfirmPassword(null);
-		updateProfileForm.setBiography("This is a test biography");
-		updateProfileForm.setRegion("Bern");
-		updateProfileForm.setWage(new BigDecimal(50));
-		
-		UpdateProfileForm tmpUpdateProfileForm = profileService.saveFrom(updateProfileForm, mockUser);
+		this.updateProfileForm.setPassword(null);
+		this.updateProfileForm.setConfirmPassword(null);
+
+		UpdateProfileForm tmpUpdateProfileForm = profileService.saveFrom(this.updateProfileForm, mockUser);
 		
 		//THEN
 		assertEquals(null, tmpUpdateProfileForm.getPassword());
@@ -88,23 +89,14 @@ public class ProfileServiceImplTest {
 	@Test
 	public void testSaveFromWithExistingPassword() {
 		//GIVEN
-		when(profileDao.findByEmail(anyString())).thenReturn(mockProfile);
+		when(profileDao.findByEmail(anyString())).thenReturn(this.mockProfile);
 		when(profileDao.save(any(Profile.class))).then(returnsFirstArg());
 		when(userDao.save(any(User.class))).then(returnsFirstArg());
 		when(mockUser.getPassword()).thenReturn("testPassword");
 
 		
-		//WHEN
-		UpdateProfileForm updateProfileForm = new UpdateProfileForm();
-		updateProfileForm.setFirstName("testFirstName");
-		updateProfileForm.setLastName("testLastName");
-		updateProfileForm.setPassword("testPassword");
-		updateProfileForm.setConfirmPassword("testPassword");
-		updateProfileForm.setBiography("This is a test biography");
-		updateProfileForm.setRegion("Bern");
-		updateProfileForm.setWage(new BigDecimal(50));
-		
-		UpdateProfileForm tmpUpdateProfileForm = profileService.saveFrom(updateProfileForm, this.mockUser);
+		//WHEN		
+		UpdateProfileForm tmpUpdateProfileForm = profileService.saveFrom(this.updateProfileForm, this.mockUser);
 		
 		//THEN
 		assertEquals("testPassword", tmpUpdateProfileForm.getPassword());
@@ -113,13 +105,13 @@ public class ProfileServiceImplTest {
 	@Test
 	public void testGetProfileByEmail() {
 		//GIVEN
-		when(profileDao.findByEmail(anyString())).thenReturn(mockProfile);
+		when(profileDao.findByEmail(anyString())).thenReturn(this.mockProfile);
 		
 		//WHEN
 		Profile tmpProfile = profileService.getProfileByEmail("test@test.test");
 		
 		//THEN
-		assertEquals(tmpProfile, mockProfile);
+		assertEquals(tmpProfile, this.mockProfile);
 	}
 	
 	@Test(expected=AssertionError.class)
@@ -140,13 +132,13 @@ public class ProfileServiceImplTest {
 	@Test
 	public void testGetProfileById() {
 		//GIVEN
-		when(profileDao.findOne(anyLong())).thenReturn(mockProfile);
+		when(profileDao.findOne(anyLong())).thenReturn(this.mockProfile);
 				
 		//WHEN
 		Profile tmpProfile = profileService.getProfileById(new Long(1));
 				
 		//THEN
-		assertEquals(tmpProfile, mockProfile);
+		assertEquals(tmpProfile, this.mockProfile);
 	}
 	
 	@Test(expected=AssertionError.class)
