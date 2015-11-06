@@ -35,6 +35,7 @@ public class ConstantVariables {
 	
 	public static final String STUDENT = "STUDENT";
 
+	/* Time and Day */
 	public static final int TIMESLOTS = 24;
 
 	public static final int DAYS = 7;
