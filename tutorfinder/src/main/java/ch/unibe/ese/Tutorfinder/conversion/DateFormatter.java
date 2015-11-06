@@ -6,12 +6,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import org.springframework.format.Formatter;
+import org.springframework.stereotype.Service;
 
 /**
  * Converts formatted strings to java.time.LocalDate objects and vice versa.
  * @author Nicola
  *
  */
+@Service
 public class DateFormatter implements Formatter<LocalDate> {
 	
 	public DateFormatter() {
