@@ -35,7 +35,8 @@ public class FindTutorServiceImpl implements FindTutorService {
 		LinkedList<User> tmpUsers = new LinkedList<User>();
 		
 		for(Subject userSubject : tmpUserSubject) {
-			tmpUsers.add(userSubject.getUser());
+			if(userSubject.getUser() != null)
+				tmpUsers.add(userSubject.getUser());
 		}
 		return tmpUsers;
 	}
