@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	ProfileServiceImplTest.class,
 	UserServiceImplTest.class,
 	TimetableServiceImplTest.class,
-	FindTutorServiceImplTest.class
+	FindTutorServiceImplTest.class,
+	SubjectServiceImplTest.class
 })
 /**
  * Test suite including all service implementation unit tests
