@@ -92,8 +92,6 @@ public class ProfileServiceImplTest {
 		when(profileDao.findByEmail(anyString())).thenReturn(this.mockProfile);
 		when(profileDao.save(any(Profile.class))).then(returnsFirstArg());
 		when(userDao.save(any(User.class))).then(returnsFirstArg());
-		when(mockUser.getPassword()).thenReturn("testPassword");
-
 		
 		//WHEN		
 		UpdateProfileForm tmpUpdateProfileForm = profileService.saveFrom(this.updateProfileForm, this.mockUser);

@@ -8,7 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	RegisterServiceImplTest.class,
 	ProfileServiceImplTest.class,
-	UserServiceImplTest.class
+	UserServiceImplTest.class,
+	TimetableServiceImplTest.class
 })
 /**
  * Test suite including all service implementation unit tests

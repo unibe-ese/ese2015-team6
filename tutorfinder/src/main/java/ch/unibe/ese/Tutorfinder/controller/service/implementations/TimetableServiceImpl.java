@@ -35,6 +35,8 @@ public class TimetableServiceImpl implements TimetableService {
 	@Transactional
 	public UpdateTimetableForm saveFrom(UpdateTimetableForm updateTimetableForm, Principal authUser)
 			throws InvalidTimetableException {
+		assert(updateTimetableForm != null);
+		assert(authUser != null);
 		
 		User user = userDao.findByEmail(authUser.getName());
 		Boolean[][] tmpTimetable = updateTimetableForm.getTimetable();
@@ -43,10 +45,9 @@ public class TimetableServiceImpl implements TimetableService {
 			for(int row=0; row<=23; row++) {
 				DayOfWeek day = DayOfWeek.of(col + 1);
 				int timeslot = row;
-				Timetable timetable;
 				
 				//if a timetable exists only change the availability, else create a new timetable
-				timetable = timetableDao.findByUserAndDayAndTimeslot(user, day, timeslot);
+				Timetable timetable = timetableDao.findByUserAndDayAndTimeslot(user, day, timeslot);
 				if(timetable != null) {
 					if(tmpTimetable[row][col]) {
 						timetable = timetableDao.save(timetable); //Save object to DB
