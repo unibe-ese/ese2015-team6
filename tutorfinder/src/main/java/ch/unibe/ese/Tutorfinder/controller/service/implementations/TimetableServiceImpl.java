@@ -35,8 +35,7 @@ public class TimetableServiceImpl implements TimetableService {
 	@Transactional
 	public UpdateTimetableForm saveFrom(UpdateTimetableForm updateTimetableForm, Principal authUser)
 			throws InvalidTimetableException {
-		assert(updateTimetableForm != null);
-		assert(authUser != null);
+		assert(updateTimetableForm != null && authUser != null);
 		
 		User user = userDao.findByEmail(authUser.getName());
 		Boolean[][] tmpTimetable = updateTimetableForm.getTimetable();

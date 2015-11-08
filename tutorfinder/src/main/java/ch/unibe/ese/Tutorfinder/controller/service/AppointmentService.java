@@ -8,7 +8,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
 
 public interface AppointmentService {
 
-	void saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student);
+	MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student);
 
 	Appointment findByTutorAndTimestamp(User user, Timestamp timestamp);
 

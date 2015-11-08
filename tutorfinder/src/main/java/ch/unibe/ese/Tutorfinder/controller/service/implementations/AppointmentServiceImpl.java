@@ -22,7 +22,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Autowired
 	AppointmentDao appointmentDao;
 
-	public void saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student) {
+	public MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student) {
 		BigDecimal wage = tutor.getProfile().getWage();
 		LocalDate date = appForm.getDate();
 		DayOfWeek dow = date.getDayOfWeek();
@@ -32,6 +32,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 		
 		Appointment appointment = new Appointment(tutor,student,dow,timestamp,Availability.RESERVED, wage);
 		appointmentDao.save(appointment);
+		
+		return appForm;
 	}
 
 	@Override
