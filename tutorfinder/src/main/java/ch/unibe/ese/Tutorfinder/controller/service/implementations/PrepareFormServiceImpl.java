@@ -38,6 +38,8 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 
 	@Override
 	public ModelAndView prepareForm(Principal authUser, ModelAndView model) {
+		assert(authUser != null && model != null);
+		
 		User dbUser = userService.getUserByPrincipal(authUser);
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(authUser));
@@ -49,12 +51,14 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 
 	@Override
 	public UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
+		assert(dbUser != null);
+		
 		UpdateTimetableForm tmpForm = new UpdateTimetableForm();
 		Boolean[][] tmpMatrix = new Boolean[ConstantVariables.TIMESLOTS][ConstantVariables.DAYS];
 		for (Boolean[] row : tmpMatrix)
 			Arrays.fill(row, false);
-		List<Timetable> tempList = timetableService.findAllByUser(dbUser);
-		for (Timetable element : tempList) {
+		List<Timetable> tmpList = timetableService.findAllByUser(dbUser);
+		for (Timetable element : tmpList) {
 			int day = element.getDay().getValue() - 1;
 			int timeslot = element.getTime();
 			tmpMatrix[timeslot][day] = true;
@@ -65,17 +69,20 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 
 	@Override
 	public UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList) {
-		UpdateSubjectsForm tempForm = new UpdateSubjectsForm();
+		assert(subjectList != null);
+		
+		UpdateSubjectsForm tmpForm = new UpdateSubjectsForm();
 		List<Row> rowList = new ArrayList<Row>();
 		for (Subject subject : subjectList) {
 			rowList.add(new Row(subject.getName(), subject.getGrade()));
 		}
-		tempForm.setRows(rowList);
-		return tempForm;
+		tmpForm.setRows(rowList);
+		return tmpForm;
 	}
 
 	@Override
 	public UpdateProfileForm getFormWithValues(Principal user) {
+		assert(user != null);
 		UpdateProfileForm tmpForm = new UpdateProfileForm();
 		tmpForm.setFirstName((userService.getUserByPrincipal(user)).getFirstName());
 		tmpForm.setLastName((userService.getUserByPrincipal(user)).getLastName());
@@ -88,6 +95,8 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 
 	@Override
 	public Profile getUsersProfile(Principal user) {
+		assert(user != null);
+		
 		User tmpUser = userService.getUserByPrincipal(user);
 		Profile tmpProfile = profileService.getProfileById(tmpUser.getId());
 

@@ -1,18 +1,19 @@
 package unitTest.service.implementation;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
@@ -39,9 +40,13 @@ public class SubjectServiceImplTest {
 	@Autowired 
 	SubjectService subjectService;
 	
+	@Mock
 	private User mockUser;
+	@Mock
 	private Principal mockAuthUser;
+	@Mock
 	private Subject mockSubject;
+	@Mock
 	private Row mockRow;
 	private UpdateSubjectsForm updateSubjectsForm = new UpdateSubjectsForm();
 	private ArrayList<Subject> subjectList = new ArrayList<Subject>();
@@ -49,13 +54,10 @@ public class SubjectServiceImplTest {
 	
 	@Before
 	public void setUp() {
-		this.mockUser = Mockito.mock(User.class);
-		this.mockAuthUser = Mockito.mock(Principal.class);
+		MockitoAnnotations.initMocks( this );
 		
-		this.mockSubject = Mockito.mock(Subject.class);
 		this.subjectList.add(this.mockSubject);
 		
-		this.mockRow = Mockito.mock(Row.class);
 		ReflectionTestUtils.setField(mockRow, "subject", "TestSubject");
 		this.rows.add(mockRow);
 		
@@ -69,6 +71,7 @@ public class SubjectServiceImplTest {
 		when(userDao.findByEmail(anyString())).thenReturn(this.mockUser);
 		when(subjectDao.findAllByUser(any(User.class))).thenReturn(this.subjectList);
 		when(mockRow.getSubject()).thenReturn("TestSubject");
+		when(subjectDao.save(subjectList)).then(returnsFirstArg());
 		
 		//WHEN
 		UpdateSubjectsForm tmpUpdateSubjectsForm = subjectService.saveFrom(this.updateSubjectsForm, this.mockAuthUser);
@@ -78,13 +81,13 @@ public class SubjectServiceImplTest {
 		
 	}
 	
-	//FIXME works when the (when...thenThrow) line is deleted
 	@Test
 	public void testSaveFromWhenNameNull() {
 		//GIVEN
 		when(userDao.findByEmail(anyString())).thenReturn(this.mockUser);
 		when(subjectDao.findAllByUser(any(User.class))).thenReturn(this.subjectList);
 		when(mockRow.getSubject()).thenReturn(null);
+		when(subjectDao.save(subjectList)).then(returnsFirstArg());
 		
 		//WHEN
 		UpdateSubjectsForm tmpUpdateSubjectsForm = subjectService.saveFrom(this.updateSubjectsForm, this.mockAuthUser);
@@ -101,7 +104,7 @@ public class SubjectServiceImplTest {
 		when(userDao.findByEmail(anyString())).thenReturn(this.mockUser);
 		when(subjectDao.findAllByUser(any(User.class))).thenReturn(this.subjectList);
 		when(mockRow.getSubject()).thenReturn("TestSubject");
-		when(subjectDao.save(any(List.class))).thenThrow(new DataIntegrityViolationException("testException"));
+		when(subjectDao.save(subjectList)).thenThrow(new DataIntegrityViolationException("testException"));
 		
 		//WHEN
 		UpdateSubjectsForm tmpUpdateSubjectsForm = subjectService.saveFrom(this.updateSubjectsForm, this.mockAuthUser);

@@ -12,7 +12,8 @@ import java.security.Principal;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,13 +32,14 @@ public class UserServiceImplTest {
 	@Autowired
 	UserService userService;
 	
+	@Mock
 	private User mockUser;
+	@Mock
 	private Principal mockAuthUser;
 	
 	@Before
 	public void setUp() {
-		this.mockUser = Mockito.mock(User.class);
-		this.mockAuthUser = Mockito.mock(Principal.class);
+		MockitoAnnotations.initMocks( this );
 	}
 	
 	
@@ -52,7 +54,7 @@ public class UserServiceImplTest {
 		User tmpUser = userService.save(this.mockUser);
 		
 		//THEN
-		assertEquals("user@test.ch", ReflectionTestUtils.getField(tmpUser, "email"));
+		assertEquals(this.mockUser.getEmail(), tmpUser.getEmail());
 	}
 	
 	@Test(expected=AssertionError.class)

@@ -11,14 +11,20 @@
     <bean class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao"/>
     </bean>
-        <bean class="org.mockito.Mockito" factory-method="mock">
+    <bean class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.ProfileDao"/>
     </bean>
-        <bean class="org.mockito.Mockito" factory-method="mock">
+    <bean class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.SubjectDao"/>
     </bean>
-       <bean class="org.mockito.Mockito" factory-method="mock">
+    <bean class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.TimetableDao"/>
+    </bean>
+    <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="java.security.Principal"/>
+    </bean>
+    <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="java.security.Principal"/>
     </bean>
    
    <!-- AUTOWIRE services -->

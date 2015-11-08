@@ -12,7 +12,8 @@ import java.math.BigDecimal;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,14 +36,15 @@ public class ProfileServiceImplTest {
 	@Autowired
 	private ProfileDao profileDao;
 	
+	@Mock
 	private Profile mockProfile;
+	@Mock
 	private User mockUser;
 	private UpdateProfileForm updateProfileForm;
 	
 	@Before
 	public void setUp() {
-		this.mockProfile = Mockito.mock(Profile.class);
-		this.mockUser = Mockito.mock(User.class);
+		MockitoAnnotations.initMocks( this );
 		
 		this.updateProfileForm = new UpdateProfileForm();
 		this.updateProfileForm.setFirstName("testFirstName");

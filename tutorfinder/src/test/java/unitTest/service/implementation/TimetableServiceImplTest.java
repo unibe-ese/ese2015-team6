@@ -16,7 +16,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -40,17 +41,18 @@ public class TimetableServiceImplTest {
 	@Autowired
 	TimetableService timetableService;
 	
+	@Mock
 	private Timetable mockTimetable;
+	@Mock
 	private User mockUser;
+	@Mock
 	private Principal mockAuthUser;
 	private UpdateTimetableForm updateTimetableForm = new UpdateTimetableForm();
 	private Boolean[][] timetable = new Boolean[ConstantVariables.TIMESLOTS][ConstantVariables.DAYS];
 	
 	@Before
 	public void setUp() {
-		this.mockTimetable = Mockito.mock(Timetable.class);
-		this.mockUser = Mockito.mock(User.class);
-		this.mockAuthUser = Mockito.mock(Principal.class);
+		MockitoAnnotations.initMocks( this );
 		
 		this.updateTimetableForm.setId(new Long(1));
 		for(Boolean[] row : this.timetable) {
