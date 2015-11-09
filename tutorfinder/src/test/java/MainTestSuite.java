@@ -9,6 +9,7 @@ import unitTest.service.implementation.ServiceImplUnitTestSuite;
 @SuiteClasses({
 	ServiceImplUnitTestSuite.class,
 	ControllerIntegrationTestSuite.class
+	
 })
 /**
  * Test suite including all tests

@@ -1,6 +1,6 @@
 package integrationTest.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Transactional 
 @TransactionConfiguration(defaultRollback = true) 
-public class HomeControllerTest { 
+public class ShowProfileControllerTest { 
 	
 	@Autowired private WebApplicationContext wac; 
 
@@ -39,13 +39,7 @@ public class HomeControllerTest {
 	public void MappingTest() throws Exception{
 		
 		this.mockMvc.perform(
-				post("/")).andExpect(status().isOk())
-		.andExpect(model().hasNoErrors());
-		
-		this.mockMvc.perform(
-				post("/home")).andExpect(status().isOk())
-						.andExpect(model().hasNoErrors());
-		
-	}
+				get("/showProfile?userId=1")).andExpect(status().isOk());
+	} 
 	
 }

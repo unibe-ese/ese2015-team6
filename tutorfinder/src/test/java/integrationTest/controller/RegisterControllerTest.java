@@ -49,7 +49,7 @@ public class RegisterControllerTest {
 		}
 	
 	@Test
-	public void InvalidEmail() throws Exception {
+	public void InvalidEmail() throws AssertionError, java.lang.Exception {
 		this.mockMvc
 		.perform(
 				post("/create").param("email", "invalidEmail")
@@ -58,7 +58,11 @@ public class RegisterControllerTest {
 				.param("password", "testtest")
 				.param("confirmPassword", "testtest")
 				.param("tutor", "true"))
-					.andExpect(model().errorCount(1));
+			.andExpect(status().isOk())
+			.andExpect(model().hasErrors())
+			.andExpect(model().errorCount(1));
+		
+;
 		//TODO check which error was added
 	}
 	
