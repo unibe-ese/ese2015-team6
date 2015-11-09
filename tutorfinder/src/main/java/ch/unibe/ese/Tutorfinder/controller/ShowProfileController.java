@@ -66,6 +66,7 @@ public class ShowProfileController {
 		return model;
 	}
 
+	//FIXME returned model appointment form is not loaded correctly
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
 	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal authUser, BindingResult result) {
