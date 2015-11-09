@@ -16,7 +16,7 @@
 	<!-- 
 		Profile picture 
 	-->
-	<img th:src="@{|/img/profPic/${User.id}.png|}"
+	<img th:src="@{|/img/profPic/${DisplayedUser.id}.png|}"
 		onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
 		alt="Profile picture" width="192" height="192"
 		src="../../img/default-avatar.jpg" />
@@ -26,10 +26,10 @@
 		Profile name 
 	-->
 	
-	<h1 th:text="|${User.firstName} ${User.lastName}|">Vorname
+	<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
 		Nachname</h1>
 
-        <button id="editButton" type="button" onClick="window.location.href='/editProfile'">Edit Profile</button>
+        <button id="editButton" type="button" onClick="window.location.href='/editProfile'" th:if = "${User.id==DisplayedUser.id}">Edit Profile</button>
     </div>
 	
 

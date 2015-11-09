@@ -68,12 +68,14 @@ public class LoginController {
             	model = new ModelAndView("login");
             	model.addObject("loginBoxVisibility", "hidden");
         		model.addObject("registerBoxVisibility", "visible");
+        		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
             }
             catch (InvalidUserException e) {
             	result.reject("page_error", e.getMessage());
             	model = new ModelAndView("login");
             	model.addObject("loginBoxVisibility", "hidden");
         		model.addObject("registerBoxVisibility", "visible");
+        		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
             }
             //TODO exception for invalid password with message
 
@@ -81,6 +83,7 @@ public class LoginController {
         	model = new ModelAndView("login");
         	model.addObject("loginBoxVisibility", "hidden");
     		model.addObject("registerBoxVisibility", "visible");
+    		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
         }   	
     	return model;
     }
@@ -114,7 +117,9 @@ public class LoginController {
 		model.addObject("registerBoxVisibility", registerBoxVis);
 		model.addObject("loginUrl", "/login");
 		model.addObject("signupForm", new SignupForm());
-
+		
+		model.addObject("registerCancelButtonAction", "document.getElementById('registerBox').style.visibility='hidden'; document.getElementById('loginBox').style.visibility='visible'");
+		
 		return model;
 	}
 

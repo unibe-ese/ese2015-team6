@@ -100,7 +100,7 @@
             <br/><br/>
 			<div class="form-actions">
 				<button type="submit" id = "registerButton" class="btn btn-primary">Sign up</button>
-                <button id = "cancelButton" type="button"   onClick="document.getElementById('registerBox').style.visibility='hidden'; document.getElementById('loginBox').style.visibility='visible'">Cancel</button>
+                <button id = "cancelButton" type="button"   onClick="document.getElementById('registerBox').style.visibility='hidden'; document.getElementById('loginBox').style.visibility='visible'" th:onClick = " ${registerCancelButtonAction}">Cancel</button>
                 
                 
 			</div>

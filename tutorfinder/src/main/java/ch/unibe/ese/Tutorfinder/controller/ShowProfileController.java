@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,11 +36,12 @@ public class ShowProfileController {
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView profile(@RequestParam(value="userId",required= true)int userId) { 
+	public ModelAndView profile(Principal user, @RequestParam(value="userId",required= true)int userId) { 
 		ModelAndView model = new ModelAndView("showProfile");
 		
 		User tmpUser = userDao.findById(userId);
-		model.addObject("User", tmpUser);
+		model.addObject("User", userDao.findByEmail(user.getName()));
+		model.addObject("DisplayedUser", tmpUser);
 		model.addObject("Subjects", subjectDao.findAllByUser(tmpUser));
 		
 		model.addObject("Profile", profileDao.findByEmail(tmpUser.getEmail()));
