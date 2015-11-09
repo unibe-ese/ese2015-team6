@@ -2,7 +2,6 @@ package integrationTest.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Transactional 
 @TransactionConfiguration(defaultRollback = true) 
-public class RegisterControllerTest { 
+public class HomeControllerTest { 
 	
 	@Autowired private WebApplicationContext wac; 
 
@@ -32,49 +31,18 @@ public class RegisterControllerTest {
 
 
 	@Before public void setup() {
-	this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build(); } 
-
-	@Test
-	public void ValidSignUpTest() throws Exception {
-		this.mockMvc
-		.perform(
-				post("/create").param("email", "test@test.test")
-				.param("firstName", "test")
-				.param("lastName", "test")
-				.param("password", "testtest")
-				.param("confirmPassword", "testtest")
-				.param("tutor", "true"))
-					.andExpect(status().isOk())
-					.andExpect(model().hasNoErrors());
-		}
-	
-	@Test
-	public void InvalidEmail() throws Exception {
-		this.mockMvc
-		.perform(
-				post("/create").param("email", "invalidEmail")
-				.param("firstName", "test")
-				.param("lastName", "test")
-				.param("password", "testtest")
-				.param("confirmPassword", "testtest")
-				.param("tutor", "true"))
-					.andExpect(model().errorCount(1));
-		//TODO check which error was added
+	this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void NullFirstName() throws Exception {
-		this.mockMvc
-		.perform(
-				post("/create").param("email", "test@test.test")
-				.param(null, "test")
-				.param("lastName", "test")
-				.param("password", "testtest")
-				.param("confirmPassword", "testtest")
-				.param("tutor", "true"));
+	@Test
+	public void MappingTest() throws Exception{
+		
+		this.mockMvc.perform(
+				post("/")).andExpect(model().hasNoErrors());
+		
 		
 	}
 	
 	
 	
-	}
+}

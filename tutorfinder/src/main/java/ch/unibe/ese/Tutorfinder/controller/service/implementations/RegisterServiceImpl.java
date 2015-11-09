@@ -35,7 +35,7 @@ public class RegisterServiceImpl implements RegisterService {
 	}
 
 	@Transactional
-	public SignupForm saveFrom(SignupForm signupForm) throws InvalidUserException {
+	public SignupForm saveFrom(SignupForm signupForm) throws InvalidEmailException {
 
 		User user = new User();
 		user.setFirstName(signupForm.getFirstName());
