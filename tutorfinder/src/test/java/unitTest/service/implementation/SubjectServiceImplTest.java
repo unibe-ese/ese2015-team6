@@ -97,14 +97,16 @@ public class SubjectServiceImplTest {
 		
 	}
 	
-	//FIXME DataIntegrityViolationException isn't catched
+	@SuppressWarnings("unchecked")
 	@Test(expected=InvalidSubjectException.class)
 	public void testSaveFromThrowsDataIntegrityViolationException() {
 		//GIVEN
 		when(userDao.findByEmail(anyString())).thenReturn(this.mockUser);
 		when(subjectDao.findAllByUser(any(User.class))).thenReturn(this.subjectList);
 		when(mockRow.getSubject()).thenReturn("TestSubject");
-		when(subjectDao.save(subjectList)).thenThrow(new DataIntegrityViolationException("testException"));
+		when(subjectDao.save(any(Iterable.class)))
+		.thenThrow(new DataIntegrityViolationException("testException"))
+		.thenReturn(subjectList);
 		
 		//WHEN
 		UpdateSubjectsForm tmpUpdateSubjectsForm = subjectService.saveFrom(this.updateSubjectsForm, this.mockAuthUser);
