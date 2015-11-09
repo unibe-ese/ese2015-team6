@@ -9,8 +9,8 @@
 <body>
     <div th:fragment="header" id="header">
     <!-- Here, a logo could be placed -->
-        <a sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/findTutor}" href="login.html"><div id = "headerLogo">ESE Tutorfinder</div></a>
-        <a sec:authorize="!hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/home}" href="login.html"><div id = "headerLogo">ESE Tutorfinder</div></a>
+        <a sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/findTutor}" href="login.html"><span id = "headerLogo">ESE Tutorfinder</span></a>
+        <a sec:authorize="!hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/home}" href="login.html"><span id = "headerLogo">ESE Tutorfinder</span></a>
     
     
         <div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
