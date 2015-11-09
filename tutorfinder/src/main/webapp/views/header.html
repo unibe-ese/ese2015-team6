@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+</head>
+    
+<body>
+    <div th:fragment="header" id="header">
+    <!-- Here, a logo could be placed -->
+        <a sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/findTutor}" href="login.html"><div id = "headerLogo">ESE Tutorfinder</div></a>
+        <a sec:authorize="!hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/home}" href="login.html"><div id = "headerLogo">ESE Tutorfinder</div></a>
+    
+    
+        <div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
+    
+    <!-- 
+	    	Show Profile Button
+	        
+            FIXME user.id not possible because user is principal
+            <a class="headerButton" id="showButton" th:href="@{'/showProfile'(userId=${User.id})}" href="showProfile.html">Show Profile</a>
+	-->
+	
+		 <!--
+			Search Button
+		 -->
+		
+            <a class="headerButton" id="searchButton" th:href="@{/findTutor}" href="/findTutor.html">Search</a>
+			
+		
+		
+			
+		<!--  
+			Logout Button
+		 -->
+		
+            <a class="headerButton" id="logoutButton" th:href="@{/logout}" href="login.html">Logout</a>
+			
+	   </div>	
+    </div>
+    
+</body>
+</html>

@@ -5,31 +5,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Profile</title>
-<link rel="stylesheet" th:href="@{/css/style.css}"
-	href="../css/style.css" />
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
 </head>
 
 <body>
 
+    <div th:include="header::header"></div>
+    
+    <div class="content">
 	<!-- 
 		Profile picture 
 	-->
-	<img th:src="@{|/img/profPic/${User.id}.png|}"
+	<img th:src="@{|/img/profPic/${DisplayedUser.id}.png|}"
 		onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
 		alt="Profile picture" width="192" height="192"
 		src="../../img/default-avatar.jpg" />
-
+	
 
 	<!-- 
 		Profile name 
 	-->
-
-	<h1 th:text="|${User.firstName} ${User.lastName}|">Vorname
+	
+	<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
 		Nachname</h1>
 
-
+        <button id="editButton" type="button" onClick="window.location.href='/editProfile'" th:if = "${User.id==DisplayedUser.id}">Edit Profile</button>
+    </div>
+	
 	<!-- The following information are only shown if it is the profile from an tutor -->
-	<div>
+	<div class="userInfoBox" th:if="${DisplayedUser.role} == TUTOR">
 		<!-- 
 	    	Biography 
 	    -->
@@ -68,53 +72,24 @@
 			</span>
 		</p>
 
-		<form action="#" method="post"
-			th:action="@{|/updateForm?userId=${User.id}|}"
-			th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
-			<input type="date" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:field="*{date}" name="date" required="required"/>
-			<!-- TODO Implement alternative picker for browsers without html5 support -->
-			<button type="submit" name="getDate">Get Appointments</button>
-			<div th:each="appointment:*{appointments}">
-				<span
-					th:text="|${appointment.timeslot}:00 Status: ${appointment.availability}|">18:00
-					Status: AVAILABLE </span>
-				<button type="submit" name="request"
-					th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
-					th:value="${appointment.timeslot}">Request</button>
-			</div>
-		</form>
+		<div th:if = "${User.id!=DisplayedUser.id}">
+			<form action="#" method="post"
+				th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
+				th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
+				<input type="date" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:field="*{date}" name="date" required="required"/>
+				<!-- TODO Implement alternative picker for browsers without html5 support -->
+				<button type="submit" name="getDate">Get Appointments</button>
+				<div th:each="appointment:*{appointments}">
+					<span
+						th:text="|${appointment.timeslot}:00 Status: ${appointment.availability}|">18:00
+						Status: AVAILABLE </span>
+					<button type="submit" name="request"
+						th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
+						th:value="${appointment.timeslot}">Request</button>
+				</div>
+			</form>
+		</div>
 	</div>
-
-	<!-- 
-    	Edit Button
-    -->
-	<div id="editButton">
-		<button type="button" onClick="window.location.href='/editProfile'">Edit
-			Profile</button>
-	</div>
-
-	<!--  
-		Search Button
-	 -->
-	<div id="searchButton">
-		<button type="button" onClick="window.location.href='/findTutor'">Search</button>
-	</div>
-
-	<!--  
-		Home Button
-	 -->
-	<div id="homeButton">
-		<button type="button" onClick="window.location.href='/home'">Home</button>
-	</div>
-
-	<!--  
-		Logout Button
-	 -->
-	<div id="logoutButton">
-		<button type="button" onClick="window.location.href='/logout'">Logout</button>
-	</div>
-
-
+	
 </body>
-
 </html>

@@ -104,6 +104,17 @@ public class User {
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
-	}	
+	}
+
+	@Override
+	public boolean equals(Object user) {
+
+		if(user instanceof User) {
+			return this.getId() == ((User) user).getId();
+		}
+		else return false;
+	}
+	
+	
 	
 }

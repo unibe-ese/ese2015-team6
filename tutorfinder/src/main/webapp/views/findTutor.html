@@ -4,10 +4,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Find Tutor</title>
-<link rel="stylesheet" th:href="@{/css/style.css}"
-	href="../css/style.css" />
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
 </head>
 <body>
+    <div th:include="header::header"></div>
+    
+    <div class="content">
 	<form action="#" th:object="${findTutorForm}" th:action="@{/submit}"
 		th:autocomplete="off" method="post" th:name="findTutorForm">
 		<fieldset>
@@ -15,17 +17,17 @@
 
 			<label class="control-label" for="subject">Subject:</label>
 			<div class="controls">
-				<input type="text" th:field="*{subject}"
+				<input type="text" th:name="subject"
 					tabindex="2" maxlength="45" required="required" />
-			</div>
-
+			</div>	
+			
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">Search</button>
 			</div>
 		</fieldset>
 	</form>
-
-	<div th:if="${param.q != null}">
+	
+	<div class="content" th:if="${param.q != null}">
 		<h1>
 			Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
 		</h1>
@@ -35,34 +37,9 @@
 				Max Mustermann (Grade 5.0)</a></p>
 		</div>
 	</div>
-
-	<!-- 
-    	Edit Button
-    -->
-	<div id="editButton">
-		<button type="button" onClick="window.location.href='/editProfile'">Edit
-			Profile</button>
-	</div>
-
-	<!--  
-		Search Button
-	 -->
-	<div id="searchButton">
-		<button type="button" onClick="window.location.href='/findTutor'">Search</button>
-	</div>
-
-	<!--  
-		Home Button
-	 -->
-	<div id="homeButton">
-		<button type="button" onClick="window.location.href='/home'">Home</button>
-	</div>
-
-	<!--  
-		Logout Button
-	 -->
-	<div id="logoutButton">
-		<button type="button" onClick="window.location.href='/logout'">Logout</button>
-	</div>
+	
+	
+	
+    </div>
 </body>
 </html>

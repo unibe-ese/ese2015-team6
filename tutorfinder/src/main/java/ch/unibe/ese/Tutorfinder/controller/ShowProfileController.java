@@ -57,9 +57,10 @@ public class ShowProfileController {
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView profile(@RequestParam(value = "userId") long userId) {
+	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId") long userId) {
 		ModelAndView model = new ModelAndView("showProfile");
-		model = prepareModelByUserId(userId, model);
+		
+		model = prepareModelByUserId(authUser, userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
 
 		return model;
@@ -67,26 +68,26 @@ public class ShowProfileController {
 
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
 	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
-			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal user, BindingResult result) {
+			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal authUser, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		final Integer slot = Integer.valueOf(req.getParameter("request"));
 		if (!result.hasErrors()) {
-			User student = userService.getUserByPrincipal(user);
+			User student = userService.getUserByPrincipal(authUser);
 			User tutor = userService.getUserById(userId);
 			appointmentService.saveFrom(appForm, slot, tutor, student);
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableService.findAllByUserAndDay(tutor, dow);
-			appForm.setAppointments(loadAppointments(slots, userService.getUserByPrincipal(user), date));
+			appForm.setAppointments(loadAppointments(slots, userService.getUserByPrincipal(authUser), date));
 		}
 		
 		model.addObject("makeAppointmentsForm", appForm);
-		model = prepareModelByUserId(userId, model);
+		model = prepareModelByUserId(authUser, userId, model);
 		return model;
 	}
 
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
-	public ModelAndView getDate(@RequestParam(value = "userId") long userId,
+	public ModelAndView getDate(Principal authUser, @RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, BindingResult result) {
 		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
@@ -97,7 +98,7 @@ public class ShowProfileController {
 			appForm.setAppointments(loadAppointments(slots, user, date));
 		}
 		model.addObject("makeAppointmentsForm", appForm);
-		model = prepareModelByUserId(userId, model);
+		model = prepareModelByUserId(authUser, userId, model);
 		return model;
 	}
 
@@ -127,9 +128,12 @@ public class ShowProfileController {
 		return tmpList;
 	}
 
-	private ModelAndView prepareModelByUserId(long userId, ModelAndView model) {
+	private ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model) {
+		User tmpAuthUser = userService.getUserByPrincipal(authUser);
+		model.addObject("User", tmpAuthUser);
+		
 		User tmpUser = userService.getUserById(userId);
-		model.addObject("User", tmpUser);
+		model.addObject("DisplayedUser", tmpUser);
 		model.addObject("Subjects", subjectService.getAllSubjectsByUser(tmpUser));
 		model.addObject("Profile", profileService.getProfileByEmail(tmpUser.getEmail()));
 		return model;
