@@ -40,9 +40,9 @@ public class HomeControllerTest {
 		this.mockMvc.perform(
 				post("/")).andExpect(model().hasNoErrors());
 		
+		this.mockMvc.perform(
+				post("/home")).andExpect(model().hasNoErrors());
 		
 	}
-	
-	
 	
 }

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidEmailException;
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidUserException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.SignupForm;
 import ch.unibe.ese.Tutorfinder.controller.service.RegisterService;
 import ch.unibe.ese.Tutorfinder.model.Profile;

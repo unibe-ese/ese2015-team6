@@ -39,10 +39,6 @@ public class RegisterController {
             	result.rejectValue("email", "", e.getMessage());
             	model = new ModelAndView("register");
             }
-            catch (InvalidUserException e) {
-            	result.reject("page_error", e.getMessage());
-            	model = new ModelAndView("register");
-            }
             //TODO exception for invalid password with message
 
         } else {
