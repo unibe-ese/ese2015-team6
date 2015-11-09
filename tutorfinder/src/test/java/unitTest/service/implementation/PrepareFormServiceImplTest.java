@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,11 +26,11 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
+import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.controller.service.implementations.PrepareFormServiceImpl;
-import ch.unibe.ese.Tutorfinder.controller.service.implementations.UserServiceImpl;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
@@ -68,7 +67,13 @@ public class PrepareFormServiceImplTest {
 	@Mock
 	private ModelAndView mockModel;
 	@Mock
-	private UserServiceImpl mockUserService;
+	private UserService mockUserService;
+	@Mock
+	private SubjectService mockSubjectService;
+	@Mock
+	private ProfileService mockProfileService;
+	@Mock
+	private TimetableService mockTimetableService;
 	
 	private ArrayList<Subject> subjectList = new ArrayList<Subject>();
 	private ArrayList<Timetable> timetableList = new ArrayList<Timetable>();
@@ -99,13 +104,24 @@ public class PrepareFormServiceImplTest {
 		this.subjectList.add(this.mockSubject);
 		this.timetableList.add(this.mockTimetable);
 		
-		prepareFormService = new PrepareFormServiceImpl(mockUserService); //Use constructor to inject mock
+		prepareFormService = new PrepareFormServiceImpl(mockUserService, mockProfileService,mockSubjectService, mockTimetableService); //Use constructor to inject mock
 	}
 
 	@Test
 	public void testPrepareForm() {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(mockUser); // Control injected mock
-		ModelAndView gotMav = prepareFormService.prepareForm(mockAuthUser, mockModel);
+		when(mockSubjectService.getAllSubjectsByUser(mockUser)).thenReturn(subjectList);
+		when(mockProfileService.getProfileById(mockUser.getId())).thenReturn(mockProfile);
+		when(mockTimetableService.findAllByUser(mockUser)).thenReturn(timetableList);
+		when(mockTimetable.getDay()).thenReturn(DayOfWeek.MONDAY);
+		
+		ModelAndView gotMav = prepareFormService.prepareForm(mockAuthUser, new ModelAndView());
+		
+		assert(gotMav.getModel().containsKey("User"));
+		assert(gotMav.getModel().containsKey("updateSubjectsForm"));
+		assert(gotMav.getModel().containsKey("updateProfileForm"));
+		assert(gotMav.getModel().containsKey("updateTimetableForm"));
+		assertEquals(mockUser, gotMav.getModel().get("User"));
 	}
 
 	@Test(expected = AssertionError.class)

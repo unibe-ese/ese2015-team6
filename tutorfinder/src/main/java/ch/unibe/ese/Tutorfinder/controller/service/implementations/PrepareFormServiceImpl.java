@@ -38,8 +38,11 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 
 	// Constructor for testing purposes
 	@Autowired
-	public PrepareFormServiceImpl(UserServiceImpl userService) {
+	public PrepareFormServiceImpl(UserService userService, ProfileService profileService, SubjectService subjectService, TimetableService timetableService) {
 		this.userService = userService;
+		this.profileService = profileService;
+		this.subjectService = subjectService;
+		this.timetableService = timetableService;
 	}
 
 
