@@ -3,6 +3,7 @@ package unitTest.service.implementation;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
+import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.util.Availability;
@@ -37,6 +39,10 @@ public class AppointmentServiceImplTest {
 	
 	@Mock
 	private User mockTutor;
+	@Mock
+	private User mockStudent;
+	@Mock
+	private Profile mockProfile;
 	@Mock
 	private Appointment mockAppointment;
 	@Mock
@@ -61,7 +67,16 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testSaveFrom() {
-		//TODO
+		//GIVEN
+		int slot = 21;
+		when(mockTutor.getProfile()).thenReturn(mockProfile);
+		when(mockProfile.getWage()).thenReturn(BigDecimal.valueOf(15.50));
+		
+		//WHEN
+		 MakeAppointmentsForm gotForm = appointmentService.saveFrom(makeAppointmentsForm, slot, mockTutor, mockStudent);
+		
+		//THEN
+		assertEquals(makeAppointmentsForm, gotForm);
 	}
 		
 	@Test
@@ -93,7 +108,6 @@ public class AppointmentServiceImplTest {
 		//WHEN
 		appointmentService.findByTutorAndTimestamp(this.mockTutor, null);
 		
-	}
-	
+	}	
 
 }
