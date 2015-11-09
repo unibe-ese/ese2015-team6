@@ -36,6 +36,13 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 	@Autowired
 	TimetableService timetableService;
 
+	// Constructor for testing purposes
+	@Autowired
+	public PrepareFormServiceImpl(UserServiceImpl userService) {
+		this.userService = userService;
+	}
+
+
 	@Override
 	public ModelAndView prepareForm(Principal authUser, ModelAndView model) {
 		assert(authUser != null && model != null);

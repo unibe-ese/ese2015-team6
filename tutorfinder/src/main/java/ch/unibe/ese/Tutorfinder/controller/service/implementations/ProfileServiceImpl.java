@@ -49,6 +49,16 @@ public class ProfileServiceImpl implements ProfileService {
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) 
 			throws InvalidProfileException {
 		
+		//Updates the users main information
+		user.setFirstName(updateProfileForm.getFirstName());
+		user.setLastName(updateProfileForm.getLastName());
+		if (updateProfileForm.getPassword() != null && 
+				user.getPassword() != updateProfileForm.getPassword()) {
+			user.setPassword(updateProfileForm.getPassword());
+		}
+		
+		user = userService.save(user);	//save object to DB
+		
 		//Updates the users profile information
 		Profile profile;
 		profile = profileDao.findByEmail(user.getEmail());
@@ -59,15 +69,6 @@ public class ProfileServiceImpl implements ProfileService {
 		profile = profileDao.save(profile); //save object to DB
 		
 		
-		//Updates the users main information
-		user.setFirstName(updateProfileForm.getFirstName());
-		user.setLastName(updateProfileForm.getLastName());
-		if (updateProfileForm.getPassword() != null && 
-				user.getPassword() != updateProfileForm.getPassword()) {
-			user.setPassword(updateProfileForm.getPassword());
-		}
-		
-		user = userService.save(user);	//save object to DB
 		
 		
 		updateProfileForm.setId(profile.getId());
