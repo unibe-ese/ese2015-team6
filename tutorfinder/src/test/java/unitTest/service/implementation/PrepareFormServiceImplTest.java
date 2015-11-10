@@ -2,7 +2,7 @@ package unitTest.service.implementation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -214,5 +214,20 @@ public class PrepareFormServiceImplTest {
 		// WHEN
 		prepareFormService.getUsersProfile(null);
 
+	}
+	
+	@Test
+	public void testPrepareModelByUserId() {
+		when(mockUserService.getUserById(anyLong())).thenReturn(mockUser);
+		when(mockSubjectService.getAllSubjectsByUser(mockUser)).thenReturn(subjectList);
+		when(mockProfileService.getProfileByEmail(any(String.class))).thenReturn(mockProfile);
+		
+		ModelAndView gotMav = prepareFormService.prepareModelByUserId(mockAuthUser, mockUser.getId(), new ModelAndView());
+		
+		assertTrue(gotMav.getModel().containsKey("authUser"));
+		assertTrue(gotMav.getModel().containsKey("DisplayedUser"));
+		assertTrue(gotMav.getModel().containsKey("Subjects"));
+		assertTrue(gotMav.getModel().containsKey("Profile"));
+		
 	}
 }

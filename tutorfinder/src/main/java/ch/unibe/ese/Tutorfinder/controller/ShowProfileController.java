@@ -1,10 +1,8 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
 import java.security.Principal;
-import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
+import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
@@ -49,6 +47,8 @@ public class ShowProfileController {
 	TimetableService timetableService;
 	@Autowired
 	SubjectService subjectService;
+	@Autowired
+	PrepareFormService prepareService;
 
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.jsp}.
@@ -60,7 +60,7 @@ public class ShowProfileController {
 	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId") long userId) {
 		ModelAndView model = new ModelAndView("showProfile");
 		
-		model = prepareModelByUserId(authUser, userId, model);
+		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
 
 		return model;
@@ -78,11 +78,11 @@ public class ShowProfileController {
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableService.findAllByUserAndDay(tutor, dow);
-			appForm.setAppointments(loadAppointments(slots, tutor, date));
+			appForm.setAppointments(appointmentService.loadAppointments(slots, tutor, date));
 		}
 		
 		ModelAndView model = new ModelAndView("showProfile");
-		model = prepareModelByUserId(authUser, userId, model);		
+		model = prepareService.prepareModelByUserId(authUser, userId, model);		
 		model.addObject("makeAppointmentsForm", appForm);
 		return model;
 	}
@@ -96,45 +96,17 @@ public class ShowProfileController {
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
-			appForm.setAppointments(loadAppointments(slots, user, date));
+			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
 		} else {
 			model = new ModelAndView("showProfile");
 		}
 		model.addObject("makeAppointmentsForm", appForm);
-		model = prepareModelByUserId(authUser, userId, model);
+		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		return model;
 	}
 
-	//TODO refactor in service
-	private List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date) {
-		
-		List<AppointmentPlaceholder> tmpList = appointmentService.findByTutorAndDate(user, date);
-		
-		for (Timetable slot : slots) {
-			int hours = slot.getTime();
-
-			LocalDateTime dateTime = LocalDateTime.from(date.atStartOfDay());
-			dateTime = dateTime.plusHours(hours);
-			Timestamp timestamp = Timestamp.valueOf(dateTime);
-
-			if (appointmentService.findByTutorAndTimestamp(user, timestamp) == null) {
-				AppointmentPlaceholder placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
-				tmpList.add(placeholder);
-			}
-		}
-		return tmpList;
-	}
 
 	//TODO refactor in service
-	private ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model) {
-		User tmpAuthUser = userService.getUserByPrincipal(authUser);
-		model.addObject("authUser", tmpAuthUser);
-		
-		User tmpUser = userService.getUserById(userId);
-		model.addObject("DisplayedUser", tmpUser);
-		model.addObject("Subjects", subjectService.getAllSubjectsByUser(tmpUser));
-		model.addObject("Profile", profileService.getProfileByEmail(tmpUser.getEmail()));
-		return model;
-	}
+	
 
 }

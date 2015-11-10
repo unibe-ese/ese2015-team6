@@ -102,6 +102,18 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 
 		return tmpForm;
 	}
+	
+	@Override
+	public ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model) {
+		User tmpAuthUser = userService.getUserByPrincipal(authUser);
+		model.addObject("authUser", tmpAuthUser);
+		
+		User tmpUser = userService.getUserById(userId);
+		model.addObject("DisplayedUser", tmpUser);
+		model.addObject("Subjects", subjectService.getAllSubjectsByUser(tmpUser));
+		model.addObject("Profile", profileService.getProfileByEmail(tmpUser.getEmail()));
+		return model;
+	}
 
 	@Override
 	public Profile getUsersProfile(Principal user) {

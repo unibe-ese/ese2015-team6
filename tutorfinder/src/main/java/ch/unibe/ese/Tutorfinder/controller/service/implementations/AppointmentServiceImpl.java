@@ -15,6 +15,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
+import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.util.Availability;
@@ -73,6 +74,25 @@ public class AppointmentServiceImpl implements AppointmentService {
 			}
 		}
 		
+		return tmpList;
+	}
+	
+	public List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User tutor, LocalDate date) {
+		
+		List<AppointmentPlaceholder> tmpList = this.findByTutorAndDate(tutor, date);
+		
+		for (Timetable slot : slots) {
+			int hours = slot.getTime();
+
+			LocalDateTime dateTime = LocalDateTime.from(date.atStartOfDay());
+			dateTime = dateTime.plusHours(hours);
+			Timestamp timestamp = Timestamp.valueOf(dateTime);
+
+			if (this.findByTutorAndTimestamp(tutor, timestamp) == null) {
+				AppointmentPlaceholder placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
+				tmpList.add(placeholder);
+			}
+		}
 		return tmpList;
 	}
 	
