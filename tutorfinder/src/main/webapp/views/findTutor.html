@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Find Tutor</title>
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
@@ -28,22 +28,20 @@
 					</div>
 				</fieldset>
 			</form>
+		</div>
 
-			<div id="results" th:if="${param.q != null}">
-				<h1>
-					Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
-				</h1>
-				<div th:each="subject : ${Result}">
-					<p>
-						<a th:if="${subject != null}"
-							th:href="@{'/showProfile'(userId=${subject.user.id})}"
-							th:text="|${subject.user.firstName} ${subject.user.lastName} (Grade ${subject.grade})|">
-							Max Mustermann (Grade 5.0)</a>
-					</p>
-				</div>
+		<div id="results" th:if="${param.q != null}">
+			<h1>
+				Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
+			</h1>
+			<div th:each="subject : ${Result}">
+				<p>
+					<a th:if="${subject != null}"
+						th:href="@{'/showProfile'(userId=${subject.user.id})}"
+						th:text="|${subject.name} - ${subject.user.firstName} ${subject.user.lastName} (Grade ${subject.grade})|">
+						Subject - Max Mustermann (Grade 5.0)</a>
+				</p>
 			</div>
-
-
 		</div>
 	</div>
 </body>

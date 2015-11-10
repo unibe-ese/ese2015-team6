@@ -43,8 +43,14 @@ public class FindTutorServiceImpl implements FindTutorService {
 
 	@Override
 	public LinkedList<Subject> getSubjectsFrom(String query) {
-		//TODO (maybe) implement search engine
-		return subjectDao.findByName(query);
+		//TODO (maybe) implement search engine by hibernate
+		LinkedList<Subject> returnList = new LinkedList<Subject>();
+		Iterable<Subject> subjectIterable = subjectDao.findAll();
+		for(Subject subject: subjectIterable) {
+			if(subject.getName().toLowerCase().contains(query.toLowerCase()))
+				returnList.add(subject);
+		}
+		return returnList;
 	}
 
 }
