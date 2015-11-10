@@ -118,7 +118,9 @@
 							<button type="submit" name="save" class="btn btn-primary">Save</button>
 							<button type="button"
 								onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'">Close</button>
-						</div>
+						</div><br />
+						<span class="error" th:if="${#fields.hasErrors('global')}"
+						th:errors="*{global}"></span>
 					</div>
 				</form>
 			</div>

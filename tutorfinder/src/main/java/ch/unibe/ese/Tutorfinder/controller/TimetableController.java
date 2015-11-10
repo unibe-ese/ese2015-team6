@@ -49,8 +49,8 @@ public class TimetableController {
 			try {
 				timetableService.saveFrom(updateTimetableForm, authUser);
 			} catch (InvalidTimetableException e) {
-				// TODO Handling
-				System.err.println("Timetable error");
+				result.reject("error", e.getMessage());
+				model = new ModelAndView("updateProfile");
 			}
 		}
 
