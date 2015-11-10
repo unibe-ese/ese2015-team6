@@ -1,6 +1,7 @@
 package integrationTest.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,7 +64,6 @@ public class LoginControllerTest {
 			.andExpect(model().errorCount(1));
 		
 ;
-		//TODO check which error was added
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -77,6 +77,13 @@ public class LoginControllerTest {
 				.param("confirmPassword", "testtest")
 				.param("tutor", "true"));
 		
+	}
+	
+	@Test
+	public void RegisterMapping() throws Exception {
+		this.mockMvc
+		.perform(
+				get("/register")).andExpect(status().is3xxRedirection());
 	}
 	
 	
