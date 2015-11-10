@@ -7,7 +7,6 @@ package ch.unibe.ese.Tutorfinder.util;
  * @author Antonio, Florian, Nicola, Lukas
  *
  */
-// TODO load from configuration file (for an admin to change)
 public class ConstantVariables {
 	
 	/* Password constants */
