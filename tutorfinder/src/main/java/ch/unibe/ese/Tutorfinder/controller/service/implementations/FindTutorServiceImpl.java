@@ -40,7 +40,10 @@ public class FindTutorServiceImpl implements FindTutorService {
 		}
 		return tmpUsers;
 	}
-
+	/**
+	 * finds all subjects whose names contain a given query
+	 * @param query - String that should be contained in the subjects name
+	 */
 	@Override
 	public LinkedList<Subject> getSubjectsFrom(String query) {
 		//TODO (maybe) implement search engine by hibernate

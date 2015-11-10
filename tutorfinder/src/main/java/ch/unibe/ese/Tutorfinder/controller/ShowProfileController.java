@@ -105,8 +105,6 @@ public class ShowProfileController {
 		return model;
 	}
 
-
-	//TODO refactor in service
 	
 
 }
