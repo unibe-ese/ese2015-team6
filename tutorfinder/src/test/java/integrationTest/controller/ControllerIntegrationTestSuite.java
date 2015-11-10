@@ -6,8 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	LoginControllerTest.class,
-	HomeControllerTest.class,
+	LoginControllerTest.class
 })
 /**
  * Test suite including all controller integration tests
