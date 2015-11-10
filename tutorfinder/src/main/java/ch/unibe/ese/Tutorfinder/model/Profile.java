@@ -18,10 +18,6 @@ import org.springframework.format.annotation.NumberFormat.Style;
  * {@code region} holds an String of 255 characters for the region of the user<br>
  * {@code wage} holds the actual wage from the tutor<br>
  * 
- * @author  Antonio
- * @author	Florian
- * @author	Lukas
- * @author	Nicola
  * @version	1.0
  *
  */

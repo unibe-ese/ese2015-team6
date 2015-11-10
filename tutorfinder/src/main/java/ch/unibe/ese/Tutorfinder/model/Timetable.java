@@ -20,10 +20,6 @@ import javax.validation.constraints.NotNull;
  * {@code time} of the day (00:00-23:59:59.999999999)<br>
  * {@code availability} true if the tutor is available, else false<br>
  * 
- * @author  Antonio
- * @author	Florian
- * @author	Lukas
- * @author	Nicola
  * @version	1.0
  *
  */

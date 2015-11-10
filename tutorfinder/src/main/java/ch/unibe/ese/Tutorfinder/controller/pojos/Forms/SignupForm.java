@@ -13,7 +13,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 /**
  * Class for validating the users input in the {@code register.html}.
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version	1.0
  *
  */
 @ScriptAssert(lang="javascript", script = "_this.password.equals(_this.confirmPassword)",

@@ -29,10 +29,6 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  * {@code availability} enumeration to difference between the tutors availability<br>
  * {@code wage} holds the wage at this date from the tutor<br>
  * 
- * @author  Antonio
- * @author	Florian
- * @author	Lukas
- * @author	Nicola
  * @version	1.0
  *
  */

@@ -20,8 +20,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the edit or update Timetable process
  * 
- * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version 1.0
  *
  */
 @Controller
@@ -32,7 +31,16 @@ public class TimetableController {
 	@Autowired
 	PrepareFormService prepareFormService;
 	
-	
+	/**
+	 * Maps the /updateTimetable action to the {@code updateProfile.html}.
+	 * Furthermore it saves the new {@link UpdateTimetableForm} as basic 
+	 * {@link Timetable} of the {@link Principal} user.
+	 * 
+	 * @param updateTimetableForm holds the new available {@code Timeslot}'s of the user
+	 * @param result
+	 * @param authUser {@link Principal} user which wants to change his basic {@link Timetable}
+	 * @return {@link ModelAndView} with the {@code updateProfile.html} mapping
+	 */
 	@RequestMapping(value = "/updateTimetable", method = RequestMethod.POST)
 	public ModelAndView updateTimetable(@Valid UpdateTimetableForm updateTimetableForm, BindingResult result,
 			Principal authUser) {

@@ -11,9 +11,9 @@ import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.Availability;
 
 /**
- * Class for validating the users input in the {@code showProfile}.
+ * Class for validating the users input in the {@code showProfile.html}.
  * 
- * @author Antonio
+ * @version	1.0
  *
  */
 public class UpdateAppointmentsForm {

@@ -31,7 +31,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the show profile process
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version 1.0
  *
  */
 @Controller
@@ -51,9 +51,9 @@ public class ShowProfileController {
 	PrepareFormService prepareService;
 
 	/**
-	 * Maps the /showProfile page to the {@code showProfile.jsp}.
+	 * Maps the /showProfile page to the {@code showProfile.html}.
 	 * 
-	 * @param user
+	 * @param authUser {@link Principal}
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
@@ -66,6 +66,17 @@ public class ShowProfileController {
 		return model;
 	}
 
+	/**
+	 * Maps an request for reserve an appointment by this {@code userId}
+	 * Tutor.
+	 * 
+	 * @param userId identification of the {@link User}'s {@link Profile}
+	 * @param appForm holds the {@link Timestamp} and other information for the requesting appointment
+	 * @param req
+	 * @param authUser {@link Principal} logged in user, which sends the request
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
 	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal authUser, BindingResult result) {
@@ -87,6 +98,16 @@ public class ShowProfileController {
 		return model;
 	}
 
+	/**
+	 * Loads the availability of the {@code Tutors} appointments on the requested date.
+	 * 
+	 * @param authUser {@link Principal} logged in user, which sends the request for the tutors appointment availability
+	 * @param userId identification of the {@link User}'s {@link Profile}
+	 * @param appForm holds the {@link Timestamp} and other information for the requesting appointment
+	 * @param result
+	 * @param redirectAttributes
+	 * @return
+	 */
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
 	public ModelAndView getDate(Principal authUser, @RequestParam(value = "userId") long userId,
 			@Valid MakeAppointmentsForm appForm, BindingResult result, RedirectAttributes redirectAttributes) {

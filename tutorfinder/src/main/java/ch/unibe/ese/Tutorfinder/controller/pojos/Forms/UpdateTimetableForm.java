@@ -9,7 +9,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 /**
  * Builds the base of a Form containing a list of {@link TimetableRow} objects.
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version	1.0
  *
  */
 public class UpdateTimetableForm {
@@ -19,6 +19,8 @@ public class UpdateTimetableForm {
 	
 	private Boolean[][] timetable = new Boolean[ConstantVariables.TIMESLOTS][ConstantVariables.DAYS];
 	
+	
+	/* Constructor */
 	public UpdateTimetableForm() {
 		for(Boolean[] row : timetable)
 			Arrays.fill(row, false);

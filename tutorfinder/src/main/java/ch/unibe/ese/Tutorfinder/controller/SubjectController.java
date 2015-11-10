@@ -27,8 +27,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UserService;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the edit or update Subjects process
  * 
- * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version 1.0
  *
  */
 @Controller
@@ -44,8 +43,8 @@ public class SubjectController {
 	/**
 	 * Handles the action to save the subjects which currently are in the form.
 	 * 
-	 * @param user
-	 * @param updateSubjectsForm
+	 * @param authUser {@link Principal}
+	 * @param updateSubjectsForm holds the updated information for the {@link Subject}'s entry in the database
 	 * @param result
 	 * @param redirectAttributes
 	 * @return

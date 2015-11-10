@@ -17,10 +17,6 @@ import javax.validation.constraints.NotNull;
  * {@code name} name of the subject, is the value referenced to search tutors<br>
  * {@code grade} holds the final value of the subjects note
  * 
- * @author  Antonio
- * @author	Florian
- * @author	Lukas
- * @author	Nicola
  * @version	1.0
  *
  */
