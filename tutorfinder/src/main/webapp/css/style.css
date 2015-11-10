@@ -314,9 +314,9 @@ form#userInfoBox fieldset {
 	    position: fixed;
 	    top: 50%;
 	    left: 50%;
-	    width: 380px; /* adjust as per your needs */
+	    width: 450px; /* adjust as per your needs */
 	    height: 380px; /* adjust as per your needs */
-	    margin-left: -190px; /* negative half of width above */
+	    margin-left: -225px; /* negative half of width above */
 	    margin-top: -190px; /* negative half of height above */
 	    padding: 13px;
 	    background-color: white;
