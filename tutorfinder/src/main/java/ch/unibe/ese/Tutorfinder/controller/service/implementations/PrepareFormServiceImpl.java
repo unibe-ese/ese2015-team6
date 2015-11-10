@@ -76,12 +76,7 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		tmpForm.setTimetable(tmpMatrix);
 		return tmpForm;
 	}
-	/**
-	 * takes an ArrayList of Subject Obj. and creates an UpdateSubjectsForm containing 
-	 * each subject name and corresponding grade
-	 * @param Arraylist of Subjects that should be added to the form
-	 * @return UpdateSubjectForm containing one or multiple row obj. with subject name and grade 
-	 */
+
 	@Override
 	public UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList) {
 		assert(subjectList != null);
@@ -94,12 +89,7 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		tmpForm.setRows(rowList);
 		return tmpForm;
 	}
-	/**	
-	 * reads data that belongs to the currently logged in user (Principal) from
-	 * the database and writes it into an UpdateProfileForm
-	 * @param Principal of an user
-	 * @return UpdateProfileForm filled with profile info from the database
-	 */
+	
 	@Override
 	public UpdateProfileForm getFormWithValues(Principal user) {
 		assert(user != null);
@@ -125,11 +115,6 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		return model;
 	}
 
-	/**
-	 * Returns the profile corresponding to a Principal 
-	 * @param Principal of which the profile should be returned
-	 * @return profile obj. that belongs to the Principal 
-	 */
 	@Override
 	public Profile getUsersProfile(Principal user) {
 		assert(user != null);

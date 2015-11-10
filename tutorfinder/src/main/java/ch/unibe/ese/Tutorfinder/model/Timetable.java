@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  * {@code time} of the day (00:00-23:59:59.999999999)<br>
  * {@code availability} true if the tutor is available, else false<br>
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version	1.0
  *
  */
 @Entity
@@ -86,6 +86,33 @@ public class Timetable {
 	
 	public void setTime(int time) {
 		this.timeslot = time;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Timetable other = (Timetable) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Timetable [id=" + id + ", user=" + user + ", day=" + day + ", timeslot=" + timeslot + "]";
 	}
 	
 }

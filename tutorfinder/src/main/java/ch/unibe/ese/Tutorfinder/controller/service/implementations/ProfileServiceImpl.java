@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
@@ -46,8 +45,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	@Transactional
-	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) 
-			throws InvalidProfileException {
+	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) {
 		
 		//Updates the users main information
 		user.setFirstName(updateProfileForm.getFirstName());

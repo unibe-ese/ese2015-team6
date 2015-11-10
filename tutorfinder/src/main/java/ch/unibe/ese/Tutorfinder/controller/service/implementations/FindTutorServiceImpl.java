@@ -11,23 +11,12 @@ import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.SubjectDao;
 
-/**
- * Service to find tutors with the selected subject.
- * 
- * @author Antonio, Florian, Nicola, Lukas
- *
- */
 @Service
 public class FindTutorServiceImpl implements FindTutorService {
 	
 	@Autowired
 	SubjectDao subjectDao;
 	
-	
-	/**
-	 * Finds all Users that have passed an given subject
-	 * @param findTutorForm - Form that lets user enter a subject 
-	 */
 	@Override
 	public Iterable<User> getUsersFrom(FindTutorForm findTutorForm) {
 		LinkedList<Subject> tmpUserSubject = subjectDao.findByName(findTutorForm.getSubject());
@@ -40,10 +29,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 		}
 		return tmpUsers;
 	}
-	/**
-	 * finds all subjects whose names contain a given query
-	 * @param query - String that should be contained in the subjects name
-	 */
+
 	@Override
 	public LinkedList<Subject> getSubjectsFrom(String query) {
 		//TODO (maybe) implement search engine by hibernate

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Class for validating the users input in the {@code showProfile.html}.
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version	1.0
  *
  */
 public class FindTutorForm {

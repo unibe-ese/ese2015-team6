@@ -27,7 +27,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.UserService;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the edit or update profile process
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version 1.0
  *
  */
 @Controller
@@ -45,7 +45,7 @@ public class UpdateProfileController {
 	PrepareFormService prepareFormService;
 
 	/**
-	 * Maps the /editProfile page to the {@code updateProfile.jsp}.
+	 * Maps the /editProfile page to the {@code updateProfile.html}.
 	 * 
 	 * @param user
 	 *            actually logged in user, is used to get the users profile

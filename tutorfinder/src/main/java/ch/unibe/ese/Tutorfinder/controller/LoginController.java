@@ -25,34 +25,43 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
- * the login/logout process
+ * the login/logout and register process.
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version 1.0
  *
  */
 @Controller
 public class LoginController {
 
-	/**
-	 * Maps the /login page to the login form (login.jsp) and provides optional
-	 * parameters for displaying messages
-	 * 
-	 * @param error displays invalid credentials message
-	 * @param logout displays successful logout message
-	 * @return ModelAndView for Springframework
-	 */
-	
 	@Autowired
 	RegisterService registerService;
+	@Autowired	
+	UserDao userDao;
 	
-	@Autowired	UserDao userDao;
-	
+	/**
+	 * Redirects the {@code /} and {@code /home} to the 
+	 * {@code login.html} page
+	 * @return redirection to login
+	 */
 	@RequestMapping(value={"/","/home"})
 	public String home() {
 		return "redirect:login";
 	}
     
-    
+    /**
+     * Loads the {@link User}'s input from the {@link SignupForm} and
+     * creates with this information a new entry in the database.
+     * After this is happens, it is possible for the user to login and
+     * he has access to the sites corresponding to his role.
+     * Redirects the user after the registration to a {@code signupCompleted.html}
+     * page to show the succesfull creation of a new login.
+     * 
+     * @param signupForm holds the information needed to create an new {@link User}
+     * @param result
+     * @param redirectAttributes
+     * @return if everything is valid a {@code signupCompleted.html} page, else again 
+     * 			the login page with the necessary error messages
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView create(@Valid SignupForm signupForm, BindingResult result, RedirectAttributes redirectAttributes) {
     	ModelAndView model;    	
@@ -79,11 +88,24 @@ public class LoginController {
     	return model;
     }
     
+    /**
+	 * Redirects the {@code /register} to the {@code login.html} page
+	 * 
+	 * @return redirection to login
+	 */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register() {
     	return "redirect:/login?register";
     }
     
+    /**
+	 * Maps the /login page to the login form (login.html) and provides optional
+	 * parameters for displaying messages
+	 * 
+	 * @param error displays invalid credentials message
+	 * @param logout displays successful logout message
+	 * @return ModelAndView for Springframework
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, @RequestParam(value = "register", required = false) String register) {
@@ -114,6 +136,11 @@ public class LoginController {
 		return model;
 	}
 
+	/**
+	 * Redirects the {@code /success} to the {@code findTutor.html} page
+	 * 
+	 * @return redirection to login
+	 */
 	@RequestMapping(value = "/success", method = RequestMethod.GET)
 	public String success() {
 		return "redirect:findTutor";
@@ -138,7 +165,8 @@ public class LoginController {
 
 	/**
 	 * Displays custom access denied page with optional message displaying username
-	 * @param user authenticated user object
+	 * 
+	 * @param user authenticated {@link Principal} user object 
 	 * @return
 	 */
 	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})

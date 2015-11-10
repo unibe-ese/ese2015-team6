@@ -5,7 +5,7 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.AvailabilityException;
 /**
  * Enumeration for the availability of an Timetable
  * 
- * @author Antonio
+ * @version	1.0
  * 
  */
 public enum Availability {

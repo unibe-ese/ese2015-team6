@@ -22,7 +22,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
  * the upload picture process.
  * Solves the saving and overwriting process for the users profile picture.
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @version 1.0
  *
  */
 @Controller
@@ -58,7 +58,7 @@ public class PictureController {
 				stream.close();
 
 				model = new ModelAndView("updateProfile");
-				// TODO show success massage to the user
+				
 			} catch (Exception e) {
 				model = new ModelAndView("updateProfile");
 				model.addObject("page_error", e.getMessage());

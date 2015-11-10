@@ -12,6 +12,10 @@ import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
 
+/**
+ * @version	1.0
+ *
+ */
 public interface PrepareFormService {
 	
 	
@@ -29,11 +33,11 @@ public interface PrepareFormService {
 	public ModelAndView prepareForm(Principal authUser, ModelAndView model);
 	
 	/**
-	 * Gets the profile which belongs to the actually logged in user
+	 * Returns the profile corresponding to a {@code Principal} user.
 	 * 
 	 * @param user
 	 *            {@link Principal} is needed to get the right profile
-	 * @return profile of the actually logged in user
+	 * @return profile obj. that belongs to the Principal
 	 */
 	public Profile getUsersProfile(Principal user);
 	
@@ -42,22 +46,33 @@ public interface PrepareFormService {
 	/**
 	 * Converts an ArrayList of Subjects into a {@link UpdateSubjectsForm}
 	 * filled with rows containing all the information from the given subjects
+	 * (corresponding name and grade)
 	 * 
 	 * @param subjectList
-	 *            Subject array list (from db)
-	 * @return UpdateSubjectForm filled with rows
+	 *            Arraylist of Subjects that should be added to the form
+	 * @return UpdateSubjectForm containing one or multiple row obj. with subject name and grade
 	 */
 	public UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList);
 	
-	/**
-	 * Gets an form with the users new information
+	/**	
+	 * reads data that belongs to the currently logged in user (Principal) from
+	 * the database and writes it into an UpdateProfileForm
 	 * 
-	 * @param user
-	 *            {@link Principal}
-	 * @return form with the users input values
+	 * @param authUser the {@link Principal} user, which is actual logged in
+	 * @return UpdateProfileForm filled with profile info from the database
 	 */
-	public UpdateProfileForm getFormWithValues(Principal user);
+	public UpdateProfileForm getFormWithValues(Principal authUser);
 
+	/**
+	 * Prepares an model to display an users {@link Profile} with {@link Subject}'s and the possibility 
+	 * to reserve an appointment by the {@link Principal} user.
+	 * 
+	 * @param authUser {@link Principal} actual logged in user
+	 * @param userId Parameter which is needed to get the right {@link Profile} and the right URL
+	 * @param model {@link ModelAndview} which needs to be updated
+	 * @return updated {@link ModelAndview} with the {@link Profile} with the {@link User} Information and {@link Subject}'s
+	 * 					and the actual logged in {@link Principal} user
+	 */
 	public ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model);
 	
 	

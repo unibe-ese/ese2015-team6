@@ -18,6 +18,13 @@ import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.User;
 
+/**
+ * Provides ModelAndView objects for the Spring MVC to load pages relevant to
+ * the search {@link Tutor} process
+ * 
+ * @version 1.0
+ *
+ */
 @Controller
 public class FindTutorController {
 
@@ -26,6 +33,13 @@ public class FindTutorController {
 	@Autowired
 	UserService userService;
 
+	/**
+	 * Maps the /findTutor pages to the {@code findTutor.html} view.
+	 * 
+	 * @param authUser {@link Principal}
+	 * @param query	{@code String} for searching for matching {@link Subject}s
+	 * @return {@link ModelAndView} with links to the corresponding {@link Tutor}s {@link Profile}s
+	 */
 	@RequestMapping(value = "/findTutor", method=RequestMethod.GET)
 	public ModelAndView findTutor(Principal authUser, @RequestParam(value = "q", required = false) String query) {
 		ModelAndView model = new ModelAndView("findTutor");
@@ -42,6 +56,15 @@ public class FindTutorController {
 		return model;
 	}
 	
+	/**
+	 * Starts the query for an {@link Subject} named equals to the
+	 * input {@code String} or which has an substring that matches it.
+	 * When a subject is found, it will be shown under the search engine.
+	 * 
+	 * @param form holds the query {@code String}
+	 * @param result
+	 * @return redirection to /findTutor with the query {@code String}
+	 */
 	@RequestMapping(value="/submit", method=RequestMethod.POST)
 	public String submit(@Valid FindTutorForm form, BindingResult result) {
 		return "redirect:/findTutor?q=" + form.getSubject();
