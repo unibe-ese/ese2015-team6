@@ -82,23 +82,15 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView update(Principal authUser, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		ModelAndView model;
+		ModelAndView model = new ModelAndView("updateProfile");;
 		if (!result.hasErrors()) {
 			try {
 				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
-				model = new ModelAndView("updateProfile");
 				// TODO show success message to the user
 			} catch (InvalidProfileException e) {
-				model = new ModelAndView("updateProfile");
 				model.addObject("page_error", e.getMessage());
 				// TODO show error massage to the user
 			}
-		} else {
-			model = new ModelAndView("updateProfile");
-			model.addObject("authUser", userService.getUserByPrincipal(authUser));
-			model.addObject("updateSubjectsForm",
-					prepareFormService.getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(userService.getUserByPrincipal(authUser))));
-			return model;
 		}
 		model = prepareFormService.prepareForm(authUser, model);
 		model.addObject("updateProfileForm", updateProfileForm);
