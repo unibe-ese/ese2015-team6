@@ -105,6 +105,4 @@ public class ShowProfileController {
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		return model;
 	}
-	
-
 }
