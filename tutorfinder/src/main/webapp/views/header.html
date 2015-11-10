@@ -13,28 +13,28 @@
         <a sec:authorize="!hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')" th:href="@{/home}" href="login.html"><span id = "headerLogo">ESE Tutorfinder</span></a>
     
     
-        <div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
+        <div id="menu" sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
     
     		<!-- 
     			Edit Profile Button
     		-->
-    		<a class="headerButton" id="editButton" th:href="@{/editProfile}" href="updateProfile.html">Edit Profile</a>
+    		<a id="editButton" th:href="@{/editProfile}" href="updateProfile.html"><span>Edit Profile</span></a>
     
     		<!-- 
 	    		Show Profile Button
 			-->
-            <a class="headerButton" id="showButton" th:href="@{'/showProfile'(userId=${authUser.id})}" href="showProfile.html">Show Profile</a>
+            <a id="showButton" th:href="@{'/showProfile'(userId=${authUser.id})}" href="showProfile.html"><span>Show Profile</span></a>
 
 	
 			 <!--
 				Search Button
 			 -->
-            <a class="headerButton" id="searchButton" th:href="@{/findTutor}" href="/findTutor.html">Search</a>
+            <a id="searchButton" th:href="@{/findTutor}" href="/findTutor.html"><span>Search</span></a>
 			
 			<!--  
 				Logout Button
 			 -->
-            <a class="headerButton" id="logoutButton" th:href="@{/logout}" href="login.html">Logout</a>
+            <a class="logout" id="logoutButton" th:href="@{/logout}" href="login.html"><span>Logout</span></a>
 			
 	   </div>	
     </div>
