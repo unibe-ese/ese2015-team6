@@ -69,7 +69,6 @@ public class LoginController {
         		model.addObject("registerBoxVisibility", "visible");
         		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
             }
-            //TODO exception for invalid password with message
 
         } else {
         	model = new ModelAndView("login");
