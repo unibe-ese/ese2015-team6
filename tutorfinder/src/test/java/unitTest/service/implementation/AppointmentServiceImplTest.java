@@ -136,6 +136,19 @@ public class AppointmentServiceImplTest {
 		assertEquals(testAppointment, gotList.get(0));
 	}
 	
+	@Test(expected=AssertionError.class)
+	public void testFindByNullTutorAndDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse("2015-11-07", formatter);
+		
+		appointmentService.findByTutorAndDate(null, date);
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testFindByTutorAndNullDate() {
+		appointmentService.findByTutorAndDate(mockTutor, null);
+	}
+	
 	@Test
 	public void testLoadAppointments() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
