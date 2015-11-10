@@ -77,9 +77,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return tmpList;
 	}
 	
-	public List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date) {
+	public List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User tutor, LocalDate date) {
 		
-		List<AppointmentPlaceholder> tmpList = this.findByTutorAndDate(user, date);
+		List<AppointmentPlaceholder> tmpList = this.findByTutorAndDate(tutor, date);
 		
 		for (Timetable slot : slots) {
 			int hours = slot.getTime();
@@ -88,7 +88,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			dateTime = dateTime.plusHours(hours);
 			Timestamp timestamp = Timestamp.valueOf(dateTime);
 
-			if (this.findByTutorAndTimestamp(user, timestamp) == null) {
+			if (this.findByTutorAndTimestamp(tutor, timestamp) == null) {
 				AppointmentPlaceholder placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
 				tmpList.add(placeholder);
 			}

@@ -47,8 +47,10 @@ public class FindTutorServiceImpl implements FindTutorService {
 		LinkedList<Subject> returnList = new LinkedList<Subject>();
 		Iterable<Subject> subjectIterable = subjectDao.findAll();
 		for(Subject subject: subjectIterable) {
-			if(subject.getName().toLowerCase().contains(query.toLowerCase()))
-				returnList.add(subject);
+			if (subject != null) {
+				if(subject.getName().toLowerCase().contains(query.toLowerCase()))
+					returnList.add(subject);
+			}
 		}
 		return returnList;
 	}

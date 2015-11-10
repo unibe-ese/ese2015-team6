@@ -21,7 +21,25 @@ public class AppointmentPlaceholder {
 	
 	@Override
 	public String toString() {
-		return "Day: " + dow + ", Time: " + timeslot;
+		return "Availability: " + availability + ", Day: " + dow + ", Time: " + timeslot;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AppointmentPlaceholder) {
+			AppointmentPlaceholder other = (AppointmentPlaceholder) obj;
+			if (other.getAvailability().equals(this.getAvailability()) &&
+					other.getDow().equals(this.getDow()) &&
+					other.getTimeslot() == this.timeslot) {
+				return true;
+			}
+		}
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	public Availability getAvailability() {
