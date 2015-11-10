@@ -49,9 +49,6 @@ html {
     
     visibility: visible;
 }
-#loginBox > div{
-    margin: 20px;
-}
 
 #registerBox {
     
@@ -325,3 +322,16 @@ form#userInfoBox fieldset {
 	    background-color: white;
 	    z-index: 1002;
 	    overflow: auto;
+}
+
+.error {
+	display: inline-block;
+	padding: 2px;
+	background-color: #ff8080;
+	border: solid 2px red;
+	color: #800000;
+	font-weight: normal;
+	font-size: medium;
+	margin: 10px;
+	overflow: visible;
+}

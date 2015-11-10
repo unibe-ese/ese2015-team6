@@ -21,7 +21,7 @@
     
     
 	<div id="loginBox" style = "" th:style="'visibility: ' + ${loginBoxVisibility} + ';'">
-		<div th:text="${error}">Invalid username and/or password</div>
+		<div class="error" th:if="${error != null}" th:text="${error}">Invalid username and/or password</div>
 		<div th:text="${msg}">You have been logged out</div>
 
 		<form th:name='loginForm' th:action="${loginUrl}" method="post">
@@ -44,7 +44,7 @@
 			<div class="controls">
 				<input type="text" th:value="*{email}" th:name="email" tabindex="1"
 					maxlength="45" required="required" placeholder = "E-Mail"/>
-				<span th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid email address</span>
+				<span class="error" th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid email address</span>
 			</div>
 			
 			<!-- 
@@ -69,7 +69,7 @@
 			<div class="controls">
 				<input type="password" th:value="*{password}" th:name="password"
 					tabindex="3" maxlength="35" required="required" placeholder = "Password"/>
-				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The length must be between 8 and 25</span>
+				<span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The length must be between 8 and 25</span>
 			</div>
 			
 			<!-- 
@@ -80,10 +80,10 @@
 				<div class="controls">
 					<input type="password" th:name="confirmPassword"
 						tabindex="4" maxlength="25" placeholder = "Confirm Password"/>
-					<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
+					<span class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
 						Invalid Input
 					</span>
-					<span th:if="${#fields.hasErrors('global')}" th:errors="*{global}"> Passwords do not match</span>
+					<span class="error" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"> Passwords do not match</span>
 				</div>
 			</div>
 
