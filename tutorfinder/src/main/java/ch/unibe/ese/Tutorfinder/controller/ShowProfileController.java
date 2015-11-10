@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
@@ -87,15 +89,17 @@ public class ShowProfileController {
 
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
 	public ModelAndView getDate(Principal authUser, @RequestParam(value = "userId") long userId,
-			MakeAppointmentsForm appForm, BindingResult result) {
+			@Valid MakeAppointmentsForm appForm, BindingResult result, RedirectAttributes redirectAttributes) {
+		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
 			User user = userService.getUserById(userId);
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
 			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
+		} else {
+			model = new ModelAndView("showProfile");
 		}
-		ModelAndView model = new ModelAndView("showProfile");
 		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		return model;

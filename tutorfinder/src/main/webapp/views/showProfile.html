@@ -78,6 +78,7 @@
 				<input type="date" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:field="*{date}" name="date" required="required"/>
 				<!-- TODO Implement alternative picker for browsers without html5 support -->
 				<button type="submit" name="getDate">Get Appointments</button>
+				<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>
 				<div th:each="appointment:*{appointments}">
 					<span
 						th:text="|${appointment.timeslot}:00 Status: ${appointment.availability}|">18:00
