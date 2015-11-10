@@ -28,6 +28,11 @@ public class ConstantVariables {
 	public static final String EMAIL_REGEX_PATTERN = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 	
 	public static final String EMAIL_ERRORMESSAGE = "Enter a valid email address";
+	
+	/* Tutor or Student */
+	public static final String TUTOR = "TUTOR";
+	
+	public static final String STUDENT = "STUDENT";
 
 	/* Time and Day */
 	public static final int TIMESLOTS = 24;

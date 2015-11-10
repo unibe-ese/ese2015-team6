@@ -37,7 +37,6 @@ public interface PrepareFormService {
 	 */
 	public Profile getUsersProfile(Principal user);
 	
-	//TODO comment
 	public UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser);
 	
 	/**
