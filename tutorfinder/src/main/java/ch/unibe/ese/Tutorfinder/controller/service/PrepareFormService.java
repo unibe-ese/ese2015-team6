@@ -57,6 +57,8 @@ public interface PrepareFormService {
 	 * @return form with the users input values
 	 */
 	public UpdateProfileForm getFormWithValues(Principal user);
+
+	public ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model);
 	
 	
 
