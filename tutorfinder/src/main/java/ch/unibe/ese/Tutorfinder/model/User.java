@@ -18,7 +18,11 @@ import javax.validation.constraints.NotNull;
  * {@code password} is need to identify the right user to the right email<br>
  * {@code role} to difference between students and tutors
  * 
- * @author  Antonio, Florian, Nicola, Lukas
+ * @author  Antonio
+ * @author	Florian
+ * @author	Lukas
+ * @author	Nicola
+ * @version	1.0
  *
  */
 @Entity
@@ -48,6 +52,10 @@ public class User {
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Profile profile;
 	
+	/* Constructor */
+	public User() {
+		super();
+	}
 	
 	/* Getters and Setters */
 	public long getId() {
@@ -107,14 +115,33 @@ public class User {
 	}
 
 	@Override
-	public boolean equals(Object user) {
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
 
-		if(user instanceof User) {
-			return this.getId() == ((User) user).getId();
-		}
-		else return false;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", role="
+				+ role + ", profile=" + profile + "]";
 	}
 	
 	
-	
+
 }

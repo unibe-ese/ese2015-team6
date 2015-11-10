@@ -4,8 +4,12 @@ package ch.unibe.ese.Tutorfinder.util;
  * Holds all constant variables of the project,
  * so they need only to be changed in one location.
  * 
- * @author Antonio, Florian, Nicola, Lukas
- *
+ * @author  Antonio
+ * @author	Florian
+ * @author	Lukas
+ * @author	Nicola
+ * @version	1.0
+ * 
  */
 public class ConstantVariables {
 	

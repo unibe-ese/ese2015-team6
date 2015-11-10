@@ -18,7 +18,11 @@ import org.springframework.format.annotation.NumberFormat.Style;
  * {@code region} holds an String of 255 characters for the region of the user<br>
  * {@code wage} holds the actual wage from the tutor<br>
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @author  Antonio
+ * @author	Florian
+ * @author	Lukas
+ * @author	Nicola
+ * @version	1.0
  *
  */
 @Entity
@@ -89,6 +93,34 @@ public class Profile {
 
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Profile other = (Profile) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Profile [id=" + id + ", email=" + email + ", biography=" + biography + ", region=" + region + ", wage="
+				+ wage + "]";
 	}
 	
 }

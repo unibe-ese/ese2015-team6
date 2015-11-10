@@ -17,7 +17,11 @@ import javax.validation.constraints.NotNull;
  * {@code name} name of the subject, is the value referenced to search tutors<br>
  * {@code grade} holds the final value of the subjects note
  * 
- * @author Antonio, Florian, Nicola, Lukas
+ * @author  Antonio
+ * @author	Florian
+ * @author	Lukas
+ * @author	Nicola
+ * @version	1.0
  *
  */
 @Entity
@@ -39,6 +43,10 @@ public class Subject {
 	@NotNull
 	private double grade;
 
+	/* Constructor */
+	public Subject() {
+		super();
+	}
 	
 	/* Getters and Setters */
 	public long getId() {
@@ -71,6 +79,33 @@ public class Subject {
 
 	public void setGrade(double grade) {
 		this.grade = grade;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Subject other = (Subject) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Subject [id=" + id + ", user=" + user + ", name=" + name + ", grade=" + grade + "]";
 	}
 
 }

@@ -29,7 +29,11 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  * {@code availability} enumeration to difference between the tutors availability<br>
  * {@code wage} holds the wage at this date from the tutor<br>
  * 
- * @author Antonio
+ * @author  Antonio
+ * @author	Florian
+ * @author	Lukas
+ * @author	Nicola
+ * @version	1.0
  *
  */
 @Entity
@@ -130,6 +134,34 @@ public class Appointment {
 
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Appointment other = (Appointment) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Appointment [id=" + id + ", tutor=" + tutor + ", student=" + student + ", timestamp=" + timestamp
+				+ ", day=" + day + ", availability=" + availability + ", wage=" + wage + "]";
 	}
 	
 }
