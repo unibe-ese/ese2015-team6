@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,8 @@ public class ProfileServiceImpl implements ProfileService {
 		user.setLastName(updateProfileForm.getLastName());
 		if (updateProfileForm.getPassword() != null && 
 				user.getPassword() != updateProfileForm.getPassword()) {
-			user.setPassword(updateProfileForm.getPassword());
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			user.setPassword(encoder.encode(updateProfileForm.getPassword()));
 		}
 		
 		user = userService.save(user);	//save object to DB

@@ -3,6 +3,7 @@ package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,8 +46,9 @@ public class RegisterServiceImpl implements RegisterService {
 		} else {
 			throw new InvalidEmailException("Email address already used");
 		}
-
-		user.setPassword(signupForm.getPassword());
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		user.setPassword(encoder.encode(signupForm.getPassword()));
 		
 		if (signupForm.isTutor()) {
 			user.setRole(ConstantVariables.TUTOR);
