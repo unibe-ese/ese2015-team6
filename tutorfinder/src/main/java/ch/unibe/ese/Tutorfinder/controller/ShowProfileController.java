@@ -99,12 +99,10 @@ public class ShowProfileController {
 			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
 		} else {
 			model = new ModelAndView("showProfile");
+			model.addObject("error_message", "Enter a valid date (yyyy-MM-dd)");
 		}
 		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		return model;
 	}
-
-	
-
 }

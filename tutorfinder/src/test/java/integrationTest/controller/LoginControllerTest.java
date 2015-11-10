@@ -86,6 +86,18 @@ public class LoginControllerTest {
 				get("/register")).andExpect(status().is3xxRedirection());
 	}
 	
+	@Test
+	public void MappingHomeTest() throws Exception{
+		
+		this.mockMvc.perform(
+				post("/")).andExpect(status().is3xxRedirection())
+		.andExpect(model().hasNoErrors());
+		
+		this.mockMvc.perform(
+				post("/home")).andExpect(status().is3xxRedirection())
+						.andExpect(model().hasNoErrors());
+		
+	}
 	
 	
 
