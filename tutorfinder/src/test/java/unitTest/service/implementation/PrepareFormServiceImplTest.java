@@ -1,8 +1,8 @@
 package unitTest.service.implementation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -117,11 +117,11 @@ public class PrepareFormServiceImplTest {
 		
 		ModelAndView gotMav = prepareFormService.prepareForm(mockAuthUser, new ModelAndView());
 		
-		assert(gotMav.getModel().containsKey("User"));
-		assert(gotMav.getModel().containsKey("updateSubjectsForm"));
-		assert(gotMav.getModel().containsKey("updateProfileForm"));
-		assert(gotMav.getModel().containsKey("updateTimetableForm"));
-		assertEquals(mockUser, gotMav.getModel().get("User"));
+		assertTrue(gotMav.getModel().containsKey("authUser"));
+		assertTrue(gotMav.getModel().containsKey("updateSubjectsForm"));
+		assertTrue(gotMav.getModel().containsKey("updateProfileForm"));
+		assertTrue(gotMav.getModel().containsKey("updateTimetableForm"));
+		assertEquals(mockUser, gotMav.getModel().get("authUser"));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -139,7 +139,7 @@ public class PrepareFormServiceImplTest {
 	@Test
 	public void testGetUpdateTimetableFormWithValues() {
 		// GIVEN
-		when(timetableService.findAllByUser(mockUser)).thenReturn(this.timetableList);
+		when(mockTimetableService.findAllByUser(mockUser)).thenReturn(this.timetableList);
 		when(mockTimetable.getDay()).thenReturn(DayOfWeek.MONDAY);
 		when(mockTimetable.getTime()).thenReturn(21);
 
@@ -147,7 +147,7 @@ public class PrepareFormServiceImplTest {
 		UpdateTimetableForm tmpForm = prepareFormService.getUpdateTimetableFormWithValues(mockUser);
 
 		// THEN
-		assertEquals(true, tmpForm.getTimetable()[21][0].booleanValue());
+		assertTrue(tmpForm.getTimetable()[21][0].booleanValue());
 	}
 
 	@Test(expected = AssertionError.class)
@@ -178,8 +178,8 @@ public class PrepareFormServiceImplTest {
 	@Test
 	public void testGetFormWithValues() {
 		// GIVEN
-		when(userDao.findByEmail(anyString())).thenReturn(this.mockUser);
-		when(profileDao.findOne(anyLong())).thenReturn(this.mockProfile);
+		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
+		when(mockProfileService.getProfileById(anyLong())).thenReturn(this.mockProfile);
 
 		// WHEN
 		UpdateProfileForm tmpForm = prepareFormService.getFormWithValues(this.mockAuthUser);
@@ -198,8 +198,8 @@ public class PrepareFormServiceImplTest {
 	@Test
 	public void testGetUsersProfile() {
 		// GIVEN
-		when(userDao.findByEmail(anyString())).thenReturn(this.mockUser);
-		when(profileDao.findOne(anyLong())).thenReturn(this.mockProfile);
+		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
+		when(mockProfileService.getProfileById(anyLong())).thenReturn(this.mockProfile);
 
 		// WHEN
 		Profile tmpProfile = prepareFormService.getUsersProfile(this.mockAuthUser);
