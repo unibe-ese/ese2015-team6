@@ -206,7 +206,9 @@ html {
 	margin-top: 50px;
 }
 
-form#userInfoBox {
+#results a {
+	color: orange;
+	text-decoration: underline;
 }
 
 form#userInfoBox fieldset {
