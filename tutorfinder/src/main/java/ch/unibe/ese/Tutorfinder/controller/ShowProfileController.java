@@ -51,6 +51,27 @@ public class ShowProfileController {
 	PrepareFormService prepareService;
 
 	/**
+	 * Constructor for testing purposes
+	 * @param appointmentService
+	 * @param userService
+	 * @param profileService
+	 * @param timetableService
+	 * @param subjectService
+	 * @param prepareService
+	 */
+	@Autowired
+	public ShowProfileController(AppointmentService appointmentService, UserService userService,
+			ProfileService profileService, TimetableService timetableService, SubjectService subjectService,
+			PrepareFormService prepareService) {
+		this.appointmentService = appointmentService;
+		this.userService = userService;
+		this.profileService = profileService;
+		this.timetableService = timetableService;
+		this.subjectService = subjectService;
+		this.prepareService = prepareService;
+	}
+
+	/**
 	 * Maps the /showProfile page to the {@code showProfile.jsp}.
 	 * 
 	 * @param user
@@ -59,7 +80,7 @@ public class ShowProfileController {
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId") long userId) {
 		ModelAndView model = new ModelAndView("showProfile");
-		
+
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
 
@@ -67,9 +88,9 @@ public class ShowProfileController {
 	}
 
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
-	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
-			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal authUser, BindingResult result) {
-		
+	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId, MakeAppointmentsForm appForm,
+			final HttpServletRequest req, Principal authUser, BindingResult result) {
+
 		final Integer slot = Integer.valueOf(req.getParameter("request"));
 		if (!result.hasErrors()) {
 			User student = userService.getUserByPrincipal(authUser);
@@ -80,9 +101,9 @@ public class ShowProfileController {
 			List<Timetable> slots = timetableService.findAllByUserAndDay(tutor, dow);
 			appForm.setAppointments(appointmentService.loadAppointments(slots, tutor, date));
 		}
-		
+
 		ModelAndView model = new ModelAndView("showProfile");
-		model = prepareService.prepareModelByUserId(authUser, userId, model);		
+		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		model.addObject("makeAppointmentsForm", appForm);
 		return model;
 	}
