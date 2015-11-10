@@ -29,7 +29,6 @@
 	<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
 		Nachname</h1>
 
-        <button id="editButton" type="button" onClick="window.location.href='/editProfile'" th:if = "${User.id==DisplayedUser.id}">Edit Profile</button>
     </div>
 	
 	<!-- The following information are only shown if it is the profile from an tutor -->
@@ -72,7 +71,7 @@
 			</span>
 		</p>
 
-		<div th:if = "${User.id!=DisplayedUser.id}">
+		<div th:if = "${authUser.id!=DisplayedUser.id}">
 			<form action="#" method="post"
 				th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
 				th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">

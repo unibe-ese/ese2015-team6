@@ -35,18 +35,18 @@ public class TimetableController {
 	
 	@RequestMapping(value = "/updateTimetable", method = RequestMethod.POST)
 	public ModelAndView updateTimetable(@Valid UpdateTimetableForm updateTimetableForm, BindingResult result,
-			Principal user) {
+			Principal authUser) {
 		ModelAndView model = new ModelAndView("updateProfile");
 		if (!result.hasErrors()) {
 			try {
-				timetableService.saveFrom(updateTimetableForm, user);
+				timetableService.saveFrom(updateTimetableForm, authUser);
 			} catch (InvalidTimetableException e) {
 				// TODO Handling
 				System.err.println("Timetable error");
 			}
 		}
 
-		model = prepareFormService.prepareForm(user, model);
+		model = prepareFormService.prepareForm(authUser, model);
 		model.addObject("updateTimetableForm", updateTimetableForm);
 		return model;
 	}

@@ -55,10 +55,10 @@ public class UpdateProfileController {
 	 *         profile.
 	 */
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
-	public ModelAndView editProfile(Principal user) {
+	public ModelAndView editProfile(Principal authUser) {
 		ModelAndView model = new ModelAndView("updateProfile");
 
-		model = prepareFormService.prepareForm(user, model);
+		model = prepareFormService.prepareForm(authUser, model);
 		return model;
 	}
 
@@ -80,12 +80,12 @@ public class UpdateProfileController {
 	 *         profile.
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView update(Principal user, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
+	public ModelAndView update(Principal authUser, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model;
 		if (!result.hasErrors()) {
 			try {
-				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(user));
+				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
 				model = new ModelAndView("updateProfile");
 				// TODO show success message to the user
 			} catch (InvalidProfileException e) {
@@ -95,12 +95,12 @@ public class UpdateProfileController {
 			}
 		} else {
 			model = new ModelAndView("updateProfile");
-			model.addObject("User", userService.getUserByPrincipal(user));
+			model.addObject("authUser", userService.getUserByPrincipal(authUser));
 			model.addObject("updateSubjectsForm",
-					prepareFormService.getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(userService.getUserByPrincipal(user))));
+					prepareFormService.getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(userService.getUserByPrincipal(authUser))));
 			return model;
 		}
-		model = prepareFormService.prepareForm(user, model);
+		model = prepareFormService.prepareForm(authUser, model);
 		model.addObject("updateProfileForm", updateProfileForm);
 
 		return model;

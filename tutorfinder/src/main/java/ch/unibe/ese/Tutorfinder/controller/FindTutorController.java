@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +15,19 @@ import org.springframework.web.servlet.ModelAndView;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
+import ch.unibe.ese.Tutorfinder.controller.service.UserService;
+import ch.unibe.ese.Tutorfinder.model.User;
 
 @Controller
 public class FindTutorController {
 
 	@Autowired
 	FindTutorService findTutorService;
+	@Autowired
+	UserService userService;
 
 	@RequestMapping(value = "/findTutor", method=RequestMethod.GET)
-	public ModelAndView findTutor(@RequestParam(value = "q", required = false) String query) {
+	public ModelAndView findTutor(Principal authUser, @RequestParam(value = "q", required = false) String query) {
 		ModelAndView model = new ModelAndView("findTutor");
 		if (query != null && !query.equals("")) {
 			try {
@@ -31,6 +37,8 @@ public class FindTutorController {
 			}
 		}
 		model.addObject("findTutorForm", new FindTutorForm());
+		User tmpAuthUser = userService.getUserByPrincipal(authUser);
+		model.addObject("authUser", tmpAuthUser);
 		return model;
 	}
 	

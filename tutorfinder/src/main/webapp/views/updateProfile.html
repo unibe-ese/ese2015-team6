@@ -20,7 +20,7 @@
 	-->
 	<form id="userAvatarBox" action="#" method="POST" th:action="@{/uploadImage}"
 		enctype="multipart/form-data">
-		<img th:src="@{|/img/profPic/${User.id}.png|}"
+		<img th:src="@{|/img/profPic/${authUser.id}.png|}"
 			onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'"
 			alt="Profile picture" width="192" height="192"
 			src="../../img/default-avatar.jpg" /><br /> Upload new profile
@@ -145,11 +145,6 @@
 				-->
 				<button type="submit" class="btn btn-primary">Save</button>
 
-				<!-- 
-					Button to redirect to showProfile and close the edit.
-					Does not save the last changes!
-				-->
-				<a th:href="@{'/showProfile'(userId=${User.id})}">Cancel</a>
 			</div>
 
 			<input type="hidden" name="${_csrf.parameterName}"

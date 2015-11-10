@@ -37,7 +37,7 @@ public class PictureController {
 	 * Upload single file using Spring Controller
 	 */
 	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-	public ModelAndView uploadFileHandler(Principal user, @RequestParam("file") MultipartFile file) {
+	public ModelAndView uploadFileHandler(Principal authUser, @RequestParam("file") MultipartFile file) {
 		ModelAndView model;
 		if (!file.isEmpty()) {
 			try {
@@ -45,7 +45,7 @@ public class PictureController {
 
 				// Creating the directory to store file
 				String rootPath = System.getProperty("user.dir");
-				User tmpUser = userService.getUserByPrincipal(user);
+				User tmpUser = userService.getUserByPrincipal(authUser);
 				File dir = new File(rootPath + File.separator + "src" + File.separator + "main" + File.separator
 						+ "webapp" + File.separator + "img" + File.separator + "profPic");
 				if (!dir.exists())
@@ -67,8 +67,7 @@ public class PictureController {
 			model = new ModelAndView("updateProfile");
 			// TODO show error massage to the user
 		}
-
-		model = prepareFormService.prepareForm(user, model);
+		model = prepareFormService.prepareForm(authUser, model);
 		return model;
 	}
 

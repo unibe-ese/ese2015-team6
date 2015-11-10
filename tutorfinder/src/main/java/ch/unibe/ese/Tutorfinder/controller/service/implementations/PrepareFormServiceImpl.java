@@ -54,7 +54,7 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(authUser));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
-		model.addObject("User", dbUser);
+		model.addObject("authUser", dbUser);
 		return model;
 	}
 

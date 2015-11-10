@@ -209,24 +209,6 @@ body {
 }
 
 /*ShowProfile*/
-#editButton {
-	top: 10px;
-	right: 240px;
-    width: 100px;
-    height: 28px;  
-    
-    
-    background-color: white;
-    border-radius: 5px;
-    
-    font-size: 18px;
-    color: darkslategrey;
-    text-align: center;
-
-    margin: 5px;
-    padding: 0px;
-    
-}
 
 .userInfoBox {
     position: absolute;
@@ -254,6 +236,10 @@ body {
 
 #tutorSubjectBox {
     width: 375px;
+}
+
+#timetableBox {
+	color: #000000;
 }
 
 /*Header*/
@@ -314,6 +300,16 @@ body {
     padding-left: 0px;
     padding-right: 0px;
     
+}
+
+#editButton {
+	position: absolute;
+	top: 10px;
+	right: 360px;
+    
+    padding-left: 0px;
+    padding-right: 0px;
+
 }
 
 #searchButton {

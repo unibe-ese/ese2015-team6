@@ -21,6 +21,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
+import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -37,6 +38,8 @@ public class SubjectController {
 	SubjectService subjectService;
 	@Autowired
 	PrepareFormService prepareFormService;
+	@Autowired
+	UserService userService;
 
 	/**
 	 * Handles the action to save the subjects which currently are in the form.
@@ -53,23 +56,22 @@ public class SubjectController {
 	// page only one is saved
 	// Futhermore allowed subject after two same named are not saved!
 	@RequestMapping(value = "/editSubjects", params = "save", method = RequestMethod.POST)
-	public ModelAndView updateSubjects(Principal user, @Valid UpdateSubjectsForm updateSubjectsForm,
+	public ModelAndView updateSubjects(Principal authUser, @Valid UpdateSubjectsForm updateSubjectsForm,
 			BindingResult result, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("updateProfile");
 
 		if (!result.hasErrors()) {
 			try {
-				subjectService.saveFrom(updateSubjectsForm, user);
+				subjectService.saveFrom(updateSubjectsForm, authUser);
 				// TODO show success message to the user
 			} catch (InvalidSubjectException e) {
 				result.reject("error", e.getMessage());
 				model = new ModelAndView("updateProfile");
 			}
-			model = prepareFormService.prepareForm(user, model);
+			model = prepareFormService.prepareForm(authUser, model);
 			model.addObject("updateSubjectsForm", updateSubjectsForm);
 		} else {
 		}
-
 		return model;
 	}
 
@@ -104,11 +106,11 @@ public class SubjectController {
 	 */
 	@RequestMapping(value = "/editSubjects", params = "remRow")
 	public ModelAndView removeRow(@Valid UpdateSubjectsForm updateSubjectsForm, final HttpServletRequest req,
-			Principal user) {
+			Principal authUser) {
 		ModelAndView model = new ModelAndView("updateProfile");
 		final Integer rowId = Integer.valueOf(req.getParameter("remRow"));
 		updateSubjectsForm.getRows().remove(rowId.intValue());
-		model = prepareFormService.prepareForm(user, model);
+		model = prepareFormService.prepareForm(authUser, model);
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
 		return model;
 	}

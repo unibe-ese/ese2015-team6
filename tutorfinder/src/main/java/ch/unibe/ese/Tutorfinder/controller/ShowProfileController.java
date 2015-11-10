@@ -70,7 +70,7 @@ public class ShowProfileController {
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
 	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal authUser, BindingResult result) {
-		ModelAndView model = new ModelAndView("showProfile");
+		
 		final Integer slot = Integer.valueOf(req.getParameter("request"));
 		if (!result.hasErrors()) {
 			User student = userService.getUserByPrincipal(authUser);
@@ -82,15 +82,15 @@ public class ShowProfileController {
 			appForm.setAppointments(loadAppointments(slots, userService.getUserByPrincipal(authUser), date));
 		}
 		
+		ModelAndView model = new ModelAndView("showProfile");
 		model.addObject("makeAppointmentsForm", appForm);
-		model = prepareModelByUserId(authUser, userId, model);
+		model = prepareModelByUserId(authUser, userId, model);		
 		return model;
 	}
 
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
 	public ModelAndView getDate(Principal authUser, @RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, BindingResult result) {
-		ModelAndView model = new ModelAndView("showProfile");
 		if (!result.hasErrors()) {
 			User user = userService.getUserById(userId);
 			LocalDate date = appForm.getDate();
@@ -98,6 +98,7 @@ public class ShowProfileController {
 			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
 			appForm.setAppointments(loadAppointments(slots, user, date));
 		}
+		ModelAndView model = new ModelAndView("showProfile");
 		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareModelByUserId(authUser, userId, model);
 		return model;
@@ -131,7 +132,7 @@ public class ShowProfileController {
 
 	private ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model) {
 		User tmpAuthUser = userService.getUserByPrincipal(authUser);
-		model.addObject("User", tmpAuthUser);
+		model.addObject("authUser", tmpAuthUser);
 		
 		User tmpUser = userService.getUserById(userId);
 		model.addObject("DisplayedUser", tmpUser);

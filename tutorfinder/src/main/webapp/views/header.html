@@ -15,26 +15,25 @@
     
         <div sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
     
-    <!-- 
-	    	Show Profile Button
-	        
-            FIXME user.id not possible because user is principal
-            <a class="headerButton" id="showButton" th:href="@{'/showProfile'(userId=${User.id})}" href="showProfile.html">Show Profile</a>
-	-->
+    		<!-- 
+    			Edit Profile Button
+    		-->
+    		<a class="headerButton" id="editButton" th:href="@{/editProfile}" href="updateProfile.html">Edit Profile</a>
+    
+    		<!-- 
+	    		Show Profile Button
+			-->
+            <a class="headerButton" id="showButton" th:href="@{'/showProfile'(userId=${authUser.id})}" href="showProfile.html">Show Profile</a>
+
 	
-		 <!--
-			Search Button
-		 -->
-		
+			 <!--
+				Search Button
+			 -->
             <a class="headerButton" id="searchButton" th:href="@{/findTutor}" href="/findTutor.html">Search</a>
 			
-		
-		
-			
-		<!--  
-			Logout Button
-		 -->
-		
+			<!--  
+				Logout Button
+			 -->
             <a class="headerButton" id="logoutButton" th:href="@{/logout}" href="login.html">Logout</a>
 			
 	   </div>	
