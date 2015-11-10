@@ -57,7 +57,6 @@ public class SubjectController {
 		if (!result.hasErrors()) {
 			try {
 				subjectService.saveFrom(updateSubjectsForm, authUser);
-				// TODO show success message to the user
 			} catch (InvalidSubjectException e) {
 				result.reject("error", e.getMessage());
 				model = new ModelAndView("updateProfile");
