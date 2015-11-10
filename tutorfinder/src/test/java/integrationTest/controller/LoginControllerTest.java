@@ -20,11 +20,11 @@ import org.springframework.web.context.WebApplicationContext;
 @SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/config/springMVC.xml", 
-		"file:src/main/webapp/WEB-INF/config/springData.xml" }) 
+		"file:src/main/webapp/WEB-INF/config/testData.xml" }) 
 
 @Transactional 
 @TransactionConfiguration(defaultRollback = true) 
-public class RegisterControllerTest { 
+public class LoginControllerTest { 
 	
 	@Autowired private WebApplicationContext wac; 
 
