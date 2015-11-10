@@ -10,14 +10,48 @@ import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 
+/**
+ * @version	1.0
+ *
+ */
 public interface AppointmentService {
 
+	/**
+	 * saves appointment with at a given time between a given user and tutor
+	 * @param appForm stores date
+	 * @param slot determines at what time the appointment takes place
+	 * @param tutor that is part of the appointment
+	 * @param student - user that asked for the appointment
+	 * @return
+	 */
 	public MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student);
-
+	
+	/**
+	 * retrieves appointment of a given user at a given time
+	 * @param user acts as tutor in the appointment
+	 * @param timestamp at what time the appointment takes place
+	 * @return appointment at given time with given tutor
+	 */
 	public Appointment findByTutorAndTimestamp(User user, Timestamp timestamp);
-
+	
+	/**
+	 * creates and returns a list of AppointmentPlaceholders into which availability of
+	 * an appointment is stored if an appointment is present for that timeslot
+	 * @param user of who the appointment should be loaded in the AppointmentPlaceholders
+	 * @param date for which the list should be created
+	 * @return list of AppointmentPlaceholders with availability 
+	 */
 	public List<AppointmentPlaceholder> findByTutorAndDate(User user, LocalDate date);
 
+	/**
+	 * takes list of Timetables and creates an List of AppointmentPlaceholdes with an placeholder 
+	 * for each slot in the timetables 
+	 * @param slots that need a corresponding placeholder
+	 * @param user of which the AppointPlaceholder should be filled with appointment data if present
+	 * @param date 
+	 * @return list of AppointmentPlaceholders that contains a AppointmentPlaceholer with matching time
+	 * to a given timetable slot
+	 */
 	public List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date);
 
 }

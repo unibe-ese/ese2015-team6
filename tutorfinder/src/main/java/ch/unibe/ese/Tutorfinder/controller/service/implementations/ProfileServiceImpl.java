@@ -46,8 +46,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	@Transactional
-	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) 
-			throws InvalidProfileException {
+	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) {
 		
 		//Updates the users main information
 		user.setFirstName(updateProfileForm.getFirstName());

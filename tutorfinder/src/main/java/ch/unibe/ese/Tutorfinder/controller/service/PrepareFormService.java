@@ -13,11 +13,6 @@ import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
 
 /**
- * 
- * @author  Antonio
- * @author	Florian
- * @author	Lukas
- * @author	Nicola
  * @version	1.0
  *
  */

@@ -8,11 +8,6 @@ import ch.unibe.ese.Tutorfinder.model.User;
 
 /**
  * Service to find tutors with the selected subject.
- * 
- * @author  Antonio
- * @author	Florian
- * @author	Lukas
- * @author	Nicola
  * @version	1.0
  *
  */
