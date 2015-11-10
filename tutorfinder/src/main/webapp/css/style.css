@@ -1,14 +1,16 @@
-
-body {
+html {
 	background-color: #666666;
-    margin: 0px;
+	
     font-family: Helvetica, sans-serif;
     font-size: 20px;
     font-weight: bold;
     color: white;
-    
 }
 
+#content {
+	width: 100%;
+	clear: both;
+}
 
 /* Login and Register */
 #logo {
@@ -21,6 +23,7 @@ body {
     
     align-self:center;
 }
+
 #infoBox {
     position: absolute;
     left: 0%;
@@ -187,39 +190,27 @@ body {
     text-decoration:underline;
 }
 
-/*Home*/
-
-.content {
-        
-    position: absolute;
-    width: 100%;
-    top: 70px;
-    margin: 30px;
-}
-
-/*ShowProfile*/
-
-.userInfoBox {
-    position: absolute;
-    width: 1008.15px;
-    height: 562px;
-    top: 75px;
-    left: 375px;
-    
-}
-
 /*EditProfile*/
-#userAvatarBox {
-    width: 300px;
-    overflow: hidden;
+#leftSide {
+	display: inline-block;
+	width: 50%;
+	float: left;
+}
+#rightSide {
+	display: inline-block;
+	width: 50%;
+	float: left;
 }
 
-#userInfoBox {
-    position: absolute;
-    width: 1008.15px;
-    height: 562px;
-    top: 0px;
-    left: 375px;
+#availability {
+	margin-top: 50px;
+}
+
+form#userInfoBox {
+}
+
+form#userInfoBox fieldset {
+	border: none;
 }
 
 #tutorSubjectBox {
