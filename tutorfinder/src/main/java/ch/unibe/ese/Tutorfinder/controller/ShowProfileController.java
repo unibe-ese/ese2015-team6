@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,6 @@ import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
-import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 
@@ -83,8 +81,8 @@ public class ShowProfileController {
 		}
 		
 		ModelAndView model = new ModelAndView("showProfile");
-		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareModelByUserId(authUser, userId, model);		
+		model.addObject("makeAppointmentsForm", appForm);
 		return model;
 	}
 
@@ -104,9 +102,10 @@ public class ShowProfileController {
 		return model;
 	}
 
-	//FIXME After unchecking a slot, even reserved slots are not displayed anymore
 	private List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date) {
-		List<AppointmentPlaceholder> tmpList = new ArrayList<AppointmentPlaceholder>();
+		
+		List<AppointmentPlaceholder> tmpList = appointmentService.findByTutorAndDate(user, date);
+		
 		for (Timetable slot : slots) {
 			int hours = slot.getTime();
 
@@ -114,18 +113,10 @@ public class ShowProfileController {
 			dateTime = dateTime.plusHours(hours);
 			Timestamp timestamp = Timestamp.valueOf(dateTime);
 
-			Appointment tmpAppointment = appointmentService.findByTutorAndTimestamp(user, timestamp);
-			AppointmentPlaceholder placeholder;
-
-			if (tmpAppointment != null) {
-				placeholder = new AppointmentPlaceholder();
-				placeholder.setAvailability(tmpAppointment.getAvailability());
-				placeholder.setDow(date.getDayOfWeek());
-				placeholder.setTimeslot(hours);
-			} else {
-				placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
+			if (appointmentService.findByTutorAndTimestamp(user, timestamp) == null) {
+				AppointmentPlaceholder placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
+				tmpList.add(placeholder);
 			}
-			tmpList.add(placeholder);
 		}
 		return tmpList;
 	}
