@@ -5,7 +5,7 @@
 
 	<groupId>ch.unibe.ese</groupId>
 	<artifactId>Tutorfinder</artifactId>
-	<version>0.1</version>
+	<version>1.0</version>
 	<packaging>war</packaging>
 
 	<name>Tutorfinder</name>
