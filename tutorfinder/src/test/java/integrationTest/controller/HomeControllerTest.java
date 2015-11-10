@@ -39,11 +39,11 @@ public class HomeControllerTest {
 	public void MappingTest() throws Exception{
 		
 		this.mockMvc.perform(
-				post("/")).andExpect(status().isOk())
+				post("/")).andExpect(status().is3xxRedirection())
 		.andExpect(model().hasNoErrors());
 		
 		this.mockMvc.perform(
-				post("/home")).andExpect(status().isOk())
+				post("/home")).andExpect(status().is3xxRedirection())
 						.andExpect(model().hasNoErrors());
 		
 	}
