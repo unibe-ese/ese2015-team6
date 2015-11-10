@@ -18,7 +18,6 @@ import org.junit.runners.Suite.SuiteClasses;
 /**
  * Test suite including all service implementation unit tests
  * 
- * @author Antonio
  *
  */
 public class ServiceImplUnitTestSuite {
