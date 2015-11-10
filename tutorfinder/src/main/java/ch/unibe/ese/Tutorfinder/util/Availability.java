@@ -65,20 +65,4 @@ public enum Availability {
     public int getValue() {
         return ordinal();
     }
-    
-    /**
-     * Changes an boolean input to an enumeration.<br>
-     * {@code true} is changed to {@code AVAILABLE}<br>
-     * {@code false} is changed to {@code UNAVAILABLE}
-     * 
-     * @param availability a boolean value to be changed to an enumeration
-     * @return {@code AVAILABLE} if input is true, else {@code UNAVAILABLE}
-     */
-    public Availability changeBooleanToAvailability (Boolean availability) {
-    	if (availability) {
-    		return AVAILABLE;
-    	} else{
-    		return UNAVAILABLE;
-    	}
-    }
 }

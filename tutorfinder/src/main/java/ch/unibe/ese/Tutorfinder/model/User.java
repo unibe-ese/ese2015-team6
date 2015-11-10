@@ -9,6 +9,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+
+import ch.unibe.ese.Tutorfinder.util.Role;
 /**
  * Entity for user, holding following values:<br>
  * {@code id} is the id of the subject and is generated automatically<br>
@@ -43,7 +45,7 @@ public class User {
 	private String password;
 	
 	@NotNull
-	private String role;
+	private Role role;
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Profile profile;
@@ -90,11 +92,11 @@ public class User {
 		this.password = password;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

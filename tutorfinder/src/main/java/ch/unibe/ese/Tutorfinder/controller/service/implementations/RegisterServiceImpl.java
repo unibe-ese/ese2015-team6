@@ -12,7 +12,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.RegisterService;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
-import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
+import ch.unibe.ese.Tutorfinder.util.Role;
 
 
 /**
@@ -49,9 +49,9 @@ public class RegisterServiceImpl implements RegisterService {
 		user.setPassword(signupForm.getPassword());
 		
 		if (signupForm.isTutor()) {
-			user.setRole(ConstantVariables.TUTOR);
+			user.setRole(Role.TUTOR);
 		} else {
-			user.setRole(ConstantVariables.STUDENT);
+			user.setRole(Role.STUDENT);
 		}
 		//adds an profile to the tutor connected by email
 		Profile profile = new Profile(user.getEmail());
