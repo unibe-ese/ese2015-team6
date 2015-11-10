@@ -64,7 +64,6 @@ public class ShowProfileController {
 		return model;
 	}
 
-	//FIXME returned model appointment form is not loaded correctly
 	@RequestMapping(value = "/updateForm", params = "request", method = RequestMethod.POST)
 	public ModelAndView requestAppointment(@RequestParam(value = "userId") long userId,
 			MakeAppointmentsForm appForm, final HttpServletRequest req, Principal authUser, BindingResult result) {
@@ -77,7 +76,7 @@ public class ShowProfileController {
 			LocalDate date = appForm.getDate();
 			DayOfWeek dow = date.getDayOfWeek();
 			List<Timetable> slots = timetableService.findAllByUserAndDay(tutor, dow);
-			appForm.setAppointments(loadAppointments(slots, userService.getUserByPrincipal(authUser), date));
+			appForm.setAppointments(loadAppointments(slots, tutor, date));
 		}
 		
 		ModelAndView model = new ModelAndView("showProfile");
@@ -102,6 +101,7 @@ public class ShowProfileController {
 		return model;
 	}
 
+	//TODO refactor in service
 	private List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date) {
 		
 		List<AppointmentPlaceholder> tmpList = appointmentService.findByTutorAndDate(user, date);
@@ -121,6 +121,7 @@ public class ShowProfileController {
 		return tmpList;
 	}
 
+	//TODO refactor in service
 	private ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model) {
 		User tmpAuthUser = userService.getUserByPrincipal(authUser);
 		model.addObject("authUser", tmpAuthUser);
