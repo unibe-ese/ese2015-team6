@@ -17,62 +17,58 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	ProfileDao profileDao;
-	
+
 	public ProfileServiceImpl() {
-		
+
 	}
-	
+
 	@Override
 	public Profile getProfileById(Long id) {
-		assert(id != null);
-		
+		assert (id != null);
+
 		Profile tmpProfile = profileDao.findOne(id);
-		assert(tmpProfile != null);
-		
+		assert (tmpProfile != null);
+
 		return tmpProfile;
 	}
 
 	@Override
 	public Profile getProfileByEmail(String email) {
-		assert(email != null);
-		
+		assert (email != null);
+
 		Profile tmpProfile = profileDao.findByEmail(email);
-		assert(tmpProfile != null);
-		
+		assert (tmpProfile != null);
+
 		return tmpProfile;
 	}
-	
+
 	@Transactional
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) {
-		
-		//Updates the users main information
+
+		// Updates the users main information
 		user.setFirstName(updateProfileForm.getFirstName());
 		user.setLastName(updateProfileForm.getLastName());
-		if (updateProfileForm.getPassword() != null && 
-				user.getPassword() != updateProfileForm.getPassword()) {
+		if (updateProfileForm.getPassword() != null && !user.getPassword().equals(updateProfileForm.getPassword())) {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			user.setPassword(encoder.encode(updateProfileForm.getPassword()));
 		}
-		
-		user = userService.save(user);	//save object to DB
-		
-		//Updates the users profile information
+
+		user = userService.save(user); // save object to DB
+
+		// Updates the users profile information
 		Profile profile;
 		profile = profileDao.findByEmail(user.getEmail());
 		profile.setBiography(updateProfileForm.getBiography());
 		profile.setRegion(updateProfileForm.getRegion());
 		profile.setWage(updateProfileForm.getWage());
-		
-		profile = profileDao.save(profile); //save object to DB
-		
-		
-		
-		
+
+		profile = profileDao.save(profile); // save object to DB
+
 		updateProfileForm.setId(profile.getId());
-		
+
 		return updateProfileForm;
 	}
 
