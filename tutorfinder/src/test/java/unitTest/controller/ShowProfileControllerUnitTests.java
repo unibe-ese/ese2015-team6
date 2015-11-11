@@ -111,12 +111,23 @@ public class ShowProfileControllerUnitTests {
 	}
 	
 	@Test
+	public void testRequestAppointmentWithErrors() {
+		when(mockTutor.getId()).thenReturn(1l);
+		when(mockReq.getParameter("request")).thenReturn("1");
+		when(mockResult.hasErrors()).thenReturn(true);
+		when(mockPrepareService.prepareModelByUserId(eq(mockAuthUser), anyLong(), any(ModelAndView.class))).thenReturn(new ModelAndView());
+		
+		ModelAndView gotMav = controller.requestAppointment(mockTutor.getId(), mockAppointmentsForm, mockReq, mockAuthUser, mockResult);
+		
+		assertEquals(mockAppointmentsForm, gotMav.getModel().get("makeAppointmentsForm"));
+	}
+	
+	@Test
 	public void testGetDate() {
 		LocalDate date = LocalDate.now();
 		List<Timetable> timetableList = new ArrayList<Timetable>();
 		List<AppointmentPlaceholder> appointmentList = new ArrayList<AppointmentPlaceholder>();
 		when(mockTutor.getId()).thenReturn(1l);
-		when(mockResult.hasErrors()).thenReturn(false);
 		when(mockUserService.getUserById(anyLong())).thenReturn(mockTutor);
 		when(mockAppointmentsForm.getDate()).thenReturn(date);
 		when(mockTimetableService.findAllByUserAndDay(mockTutor, date.getDayOfWeek())).thenReturn(timetableList);
@@ -125,6 +136,18 @@ public class ShowProfileControllerUnitTests {
 		
 		ModelAndView gotMav = controller.getDate(mockAuthUser, mockTutor.getId(), mockAppointmentsForm, mockResult, mockRedirectAttributes);
 		
+		assertEquals(mockAppointmentsForm, gotMav.getModel().get("makeAppointmentsForm"));
+	}
+	
+	@Test
+	public void testGetDateWithErrors() {
+		when(mockTutor.getId()).thenReturn(1l);
+		when(mockResult.hasErrors()).thenReturn(true);
+		when(mockPrepareService.prepareModelByUserId(eq(mockAuthUser), anyLong(), any(ModelAndView.class))).then(AdditionalAnswers.returnsLastArg());
+		
+		ModelAndView gotMav = controller.getDate(mockAuthUser, mockTutor.getId(), mockAppointmentsForm, mockResult, mockRedirectAttributes);
+		
+		assertTrue(gotMav.getModel().containsKey("error_message"));
 		assertEquals(mockAppointmentsForm, gotMav.getModel().get("makeAppointmentsForm"));
 	}
 

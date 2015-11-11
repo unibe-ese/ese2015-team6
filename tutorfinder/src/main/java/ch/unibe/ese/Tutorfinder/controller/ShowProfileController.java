@@ -52,6 +52,7 @@ public class ShowProfileController {
 
 	/**
 	 * Constructor for testing purposes
+	 * 
 	 * @param appointmentService
 	 * @param userService
 	 * @param profileService
@@ -74,7 +75,8 @@ public class ShowProfileController {
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.html}.
 	 * 
-	 * @param authUser {@link Principal}
+	 * @param authUser
+	 *            {@link Principal}
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
@@ -88,13 +90,16 @@ public class ShowProfileController {
 	}
 
 	/**
-	 * Maps an request for reserve an appointment by this {@code userId}
-	 * Tutor.
+	 * Maps an request for reserve an appointment by this {@code userId} Tutor.
 	 * 
-	 * @param userId identification of the {@link User}'s {@link Profile}
-	 * @param appForm holds the {@link Timestamp} and other information for the requesting appointment
+	 * @param userId
+	 *            identification of the {@link User}'s {@link Profile}
+	 * @param appForm
+	 *            holds the {@link Timestamp} and other information for the
+	 *            requesting appointment
 	 * @param req
-	 * @param authUser {@link Principal} logged in user, which sends the request
+	 * @param authUser
+	 *            {@link Principal} logged in user, which sends the request
 	 * @param result
 	 * @return
 	 */
@@ -120,11 +125,17 @@ public class ShowProfileController {
 	}
 
 	/**
-	 * Loads the availability of the {@code Tutors} appointments on the requested date.
+	 * Loads the availability of the {@code Tutors} appointments on the
+	 * requested date.
 	 * 
-	 * @param authUser {@link Principal} logged in user, which sends the request for the tutors appointment availability
-	 * @param userId identification of the {@link User}'s {@link Profile}
-	 * @param appForm holds the {@link Timestamp} and other information for the requesting appointment
+	 * @param authUser
+	 *            {@link Principal} logged in user, which sends the request for
+	 *            the tutors appointment availability
+	 * @param userId
+	 *            identification of the {@link User}'s {@link Profile}
+	 * @param appForm
+	 *            holds the {@link Timestamp} and other information for the
+	 *            requesting appointment
 	 * @param result
 	 * @param redirectAttributes
 	 * @return
@@ -132,7 +143,9 @@ public class ShowProfileController {
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
 	public ModelAndView getDate(Principal authUser, @RequestParam(value = "userId") long userId,
 			@Valid MakeAppointmentsForm appForm, BindingResult result, RedirectAttributes redirectAttributes) {
+
 		ModelAndView model = new ModelAndView("showProfile");
+
 		if (!result.hasErrors()) {
 			User user = userService.getUserById(userId);
 			LocalDate date = appForm.getDate();
@@ -140,9 +153,9 @@ public class ShowProfileController {
 			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
 			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
 		} else {
-			model = new ModelAndView("showProfile");
 			model.addObject("error_message", "Enter a valid date (yyyy-MM-dd)");
 		}
+
 		model.addObject("makeAppointmentsForm", appForm);
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		return model;
