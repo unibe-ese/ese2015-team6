@@ -43,7 +43,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
 @WebAppConfiguration @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/test.xml"})
 public class ShowProfileControllerUnitTests {
 
-	ShowProfileController controller;
+	private ShowProfileController controller;
 
 	@Mock
 	private Principal mockAuthUser;

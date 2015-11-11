@@ -39,6 +39,15 @@ public class LoginController {
 	UserDao userDao;
 	
 	/**
+	 * Constructor for testing purposes
+	 * @param registerService
+	 */
+	@Autowired
+	public LoginController(RegisterService registerService) {
+		this.registerService = registerService;
+	}
+
+	/**
 	 * Redirects the {@code /} and {@code /home} to the 
 	 * {@code login.html} page
 	 * @return redirection to login
@@ -54,7 +63,7 @@ public class LoginController {
      * After this is happens, it is possible for the user to login and
      * he has access to the sites corresponding to his role.
      * Redirects the user after the registration to a {@code signupCompleted.html}
-     * page to show the succesfull creation of a new login.
+     * page to show the successful creation of a new login.
      * 
      * @param signupForm holds the information needed to create an new {@link User}
      * @param result
@@ -170,7 +179,7 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView accesssDenied(Principal user) {
+	public ModelAndView accessDenied(Principal user) {
 
 		ModelAndView model = new ModelAndView("403");
 		if (user != null) {
