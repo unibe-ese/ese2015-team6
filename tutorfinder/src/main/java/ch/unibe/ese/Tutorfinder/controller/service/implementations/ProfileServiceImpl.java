@@ -51,9 +51,10 @@ public class ProfileServiceImpl implements ProfileService {
 		// Updates the users main information
 		user.setFirstName(updateProfileForm.getFirstName());
 		user.setLastName(updateProfileForm.getLastName());
-		if (updateProfileForm.getPassword() != null && !user.getPassword().equals(updateProfileForm.getPassword())) {
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			user.setPassword(encoder.encode(updateProfileForm.getPassword()));
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encPwd = encoder.encode(updateProfileForm.getPassword());
+		if (updateProfileForm.getPassword() != null && !user.getPassword().equals(encPwd)) {
+			user.setPassword(encPwd);
 		}
 
 		user = userService.save(user); // save object to DB
