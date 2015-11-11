@@ -159,5 +159,19 @@ public class AppointmentServiceImplTest {
 		assertEquals(Availability.AVAILABLE, gotList.get(0).getAvailability());
 		assertEquals(DayOfWeek.SATURDAY, gotList.get(0).getDow());
 	}
+	
+	@Test
+	public void testLoadAppointmentsWithSaved() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse("2015-11-07", formatter);
+		when(appointmentDao.findByTutorAndTimestamp(eq(mockTutor), any(Timestamp.class))).thenReturn(mockAppointment);
+		when(mockAppointment.getAvailability()).thenReturn(Availability.AVAILABLE);
+		
+		AppointmentPlaceholder testApp = new AppointmentPlaceholder(date.getDayOfWeek(), 0);
+		
+		List<AppointmentPlaceholder> gotList = appointmentService.loadAppointments(timetableList, mockTutor, date);
+		
+		assertEquals(testApp, gotList.get(0));
+	}
 
 }
