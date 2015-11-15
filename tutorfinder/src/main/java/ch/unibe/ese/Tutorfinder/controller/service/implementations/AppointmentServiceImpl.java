@@ -1,7 +1,6 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -12,7 +11,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
@@ -100,19 +98,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 			}
 		}
 		return tmpList;
-	}
-	
-	//TODO test
-	@Override
-	public ModelAndView prepareAppointmentsOverview(ModelAndView model, Principal authUser) {
-		User tmpUser = userService.getUserByPrincipal(authUser);
-		model.addObject("authUser", tmpUser);
-		
-		model.addObject("Arranged", getFutureAppointments(tmpUser, Availability.ARRANGED));
-		model.addObject("Reserved", getFutureAppointments(tmpUser, Availability.RESERVED));
-		model.addObject("Past", getPastAppointments(tmpUser, Availability.ARRANGED));
-
-		return model;
 	}
 	
 	@Override

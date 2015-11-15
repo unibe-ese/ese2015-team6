@@ -3,8 +3,7 @@ package unitTest.service.implementation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -171,6 +170,20 @@ public class AppointmentServiceImplTest {
 		
 		assertEquals(Availability.AVAILABLE, gotList.get(0).getAvailability());
 		assertEquals(DayOfWeek.SATURDAY, gotList.get(0).getDow());
+	}
+	
+	@Test
+	public void testLoadAppointmentsWithSaved() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse("2015-11-07", formatter);
+		when(appointmentDao.findByTutorAndTimestamp(eq(mockTutor), any(Timestamp.class))).thenReturn(mockAppointment);
+		when(mockAppointment.getAvailability()).thenReturn(Availability.AVAILABLE);
+		
+		AppointmentPlaceholder testApp = new AppointmentPlaceholder(date.getDayOfWeek(), 0);
+		
+		List<AppointmentPlaceholder> gotList = appointmentService.loadAppointments(timetableList, mockTutor, date);
+		
+		assertEquals(testApp, gotList.get(0));
 	}
 	
 	@Test

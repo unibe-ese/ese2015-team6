@@ -1,11 +1,8 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
-import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
-
-import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
@@ -57,16 +54,6 @@ public interface AppointmentService {
 	 * to a given timetable slot
 	 */
 	public List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User user, LocalDate date);
-	
-	/**
-	 * Prepares the model for the {@code appointmentsOverview.html} site, which means 
-	 * it adds the confirmed, reserved and past appointments of the tutor in the model.
-	 * 
-	 * @param model a new {@code appointmentsOverview.html}
-	 * @param authUser {@link Principal} actual logged in user
-	 * @return model with the new objects
-	 */
-	public ModelAndView prepareAppointmentsOverview(ModelAndView model, Principal authUser);
 	
 	/**
 	 * Updates the {@link Availability} of the {@link Appointment} with the 
