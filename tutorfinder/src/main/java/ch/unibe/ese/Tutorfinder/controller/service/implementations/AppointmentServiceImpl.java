@@ -1,19 +1,23 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
+import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -26,6 +30,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	
 	@Autowired
 	AppointmentDao appointmentDao;
+	@Autowired
+	UserService userService;
 
 	public MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student) {
 		BigDecimal wage = tutor.getProfile().getWage();
@@ -94,6 +100,80 @@ public class AppointmentServiceImpl implements AppointmentService {
 			}
 		}
 		return tmpList;
+	}
+	
+	//TODO test
+	@Override
+	public ModelAndView prepareAppointmentsOverview(ModelAndView model, Principal authUser) {
+		User tmpUser = userService.getUserByPrincipal(authUser);
+		model.addObject("authUser", tmpUser);
+		
+		model.addObject("Arranged", getFutureAppointments(tmpUser, Availability.ARRANGED));
+		model.addObject("Reserved", getFutureAppointments(tmpUser, Availability.RESERVED));
+		model.addObject("Past", getPastAppointments(tmpUser, Availability.ARRANGED));
+
+		return model;
+	}
+	
+	@Override
+	public List<Appointment> getPastAppointments(User tutor, Availability availability) {
+		assert(tutor != null && availability != null);
+		
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailability(tutor, availability);
+		
+		Timestamp timestampNow = new Timestamp((new Date()).getTime());
+		
+		List<Appointment> pastAppointments = new ArrayList<Appointment>();
+		
+		if(appointments != null) {
+			for(Appointment appointment : appointments) {
+				if(appointment != null) {
+					int compareResult = timestampNow.compareTo(appointment.getDate());
+					if(compareResult > 0)
+						pastAppointments.add(appointment);
+				}
+			}
+		}
+		
+		return pastAppointments;
+	}
+	
+	@Override
+	public List<Appointment> getFutureAppointments(User tutor, Availability availability) {
+		assert(tutor != null && availability != null);
+		
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailability(tutor, availability);
+		
+		Timestamp timestampNow = new Timestamp((new Date()).getTime());
+		
+		List<Appointment> newAppointments = new ArrayList<Appointment>();
+		
+		if(appointments != null) {
+			for(Appointment appointment : appointments) {
+				if(appointment != null) {
+					int compareResult = timestampNow.compareTo(appointment.getDate());
+					if(compareResult <= 0)
+						newAppointments.add(appointment);
+				}
+			}
+		}
+		
+		return newAppointments;
+	}
+	
+	@Override
+	public Appointment updateAppointment(Availability availability, Long appointmentId) {	
+		assert(availability != null && appointmentId != null);
+		if(availability.equals(Availability.AVAILABLE)) {
+			appointmentDao.delete(appointmentId);
+			return null;
+		} else {
+			Appointment tmpApp = appointmentDao.findOne(appointmentId);
+			tmpApp.setAvailability(availability);
+			
+			appointmentDao.save(tmpApp);
+			return appointmentDao.findOne(appointmentId);
+		}
 	}
 	
 

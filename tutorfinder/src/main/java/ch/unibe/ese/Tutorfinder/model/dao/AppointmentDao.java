@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.User;
+import ch.unibe.ese.Tutorfinder.util.Availability;
 
 public interface AppointmentDao extends CrudRepository<Appointment, Long> {
 	
@@ -15,4 +16,6 @@ public interface AppointmentDao extends CrudRepository<Appointment, Long> {
 	ArrayList<Appointment> findAllByStudent (User student);
 	
 	Appointment findByTutorAndTimestamp (User tutor, Timestamp timestamp);
+	
+	ArrayList<Appointment> findAllByTutorAndAvailability (User tutor, Availability availability);
 }

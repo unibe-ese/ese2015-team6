@@ -239,7 +239,7 @@ form#userInfoBox fieldset {
 
 #menu a{
 	display: inline-block;
-	width: 120px;
+	width: 140px;
     height: 28px;
     
     background-color: white;
@@ -251,6 +251,9 @@ form#userInfoBox fieldset {
     text-decoration: none;
 }
 
+#menu li {
+	display: inline;
+}
 
 #menu a span {
 	vertical-align: sub;
@@ -263,6 +266,7 @@ form#userInfoBox fieldset {
 	background-color: red;
 }
 
+/* Timetable */
 .Table {
 	display: table;
 }
