@@ -29,6 +29,18 @@ public class AppointmentsOverviewController {
 	UserService userService;
 
 	/**
+	 * Constructor for testing purposes
+	 * 
+	 * @param appointmentService
+	 * @param userService
+	 */
+	@Autowired
+	public AppointmentsOverviewController(AppointmentService appointmentService, UserService userService) {
+		this.appointmentService = appointmentService;
+		this.userService = userService;
+	}
+	
+	/**
 	 * Maps the /appointments page to the {@code appointmentsOverview.html}.
 	 * 
 	 * @param authUser
@@ -40,9 +52,9 @@ public class AppointmentsOverviewController {
 	public ModelAndView appointments(Principal authUser) {
 		ModelAndView model = new ModelAndView("appointmentsOverview");
 		
-		ModelAndView resultModel = prepareAppointmentsOverview(model, authUser);
+		model = prepareAppointmentsOverview(model, authUser);
 
-		return resultModel;
+		return model;
 	}
 	
 	@RequestMapping(value="/editAppointments", params = "decline", method = RequestMethod.POST)
@@ -52,10 +64,9 @@ public class AppointmentsOverviewController {
 		final long appointmentId = Long.valueOf(req.getParameter("decline"));
 		appointmentService.updateAppointment(Availability.AVAILABLE, appointmentId);
 		
-		ModelAndView resultModel = prepareAppointmentsOverview(model, authUser);
+		model = prepareAppointmentsOverview(model, authUser);
 		
-		
-		return resultModel;
+		return model;
 	}
 	
 	@RequestMapping(value="/editAppointments", params = "confirm", method = RequestMethod.POST)
@@ -65,10 +76,9 @@ public class AppointmentsOverviewController {
 		final long appointmentId = Long.valueOf(req.getParameter("confirm"));
 		appointmentService.updateAppointment(Availability.ARRANGED, appointmentId);
 		
-		ModelAndView resultModel = prepareAppointmentsOverview(model, authUser);
+		model = prepareAppointmentsOverview(model, authUser);
 		
-		
-		return resultModel;
+		return model;
 	}
 	
 	/**
