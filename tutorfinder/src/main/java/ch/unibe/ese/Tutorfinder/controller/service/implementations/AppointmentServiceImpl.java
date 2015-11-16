@@ -113,7 +113,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		if(appointments != null) {
 			for(Appointment appointment : appointments) {
 				if(appointment != null) {
-					int compareResult = timestampNow.compareTo(appointment.getDate());
+					int compareResult = timestampNow.compareTo(appointment.getTimestamp());
 					if(compareResult > 0)
 						pastAppointments.add(appointment);
 				}
@@ -136,7 +136,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		if(appointments != null) {
 			for(Appointment appointment : appointments) {
 				if(appointment != null) {
-					int compareResult = timestampNow.compareTo(appointment.getDate());
+					int compareResult = timestampNow.compareTo(appointment.getTimestamp());
 					if(compareResult <= 0)
 						newAppointments.add(appointment);
 				}

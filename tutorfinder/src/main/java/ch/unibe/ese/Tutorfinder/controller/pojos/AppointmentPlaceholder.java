@@ -16,7 +16,7 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
 public class AppointmentPlaceholder {
 	private Availability availability;
 	private DayOfWeek dow;
-	private int timeslot;
+	private int timeslot; 
 	
 	public AppointmentPlaceholder() {
 		availability = Availability.UNAVAILABLE;

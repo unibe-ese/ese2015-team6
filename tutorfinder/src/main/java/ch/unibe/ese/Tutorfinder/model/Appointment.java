@@ -100,11 +100,11 @@ public class Appointment {
 		this.student = student;
 	}
 
-	public Timestamp getDate() {
+	public Timestamp getTimestamp() {
 		return timestamp;
 	}
 
-	public void setDate(Timestamp timestamp) {
+	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
 

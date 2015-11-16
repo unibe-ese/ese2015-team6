@@ -188,7 +188,7 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testGetPastAppointments() {
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpList = appointmentService.getPastAppointments(this.mockTutor, Availability.ARRANGED);
@@ -198,7 +198,7 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testGetPastAppointmentsWhenEmpty() {
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(null);
 		
 		List<Appointment> tmpList = appointmentService.getPastAppointments(this.mockTutor, Availability.ARRANGED);
@@ -212,7 +212,7 @@ public class AppointmentServiceImplTest {
 		this.appList.remove(this.mockAppointment);
 		this.appList.add(null);
 		
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpList = appointmentService.getPastAppointments(this.mockTutor, Availability.ARRANGED);
@@ -222,7 +222,7 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testGetPastAppointmentsWhenHaveFuture() {
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpList = appointmentService.getPastAppointments(this.mockTutor, Availability.ARRANGED);
@@ -243,7 +243,7 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testGetFutureAppointments() {
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpList = appointmentService.getFutureAppointments(this.mockTutor, Availability.ARRANGED);
@@ -253,7 +253,7 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testGetFutureAppointmentsWhenEmpty() {
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(null);
 		
 		List<Appointment> tmpList = appointmentService.getFutureAppointments(this.mockTutor, Availability.ARRANGED);
@@ -267,7 +267,7 @@ public class AppointmentServiceImplTest {
 		this.appList.remove(this.mockAppointment);
 		this.appList.add(null);
 		
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpList = appointmentService.getFutureAppointments(this.mockTutor, Availability.ARRANGED);
@@ -277,7 +277,7 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testGetFutureAppointmentsWhenHaveFuture() {
-		when(mockAppointment.getDate()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
 		when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpList = appointmentService.getFutureAppointments(this.mockTutor, Availability.ARRANGED);
