@@ -1,12 +1,25 @@
 # ese2015-team6
 ##Prototype: 
 https://www.fluidui.com/editor/live/preview/p_11b002272439085d2f39b9f67bd5014e.1444673932913
-##Setting up in eclipse
-- Import the project via >File >Import... >Maven >Existing Maven Projects
-- After importing the project you may need to update the project with Alt+F5
-- For setting up the runing configuration
+
+## Setup guides:
+### Prerequisites
+- *[XAMPP][1]*, *[WAMP][2]* or sth similar that lets you run a *MySQL* server locally. (Apache and PHP support may be needed)
+
+### Using Eclipse
+1. Import the project via **File >Import... >Maven >Existing Maven Projects**
+  - After importing the project you may need to update the project with Alt+F5
+2. Set up the run configuration
   - Right click on the project
-  - >Run as > Maven build...
-  - Add the follow to the goals: "jetty:stop jetty:run"
-- Apply it and you can run it. 
-- Be sure you have installed XAMPP or WAMP or something similar with Apache, Mysql and PHP.
+  - **Run as > Maven build...**
+  - Add the following to the goals: `jetty:stop jetty:run`
+3. Run the new configuration
+
+### Running the servlet from console
+1. Install [Apache Maven](https://maven.apache.org/) and configure it to be run in console (you can follow [this guide][3])
+2. Using the command line, browse into the tutorfinder directory
+3. Execute `mvn jetty:run`
+
+[1]: https://www.apachefriends.org/
+[2]: http://www.wampserver.com/en/
+[3]: http://www.tutorialspoint.com/maven/maven_environment_setup.htm
