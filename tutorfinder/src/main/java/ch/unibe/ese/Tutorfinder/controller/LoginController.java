@@ -27,7 +27,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the login/logout and register process.
  * 
- * @version 1.0
+ * @version 1.0.1
  *
  */
 @Controller
@@ -83,19 +83,21 @@ public class LoginController {
             } catch (InvalidEmailException e) {
             	result.rejectValue("email", "", e.getMessage());
             	model = new ModelAndView("login");
-            	model.addObject("loginBoxVisibility", "hidden");
-        		model.addObject("registerBoxVisibility", "visible");
-        		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
+            	switchPage(model);
             }
 
         } else {
         	model = new ModelAndView("login");
-        	model.addObject("loginBoxVisibility", "hidden");
-    		model.addObject("registerBoxVisibility", "visible");
-    		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
+        	switchPage(model);
         }   	
     	return model;
     }
+
+	private void switchPage(ModelAndView model) {
+		model.addObject("loginBoxVisibility", "hidden");
+		model.addObject("registerBoxVisibility", "visible");
+		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
+	}
     
     /**
 	 * Redirects the {@code /register} to the {@code login.html} page
