@@ -18,7 +18,7 @@
 *   There are no assertions, contracts or invariant checks
 *   There are some utility methods (e.g. findCompetence and findCompetenceLike in the SampleService). Since they are quite specific, they don’t need to be in a separate utility class.
 
-### <a name="h.r4271l1l4ylu"></a>General comments to coding style
+### General comments to coding style
 
 Classes should not print to console especially since you have the SLF4J logger.  
 Comments should not be used to disable code segments especially in release versions (e.g:
@@ -52,8 +52,8 @@ Calling methods and save the return object in a new object, which is never used,
 *   There are only 2 tests classes. Both contain only one test case each. With only two test case it’s obvious that the test coverage is low. Total coverage: 10.3%, Model: 40.3%, Pojos: 33.3%, Service: 9.3%, Rest: 0%
 *   testSaveUser() good, easy to understand, 
 testInvalidUserException(), unclear. according to the name this test case should test for an exception but there is no expected exception.
-*   <span class="c10">No tests with null or boundary values
-*   <span class="c10">The tests are readable and easy to understand
+*   No tests with null or boundary values
+*   The tests are readable and easy to understand
 
 ### General comments to test
 
