@@ -68,6 +68,8 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+# STS (Spring Tool Suite)
+.springBeans
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
