@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorForm;
 import ch.unibe.ese.Tutorfinder.model.Subject;
@@ -23,6 +24,6 @@ public interface FindTutorService {
 	 * finds all subjects whose names contain a given query
 	 * @param query - String that should be contained in the subjects name
 	 */
-	public LinkedList<Subject> getSubjectsFrom(String query);
+	public Map<User, List<Subject>> getSubjectsFrom(String query);
 
 }

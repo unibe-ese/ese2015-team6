@@ -34,13 +34,25 @@
 			<h1>
 				Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
 			</h1>
-			<div th:each="subject : ${Result}">
-				<p>
-					<a th:if="${subject != null}"
-						th:href="@{'/showProfile'(userId=${subject.user.id})}"
-						th:text="|${subject.name} - ${subject.user.firstName} ${subject.user.lastName} (Grade ${subject.grade})|">
-						Subject - Max Mustermann (Grade 5.0)</a>
-				</p>
+			<div th:each="foundTutor : ${Result}" th:if="${foundTutor != null}">
+					<a th:href="@{'/showProfile'(userId=${foundTutor.key.id})}">
+					
+						<img th:src="@{|/img/profPic/${foundTutor.key.id}.png|}"
+						onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
+						alt="Profile picture" width="192" height="192"
+						src="../../img/default-avatar.jpg" />
+						<br />
+						<span th:text="|${foundTutor.key.firstName} ${foundTutor.key.lastName}|">
+							Max Muster</span>
+						
+						<span th:each="subject : ${foundTutor.value}">
+								<br />
+								<span th:if="${subject != null}"
+									th:text="|${subject.name} (Grade ${subject.grade})|">
+									Subject (Grade 5.0)</span>
+						</span>
+						
+					</a>
 			</div>
 		</div>
 	</div>

@@ -1,10 +1,13 @@
 package unitTest.service.implementation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -79,11 +82,12 @@ public class FindTutorServiceImplTest {
 		//GIVEN
 		when(subjectDao.findAll()).thenReturn(this.subjectList);
 		when(mockSubject.getName()).thenReturn("TestSubject");
+		when(mockSubject.getUser()).thenReturn(this.mockUser);
 		
 		//WHEN
-		LinkedList<Subject> tmpSubjectList = findTutorService.getSubjectsFrom("TestSubject");
+		Map<User, List<Subject>> tmpSubjectList = findTutorService.getSubjectsFrom("TestSubject");
 		
 		//THEN
-		assertEquals(tmpSubjectList, this.subjectList);
+		assertTrue(tmpSubjectList.containsValue(this.subjectList));
 	}
 }
