@@ -84,4 +84,13 @@ public interface AppointmentService {
 	 */
 	public List<Appointment> getFutureAppointments(User tutor, Availability availability);
 
+	/**
+	 * Searches all {@link Availability} {@link Appointment}s of an {@code Student} and
+	 * returns only the appointments which are not in the past.
+	 * 
+	 * @param student for which the reserved appointments in the future are searched
+	 * @return
+	 */
+	public List<Appointment> getPendingAppointments(User student);
+
 }

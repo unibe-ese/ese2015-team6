@@ -160,6 +160,29 @@ public class AppointmentServiceImpl implements AppointmentService {
 			return appointmentDao.findOne(appointmentId);
 		}
 	}
+
+	@Override
+	public List<Appointment> getPendingAppointments(User student) {
+		assert(student != null);
+		
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailability(student, Availability.RESERVED);
+		
+		Timestamp timestampNow = new Timestamp((new Date()).getTime());
+		
+		List<Appointment> newAppointments = new ArrayList<Appointment>();
+		
+		if(appointments != null) {
+			for(Appointment appointment : appointments) {
+				if(appointment != null) {
+					int compareResult = timestampNow.compareTo(appointment.getTimestamp());
+					if(compareResult <= 0)
+						newAppointments.add(appointment);
+				}
+			}
+		}
+		
+		return newAppointments;
+	}
 	
 
 }

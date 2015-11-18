@@ -95,6 +95,7 @@ public class AppointmentsOverviewController {
 		
 		model.addObject("Arranged", appointmentService.getFutureAppointments(tmpUser, Availability.ARRANGED));
 		model.addObject("Reserved", appointmentService.getFutureAppointments(tmpUser, Availability.RESERVED));
+		model.addObject("Pending", appointmentService.getPendingAppointments(tmpUser));
 		model.addObject("Past", appointmentService.getPastAppointments(tmpUser, Availability.ARRANGED));
 
 		return model;
