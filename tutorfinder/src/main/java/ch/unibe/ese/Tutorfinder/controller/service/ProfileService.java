@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
+import java.math.BigDecimal;
+
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -34,5 +36,14 @@ public interface ProfileService {
 	 * @return  @link updateProfileForm} that was given as an input except with the profile id added
 	 */
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user);
+	
+	/**
+	 * Updates the {@code tutors} total rating to the given {@code rating}
+	 * 
+	 * @param tutor for which the rating should be updated
+	 * @param rating, which should be the new one
+	 * @param countedRating, is the total counted ratings for the tutor
+	 */
+	public void updateRating(User tutor, BigDecimal rating, BigDecimal countedRating);
 
 }

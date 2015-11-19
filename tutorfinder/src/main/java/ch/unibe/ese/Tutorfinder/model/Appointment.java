@@ -60,6 +60,8 @@ public class Appointment {
 	
 	@NumberFormat(style=Style.CURRENCY)
 	private BigDecimal wage;
+	
+	private BigDecimal rating;
 
 	/* Constructors */
 	public Appointment() {
@@ -130,6 +132,14 @@ public class Appointment {
 
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
+	}
+	
+	public BigDecimal getRating() {
+		return rating;
+	}
+
+	public void setRating(BigDecimal rating) {
+		this.rating = rating;
 	}
 
 	@Override

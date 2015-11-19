@@ -10,13 +10,14 @@ import static org.mockito.Mockito.when;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,10 +47,10 @@ public class LoginControllerUnitTests {
 	private BindingResult mockResult;
 	@Mock
 	private RedirectAttributes mockRedirectAttributes;
-
-	private MockHttpServletRequest mockRequest;
-
-	private MockHttpServletResponse mockResponse;
+	@Mock
+	private HttpServletRequest mockRequest;
+	@Mock
+	private HttpServletResponse mockResponse;
 	@Mock
 	private SecurityContext mockContext;
 	@Mock
