@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.util;
 
+import java.math.BigDecimal;
+
 /**
  * Holds all constant variables of the project,
  * so they need only to be changed in one location.
@@ -38,6 +40,9 @@ public class ConstantVariables {
 	public static final int TIMESLOTS = 24;
 
 	public static final int DAYS = 7;
+	
+	/* Percentage of Wage that is owed to the site*/
+	public static final BigDecimal PERCENTAGE = BigDecimal.valueOf(0.05);
 	
 }
 

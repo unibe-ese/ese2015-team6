@@ -75,6 +75,17 @@ public interface AppointmentService {
 	public List<Appointment> getPastAppointments(User tutor, Availability availability);
 	
 	/**
+	 * Searches all {@link Appointment}s with a given {@link Availability} in a certain
+	 * month
+	 * @param tutor for which the appointments are searched
+	 * @param availability which the searched appointments have
+	 * @param month in which the appointments take place
+	 * @param year in which the appointments take place
+	 * @return all appointments for the tutor that fit the given criteria 
+	 */
+	public List<Appointment> getAppointmentsForMonthAndYear(User tutor, Availability availability, int month, int year);
+	
+	/**
 	 * Searches all {@link Availability} {@link Appointment}s of an {@code Tutor} and
 	 * returns only the appointments which are not in the past.
 	 * 
