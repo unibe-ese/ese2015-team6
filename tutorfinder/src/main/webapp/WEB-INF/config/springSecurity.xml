@@ -23,7 +23,7 @@
 		<intercept-url pattern="/home" access="permitAll" />
 		<intercept-url pattern="/403" access="permitAll" />
 		<intercept-url pattern="/timetable" access="hasAnyRole('ROLE_TUTOR')" />
-		<intercept-url pattern="/bill" access="hasAnyRole('ROLE_TUTOR')" />
+		<intercept-url pattern="/timetable" access="hasAnyRole('ROLE_TUTOR')" />
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_STUDENT','ROLE_TUTOR')" />
 
 		<!-- access denied page -->

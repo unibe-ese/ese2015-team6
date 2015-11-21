@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.BillService;
@@ -13,6 +14,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.Availability;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
+@Service
 public class BillServiceImpl implements BillService {
 	
 	@Autowired
