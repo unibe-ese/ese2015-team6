@@ -15,7 +15,7 @@
 	<div id="content">
 		<h1>Appointments</h1>
 		<h2>Confirmed Appointments</h2>
-		<span th:each="appointment:${Arranged}" th:if="${appointment != null}">
+		<span th:each="appointment:${arranged}" th:if="${appointment != null}">
 			<small
 			th:text="|${appointment.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getYear()} ${appointment.day},
 				${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
@@ -28,40 +28,82 @@
 		</a><br />
 		</span>
 
-		<h2>Pending Appointments</h2>
-		<form id="appointmentDecision" action="#" method="post"
-			th:action="@{/editAppointments}">
-			<span th:each="appointment:${Reserved}"
-				th:if="${appointment != null}"> <small
+		<div sec:authorize="hasAnyRole('ROLE_TUTOR')">
+			<h2>Pending Appointments</h2>
+			<form id="appointmentDecision" action="#" method="post"
+				th:action="@{/editAppointments}">
+				<span th:each="appointment:${reserved}"
+					th:if="${appointment != null}"> <small
+					th:text="|${appointment.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getYear()} ${appointment.day},
+					${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
+					${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)},|">
+						2015-11-16 17:00:00 Monday <br />
+				</small> <a th:href="@{'/showProfile'(userId=${appointment.student.id})}">
+						<span
+						th:text="|${appointment.student.firstName} ${appointment.student.lastName}|">Max
+							Muster</span>
+				</a> &nbsp;
+					<button id="decline" type="submit" name="decline"
+						th:value="${appointment.id}">Decline</button> &nbsp;
+					<button id="confirm" type="submit" name="confirm"
+						th:value="${appointment.id}">Confirm</button> <br />
+				</span>
+			</form>
+		</div>
+
+		<div>
+			<h2>Reserved Appointments</h2>
+			<span th:each="appointment:${pending}" th:if="${appointment != null}">
+				<small
 				th:text="|${appointment.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getYear()} ${appointment.day},
 				${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
 				${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)},|">
 					2015-11-16 17:00:00 Monday <br />
-			</small> <a th:href="@{'/showProfile'(userId=${appointment.student.id})}">
+			</small> <a th:href="@{'/showProfile'(userId=${appointment.tutor.id})}">
 					<span
-					th:text="|${appointment.student.firstName} ${appointment.student.lastName}|">Max
+					th:text="|${appointment.tutor.firstName} ${appointment.tutor.lastName}|">Max
 						Muster</span>
-			</a> &nbsp;
-				<button id="decline" type="submit" name="decline"
-					th:value="${appointment.id}">Decline</button> &nbsp;
-				<button id="confirm" type="submit" name="confirm"
-					th:value="${appointment.id}">Confirm</button> <br />
+			</a><br />
 			</span>
-		</form>
+		</div>
 
-		<h2>Past Appointments</h2>
-		<span th:each="appointment:${Past}" th:if="${appointment != null}">
+		<h2>Visited Appointments</h2>
+		<div th:each="appointment:${visited}" th:if="${appointment != null}">
+			<form id="rateAppointment" action="#" th:object="${rateTutorForm}"
+				method="post" th:action="@{/rateAppointment}"
+				th:name="rateTutorForm">
+				<small
+					th:text="|${appointment.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getYear()} ${appointment.day},
+					${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
+					${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)},|">
+					2015-11-16 17:00:00 Monday <br />
+				</small> <a th:href="@{'/showProfile'(userId=${appointment.student.id})}">
+					<span
+					th:text="|${appointment.tutor.firstName} ${appointment.tutor.lastName}|">Max
+						Muster</span>
+				</a> &nbsp; <span class="control-group"
+					th:if="${appointment.rating == null}"> <input type="number"
+					th:name="rating" th:value="*{rating}" min="0.0" max="5.0"
+					step="0.5" placeholder="4.0" required="required" />
+					<button type="submit" name="rate" th:value="${appointment.id}">rate</button>
+				</span> <span th:if="${appointment.rating != null}"
+					th:text="|Rating: ${appointment.rating}|">Rating: 4.5</span>
+			</form>
+		</div>
+
+		<h2>Given Appointments</h2>
+		<div th:each="appointment:${past}" th:if="${appointment != null}">
 			<small
-			th:text="|${appointment.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getYear()} ${appointment.day},
-				${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
-				${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)},|">
+				th:text="|${appointment.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}-${appointment.timestamp.toLocalDateTime().toLocalDate().getYear()} ${appointment.day},
+					${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
+					${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)},|">
 				2015-11-16 17:00:00 Monday <br />
-		</small> <a th:href="@{'/showProfile'(userId=${appointment.student.id})}">
+			</small> <a th:href="@{'/showProfile'(userId=${appointment.student.id})}">
 				<span
 				th:text="|${appointment.student.firstName} ${appointment.student.lastName}|">Max
 					Muster</span>
-		</a><br />
-		</span>
+			</a>
+		</div>
 	</div>
 </body>
 </html>

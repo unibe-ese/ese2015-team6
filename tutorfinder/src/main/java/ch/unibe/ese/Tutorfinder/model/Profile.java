@@ -38,6 +38,10 @@ public class Profile {
 	@NumberFormat(style=Style.CURRENCY)
 	private BigDecimal wage;
 	
+	private BigDecimal rating;
+	
+	private long countedRatings;
+	
 	
 	/* Constructors */
 	public Profile() {
@@ -89,6 +93,22 @@ public class Profile {
 
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
+	}
+
+	public BigDecimal getRating() {
+		return rating;
+	}
+
+	public void setRating(BigDecimal rating) {
+		this.rating = rating;
+	}
+
+	public long getCountedRatings() {
+		return countedRatings;
+	}
+
+	public void setCountedRatings(long countedRatings) {
+		this.countedRatings = countedRatings;
 	}
 
 	@Override

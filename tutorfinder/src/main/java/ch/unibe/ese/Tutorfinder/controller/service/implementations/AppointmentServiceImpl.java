@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
-import ch.unibe.ese.Tutorfinder.controller.service.UserService;
+import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -29,7 +29,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Autowired
 	AppointmentDao appointmentDao;
 	@Autowired
-	UserService userService;
+	ProfileService profileService;
 
 	public MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student) {
 		BigDecimal wage = tutor.getProfile().getWage();
@@ -160,6 +160,82 @@ public class AppointmentServiceImpl implements AppointmentService {
 			return appointmentDao.findOne(appointmentId);
 		}
 	}
-	
 
+	@Override
+	public List<Appointment> getPendingAppointments(User student) {
+		assert(student != null);
+		
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailability(student, Availability.RESERVED);
+		
+		Timestamp timestampNow = new Timestamp((new Date()).getTime());
+		
+		List<Appointment> newAppointments = new ArrayList<Appointment>();
+		
+		if(appointments != null) {
+			for(Appointment appointment : appointments) {
+				if(appointment != null) {
+					int compareResult = timestampNow.compareTo(appointment.getTimestamp());
+					if(compareResult <= 0)
+						newAppointments.add(appointment);
+				}
+			}
+		}
+		
+		return newAppointments;
+	}
+
+	@Override
+	public List<Appointment> getPastAppointmentsAsStudent(User student) {
+		assert(student != null);
+		
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailability(student, Availability.ARRANGED);
+		
+		Timestamp timestampNow = new Timestamp((new Date()).getTime());
+		
+		List<Appointment> visitedAppointments = new ArrayList<Appointment>();
+		
+		if(appointments != null) {
+			for(Appointment appointment : appointments) {
+				if(appointment != null) {
+					int compareResult = timestampNow.compareTo(appointment.getTimestamp());
+					if(compareResult > 0)
+						visitedAppointments.add(appointment);
+				}
+			}
+		}
+		
+		return visitedAppointments;
+	}
+	
+	@Override
+	public void rateTutorForAppointment(Long appointmentId, BigDecimal rating) {
+		assert(appointmentId != null && rating != null);
+		
+		Appointment tmpApp = appointmentDao.findOne(appointmentId);
+		tmpApp.setRating(rating);
+		
+		appointmentDao.save(tmpApp);
+		
+		List<Appointment> tmpAppList = appointmentDao.findAllByTutor(tmpApp.getTutor());
+		
+		if(tmpAppList != null) {
+			
+			BigDecimal totalRating = BigDecimal.ZERO;
+			BigDecimal countRatings = BigDecimal.ZERO;
+			
+			for(Appointment app : tmpAppList){
+				if(app.getRating() != null) {
+					totalRating = totalRating.add(app.getRating());
+					countRatings = countRatings.add(BigDecimal.ONE);
+				}
+			}
+			
+			if(!countRatings.equals(BigDecimal.ZERO)){
+				totalRating = totalRating.divide(countRatings, 1, BigDecimal.ROUND_HALF_EVEN);
+				profileService.updateRating(tmpApp.getTutor(), totalRating, countRatings);
+			}
+		}
+		
+	}
+	
 }
