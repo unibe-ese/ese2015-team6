@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
+</head>
+
+<body>
+	<div id="header" th:fragment="header">
+		<!-- Here, a logo could be placed -->
+		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">ESE
+			Tutorfinder</a>
+
+
+		<ul id="menu" sec:authorize="hasAnyRole('ROLE_TUTOR', 'ROLE_STUDENT')">
+
+			<!-- 
+    			Appointments Button
+    		-->
+			<li><a id="appointmentsButton" th:href="@{/appointments}"
+				href="appointmentsOverview.html"><span>Appointments</span></a></li>
+
+			<!-- 
+    			Edit Profile Button
+    		-->
+			<li><a id="editButton" th:href="@{/editProfile}"
+				href="updateProfile.html"><span>Edit Profile</span></a></li>
+
+			<!-- 
+	    		Show Profile Button
+			-->
+			<li><a id="showButton"
+				th:href="@{'/showProfile'(userId=${authUser.id})}"
+				href="showProfile.html"><span>Show Profile</span></a></li>
+
+
+			<!--
+				Search Button
+			 -->
+			<li><a id="searchButton" th:href="@{/findTutor}"
+				href="/findTutor.html"><span>Search</span></a></li>
+
+			<!--  
+				Logout Button
+			 -->
+			<li><a class="logout" id="logoutButton" th:href="@{/logout}"
+				href="login.html"><span>Logout</span></a></li>
+
+		</ul>
+	</div>
+
+</body>
+</html>

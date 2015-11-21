@@ -83,21 +83,13 @@ public class LoginController {
             } catch (InvalidEmailException e) {
             	result.rejectValue("email", "", e.getMessage());
             	model = new ModelAndView("login");
-            	switchPage(model);
             }
 
         } else {
         	model = new ModelAndView("login");
-        	switchPage(model);
         }   	
     	return model;
     }
-
-	private void switchPage(ModelAndView model) {
-		model.addObject("loginBoxVisibility", "hidden");
-		model.addObject("registerBoxVisibility", "visible");
-		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
-	}
     
     /**
 	 * Redirects the {@code /register} to the {@code login.html} page
@@ -115,34 +107,21 @@ public class LoginController {
 	 * 
 	 * @param error displays invalid credentials message
 	 * @param logout displays successful logout message
-	 * @return ModelAndView for Springframework
+	 * @return ModelAndView for Spring Framework
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, @RequestParam(value = "register", required = false) String register) {
-
-		String loginBoxVis = "visible";
-		String registerBoxVis = "hidden";
-		
 		ModelAndView model = new ModelAndView("login");
 		if (error != null) {
 			model.addObject("error", "Invalid username or password!");
-		}
-		
-		if (register != null){
-			loginBoxVis = "hidden";
-			registerBoxVis = "visible";
 		}
 
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
-		model.addObject("loginBoxVisibility", loginBoxVis);
-		model.addObject("registerBoxVisibility", registerBoxVis);
 		model.addObject("loginUrl", "/login");
 		model.addObject("signupForm", new SignupForm());
-		
-		model.addObject("registerCancelButtonAction", "document.getElementById('registerBox').style.visibility='hidden'; document.getElementById('loginBox').style.visibility='visible'");
 		
 		return model;
 	}

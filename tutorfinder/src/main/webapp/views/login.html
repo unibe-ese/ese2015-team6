@@ -3,112 +3,139 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
 </head>
 
 <body onload='document.loginForm.email.focus();'>
+	<div th:replace="fragments/header::header"></div>
+	<div id="wrapper">
+		<div id="sidebar"></div>
+		<div id="content">
+		<div id="title-image">
+			<img src="http://placehold.it/350x200" />
+		</div>
 
-	<div id="logo">
-		<h1>ESE Tutorfinder</h1>
-	</div>
-    <div id="infoBox">
-        Welcome to the Tutorfinder-website of Team 6.
-        Here it is possible to find a tutor for a subject you 
-        want to improve or to offer your help, if you are already experienced
-        in a subject.<br/><br/>Please register to use the website (there is no demo data)
-        
-    </div>
-    
-    
-	<div id="loginBox" style = "" th:style="'visibility: ' + ${loginBoxVisibility} + ';'">
-		<div class="error" th:if="${error != null}" th:text="${error}">Invalid username and/or password</div>
-		<div th:text="${msg}">You have been logged out</div>
+		<div id="infoBox">
+			Welcome to the Tutorfinder-website of Team 6. Here it is possible to
+			find a tutor for a subject you want to improve or to offer your help,
+			if you are already experienced in a subject.<br />
+		</div>
 
-		<form th:name='loginForm' th:action="${loginUrl}" method="post">
-			<input type='text' id="email" name='email' placeholder = "E-Mail"/><br /> 
-			<input type='password' id="password" name='password' placeholder = "*******"/><br />
-			<input id = "loginButton" name="submit" type="submit" value="Login" />
-			<button id = "registerButton" type="button" onClick="document.getElementById('registerBox').style.visibility='visible'; document.getElementById('loginBox').style.visibility='hidden'">Register</button>
 
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-		</form>
+		<div id="loginBox">
+			<div class="error" th:if="${error != null}" th:text="${error}">Invalid
+				username and/or password</div>
+			<div th:text="${msg}">You have been logged out</div>
 
-	</div>
-    
-    <div id = "registerBox" th:style="'visibility: ' + ${registerBoxVisibility} + ';'">
-	   <form action="#" th:object="${signupForm}" th:action="@{/create}"
-		th:autocomplete="off" method="post" th:name="signupForm">
-		  <fieldset>			
+			<form th:name='loginForm' th:action="${loginUrl}" method="post">
+				<input type='text' id="email" name='email' placeholder="E-Mail" /><br />
+				<input type='password' id="password" name='password'
+					placeholder="*******" /><br /> <input id="loginButton"
+					name="submit" type="submit" value="Login" />
+				<button id="registerButton" type="button"
+					onClick="showRegisterBox()">Register</button>
 
-			<div class="controls">
-				<input type="text" th:value="*{email}" th:name="email" tabindex="1"
-					maxlength="45" required="required" placeholder = "E-Mail"/>
-				<span class="error" th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid email address</span>
-			</div>
-			
-			<!-- 
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+			</form>
+
+		</div>
+
+			<div id="registerBox">
+				<form action="#" th:object="${signupForm}" th:action="@{/create}"
+					th:autocomplete="off" method="post" th:name="signupForm">
+					<fieldset>
+
+						<div class="controls">
+							<input type="text" th:value="*{email}" th:name="email"
+								tabindex="1" maxlength="45" required="required"
+								placeholder="E-Mail" /> <span class="error"
+								th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid
+								email address</span>
+						</div>
+
+						<!-- 
 				First name field
 			 -->
-			<div class="controls">
-				<input type="text" th:value="*{firstName}" th:name="firstName"
-					tabindex="2" maxlength="35" required="required" placeholder = "First Name"/>
-			</div>
+						<div class="controls">
+							<input type="text" th:value="*{firstName}" th:name="firstName"
+								tabindex="2" maxlength="35" required="required"
+								placeholder="First Name" />
+						</div>
 
-			<!-- 
+						<!-- 
 				Last name field
 			 -->
-			<div class="controls">
-				<input type="text" th:value="*{lastName}" th:name="lastName"
-					tabindex="3" maxlength="35" required="required" placeholder = "Last Name"/>
-			</div>
+						<div class="controls">
+							<input type="text" th:value="*{lastName}" th:name="lastName"
+								tabindex="3" maxlength="35" required="required"
+								placeholder="Last Name" />
+						</div>
 
-			<!-- 
+						<!-- 
 				Password field
 			 -->
-			<div class="controls">
-				<input type="password" th:value="*{password}" th:name="password"
-					tabindex="3" maxlength="35" required="required" placeholder = "Password"/>
-				<span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The length must be between 8 and 25</span>
-			</div>
-			
-			<!-- 
+						<div class="controls">
+							<input type="password" th:value="*{password}" th:name="password"
+								tabindex="3" maxlength="35" required="required"
+								placeholder="Password" /> <span class="error"
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}">The
+								length must be between 8 and 25</span>
+						</div>
+
+						<!-- 
 				Confirm password field
 			 -->
-			<div class="control-group">
-				
-				<div class="controls">
-					<input type="password" th:name="confirmPassword"
-						tabindex="4" maxlength="25" placeholder = "Confirm Password"/>
-					<span class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">
-						Invalid Input
-					</span>
-					<span class="error" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"> Passwords do not match</span>
-				</div>
-			</div>
+						<div class="control-group">
 
-			<!-- 
+							<div class="controls">
+								<input type="password" th:name="confirmPassword" tabindex="4"
+									maxlength="25" placeholder="Confirm Password" /> <span
+									class="error" th:if="${#fields.hasErrors('confirmPassword')}"
+									th:errors="*{confirmPassword}"> Invalid Input </span> <span
+									class="error" th:if="${#fields.hasErrors('global')}"
+									th:errors="*{global}"> Passwords do not match</span>
+							</div>
+						</div>
+
+						<!-- 
 				Select Tutor or student bar
 			 -->
-			<div class="controls">
+						<div class="controls">
 
-				<select th:value="*{tutor}" th:name="tutor">
-					<option th:value="false">Student</option>
-					<option th:value="true">Tutor</option>
-				</select>
+							<select th:value="*{tutor}" th:name="tutor">
+								<option th:value="false">Student</option>
+								<option th:value="true">Tutor</option>
+							</select>
+						</div>
+						<br /> <br />
+						<div class="form-actions">
+							<button type="submit" id="registerButton" class="btn btn-primary">Sign
+								up</button>
+							<button id="cancelButton" type="button" onClick="showLoginBox()">Cancel</button>
+
+
+						</div>
+					</fieldset>
+				</form>
 			</div>
-            <br/><br/>
-			<div class="form-actions">
-				<button type="submit" id = "registerButton" class="btn btn-primary">Sign up</button>
-                <button id = "cancelButton" type="button"   onClick="document.getElementById('registerBox').style.visibility='hidden'; document.getElementById('loginBox').style.visibility='visible'" th:onClick = " ${registerCancelButtonAction}">Cancel</button>
-                
-                
-			</div>
-		</fieldset>
-	</form>
-    </div>
-    
-  
+		</div>
+		<div id="sidebar"></div>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+
+	<script>
+		function showRegisterBox() {
+			document.getElementById('registerBox').style.display = 'table-cell';
+			document.getElementById('loginBox').style.display = 'none'
+		}
+
+		function showLoginBox() {
+			document.getElementById('registerBox').style.display = 'none';
+			document.getElementById('loginBox').style.display = 'table-cell'
+		}
+	</script>
 
 </body>
 </html>
