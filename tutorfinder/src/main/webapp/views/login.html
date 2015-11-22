@@ -7,7 +7,7 @@
 	href="../css/style.css" />
 </head>
 
-<body onload='document.loginForm.email.focus();'>
+<body>
 	<div th:replace="fragments/header::header"></div>
 	<div id="wrapper">
 		<div id="sidebar"></div>
@@ -25,18 +25,28 @@
 
 
 				<div id="loginBox">
-					<div class="error" th:if="${error != null}" th:text="${error}">Invalid
-						username and/or password</div>
-					<div th:text="${msg}">You have been logged out</div>
 
 					<form th:name='loginForm' th:action="${loginUrl}" method="post">
 						<fieldset>
-							<input type='text' id="email" name='email' placeholder="E-Mail" /><br />
-							<input type='password' id="password" name='password'
-								placeholder="*******" /><br /> <input id="loginButton"
-								name="submit" type="submit" value="Login" />
-							<button id="registerButton" type="button"
-								onClick="showRegisterBox()">Register</button>
+					<div th:text="${msg}">You have been logged out</div>
+						<div class="error" th:if="${error != null}" th:text="${error}">Invalid
+							username and/or password</div>
+							<p>
+								<input type='email' id="email" name='email' placeholder="E-Mail address"
+									autofocus="autofocus" />
+							</p>
+							<p>
+								<input type='password' id="password" name='password'
+									placeholder="Password" />
+							</p>
+
+							<p>
+								<input id="loginButton" name="submit" type="submit"
+									value="Login" />
+
+								<button id="registerButton" type="button"
+									onClick="showRegisterBox()">Register</button>
+							</p>
 
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
@@ -50,77 +60,56 @@
 						th:autocomplete="off" method="post" th:name="signupForm">
 						<fieldset>
 
-							<div class="controls">
-								<input type="text" th:value="*{email}" th:name="email"
+							<p>
+								<input type="email" th:value="*{email}" th:name="email"
 									tabindex="1" maxlength="45" required="required"
 									placeholder="E-Mail" /> <span class="error"
 									th:if="${#fields.hasErrors('email')}" th:errors=" *{email}">Invalid
 									email address</span>
-							</div>
+							</p>
 
-							<!-- 
-				First name field
-			 -->
-							<div class="controls">
+							<p>
 								<input type="text" th:value="*{firstName}" th:name="firstName"
 									tabindex="2" maxlength="35" required="required"
 									placeholder="First Name" />
-							</div>
+							</p>
 
-							<!-- 
-				Last name field
-			 -->
-							<div class="controls">
+							<p>
 								<input type="text" th:value="*{lastName}" th:name="lastName"
 									tabindex="3" maxlength="35" required="required"
 									placeholder="Last Name" />
-							</div>
+							</p>
 
-							<!-- 
-				Password field
-			 -->
-							<div class="controls">
+							<p>
 								<input type="password" th:value="*{password}" th:name="password"
-									tabindex="3" maxlength="35" required="required"
+									tabindex="3" maxlength="25" required="required" min="8"
 									placeholder="Password" /> <span class="error"
 									th:if="${#fields.hasErrors('password')}"
 									th:errors="*{password}">The length must be between 8 and
 									25</span>
-							</div>
+							</p>
 
-							<!-- 
-				Confirm password field
-			 -->
-							<div class="control-group">
+							<p>
+								<input type="password" th:name="confirmPassword" tabindex="4"
+									maxlength="25" required="required" min="8" placeholder="Confirm Password" /> <span
+									class="error" th:if="${#fields.hasErrors('confirmPassword')}"
+									th:errors="*{confirmPassword}"> Invalid Input </span> <span
+									class="error" th:if="${#fields.hasErrors('global')}"
+									th:errors="*{global}"> Passwords do not match</span>
+							</p>
 
-								<div class="controls">
-									<input type="password" th:name="confirmPassword" tabindex="4"
-										maxlength="25" placeholder="Confirm Password" /> <span
-										class="error" th:if="${#fields.hasErrors('confirmPassword')}"
-										th:errors="*{confirmPassword}"> Invalid Input </span> <span
-										class="error" th:if="${#fields.hasErrors('global')}"
-										th:errors="*{global}"> Passwords do not match</span>
-								</div>
-							</div>
-
-							<!-- 
-				Select Tutor or student bar
-			 -->
-							<div class="controls">
-
-								<select th:value="*{tutor}" th:name="tutor">
+							<p>
+								<label>Register as: </label> <select th:value="*{tutor}"
+									th:name="tutor">
 									<option th:value="false">Student</option>
 									<option th:value="true">Tutor</option>
 								</select>
-							</div>
-							<br /> <br />
-							<div class="form-actions">
+							</p>
+							<p>
 								<button type="submit" id="registerButton"
 									class="btn btn-primary">Sign up</button>
 								<button id="cancelButton" type="button" onClick="showLoginBox()">Cancel</button>
-
-
-							</div>
+							</p>
 						</fieldset>
 					</form>
 				</div>
@@ -140,6 +129,9 @@
 			document.getElementById('registerBox').style.display = 'none';
 			document.getElementById('loginBox').style.display = 'table-cell'
 		}
+	</script>
+	<script th:if="${switch == true}" type="text/javascript">
+		showRegisterBox()
 	</script>
 
 </body>

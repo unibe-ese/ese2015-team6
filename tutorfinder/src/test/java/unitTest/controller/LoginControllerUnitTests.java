@@ -97,75 +97,64 @@ public class LoginControllerUnitTests {
 	public void testCreate() {
 		when(mockRegisterService.saveFrom(any(SignupForm.class))).thenReturn(mockSignupForm);
 
-		ModelAndView got = controller.create(mockSignupForm, mockResult, mockRedirectAttributes);
+		controller.create(mockSignupForm, mockResult, mockRedirectAttributes);
+		
+		verify(mockRedirectAttributes, never()).addFlashAttribute(any(Object.class));
 
-		assertEquals("signupCompleted", got.getViewName());
 	}
 
 	@Test
 	public void testCreateWithInvalidEmail() {
 		when(mockRegisterService.saveFrom(any(SignupForm.class))).thenThrow(new InvalidEmailException("TestException"));
 
-		ModelAndView got = controller.create(mockSignupForm, mockResult, mockRedirectAttributes);
+		controller.create(mockSignupForm, mockResult, mockRedirectAttributes);
 
-		assertEquals("login", got.getViewName());
 		verify(mockResult).rejectValue(eq("email"), any(String.class), any(String.class));
+		verify(mockRedirectAttributes).addFlashAttribute("org.springframework.validation.BindingResult.signupForm", mockResult);
 	}
 
 	@Test
 	public void testCreateWithErrors() {
 		when(mockResult.hasErrors()).thenReturn(true);
 
-		ModelAndView got = controller.create(mockSignupForm, mockResult, mockRedirectAttributes);
+		controller.create(mockSignupForm, mockResult, mockRedirectAttributes);
 
-		assertEquals("login", got.getViewName());
 		verify(mockResult, never()).rejectValue(any(String.class), any(String.class), any(String.class));
+		verify(mockRedirectAttributes).addFlashAttribute("org.springframework.validation.BindingResult.signupForm", mockResult);
 	}
 	
 	@Test
 	public void testLogin() {
-		ModelAndView got = controller.login(null, null, null);
+		ModelAndView got = controller.login(null, null, null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
-		assertTrue(got.getModel().containsKey("signupForm"));
-		assertEquals("visible", got.getModel().get("loginBoxVisibility"));
-		assertEquals("hidden", got.getModel().get("registerBoxVisibility"));
 	}
 	
 	@Test
 	public void testLoginParamError() {
-		ModelAndView got = controller.login("error", null, null);
+		ModelAndView got = controller.login("error", null, null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
-		assertTrue(got.getModel().containsKey("signupForm"));
 		assertTrue(got.getModel().containsKey("error"));
-		assertEquals("visible", got.getModel().get("loginBoxVisibility"));
-		assertEquals("hidden", got.getModel().get("registerBoxVisibility"));
 	}
 	
 	@Test
 	public void testLoginParamLogout() {
-		ModelAndView got = controller.login(null, "logout", null);
+		ModelAndView got = controller.login(null, "logout", null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
-		assertTrue(got.getModel().containsKey("signupForm"));
 		assertTrue(got.getModel().containsKey("msg"));
-		assertEquals("visible", got.getModel().get("loginBoxVisibility"));
-		assertEquals("hidden", got.getModel().get("registerBoxVisibility"));
 	}
 	
 	@Test
 	public void testLoginParamRegister() {
-		ModelAndView got = controller.login(null, null, "register");
+		ModelAndView got = controller.login(null, null, "register", null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
-		assertTrue(got.getModel().containsKey("signupForm"));
-		assertEquals("hidden", got.getModel().get("loginBoxVisibility"));
-		assertEquals("visible", got.getModel().get("registerBoxVisibility"));
 	}
 
 	@Test

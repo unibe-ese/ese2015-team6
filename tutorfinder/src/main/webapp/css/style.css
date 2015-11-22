@@ -4,7 +4,6 @@ html {
 	
     font-family: Helvetica, sans-serif;
     font-size: 20px;
-    font-weight: bold;
     color: white;
 }
 
@@ -85,13 +84,13 @@ img {
 
 fieldset {
 	border: none;
+	font-size: small;
 }
 
 #loginBox {
 	display: table-cell;
     vertical-align: middle;
-    text-align: center;
-    margin: 20px;
+    padding-left: 100px;
 }
 
 #registerBox {
@@ -245,6 +244,5 @@ fieldset {
 	color: #800000;
 	font-weight: normal;
 	font-size: medium;
-	margin: 10px;
 	overflow: visible;
 }

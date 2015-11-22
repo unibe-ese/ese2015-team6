@@ -45,7 +45,7 @@ public class LoginControllerTest {
 				.param("password", "testtest")
 				.param("confirmPassword", "testtest")
 				.param("tutor", "true"))
-					.andExpect(status().isOk())
+					.andExpect(status().is3xxRedirection())
 					.andExpect(model().hasNoErrors());
 		}
 	
@@ -59,7 +59,7 @@ public class LoginControllerTest {
 				.param("password", "testtest")
 				.param("confirmPassword", "testtest")
 				.param("tutor", "true"))
-			.andExpect(status().isOk())
+			.andExpect(status().is3xxRedirection())
 			.andExpect(model().hasErrors())
 			.andExpect(model().errorCount(1));
 		
