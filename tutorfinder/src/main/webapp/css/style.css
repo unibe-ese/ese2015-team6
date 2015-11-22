@@ -30,6 +30,7 @@ html, body {
 #content {
 	display: inline-table;
 	height: 100%;
+	width: 100%;
 	border-style: none solid none solid;
 	border-color: #ddd;
 }
@@ -77,19 +78,22 @@ fieldset {
 }
 
 #leftSide {
-	display: inline-block;
+	display: table-cell;
 	width: 50%;
-	float: left;
+	
+	padding-left: 10%;
 }
 
 #rightSide {
-	display: inline-block;
+	display: table-cell;
 	width: 50%;
+	padding-right: 40px;
 }
 
 /*EditProfile*/
 #availability {
 	margin-top: 50px;
+	margin-bottom: 10px;
 }
 
 #results a {
@@ -167,12 +171,12 @@ nav li:hover ul {
 	list-style: none;
 }
 
-nav li ul li:FIRST-CHILD a{
-	border-radius: 0;
+nav li ul li a {
+	
 }
 
-nav li ul li:LAST-CHILD a{
-	border-radius: 0;
+nav li ul li a:hover {
+	box-shadow: none;
 }
 
 nav li:FIRST-CHILD a {
@@ -297,6 +301,11 @@ nav li a.logout:hover {
 	font-weight: normal;
 	font-size: medium;
 	overflow: visible;
+}
+
+.filler {
+	display: table-cell;
+	width: 10vw;
 }
 
 @media all and (max-width: 800px) {
