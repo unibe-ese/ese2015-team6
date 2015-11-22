@@ -11,7 +11,7 @@
 
 </head>
 <body>
-	<div th:include="header::header"></div>
+	<div th:replace="fragments/header::header"></div>
 	<div id="content">
 		<h1>Appointments</h1>
 		<h2>Confirmed Appointments</h2>
@@ -105,5 +105,6 @@
 			</a>
 		</div>
 	</div>
+	<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

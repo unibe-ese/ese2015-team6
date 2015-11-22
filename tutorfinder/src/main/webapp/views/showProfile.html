@@ -10,7 +10,7 @@
 
 <body>
 
-    <div th:include="header::header"></div>
+    <div th:replace="fragments/header::header"></div>
     
     <div id="content">
 	<!-- 
@@ -93,6 +93,6 @@
 			</form>
 		</div>
 	</div>
-	
+	<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

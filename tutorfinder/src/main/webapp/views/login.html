@@ -8,7 +8,7 @@
 </head>
 
 <body>
-	<div th:replace="fragments/header::header"></div>
+	<div th:replace="fragments/header:: (${#authorization.expression('isAuthenticated()')}? header : nouser)"></div>
 	<div id="wrapper">
 		<div id="sidebar"></div>
 		<div id="content">
