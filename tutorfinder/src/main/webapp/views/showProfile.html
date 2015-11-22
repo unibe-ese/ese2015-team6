@@ -5,93 +5,102 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Profile</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
 </head>
 
 <body>
 
-    <div th:replace="fragments/header::header"></div>
-    
-    <div id="content">
-	<!-- 
+	<div th:replace="fragments/header::header"></div>
+	<div id="wrapper">
+		<div id="sidebar"></div>
+		<div id="content">
+			<!-- 
 		Profile picture 
 	-->
-	<img th:src="@{|/img/profPic/${DisplayedUser.id}.png|}"
-		onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
-		alt="Profile picture" width="192" height="192"
-		src="../../img/default-avatar.jpg" />
-	
+			<img th:src="@{|/img/profPic/${DisplayedUser.id}.png|}"
+				onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
+				alt="Profile picture" width="192" height="192"
+				src="../../img/default-avatar.jpg" />
 
-	<!-- 
+
+			<!-- 
 		Profile name 
 	-->
-	
-	<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
-		Nachname</h1>
-		
-	<h2 th:title="|Number of ratings: ${Profile.countedRatings}|" th:if="${Profile.rating != null}" th:text="|Rating: ${Profile.rating}|">Rating: 4.5</h2>
 
-    </div>
-	
-	<!-- The following information are only shown if it is the profile from an tutor -->
-	<div class="userInfoBox" th:if="${DisplayedUser.role} == TUTOR">
-		<!-- 
-	    	Biography 
-	    -->
-		<h3>Short biography</h3>
-		<p style="width: 700px" th:text="${Profile.biography}">Lorem ipsum
-			dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-			tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-			voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-			Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-			dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-			elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-			magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-			justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-			takimata sanctus est Lorem ipsum dolor sit amet.</p>
+			<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
+				Nachname</h1>
+
+			<h2 th:title="|Number of ratings: ${Profile.countedRatings}|"
+				th:if="${Profile.rating != null}"
+				th:text="|Rating: ${Profile.rating}|">Rating: 4.5</h2>
 
 
-		<!-- 
+			<!-- The following information are only shown if it is the profile from an tutor -->
+			<div id="userInfoBox" th:if="${DisplayedUser.role} == TUTOR">
+
+				<div id="Bio">
+				<h3>Short biography</h3>
+				<p th:text="${Profile.biography}">Lorem
+					ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+					eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+					diam voluptua. At vero eos et accusam et justo duo dolores et ea
+					rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+					ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+					sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+					et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+					accusam et justo duo dolores et ea rebum. Stet clita kasd
+					gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+				</div>
+
+
+				<!-- 
 			Region 
 		-->
-		<p>
-			<b>Region:</b> <span th:text="${Profile.region}"> Bern</span>
-		</p>
+				<p>
+					<b>Region:</b> <span th:text="${Profile.region}"> Bern</span>
+				</p>
 
-		<!-- 
+				<!-- 
 			Wage 
 		-->
-		<p>
-			<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
-		</p>
-		<p>
-			<b th:if="${Subjects != null}">Teaching:</b><br /> <span
-				th:each="subject:${Subjects}" th:if="${subject != null}"> <small
-				th:text="|${subject.name} (Grade ${subject.grade})|">
-					SubjectOne (Grade 5.0)<br /> SubjectTwo (Grade 5.5)<br />
-			</small><br />
-			</span>
-		</p>
+				<p>
+					<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
+				</p>
+				<p>
+					<b th:if="${Subjects != null}">Teaching:</b><br /> <span
+						th:each="subject:${Subjects}" th:if="${subject != null}"> <small
+						th:text="|${subject.name} (Grade ${subject.grade})|">
+							SubjectOne (Grade 5.0)<br /> SubjectTwo (Grade 5.5)<br />
+					</small><br />
+					</span>
+				</p>
 
-		<div th:if = "${authUser.id!=DisplayedUser.id}">
-			<form action="#" method="post"
-				th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
-				th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
-				<input type="date" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:field="*{date}" name="date" required="required"/>
-				<!-- TODO Implement alternative picker for browsers without html5 support -->
-				<button type="submit" name="getDate">Get Appointments</button>
-				<!--<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>-->
-				<span class="error" th:if="${error_message != null}" th:text="${error_message}">Enter a valid date (yyyy-MM-dd)</span>
-				<div th:each="appointment:*{appointments}">
-					<span
-						th:text="|${appointment.timeslot}:00 Status: ${appointment.availability}|">18:00
-						Status: AVAILABLE </span>
-					<button type="submit" name="request"
-						th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
-						th:value="${appointment.timeslot}">Request</button>
+				<div th:if="${authUser.id!=DisplayedUser.id}">
+					<form action="#" method="post"
+						th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
+						th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
+						<input type="date"
+							th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"
+							th:field="*{date}" name="date" required="required" />
+						<!-- TODO Implement alternative picker for browsers without html5 support -->
+						<button type="submit" name="getDate">Get Appointments</button>
+						<!--<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>-->
+						<span class="error" th:if="${error_message != null}"
+							th:text="${error_message}">Enter a valid date (yyyy-MM-dd)</span>
+						<div th:each="appointment:*{appointments}">
+							<span
+								th:text="|${appointment.timeslot}:00 Status: ${appointment.availability}|">18:00
+								Status: AVAILABLE </span>
+							<button type="submit" name="request"
+								th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
+								th:value="${appointment.timeslot}">Request</button>
+						</div>
+					</form>
 				</div>
-			</form>
+			</div>
 		</div>
+		<div id="sidebar"></div>
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
 </body>

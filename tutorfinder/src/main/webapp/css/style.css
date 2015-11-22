@@ -223,6 +223,15 @@ nav li a.logout:hover {
 	box-shadow: 5px 5px 5px darkred inset;
 }
 
+#Bio {
+	float: right;
+}
+
+#Bio p {
+	word-wrap: break-word;
+	white-space: normal;
+}
+
 /* Timetable */
 .Table {
 	display: table;
