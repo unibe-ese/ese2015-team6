@@ -9,5 +9,7 @@ public interface UserDao extends CrudRepository<User,Long>{
 	User findByEmail(String emailAddress);
 	
 	User findById(long id);
+	
+	Iterable<User> findAllByRole(String role);
 
 }

@@ -3,17 +3,26 @@ package ch.unibe.ese.Tutorfinder.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Bill {
 	
+	@Id
+	@GeneratedValue
+	private long id;
+	
 	@ManyToOne
 	private User tutor;
 	
 	@NotNull
-	private int month;
+	private String month;
+	
+	@NotNull
+	private int monthValue;
 	
 	@NotNull
 	private int year;
@@ -34,12 +43,20 @@ public class Bill {
 		this.tutor = tutor;
 	}
 
-	public int getMonth() {
+	public String getMonth() {
 		return month;
 	}
 
-	public void setMonth(int month) {
+	public void setMonth(String month) {
 		this.month = month;
+	}
+	
+	public int getMonthValue() {
+		return monthValue;
+	}
+	
+	public void setMonthValue(int monthValue) {
+		this.monthValue = monthValue;
 	}
 
 	public int getYear() {

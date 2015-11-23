@@ -9,8 +9,18 @@
 </head>
 
 <body>
-<h1>Bill for this month:</h1>
-<h1 th:text="|${balance}|">0</h1>
+
+	<h1>Bill for this month:</h1>
+	<h1 th:text="|${balance} Fr.|">0 Fr.</h1>
+	
+	<div th:if="${Bills != null}">
+		<h1>Past Bills:</h1>
+	</div>
+	<div th:each="bill : ${Bills}" th:if="${bill != null}"> 
+		<span th:text="|${bill.year} ${bill.month} ${bill.amount} Fr.|">
+							1970 January 0</span>
+
+	</div>
 
 </body>
 </html>
