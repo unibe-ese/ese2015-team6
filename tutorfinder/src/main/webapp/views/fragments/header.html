@@ -3,12 +3,10 @@
 	xmlns:sec="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" th:href="@{/css/style.css}"
-	href="../../css/style.css" />
 </head>
 
 <body>
-	<header th:fragment="header">
+	<div th:fragment="header">
 		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">ESE
 			Tutorfinder</a>
 		<nav>
@@ -28,9 +26,9 @@
 				<li><a class="logout" th:href="@{/logout}" href="login.html">Logout</a></li>
 			</ul>
 		</nav>
-	</header>
+	</div>
 
-	<div id="header" th:fragment="nouser">
+	<div th:fragment="nouser">
 		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">ESE
 			Tutorfinder</a>
 	</div>
