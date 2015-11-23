@@ -22,7 +22,8 @@
 						<li th:if="${authUser != null}"><a
 							th:href="@{'/showProfile'(userId=${authUser.id})}"
 							href="showProfile.html">Show Profile</a></li>
-					</ul></li>
+					</ul>
+				</li>
 				<li><a th:href="@{/findTutor}" href="/findTutor.html">Search</a></li>
 				<li><a class="logout" th:href="@{/logout}" href="login.html">Logout</a></li>
 			</ul>

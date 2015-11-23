@@ -77,16 +77,17 @@ fieldset {
 	text-align: center;
 }
 
-#leftSide {
+.leftSide {
 	display: table-cell;
 	width: 50%;
 	
 	padding-left: 10%;
 }
 
-#rightSide {
+.rightSide {
 	display: table-cell;
 	width: 50%;
+	padding-left: 20px;
 	padding-right: 40px;
 }
 
@@ -107,6 +108,10 @@ fieldset {
 
 #timetableBox {
 	color: #000000;
+}
+
+#userAvatarBox {
+	padding-top: 20px;
 }
 
 /*Header*/
@@ -143,6 +148,10 @@ nav ul {
 	padding: 0;
 }
 
+nav ul li ul {
+	border-radius: unset;
+}
+
 nav ul li {
 	float: none;
 }
@@ -163,20 +172,16 @@ nav li ul {
 	display: none;
 }
 
+nav li ul li a {
+	background-color: gray;
+}
+
 nav li:hover ul {
 	display: block;
 	background-color: gray;
 	width: 130px;
 	position: absolute;
 	list-style: none;
-}
-
-nav li ul li a {
-	
-}
-
-nav li ul li a:hover {
-	box-shadow: none;
 }
 
 nav li:FIRST-CHILD a {
@@ -187,6 +192,16 @@ nav li:LAST-CHILD a {
 	border-radius: 0 5px 0 0;
 }
 
+nav li ul li:FIRST-CHILD a {
+	border-radius: unset;
+	box-shadow: unset;
+}
+
+nav li ul li:LAST-CHILD a {
+	border-radius: unset;
+	box-shadow: unset;
+}
+
 nav a {
 	display: block;
 	text-decoration: none;
@@ -194,18 +209,10 @@ nav a {
 	color: black;
 	text-align: center;
 	font-size: medium;
-	transition: .3s background-color;
+	transition: .1s box-shadow;
 }
 
 nav a:hover {
-	box-shadow: 5px 5px 5px gray inset;
-}
-
-nav li:FIRST-CHILD a:hover {
-	box-shadow: 5px 5px 5px gray inset;
-}
-
-nav li:LAST-CHILD a:hover {
 	box-shadow: 5px 5px 5px gray inset;
 }
 
@@ -223,13 +230,48 @@ nav li a.logout:hover {
 	box-shadow: 5px 5px 5px darkred inset;
 }
 
-#Bio {
-	float: right;
+#Bio h3{
+	margin-bottom: 0;
 }
 
 #Bio p {
+	margin-top: 0;
+	border: solid lightgray 3px;
 	word-wrap: break-word;
 	white-space: normal;
+	padding: 5px;
+}
+
+#timeslot {
+	display: inline-block;
+	width: 100%;
+	margin-top: 2px;
+}
+
+#timeslot label {
+	cursor: pointer;
+}
+
+#timeslot input {
+	visibility: hidden;
+}
+
+.AVAILABLE {
+	background-color: lightgreen;
+	border: solid darkgreen 1px;
+	padding: 3px;
+}
+
+.RESERVED {
+	background-color: yellow;
+	border: solid orange 1px;
+	padding: 3px;
+}
+
+.ARRANGED {
+	background-color: orange;
+	border: solid red 1px;
+	padding: 3px;
 }
 
 /* Timetable */
@@ -289,12 +331,11 @@ nav li a.logout:hover {
 .white_content {
 	display: none;
 	position: fixed;
-	top: 50%;
+	top: 5%;
+	bottom: 5%;
 	left: 50%;
 	width: 450px; /* adjust as per your needs */
-	height: 380px; /* adjust as per your needs */
 	margin-left: -225px; /* negative half of width above */
-	margin-top: -190px; /* negative half of height above */
 	padding: 13px;
 	background-color: white;
 	z-index: 1002;

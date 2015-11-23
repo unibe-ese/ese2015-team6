@@ -15,7 +15,7 @@
 	<div id="wrapper">
 		<div id="sidebar"></div>
 		<div id="content">
-			<div id="leftSide">
+			<div class="leftSide">
 				<!-- 
 		ProfilePicture form
 		Shows the actual picture and allows the user to upload an new picture
@@ -88,10 +88,7 @@
 					Timetable
 				-->
 							<div class="Table">
-								<div class="Title">
-									<p>Timetable for availability</p>
-								</div>
-								<div class="Heading" id="timeTable">
+								<div class="Heading">
 									<div class="Row">
 										<div class="Cell">Hour</div>
 										<div class="Cell">MON</div>
@@ -129,7 +126,7 @@
 				<div id="fade" class="black_overlay"
 					onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'"></div>
 			</div>
-			<div id="rightSide">
+			<div class="rightSide">
 				<form id="userInfoBox" action="#" th:object="${updateProfileForm}"
 					th:action="@{/update}" th:name="updateProfileForm"
 					th:autocomplete="off" method="post">
