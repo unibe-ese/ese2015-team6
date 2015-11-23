@@ -156,12 +156,5 @@ public class LoginControllerUnitTests {
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
 	}
-
-	@Test
-	public void testAccessDenied() {
-		ModelAndView got = controller.accessDenied(mockPrincipal);
-
-		assertEquals("403", got.getViewName());
-	}
 	
 }

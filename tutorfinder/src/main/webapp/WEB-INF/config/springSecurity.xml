@@ -25,9 +25,6 @@
 		<intercept-url pattern="/timetable" access="hasAnyRole('ROLE_TUTOR')" />
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_STUDENT','ROLE_TUTOR')" />
 
-		<!-- access denied page -->
-		<access-denied-handler error-page="/403" />
-
 		<form-login login-page="/login" 
 			default-target-url="/success"
 			authentication-failure-url="/login?error" 

@@ -1,7 +1,5 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -85,22 +83,6 @@ public class LoginController {
 	public String success() {
 		return "redirect:findTutor";
 	
-	}
-
-	/**
-	 * Displays custom access denied page with optional message displaying username
-	 * 
-	 * @param user authenticated {@link Principal} user object 
-	 * @return
-	 */
-	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView accessDenied(Principal user) {
-	
-		ModelAndView model = new ModelAndView("403");
-		if (user != null) {
-			model.addObject("msg", "Name: " + user.getName());
-		}
-		return model;
 	}
 
 	/**
