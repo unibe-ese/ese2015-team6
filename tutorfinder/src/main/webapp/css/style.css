@@ -1,3 +1,8 @@
+@import url("/css/menu.css");
+@import url("/css/timetable.css");
+@import url("/css/timeslots.css");
+@import url("/css/below800.css") (max-width: 800px) ;
+
 html, body {
 	display: table;
 	height: 100vh;
@@ -130,217 +135,22 @@ fieldset {
 	text-decoration: none;
 }
 
-nav {
-	float: right;
-	position: relative;
-	margin-top: 50px;
-	margin-right: 10px;
-	font-size: 0;
-}
-
-nav ul {
-	background: white;
-	backgound: rgba(255,255,255,0);
-	border-radius: 5px 5px 0 0;
-	list-style: none;
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-}
-
-nav ul li ul {
-	border-radius: unset;
-}
-
-nav ul li {
-	float: none;
-}
-
-nav ul a {
-	white-space: nowrap;
-}
-
-nav li {
-	display: inline-block;
-	width: 130px;
-	border-bottom: none;
-	height: 30px;
-	line-height: 30px;
-}
-
-nav li ul {
-	display: none;
-}
-
-nav li ul li a {
-	background-color: gray;
-}
-
-nav li:hover ul {
-	display: block;
-	background-color: gray;
-	width: 130px;
-	position: absolute;
-	list-style: none;
-}
-
-nav li:FIRST-CHILD a {
-	border-radius: 5px 0 0 0;
-}
-
-nav li:LAST-CHILD a {
-	border-radius: 0 5px 0 0;
-}
-
-nav li ul li:FIRST-CHILD a {
-	border-radius: unset;
-	box-shadow: unset;
-}
-
-nav li ul li:LAST-CHILD a {
-	border-radius: unset;
-	box-shadow: unset;
-}
-
-nav a {
-	display: block;
-	text-decoration: none;
-	background-color: #f0f0f0;
-	color: black;
-	text-align: center;
-	font-size: medium;
-	transition: .1s box-shadow;
-}
-
-nav a:hover {
-	box-shadow: 5px 5px 5px gray inset;
-}
-
-a.active {
-	background-color: #fff;
-	color: #444;
-}
-
-a.logout {
-	color: white;
-	background-color: red;
-}
-
-nav li a.logout:hover {
-	box-shadow: 5px 5px 5px darkred inset;
-}
-
 #Bio h3{
 	margin-bottom: 0;
 }
 
 #Bio p {
 	margin-top: 0;
+	display: inline-block;
 	border: solid lightgray 3px;
-	word-wrap: break-word;
 	white-space: normal;
 	padding: 5px;
 }
 
-#timeslot {
-	display: inline-block;
-	width: 100%;
-	margin-top: 2px;
-}
 
-#timeslot label {
-	cursor: pointer;
-}
-
-#timeslot input {
-	visibility: hidden;
-}
-
-.AVAILABLE {
-	background-color: lightgreen;
-	border: solid darkgreen 1px;
-	padding: 3px;
-}
-
-.RESERVED {
-	background-color: yellow;
-	border: solid orange 1px;
-	padding: 3px;
-}
-
-.ARRANGED {
-	background-color: orange;
-	border: solid red 1px;
-	padding: 3px;
-}
 
 /* Timetable */
-.Table {
-	display: table;
-}
 
-.Title {
-	display: table-caption;
-	text-align: center;
-	font-weight: bold;
-	font-size: larger;
-}
-
-.Heading {
-	display: table-header-group;
-	font-weight: bold;
-	text-align: center;
-}
-
-.Body {
-	display: table-row-group;
-}
-
-.Row {
-	display: table-row;
-}
-
-.Cell {
-	display: table-cell;
-	border: solid;
-	border-width: thin;
-	padding-left: 5px;
-	padding-right: 5px;
-	text-align: center;
-}
-
-.Button {
-	float: right;
-	padding: 5px;
-}
-
-.black_overlay {
-	display: none;
-	position: fixed;
-	top: 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: black;
-	z-index: 1001;
-	-moz-opacity: 0.5;
-	opacity: .50;
-	filter: alpha(opacity = 50);
-}
-
-.white_content {
-	display: none;
-	position: fixed;
-	top: 5%;
-	bottom: 5%;
-	left: 50%;
-	width: 450px; /* adjust as per your needs */
-	margin-left: -225px; /* negative half of width above */
-	padding: 13px;
-	background-color: white;
-	z-index: 1002;
-	overflow: auto;
-}
 
 .error {
 	display: inline-block;
@@ -353,17 +163,35 @@ nav li a.logout:hover {
 	overflow: visible;
 }
 
+#registerBox .error {
+	display: inline-block;
+	padding: 2px;
+	background-color: #ff8080;
+	border: solid 2px red;
+	color: #800000;
+	font-weight: normal;
+	font-size: smaller;
+	overflow: visible;
+}
+
 .filler {
 	display: table-cell;
 	width: 10vw;
 }
 
-@media all and (max-width: 800px) {
-	#title-image img {
-		width: 100%;
-		height: auto;
-	}
-	#sidebar {
-		display: none;
-	}
+.breakable {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }

@@ -1,0 +1,99 @@
+nav {
+	float: right;
+	position: relative;
+	margin-top: 50px;
+	margin-right: 9.5%;
+	font-size: 0;
+}
+
+nav ul {
+	background: white;
+	backgound: rgba(255,255,255,0);
+	border-radius: 5px 5px 0 0;
+	list-style: none;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li ul {
+	border-radius: unset;
+}
+
+nav ul li {
+	float: none;
+}
+
+nav ul a {
+	white-space: nowrap;
+}
+
+nav li {
+	display: inline-block;
+	width: 130px;
+	border-bottom: none;
+	height: 30px;
+	line-height: 30px;
+}
+
+nav li ul {
+	display: none;
+}
+
+nav li ul li a {
+	background-color: gray;
+}
+
+nav li:hover ul {
+	display: block;
+	background-color: gray;
+	width: 130px;
+	position: absolute;
+	list-style: none;
+}
+
+nav li:FIRST-CHILD a {
+	border-radius: 5px 0 0 0;
+}
+
+nav li:LAST-CHILD a {
+	border-radius: 0 5px 0 0;
+}
+
+nav li ul li:FIRST-CHILD a {
+	border-radius: unset;
+	box-shadow: unset;
+}
+
+nav li ul li:LAST-CHILD a {
+	border-radius: unset;
+	box-shadow: unset;
+}
+
+nav a {
+	display: block;
+	text-decoration: none;
+	background-color: #f0f0f0;
+	color: black;
+	text-align: center;
+	font-size: medium;
+	transition: .1s box-shadow;
+}
+
+nav a:hover {
+	box-shadow: 5px 5px 5px gray inset;
+}
+
+a.active {
+	background-color: #fff;
+	color: #444;
+}
+
+a.logout {
+	color: white;
+	background-color: red;
+}
+
+nav li a.logout:hover {
+	box-shadow: 5px 5px 5px darkred inset;
+}
