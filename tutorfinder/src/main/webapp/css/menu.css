@@ -1,55 +1,56 @@
-nav {
+header > nav > ul {
 	float: right;
-	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	
+	border-radius: 5px 5px 0 0;
+	
 	margin-top: 50px;
 	margin-right: 9.5%;
-	font-size: 0;
 }
 
 nav ul {
-	background: white;
-	backgound: rgba(255,255,255,0);
-	border-radius: 5px 5px 0 0;
 	list-style: none;
-	overflow: hidden;
+	border-radius: 5px 5px 0 0;
 	margin: 0;
 	padding: 0;
 }
 
-nav ul li ul {
-	border-radius: unset;
-}
-
-nav ul li {
-	float: none;
-}
-
-nav ul a {
-	white-space: nowrap;
-}
-
 nav li {
-	display: inline-block;
+	border-radius: 5px 5px 0 0;
+	text-align: center;
 	width: 130px;
-	border-bottom: none;
-	height: 30px;
+	
 	line-height: 30px;
 }
 
-nav li ul {
-	display: none;
+nav ul ul {
+	width: 130px;
+	
+	position: absolute;
+	z-index: 100;
+	
+	height: 0;
+	overflow: hidden;
+	
+	transition: height .3s;
 }
 
-nav li ul li a {
-	background-color: gray;
+nav ul li ul {
+	border-radius: 0 0 5px 5px;
+}
+
+nav ul ul a {
+	background-color: lightgray;
+	font-size: medium;
+}
+
+nav ul ul li:hover {
+	text-decoration: underline;
 }
 
 nav li:hover ul {
-	display: block;
-	background-color: gray;
-	width: 130px;
-	position: absolute;
-	list-style: none;
+	height: 60px;
 }
 
 nav li:FIRST-CHILD a {

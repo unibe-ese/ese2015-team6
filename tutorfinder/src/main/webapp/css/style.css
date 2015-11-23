@@ -1,7 +1,14 @@
 @import url("/css/menu.css");
 @import url("/css/timetable.css");
 @import url("/css/timeslots.css");
-@import url("/css/below800.css") (max-width: 800px) ;
+@import url("/css/below800.css") (max-width: 800px);
+
+* {margin: 0;padding: 0;outline: none;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+*:after, *:before { -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section {  display: block;}
+html {font-size: 100%;height: auto !important;height: 100%;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;}
+.clear {display: block;	}
+.clear::after {clear: both;content: ".";display: block;height: 1px;visibility: hidden;}
 
 html, body {
 	display: table;
@@ -10,6 +17,12 @@ html, body {
 	margin: 0;
 	font-family: Helvetica, sans-serif;
 	font-size: 20px;
+}
+
+header {
+	display: table-row; background-color : gray;
+	height: 80px;
+	background-color: gray;
 }
 
 #footer {
@@ -117,13 +130,6 @@ fieldset {
 
 #userAvatarBox {
 	padding-top: 20px;
-}
-
-/*Header*/
-#header {
-	display: table-row; background-color : gray;
-	height: 80px;
-	background-color: gray;
 }
 
 .headerLogo {

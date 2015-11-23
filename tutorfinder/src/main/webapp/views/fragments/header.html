@@ -8,7 +8,7 @@
 </head>
 
 <body>
-	<div id="header" th:fragment="header">
+	<header th:fragment="header">
 		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">ESE
 			Tutorfinder</a>
 		<nav>
@@ -28,7 +28,7 @@
 				<li><a class="logout" th:href="@{/logout}" href="login.html">Logout</a></li>
 			</ul>
 		</nav>
-	</div>
+	</header>
 
 	<div id="header" th:fragment="nouser">
 		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">ESE
