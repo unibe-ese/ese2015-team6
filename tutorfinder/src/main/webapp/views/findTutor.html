@@ -13,47 +13,42 @@
 		<div id="sidebar"></div>
 		<div id="content">
 
-			<div id="search">
+			<div id="search" class="full">
 				<form action="#" th:object="${findTutorForm}" th:action="@{/submit}"
 					th:autocomplete="off" method="post" th:name="findTutorForm">
 					<fieldset>
-						<legend>Enter subject you need help with:</legend>
-
-						<label class="control-label" for="subject">Subject:</label>
-						<div class="controls">
+						<div>
 							<input type="text" th:name="subject" tabindex="2" maxlength="45"
-								required="required" />
-						</div>
-
-						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Search</button>
+								required="required" /> <span>
+								<button type="submit" class="btn btn-primary">Search</button>
+							</span>
 						</div>
 					</fieldset>
 				</form>
-			</div>
 
-			<div id="results" th:if="${param.q != null}">
-				<h1>
-					Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
-				</h1>
-				<div th:each="foundTutor : ${Result}" th:if="${foundTutor != null}">
-					<a th:href="@{'/showProfile'(userId=${foundTutor.key.id})}"> <img
-						th:src="@{|/img/profPic/${foundTutor.key.id}.png|}"
-						onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
-						alt="Profile picture" width="192" height="192"
-						src="../../img/default-avatar.jpg" /> <br /> <span
-						th:text="|${foundTutor.key.firstName} ${foundTutor.key.lastName}|">
-							Max Muster</span> <span
-						th:title="|Number of ratings: ${foundTutor.key.profile.countedRatings}|"
-						th:if="${foundTutor.key.profile.rating != null}"
-						th:text="|- rating: ${foundTutor.key.profile.rating}|">rating:
-							4.5</span> <span th:each="subject : ${foundTutor.value}"> <br />
-							<span th:if="${subject != null}"
-							th:text="|${subject.name} (Grade ${subject.grade})|">
-								Subject (Grade 5.0)</span>
-					</span>
+				<div id="results" th:if="${param.q != null}">
+					<h1>
+						Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
+					</h1>
+					<div class="result" th:each="foundTutor : ${Result}" th:if="${foundTutor != null}">
+						<a th:href="@{'/showProfile'(userId=${foundTutor.key.id})}"> <img
+							th:src="@{|/img/profPic/${foundTutor.key.id}.png|}"
+							onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
+							alt="Profile picture" width="192" height="192"
+							src="../../img/default-avatar.jpg" /> <br /> <span
+							th:text="|${foundTutor.key.firstName} ${foundTutor.key.lastName}|">
+								Max Muster</span> <span
+							th:title="|Number of ratings: ${foundTutor.key.profile.countedRatings}|"
+							th:if="${foundTutor.key.profile.rating != null}"
+							th:text="|- rating: ${foundTutor.key.profile.rating}|">rating:
+								4.5</span> <span th:each="subject : ${foundTutor.value}"> <br />
+								<span th:if="${subject != null}"
+								th:text="|${subject.name} (Grade ${subject.grade})|">
+									Subject (Grade 5.0)</span>
+						</span>
 
-					</a>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>

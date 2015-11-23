@@ -58,6 +58,10 @@ header {
 	height: 100%;
 }
 
+#search {
+	padding-top: 10px;
+}
+
 /* Login and Register */
 #title-image {
 	display: table-row;
@@ -109,6 +113,13 @@ fieldset {
 	padding-right: 40px;
 }
 
+.full {
+	display: table-cell;
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
 /*EditProfile*/
 #availability {
 	margin-top: 50px;
@@ -153,7 +164,10 @@ fieldset {
 	padding: 5px;
 }
 
-
+.result {
+	display: inline-block;
+	margin-right: 10px;
+}
 
 /* Timetable */
 
@@ -178,11 +192,6 @@ fieldset {
 	font-weight: normal;
 	font-size: smaller;
 	overflow: visible;
-}
-
-.filler {
-	display: table-cell;
-	width: 10vw;
 }
 
 .breakable {
