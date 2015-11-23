@@ -83,13 +83,18 @@ public class BillServiceImpl implements BillService {
 		Iterable<User> tutors = userDao.findAllByRole(ConstantVariables.TUTOR);
 		
 		for(User tutor : tutors) {
-			createLastMonthsBill(tutor);
+			createLastMonthsBill(tutor, LocalDate.now());
 		}
 		
 	}
 
-	private void createLastMonthsBill(User tutor) {
-		LocalDate tmpDate = LocalDate.now();
+	/**
+	 * calculates the previous month for a given Date and saves the bill for
+	 * a given User for that month in the database
+	 * @param tutor
+	 * @param tmpDate
+	 */
+	private void createLastMonthsBill(User tutor, LocalDate tmpDate) {
 		Bill tmpBill = new Bill();
 
 		int monthValue = tmpDate.getMonthValue();
@@ -124,7 +129,7 @@ public class BillServiceImpl implements BillService {
 	 * @param monthValue integer representation of a month, must be between 1 and 12
 	 * @return String with the months name corresponding to the given integer
 	 */
-	public String getMonth(int monthValue) {
+	private String getMonth(int monthValue) {
 		assert(monthValue >= 1);
 		assert(monthValue <= 12);
 	    return new DateFormatSymbols().getMonths()[monthValue-1];

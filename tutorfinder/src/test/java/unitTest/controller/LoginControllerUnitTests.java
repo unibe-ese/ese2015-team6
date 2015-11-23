@@ -68,7 +68,7 @@ public class LoginControllerUnitTests {
 	public void testHome() {
 		String got = controller.home();
 
-		assertTrue(!got.isEmpty());
+		assertTrue(got.isEmpty());
 	}
 	
 	@Test
