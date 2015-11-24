@@ -1,7 +1,10 @@
 package ch.unibe.ese.Tutorfinder.model.dao;
 
-import ch.unibe.ese.Tutorfinder.model.User;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
+
+import ch.unibe.ese.Tutorfinder.model.User;
 
 
 public interface UserDao extends CrudRepository<User,Long>{
@@ -10,6 +13,6 @@ public interface UserDao extends CrudRepository<User,Long>{
 	
 	User findById(long id);
 	
-	Iterable<User> findAllByRole(String role);
+	List<User> findAllByRole(String role);
 
 }

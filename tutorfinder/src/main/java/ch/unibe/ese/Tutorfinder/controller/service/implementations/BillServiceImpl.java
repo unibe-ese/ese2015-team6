@@ -70,7 +70,7 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public Iterable<Bill> getBills(User user) {
+	public List<Bill> getBills(User user) {
 		assert(user != null);
 		
 		return billDao.findAllByTutor(user);
@@ -80,7 +80,7 @@ public class BillServiceImpl implements BillService {
 	@Scheduled(cron="0 0 1 1 * ?") //execute method first of every month
 	public void updateMonthlyBills() {
 		
-		Iterable<User> tutors = userDao.findAllByRole(ConstantVariables.TUTOR);
+		List<User> tutors = userDao.findAllByRole(ConstantVariables.TUTOR);
 		
 		for(User tutor : tutors) {
 			createLastMonthsBill(tutor, LocalDate.now());
@@ -96,17 +96,11 @@ public class BillServiceImpl implements BillService {
 	 */
 	private void createLastMonthsBill(User tutor, LocalDate tmpDate) {
 		Bill tmpBill = new Bill();
-
+		
+		tmpDate = tmpDate.minusMonths(1);
 		int monthValue = tmpDate.getMonthValue();
 		int year = tmpDate.getYear();
-		
-		if(monthValue == 1) {
-			monthValue = 12;
-			year -= 1;
-		} else {
-			monthValue -= 1;
-		}
-		
+
 		List<Appointment> tmpList = appointmentService.getAppointmentsForMonthAndYear(tutor, Availability.ARRANGED,
 				monthValue, year);
 		

@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import ch.unibe.ese.Tutorfinder.model.Bill;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -18,9 +19,9 @@ public interface BillService {
 	/**
 	 * Loads and returns all {@link Bill}s for a given {@link User} from the database
 	 * @param user whose bills should be returned
-	 * @return Iterable of {@link Bill}s of the given {@link User}
+	 * @return List of {@link Bill}s of the given {@link User}
 	 */
-	public Iterable<Bill> getBills(User user); 
+	public List<Bill> getBills(User user); 
 	
 	/**
 	 * updates the bills for the previous month
