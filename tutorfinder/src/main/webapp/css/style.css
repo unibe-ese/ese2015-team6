@@ -1,6 +1,7 @@
 @import url("/css/menu.css");
 @import url("/css/timetable.css");
 @import url("/css/timeslots.css");
+@import url("/css/pikaday.css");
 @import url("/css/below800.css") (max-width: 800px);
 
 * {margin: 0;padding: 0;outline: none;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}

@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org">
+	xmlns:sec="http://www.thymeleaf.org" class="no-js">
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Profile</title>
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
+<script th:src="@{/js/modernizr-custom.js}"></script>
+<script th:src="@{/js/moment.js}"></script>
+<script th:src="@{/js/pikaday.js}"></script>
+
+<script type="text/javascript">
+function datepicker() {
+	if (!Modernizr.inputtypes.date) {
+		var picker = new Pikaday({ 
+			field: document.getElementById('date'), 
+			firstDay: 1,
+			format: 'YYYY-MM-DD',
+			minDate: moment().toDate()
+		});
+	}	
+};
+</script>
+
 </head>
 
-<body lang="en">
+<body lang="en" onload="datepicker()">
 
 	<header th:include="fragments/header::header"></header>
 	<div id="wrapper">
@@ -67,29 +84,29 @@
 					<form action="#" method="post"
 						th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
 						th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
-						
+
 						<fieldset>
-						<legend>Make an Appointment:</legend>
-						<input type="date"
-							th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"
-							th:field="*{date}" name="date" required="required" />
-						<!-- TODO Implement alternative picker for browsers without html5 support -->
-						<button type="submit" name="getDate">Show Availability</button>
-						<!--<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>-->
-						<div id="timeslots">
-						<span class="error" th:if="${error_message != null}"
-							th:text="${error_message}">Enter a valid date (yyyy-MM-dd)</span>
-						<div th:each="appointment:*{appointments}">
-							<label id="timeslot"
-								th:attr="title=${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE ? 'Click to send a request':''}">
-								<span th:class="${appointment.availability}"
-								th:text="|${appointment.timeslot}:00 - ${(appointment.timeslot + 1)%24}:00|">18:00
-									- 19:00 </span> <input type="submit" name="request"
-								th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
-								th:value="${appointment.timeslot}" />
-							</label>
-						</div>
-						</div>
+							<legend>Make an Appointment:</legend>
+							<input type="date" id="date"
+								th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"
+								th:field="*{date}" name="date" required="required" />
+							<button type="submit" name="getDate">Show Availability</button>
+							<!--<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>-->
+							<div id="timeslots">
+								<span class="error" th:if="${error_message != null}"
+									th:text="${error_message}">Enter a valid date
+									(yyyy-MM-dd)</span>
+								<div th:each="appointment:*{appointments}">
+									<label id="timeslot"
+										th:attr="title=${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE ? 'Click to send a request':''}">
+										<span th:class="${appointment.availability}"
+										th:text="|${appointment.timeslot}:00 - ${(appointment.timeslot + 1)%24}:00|">18:00
+											- 19:00 </span> <input type="submit" name="request"
+										th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
+										th:value="${appointment.timeslot}" />
+									</label>
+								</div>
+							</div>
 						</fieldset>
 					</form>
 				</div>
