@@ -50,7 +50,6 @@ public class SubjectServiceImpl implements SubjectService {
 		List<Subject> subjects = new ArrayList<Subject>();
 		List<Row> rowList = updateSubjectsForm.getRows();
 
-		// TODO Refactor: This could be in a separate class
 		for (Row row : rowList) {
 			String name = row.getSubject();
 			if (name != null) {
@@ -65,7 +64,6 @@ public class SubjectServiceImpl implements SubjectService {
 			subjectDao.save(subjects);
 		} catch (DataIntegrityViolationException e) {
 			subjectDao.save(tmpSubjList);
-			// TODO Inject some error message into form or similar
 			throw new InvalidSubjectException("The same subject can't be added twice");
 		}
 		updateSubjectsForm.setId(user.getId());
