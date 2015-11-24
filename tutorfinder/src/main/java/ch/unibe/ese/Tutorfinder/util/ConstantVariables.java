@@ -14,20 +14,20 @@ public class ConstantVariables {
 	
 	public static final int PASSWORD_MAX_LENGTH = 25;
 	
-	public static final String PASSWORD_ERRORMESSAGE = "Enter a password with a length between {min} and {max} characters";
+	public static final String PASSWORD_ERRORMESSAGE = "Please enter a password with a length between {min} and {max} characters!";
 	
-	public static final String CONFIRMPASSWORD_ERRORMESSAGE = "Password and password confirmation do not match";
+	public static final String CONFIRMPASSWORD_ERRORMESSAGE = "Password and password confirmation do not match!";
 	
 	/* Wage constants */
 	public static final int WAGE_VALUE = 0;
 	
-	public static final String WAGE_ERRORMESSAGE = "The wage must be positive";
+	public static final String WAGE_ERRORMESSAGE = "The wage must be positive!";
 	
 	
 	/* Email constants */
 	public static final String EMAIL_REGEX_PATTERN = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 	
-	public static final String EMAIL_ERRORMESSAGE = "Enter a valid email address";
+	public static final String EMAIL_ERRORMESSAGE = "Please enter a valid email address!";
 	
 	/* Tutor or Student */
 	public static final String TUTOR = "TUTOR";
@@ -38,6 +38,17 @@ public class ConstantVariables {
 	public static final int TIMESLOTS = 24;
 
 	public static final int DAYS = 7;
+	
+	/* Message constants */
+	public static final String SUBJECT_ERRORMESSAGE = "Please enter a subject!";
+	
+	public static final String MESSAGE_ERRORMESSAGE = "Please enter a message!";
+	
+	public static final String INBOX = "inbox";
+	
+	public static final String OUTBOX = "outbox";
+	
+	public static final String TRASH = "trash";
 	
 }
 

@@ -43,6 +43,9 @@ public class Message {
 	private User receiver;
 
 	@NotNull
+	private String subject;
+	
+	@NotNull
 	@Column(length = 1048)
 	private String message;
 
@@ -81,6 +84,14 @@ public class Message {
 
 	public void setReceiver(User receiver) {
 		this.receiver = receiver;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	public String getMessage() {
