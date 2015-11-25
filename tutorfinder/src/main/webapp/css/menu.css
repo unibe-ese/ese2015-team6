@@ -1,16 +1,15 @@
 nav {
-	height: 85px;
+	height: 85px; /*header height*/
 	margin-right: 10%;
 }
 
-nav > ul {
+nav>ul {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-end;
 	align-items: flex-end;
 	margin: 0;
 	padding: 0;
-	
 	height: 100%;
 }
 
@@ -18,34 +17,70 @@ nav ul {
 	list-style: none;
 }
 
-nav > ul > li {
+/* ---------- First menu level ---------- */
+nav>ul>li {
 	flex: 0 1 auto;
 	margin: 0;
 	padding: 0;
-	
 	position: relative;
 }
 
-nav > ul > li > a {
+nav>ul>li>a {
+	position: relative;
 	color: #ccc;
 	padding: 0 24px;
-	
 	border-left: solid thin lightgray;
-	
 	line-height: 56px;
 	text-decoration: none;
+	color: #ccc;
+	transition: color .3s;
 }
 
-nav > ul > li ul > li:hover a {
+/* ---------- First level animation ---------- */
+nav>ul>li>a:hover {
+	color: white;
+}
+
+nav>ul>li>a:before {
+	content: "";
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	width: 80%;
+	height: 1px;
+	bottom: -1px;
+	background-color: lightgray;
+	visibility: hidden;
+	-webkit-transform: scaleX(0);
+	transform: scaleX(0);
+	-webkit-transition: all 0.3s ease-in-out 0s;
+	transition: all 0.3s ease-in-out 0s;
+}
+
+nav>ul>li>a:hover:before {
+	visibility: visible;
+	-webkit-transform: scaleX(1);
+	transform: scaleX(1);
+}
+
+/*Dropdown animation*/
+nav>ul>li ul>li:hover a {
 	background-color: darkgrey;
-	color: white;	
+	color: white;
+}
+
+nav>ul>li ul>li:hover a {
+	background-color: darkgrey;
+	color: white;
 }
 
 .logout:hover {
 	background-color: red;
 }
 
-nav > ul > li ul a {
+nav>ul>li ul a {
 	display: block;
 	padding: 5px;
 	padding-bottom: 6px;
@@ -53,32 +88,29 @@ nav > ul > li ul a {
 	text-decoration: none;
 }
 
-nav > ul > li > div {
+nav>ul>li>div {
 	transition: height 0.3s;
 	background-color: lightgray;
 }
 
-nav > ul > li a + div {
+nav>ul>li a+div {
 	position: absolute;
 	right: 20px;
-	
 	height: 0;
 	overflow: hidden;
-	
 	text-align: right;
-	
-	box-shadow: 0 3px 5px rgba(0,0,0,.5);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, .5);
 }
 
-nav > ul > li a + div > ul > li {
+nav>ul>li a+div>ul>li {
 	position: relative;
 }
 
-nav > ul > li:hover > div {
+nav>ul>li:hover>div {
 	height: 105px;
 }
 
-nav > ul > li > a > .caret {
+nav>ul>li>a>.caret {
 	display: inline-block;
 	align-self: center;
 	margin-left: 4px;
@@ -89,4 +121,4 @@ nav > ul > li > a > .caret {
 	height: 0;
 	width: 0;
 	vertical-align: middle;
-  }
+}

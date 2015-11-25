@@ -11,7 +11,7 @@
 		<nav role="navigation">
 			<ul>
 				<li><a th:href="@{/findTutor}" href="/findTutor.html">Search</a></li>
-				<li><a sec:authentication="name" th:href="@{'/showProfile'}" href="showProfile.html"> example@test.ch <span class="caret"></span></a>
+				<li><a th:href="@{'/showProfile'}" href="showProfile.html"><span sec:authentication="name">example@test.ch</span><span class="caret"></span></a>
 					<div>
 						<ul>
 							<li><a th:href="@{'/editProfile'}" href="editProfile.html">Edit Profile</a></li>
