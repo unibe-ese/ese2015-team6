@@ -5,6 +5,7 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -155,6 +156,40 @@ public class ProfileServiceImplTest {
 				
 		//WHEN
 		profileService.getProfileById(new Long(1));
+	}
+	
+	@Test
+	public void testUpdateRating() {
+		BigDecimal testRating = new BigDecimal(4.5);
+		BigDecimal countedRatings = BigDecimal.ONE;
+		when(mockUser.getProfile()).thenReturn(mockProfile);
+		when(profileDao.save(mockProfile)).thenReturn(mockProfile);
+		
+		
+		profileService.updateRating(mockUser, testRating, countedRatings);
+		
+		verify(mockProfile).setRating(testRating);
+		verify(mockProfile).setCountedRatings(countedRatings.longValue());
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testUpdateRatingWhenRatingNull() {
+		profileService.updateRating(mockUser, null, BigDecimal.ONE);
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testUpdateRatingWhenTutorNull() {
+		profileService.updateRating(null, new BigDecimal(4.5), BigDecimal.ONE);
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testUpdateRatingWhenCountedRatingNull() {
+		profileService.updateRating(mockUser, new BigDecimal(4.5), null);
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testUpdateRatingWhenCountedRatingZero() {
+		profileService.updateRating(mockUser, new BigDecimal(4.5), BigDecimal.ZERO);
 	}
 
 }

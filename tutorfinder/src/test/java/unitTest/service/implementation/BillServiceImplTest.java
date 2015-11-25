@@ -35,7 +35,6 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/test.xml" })
 public class BillServiceImplTest {
 	

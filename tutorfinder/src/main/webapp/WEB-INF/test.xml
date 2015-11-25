@@ -21,6 +21,9 @@
         <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.TimetableDao"/>
     </bean>
     <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="ch.unibe.ese.Tutorfinder.model.dao.BillDao"/>
+    </bean>
+    <bean class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="java.security.Principal"/>
     </bean>
     <bean class="org.mockito.Mockito" factory-method="mock">
@@ -36,6 +39,6 @@
     <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.SubjectServiceImpl" />
     <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.TimetableServiceImpl" />
     <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.UserServiceImpl" />
-    
+    <bean class="ch.unibe.ese.Tutorfinder.controller.service.implementations.BillServiceImpl" />
 
 </beans>

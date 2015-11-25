@@ -3,7 +3,11 @@ package unitTest.service.implementation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -29,6 +33,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
+import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
@@ -57,6 +62,8 @@ public class AppointmentServiceImplTest {
 	private AppointmentPlaceholder mockAppointmentPlaceholder;
 	@Mock
 	private Timetable mockTimetable;
+	@Mock
+	private ProfileService profileService;
 	
 	private ArrayList<Appointment> appList = new ArrayList<Appointment>();
 	private ArrayList<AppointmentPlaceholder> appointmentsList = new ArrayList<AppointmentPlaceholder>();
@@ -322,6 +329,206 @@ public class AppointmentServiceImplTest {
 	@Test(expected=AssertionError.class)
 	public void testUpdateAppointmentNullAppointmentId() {
 		appointmentService.updateAppointment(Availability.AVAILABLE, null);
+	}
+	
+	@Test
+	public void testGetPendingAppointments() {
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.RESERVED)).thenReturn(this.appList);
+		
+		List<Appointment> tmpAppList = appointmentService.getPendingAppointments(this.mockStudent);
+		
+		assertEquals(appList, tmpAppList);
+	}
+	
+	@Test
+	public void testGetPendingAppointmentsWhenIsEmpty() {
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.RESERVED)).thenReturn(null);
+		
+		List<Appointment> tmpAppList = appointmentService.getPendingAppointments(this.mockStudent);
+		
+		assertTrue(tmpAppList.isEmpty());
+	}
+	
+	@Test
+	public void testGetPendingAppointmentsWhenAppointmentIsNull() {
+		ArrayList<Appointment> nullList = new ArrayList<Appointment>();
+		nullList.add(null);
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.RESERVED)).thenReturn(nullList);
+		
+		List<Appointment> tmpAppList = appointmentService.getPendingAppointments(this.mockStudent);
+		
+		assertTrue(tmpAppList.isEmpty());
+	}
+	
+	@Test
+	public void testGetPendingAppointmentsWhenNoFuture() {
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.RESERVED)).thenReturn(this.appList);
+		
+		List<Appointment> tmpAppList = appointmentService.getPendingAppointments(this.mockStudent);
+
+		assertTrue(tmpAppList.isEmpty());
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testGetPendingAppointmentsNullStudent() {
+		appointmentService.getPendingAppointments(null);
+	}
+	
+	@Test
+	public void testGetPastAppointmentAsStudent() {
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.ARRANGED)).thenReturn(this.appList);
+		
+		List<Appointment> tmpAppList = appointmentService.getPastAppointmentsAsStudent(this.mockStudent);
+		
+		assertEquals(appList, tmpAppList);
+	}
+	
+	@Test
+	public void testGetPastAppointmentWhenIsEmptyAsStudent() {
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() - 9999999));
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.ARRANGED)).thenReturn(null);
+		
+		List<Appointment> tmpAppList = appointmentService.getPastAppointmentsAsStudent(this.mockStudent);
+		
+		assertTrue(tmpAppList.isEmpty());
+	}
+	
+	@Test
+	public void testGetPastAppointmentAsStudentWhenAppointmentIsNull() {
+		ArrayList<Appointment> nullList = new ArrayList<Appointment>();
+		nullList.add(null);
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.ARRANGED)).thenReturn(nullList);
+		
+		List<Appointment> tmpAppList = appointmentService.getPastAppointmentsAsStudent(this.mockStudent);
+		
+		assertTrue(tmpAppList.isEmpty());
+	}
+	
+	@Test
+	public void testGetPastAppointmentAsStudentWhenNoPast() {
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
+		when(appointmentDao.findAllByStudentAndAvailability(mockStudent, Availability.ARRANGED)).thenReturn(this.appList);
+		
+		List<Appointment> tmpAppList = appointmentService.getPastAppointmentsAsStudent(this.mockStudent);
+		
+		assertTrue(tmpAppList.isEmpty());
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testGetPastAppointmentAsNullStudent() {
+		appointmentService.getPastAppointmentsAsStudent(null);
+	}
+	
+	@Test
+	public void testRatueTutorForAppointment() {
+		when(appointmentDao.findOne(anyLong())).thenReturn(this.mockAppointment);
+		when(appointmentDao.save(mockAppointment)).thenReturn(this.mockAppointment);
+		when(appointmentDao.findAllByTutor(mockTutor)).thenReturn(this.appList);
+		when(mockAppointment.getRating()).thenReturn(BigDecimal.ONE);
+		when(mockAppointment.getTutor()).thenReturn(this.mockTutor);
+		when(mockTutor.getProfile()).thenReturn(mockProfile);
+		
+		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
+		
+		verify(mockAppointment).setRating(BigDecimal.ONE);
+		verify(mockProfile).setCountedRatings((BigDecimal.ONE).longValue());
+		//FIXME test the last line of this method right... something does not work...
+	}
+	
+	@Test
+	public void testRatueTutorForAppointmentWhenNoAppointmentsExist() {
+		when(appointmentDao.findOne(anyLong())).thenReturn(this.mockAppointment);
+		when(appointmentDao.save(mockAppointment)).thenReturn(this.mockAppointment);
+		when(appointmentDao.findAllByTutor(mockTutor)).thenReturn(null);
+		when(mockAppointment.getRating()).thenReturn(BigDecimal.ONE);
+		when(mockAppointment.getTutor()).thenReturn(this.mockTutor);
+		when(mockTutor.getProfile()).thenReturn(mockProfile);
+		
+		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
+		
+		verify(mockAppointment).setRating(BigDecimal.ONE);
+	}
+	
+	@Test
+	public void testRatueTutorForAppointmentWhenAppointmentRatingIsNull() {
+		when(appointmentDao.findOne(anyLong())).thenReturn(this.mockAppointment);
+		when(appointmentDao.save(mockAppointment)).thenReturn(this.mockAppointment);
+		when(appointmentDao.findAllByTutor(mockTutor)).thenReturn(this.appList);
+		when(mockAppointment.getRating()).thenReturn(null);
+		when(mockAppointment.getTutor()).thenReturn(this.mockTutor);
+		when(mockTutor.getProfile()).thenReturn(mockProfile);
+		
+		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
+		
+		verify(mockAppointment).setRating(BigDecimal.ONE);
+	}           
+	
+	@Test(expected=AssertionError.class)
+	public void testRatueTutorForAppointmentWhenIdIsNull() {
+		appointmentService.rateTutorForAppointment(null, BigDecimal.ONE);
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testRatueTutorForAppointmentWhenRatingIsNull() {
+		appointmentService.rateTutorForAppointment(new Long(1), null);
+	}
+	
+	@Test 
+	public void getAppointmentsForMonthAndYearTest() {
+	//GIVEN
+		LocalDate tmpDate = LocalDate.now();
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp(new Date().getTime()));
+		     when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(appList);                                      
+	//WHEN
+		     List<Appointment> testList = appointmentService.getAppointmentsForMonthAndYear(mockTutor, Availability.ARRANGED, 
+		    		 																			tmpDate.getMonthValue(), tmpDate.getYear());     
+	//THEN
+		     assertTrue(testList != null);
+		     assertTrue(testList.size() == 1);
+		     assertTrue(testList.get(0).equals(mockAppointment));
+	}
+	
+	@Test 
+	public void getAppointmentsForMonthAndYearTestDataBaseReturnsNull() {
+	//GIVEN
+		LocalDate tmpDate = LocalDate.now();
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp(new Date().getTime()));
+		     when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(null);                                      
+	//WHEN
+		     List<Appointment> testList = appointmentService.getAppointmentsForMonthAndYear(mockTutor, Availability.ARRANGED, 
+		    		 																			tmpDate.getMonthValue(), tmpDate.getYear());     
+	//THEN
+		     assertTrue(testList != null);
+		     assertTrue(testList.size() == 0);
+		    
+	}
+	
+	public void getAppointmentsForMonthAndYearTestAppointmontOlderThanAMonth() {
+		
+		//GIVEN
+				LocalDate tmpDate = LocalDate.now();
+				when(mockAppointment.getTimestamp()).thenReturn(new Timestamp(0));
+				     when(appointmentDao.findAllByTutorAndAvailability(mockTutor, Availability.ARRANGED)).thenReturn(null);                                      
+			//WHEN
+				     List<Appointment> testList = appointmentService.getAppointmentsForMonthAndYear(mockTutor, Availability.ARRANGED, 
+				    		 																			tmpDate.getMonthValue(), tmpDate.getYear());     
+			//THEN
+				     assertTrue(testList != null);
+				     assertTrue(testList.size() == 0);
+		
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void getAppointmentsForMonthAndYearTestWhenTutorisNull() {
+	  appointmentService.getAppointmentsForMonthAndYear(null, Availability.ARRANGED, 1, 2015);    
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void getAppointmentsForMonthAndYearTestWhenAvailabilityisNull() {
+	  appointmentService.getAppointmentsForMonthAndYear(mockTutor, null, 1, 2015);    
 	}
 	
 	

@@ -31,6 +31,8 @@ public class BillServiceImpl implements BillService {
 	@Autowired
 	UserDao userDao;
 	
+	
+	
 	// Constructor for testing purposes
 		@Autowired
 		public BillServiceImpl(AppointmentService appointmentService, BillDao billDao,

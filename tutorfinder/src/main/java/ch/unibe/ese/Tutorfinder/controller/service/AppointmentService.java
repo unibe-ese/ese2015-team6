@@ -1,5 +1,6 @@
 package ch.unibe.ese.Tutorfinder.controller.service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
@@ -94,5 +95,32 @@ public interface AppointmentService {
 	 * @return
 	 */
 	public List<Appointment> getFutureAppointments(User tutor, Availability availability);
+
+	/**
+	 * Searches all {@code Reserved} {@link Appointment}s of an {@code Student} and
+	 * returns only the appointments which are not in the future.
+	 * 
+	 * @param student for which the reserved appointments in the future are searched
+	 * @return A list of appointments with the {@link Availability} {@code Reserved}
+	 */
+	public List<Appointment> getPendingAppointments(User student);
+	
+	/**
+	 * Searches all {@code Arranged} {@link Appointment}s of an {@code Student} and
+	 * returns only the appointments which are not in the past.
+	 * 
+	 * @param student for which the arranged appointments in the past are searched
+	 * @return A list of appointments with the {@link Availability} {@code Arranged}
+	 */
+	public List<Appointment> getPastAppointmentsAsStudent(User student);
+	
+	/**
+	 * Updates first the {@link Appointment} with the given {@code appointmentId},
+	 * afterwards it updates the tutors total rating.
+	 * 
+	 * @param appointmentId
+	 * @param rating
+	 */
+	public void rateTutorForAppointment(Long appointmentId, BigDecimal rating);
 
 }

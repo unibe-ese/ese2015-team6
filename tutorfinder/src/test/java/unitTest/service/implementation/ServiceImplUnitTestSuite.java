@@ -4,6 +4,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import ch.unibe.ese.Tutorfinder.controller.service.implementations.BillServiceImpl;
+
 @RunWith(Suite.class)
 @SuiteClasses({
 	RegisterServiceImplTest.class,
@@ -13,7 +15,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	FindTutorServiceImplTest.class,
 	SubjectServiceImplTest.class,
 	AppointmentServiceImplTest.class,
-	PrepareFormServiceImplTest.class
+	PrepareFormServiceImplTest.class,
+	BillServiceImplTest.class
 })
 /**
  * Test suite including all service implementation unit tests

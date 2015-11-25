@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,7 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	public Profile getProfileByEmail(String email) {
 		assert (email != null);
-		assert (email != "");
+		assert (!email.isEmpty());
 
 		Profile tmpProfile = profileDao.findByEmail(email);
 		assert (tmpProfile != null);
@@ -99,8 +101,23 @@ public class ProfileServiceImpl implements ProfileService {
 			}
 		}
 
-		user = userService.save(user); // save object to DB
+		userService.save(user); // save object to DB
 		
+	}
+	
+	@Override
+	public void updateRating(User tutor, BigDecimal rating, BigDecimal countedRating) {
+		assert(tutor != null);
+		assert(rating != null);
+		assert(countedRating != null && countedRating != BigDecimal.ZERO);
+		
+		Profile tmpProfile = tutor.getProfile();
+		tmpProfile.setRating(rating);
+		
+		Long countingRates = countedRating.longValue();
+		tmpProfile.setCountedRatings(countingRates);
+		
+		profileDao.save(tmpProfile);
 	}
 	
 	
