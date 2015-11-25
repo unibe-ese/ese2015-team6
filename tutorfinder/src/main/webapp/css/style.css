@@ -4,6 +4,9 @@
 @import url("/css/pikaday.css");
 @import url("/css/below800.css") (max-width: 800px);
 
+@import url(https://fonts.googleapis.com/css?family=Cookie);
+
+/* Resets Browser specific rules */
 * {margin: 0;padding: 0;outline: none;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 *:after, *:before { -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
 article,aside,details,figcaption,figure,footer,header,hgroup,nav,section {  display: block;}
@@ -18,25 +21,34 @@ html, body {
 	margin: 0;
 	font-family: Helvetica, sans-serif;
 	font-size: 20px;
+	
+	background-image: url("/img/bg/body.png");
+	background-repeat: repeat;
 }
 
 header {
-	display: table-row; background-color : gray;
-	height: 80px;
+	display: table-row;
+	height: 85px;
+	
 	background-color: gray;
+	
+/* 	background-image: url("/img/bg/header_footer.png"); */
+/* 	background-repeat: repeat; */
 }
 
 #footer {
 	display: table-row;
-	background-color: gray;
 	height: 40px;
+	
+	background-color: gray;
+/* 	background-image: url("/img/bg/header_footer.png"); */
+/* 	background-repeat: repeat; */
 }
 
 #wrapper {
 	display: table;
 	width: 100%;
 	height: 100%;
-	background-color: white;
 	color: black;
 	margin: 0;
 }
@@ -50,6 +62,7 @@ header {
 	display: inline-table;
 	height: 100%;
 	width: 100%;
+	background-color: white;
 	border-style: none solid none solid;
 	border-color: #ddd;
 }
@@ -145,10 +158,11 @@ fieldset {
 }
 
 .headerLogo {
+	font-family: 'Cookie', cursive;
 	float: left;
-	width: 360px;
-	margin: 10px;
-	font-size: 50px;
+	margin: 0;
+	margin-left: 30px;
+	font-size: 70px;
 	color: white;
 	text-decoration: none;
 }
@@ -196,14 +210,11 @@ fieldset {
 }
 
 .breakable {
+  -ms-word-break: break-all;
+  word-break: break-word;
+
   overflow-wrap: break-word;
   word-wrap: break-word;
-
-  -ms-word-break: break-all;
-  /* This is the dangerous one in WebKit, as it breaks things wherever */
-  word-break: break-all;
-  /* Instead use this non-standard one: */
-  word-break: break-word;
 
   /* Adds a hyphen where the word breaks, if supported (No Blink) */
   -ms-hyphens: auto;

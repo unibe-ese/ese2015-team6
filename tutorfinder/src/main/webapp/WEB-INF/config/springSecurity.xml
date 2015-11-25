@@ -8,8 +8,8 @@
 
 	<!-- Whitelist for not secured content -->
 	<http pattern="/" security="none" />
-	<http pattern="/img/*" security="none" />
-	<http pattern="/css/*" security="none" />
+	<http pattern="/img/bg/**" security="none" />
+	<http pattern="/css/**" security="none" />
 	<http pattern="/register" security="none" />
 	<http pattern="/create" security="none" />
 	<http pattern="/favicon.ico" security="none" />

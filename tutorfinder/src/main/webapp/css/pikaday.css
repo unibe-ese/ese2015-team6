@@ -209,7 +209,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .pika-button:hover {
     color: #fff;
-    background: #ff8000;
+    background: gray;
     box-shadow: none;
     border-radius: 3px;
 }

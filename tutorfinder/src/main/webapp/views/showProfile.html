@@ -12,13 +12,17 @@
 <script th:src="@{/js/pikaday.js}"></script>
 
 <script type="text/javascript">
-function datepicker() {
+window.onload = function(){
 	if (!Modernizr.inputtypes.date) {
+		document.getElementById('datebutton').style.display = 'none';
 		var picker = new Pikaday({ 
 			field: document.getElementById('date'), 
 			firstDay: 1,
 			format: 'YYYY-MM-DD',
-			minDate: moment().toDate()
+			minDate: moment().toDate(),
+			onSelect: function() {
+				document.getElementById('datebutton').click();
+			}
 		});
 	}	
 };
@@ -26,7 +30,7 @@ function datepicker() {
 
 </head>
 
-<body lang="en" onload="datepicker()">
+<body lang="en">
 
 	<header th:include="fragments/header::header"></header>
 	<div id="wrapper">
@@ -90,7 +94,8 @@ function datepicker() {
 							<input type="date" id="date"
 								th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"
 								th:field="*{date}" name="date" required="required" />
-							<button type="submit" name="getDate">Show Availability</button>
+							<button type="submit" id="datebutton" name="getDate">Show
+								Availability</button>
 							<!--<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>-->
 							<div id="timeslots">
 								<span class="error" th:if="${error_message != null}"

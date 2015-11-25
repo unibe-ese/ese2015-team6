@@ -7,30 +7,25 @@
 
 <body>
 	<div th:fragment="header">
-		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">ESE
-			Tutorfinder</a>
-		<nav>
+		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">Tutorfinder</a>
+		<nav role="navigation">
 			<ul>
-				<li><a th:href="@{/appointments}"
-					href="appointmentsOverview.html">Appointments</a></li>
-				<li><a href="#">Profile</a>
-					<ul>
-						<li><a th:href="@{/editProfile}" href="updateProfile.html">Edit
-								Profile</a></li>
-						<li th:if="${authUser != null}"><a
-							th:href="@{'/showProfile'(userId=${authUser.id})}"
-							href="showProfile.html">Show Profile</a></li>
-					</ul>
-				</li>
 				<li><a th:href="@{/findTutor}" href="/findTutor.html">Search</a></li>
-				<li><a class="logout" th:href="@{/logout}" href="login.html">Logout</a></li>
+				<li><a sec:authentication="name" th:href="@{'/showProfile'}" href="showProfile.html"> example@test.ch <span class="caret"></span></a>
+					<div>
+						<ul>
+							<li><a th:href="@{'/editProfile'}" href="editProfile.html">Edit Profile</a></li>
+							<li><a th:href="@{/appointments}" href="appointmentsOverview.html">Appointments</a></li>
+							<li><a class="logout" th:href="@{/logout}" href="login.html">Logout</a></li>
+						</ul>
+					</div>
+				</li>
 			</ul>
 		</nav>
 	</div>
 
 	<div th:fragment="nouser">
-		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">ESE
-			Tutorfinder</a>
+		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">Tutorfinder</a>
 	</div>
 
 </body>

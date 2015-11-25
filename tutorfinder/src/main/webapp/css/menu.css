@@ -1,100 +1,89 @@
-header > nav > ul {
-	float: right;
+nav {
+	height: 85px;
+	margin-right: 10%;
+}
+
+nav > ul {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: flex-end;
+	align-items: flex-end;
+	margin: 0;
+	padding: 0;
 	
-	border-radius: 5px 5px 0 0;
-	
-	margin-top: 50px;
-	margin-right: 9.5%;
+	height: 100%;
 }
 
 nav ul {
 	list-style: none;
-	border-radius: 5px 5px 0 0;
+}
+
+nav > ul > li {
+	flex: 0 1 auto;
 	margin: 0;
 	padding: 0;
 }
 
-nav li {
-	border-radius: 5px 5px 0 0;
-	text-align: center;
-	width: 130px;
+nav > ul > li > a {
+	color: #ccc;
+	padding: 0 24px;
 	
-	line-height: 30px;
+	border-left: solid thin lightgray;
+	
+	line-height: 56px;
+	text-decoration: none;
 }
 
-nav ul ul {
-	width: 130px;
-	
+nav > ul > li ul > li:hover a {
+	background-color: darkgrey;
+	color: white;	
+}
+
+.logout:hover {
+	background-color: red;
+}
+
+nav > ul > li ul a {
+	display: block;
+	padding: 5px;
+	padding-bottom: 6px;
+	color: gray;
+	text-decoration: none;
+}
+
+nav > ul > li > div {
+	transition: height 0.3s;
+	background-color: lightgray;
+}
+
+nav > ul > li a + div {
 	position: absolute;
-	z-index: 100;
 	
 	height: 0;
 	overflow: hidden;
 	
-	transition: height .3s;
+	text-align: right;
+	
+	box-shadow: 0 3px 5px rgba(0,0,0,.5);
 }
 
-nav ul li ul {
-	border-radius: 0 0 5px 5px;
+nav > ul > li a + div > ul > li {
+	position: relative;
 }
 
-nav ul ul a {
-	background-color: lightgray;
-	font-size: medium;
+nav > ul > li:hover > div {
+	height: 105px;
 }
 
-nav ul ul li:hover {
-	text-decoration: underline;
-}
-
-nav li:hover ul {
-	height: 60px;
-}
-
-nav li:FIRST-CHILD a {
-	border-radius: 5px 0 0 0;
-}
-
-nav li:LAST-CHILD a {
-	border-radius: 0 5px 0 0;
-}
-
-nav li ul li:FIRST-CHILD a {
-	border-radius: unset;
-	box-shadow: unset;
-}
-
-nav li ul li:LAST-CHILD a {
-	border-radius: unset;
-	box-shadow: unset;
-}
-
-nav a {
-	display: block;
-	text-decoration: none;
-	background-color: #f0f0f0;
-	color: black;
-	text-align: center;
-	font-size: medium;
-	transition: .1s box-shadow;
-}
-
-nav a:hover {
-	box-shadow: 5px 5px 5px gray inset;
-}
-
-a.active {
-	background-color: #fff;
-	color: #444;
-}
-
-a.logout {
-	color: white;
-	background-color: red;
-}
-
-nav li a.logout:hover {
-	box-shadow: 5px 5px 5px darkred inset;
-}
+nav > ul > li > a > .caret {
+	display: inline-block;
+	align-self: center;
+	margin-left: 4px;
+	border-top: 4px solid #aaa;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	vertical-align: middle;
+  }
