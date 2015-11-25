@@ -22,6 +22,8 @@ nav > ul > li {
 	flex: 0 1 auto;
 	margin: 0;
 	padding: 0;
+	
+	position: relative;
 }
 
 nav > ul > li > a {
@@ -58,6 +60,7 @@ nav > ul > li > div {
 
 nav > ul > li a + div {
 	position: absolute;
+	right: 20px;
 	
 	height: 0;
 	overflow: hidden;
