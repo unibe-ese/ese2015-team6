@@ -19,6 +19,7 @@
 		<spring.version>4.2.2.RELEASE</spring.version>
 		<spring.data.version>1.9.0.RELEASE</spring.data.version>
 		<spring.security.version>4.0.2.RELEASE</spring.security.version>
+		<thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
 		<cglib.version>2.2.2</cglib.version>
 	</properties>
 
@@ -219,12 +220,17 @@
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring4</artifactId>
-			<version>2.1.4.RELEASE</version>
+			<version>${thymeleaf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 			<version>2.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-testing</artifactId>
+			<version>${thymeleaf.version}</version>
 		</dependency>
 		
 		
