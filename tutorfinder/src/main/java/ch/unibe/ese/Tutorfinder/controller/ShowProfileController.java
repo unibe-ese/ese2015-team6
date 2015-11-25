@@ -80,8 +80,12 @@ public class ShowProfileController {
 	 * @return ModelAndView for Springframework with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId") long userId) {
+	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId", required = false) Long userId) {
 		ModelAndView model = new ModelAndView("showProfile");
+		
+		if (userId == null) {
+			userId = userService.getUserByPrincipal(authUser).getId();
+		}
 
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
