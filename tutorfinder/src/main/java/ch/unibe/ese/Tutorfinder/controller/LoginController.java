@@ -137,7 +137,7 @@ public class LoginController {
     public String create(@Valid @ModelAttribute("signupForm") SignupForm signupForm, BindingResult result, RedirectAttributes redirectAttributes) {
     	if (!result.hasErrors()) {
             try {
-            	signupForm = registerService.saveFrom(signupForm);
+            	registerService.saveFrom(signupForm);
             	return "redirect:/login?success";
 
             } catch (InvalidEmailException e) {

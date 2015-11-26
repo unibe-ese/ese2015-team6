@@ -159,6 +159,7 @@ public class AppointmentsOverviewController {
 		model.addObject("pending", appointmentService.getPendingAppointments(tmpUser));
 		model.addObject("past", appointmentService.getPastAppointments(tmpUser, Availability.ARRANGED));
 		model.addObject("visited", appointmentService.getPastAppointmentsAsStudent(tmpUser));
+		model.addObject("confirmed", appointmentService.getFutureAppointmentsAsStudent(tmpUser));
 
 		model.addObject("rateTutorForm", new RateTutorForm());
 
