@@ -121,6 +121,7 @@ public class PrepareFormServiceImplTest {
 		assertTrue(gotMav.getModel().containsKey("updateSubjectsForm"));
 		assertTrue(gotMav.getModel().containsKey("updateProfileForm"));
 		assertTrue(gotMav.getModel().containsKey("updateTimetableForm"));
+		assertTrue(gotMav.getModel().containsKey("passwordConfirmationForm"));
 		assertEquals(mockUser, gotMav.getModel().get("authUser"));
 	}
 

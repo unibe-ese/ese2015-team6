@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.PasswordConfirmationForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
@@ -54,6 +55,7 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(authUser));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
+		model.addObject("passwordConfirmationForm", new PasswordConfirmationForm());
 		model.addObject("authUser", dbUser);
 		return model;
 	}

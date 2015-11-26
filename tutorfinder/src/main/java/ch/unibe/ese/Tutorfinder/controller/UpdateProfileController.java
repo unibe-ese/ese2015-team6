@@ -6,6 +6,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -16,12 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.PasswordConfirmationForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
-import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
-import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
+import ch.unibe.ese.Tutorfinder.model.User;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -36,14 +41,28 @@ public class UpdateProfileController {
 	@Autowired
 	UserService userService;
 	@Autowired
-	TimetableService timetableService;
-	@Autowired
 	ProfileService profileService;
 	@Autowired
-	SubjectService subjectService;
-	@Autowired
 	PrepareFormService prepareFormService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
+	/**
+	 * Constructor for testing purposes
+	 * 
+	 * @param userService
+	 * @param profileService
+	 * @param prepareFormService
+	 * @param authenticationManager
+	 */
+	@Autowired
+	public UpdateProfileController(UserService userService, ProfileService profileService, 
+			PrepareFormService prepareFormService, AuthenticationManager authenticationManager) {
+		this.userService = userService;
+		this.profileService = profileService;
+		this.prepareFormService = prepareFormService;
+		this.authenticationManager = authenticationManager;
+	}
 	/**
 	 * Maps the /editProfile page to the {@code updateProfile.html}.
 	 * 
@@ -82,7 +101,8 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView update(Principal authUser, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		ModelAndView model = new ModelAndView("updateProfile");;
+		ModelAndView model = new ModelAndView("updateProfile");
+		
 		if (!result.hasErrors()) {
 			try {
 				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
@@ -92,6 +112,45 @@ public class UpdateProfileController {
 		}
 		model = prepareFormService.prepareForm(authUser, model);
 		model.addObject("updateProfileForm", updateProfileForm);
+
+		return model;
+	}
+
+	/**
+	 * Handles users form input with let it validate by the
+	 * {@code PasswordConfirmationForm} class and allows the changing of the
+	 * users {@code Role} from {@code STUDENT} to {@code TUTOR}
+	 * 
+	 * @param authUser
+	 *            {@link Principal} which is actual logged in and wants to
+	 *            become a tutor
+	 * @param passwordConfirmationForm
+	 *            saves temporarily the users confirmation password
+	 * @param result
+	 * @param redirectAttributes
+	 * @return {@link ModelAndView} with the {@code updateProfile.html} view for
+	 *         an Tutor if the password confirmation war correct els the same
+	 *         view for an Student
+	 */
+	@RequestMapping(value = "/changeRole", method = RequestMethod.POST)
+	public ModelAndView becomeTutor(Principal authUser, @Valid PasswordConfirmationForm passwordConfirmationForm,
+			BindingResult result, RedirectAttributes redirectAttributes) {
+		User user = userService.getUserByPrincipal(authUser);
+		ModelAndView model = new ModelAndView("updateProfile");
+
+		if (passwordConfirmationForm.getPassword() != null) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			if (encoder.matches(passwordConfirmationForm.getPassword(), user.getPassword())) {
+				userService.changeToTutor(user);
+				Authentication authenticate = authenticationManager
+						.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),
+								passwordConfirmationForm.getPassword()));
+				SecurityContextHolder.getContext().setAuthentication(authenticate);
+				model = prepareFormService.prepareForm(authenticate, model);
+			} else {
+				model = prepareFormService.prepareForm(authUser, model);
+			}
+		}
 
 		return model;
 	}

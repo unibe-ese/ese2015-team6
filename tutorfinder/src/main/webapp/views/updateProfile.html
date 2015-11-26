@@ -8,6 +8,18 @@
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
 
+<script>
+/*<![CDATA[*/
+function closePopup() {
+	document.getElementById('fade').style.display='none';
+	var elements = document.getElementsByClassName('white_content');
+	for (var i in elements) {
+		elements[i].style.display='none';
+	}
+};
+/*]]>*/
+</script>
+
 </head>
 <body>
 
@@ -72,11 +84,34 @@
 					</div>
 				</form>
 
-				<div id="availability" sec:authorize="hasRole('ROLE_TUTOR')">
+			<div id="availability" sec:authorize="hasRole('ROLE_TUTOR')">
+				<button type="button"
+					onclick="document.getElementById('timetableBox').style.display='block';document.getElementById('fade').style.display='block'">Update
+					availability</button>
+			</div>
+			
+			<div id="changeRoleButton" sec:authorize="hasRole('ROLE_STUDENT')">
+				<button type="button"
+					onclick="document.getElementById('changeRoleBox').style.display='block';document.getElementById('fade').style.display='block'">Become a Tutor</button>
+			</div>
+			
+			<div id="changeRoleBox" class="white_content" sec:authorize="hasRole('ROLE_STUDENT')">
+				<form action="#" method="post" th:action="@{/changeRole}" 
+					th:object="${passwordConfirmationForm}" name="passwordConfirmationForm">
+					<div class="control-group">
+						<label class="control-label" for="password">Please confirm the change with the password</label>
+						<div class="controls">
+							<input type="password" th:name="password"
+								maxlength="35" th:value="*{password}" /> <span class="error"
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+							</span>
+						</div>
+					</div>
+					<button type="submit" name="apply" class="btn btn-primary">Apply</button>
 					<button type="button"
-						onclick="document.getElementById('timetableBox').style.display='block';document.getElementById('fade').style.display='block'">Update
-						availability</button>
-				</div>
+								onclick="closePopup()">Cancel</button>
+				</form>
+			</div>
 
 				<!-- PopupBox -->
 				<div id="timetableBox" class="white_content">
@@ -124,7 +159,7 @@
 					</form>
 				</div>
 				<div id="fade" class="black_overlay"
-					onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'"></div>
+					onclick="closePopup()"></div>
 			</div>
 			<form id="userInfoBox" class="rightSide" action="#"
 				th:object="${updateProfileForm}" th:action="@{/update}"

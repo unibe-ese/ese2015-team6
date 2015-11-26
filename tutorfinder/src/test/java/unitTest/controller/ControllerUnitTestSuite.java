@@ -8,7 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	ShowProfileControllerUnitTests.class,
 	LoginControllerUnitTests.class,
-	AppointmentsOverviewUnitTests.class
+	AppointmentsOverviewUnitTests.class,
+	UpdateProfileControllerTest.class
 })
 /**
  * Test suite including all controller unit tests
