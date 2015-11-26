@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
@@ -54,10 +55,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public Message saveMessage(MessageForm messageForm, Principal authUser) {
+	@Transactional
+	public Message saveFrom(MessageForm messageForm, Principal authUser){
 		assert (messageForm != null);
+		
 		Message newMessage = new Message();
-		newMessage.setReceiver(userService.getUserById(messageForm.getReceiverId()));
+		
+		newMessage.setReceiver(messageForm.getReceiver());
 		newMessage.setSender(userService.getUserByPrincipal(authUser));
 		newMessage.setTimestamp(new Timestamp((new Date()).getTime()));
 		newMessage.setMessage(messageForm.getMessage());

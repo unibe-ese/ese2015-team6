@@ -42,5 +42,5 @@ public interface MessageService {
 	 * @param authuser, actual user, who wants to send a message
 	 * @return the new created and saved message
 	 */
-	public Message saveMessage(MessageForm messageForm, Principal authUser);
+	public Message saveFrom(MessageForm messageForm, Principal authUser);
 }

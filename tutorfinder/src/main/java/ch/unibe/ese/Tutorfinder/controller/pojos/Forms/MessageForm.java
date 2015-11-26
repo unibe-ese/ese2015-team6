@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 /**
@@ -13,7 +14,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class MessageForm {
 
 	@NotNull
-	private Long receiverId;
+	private User receiver;
 
 	@NotBlank(message = ConstantVariables.SUBJECT_ERRORMESSAGE)
 	private String subject;
@@ -23,12 +24,12 @@ public class MessageForm {
 
 	
 	/* Getters and Setters */
-	public Long getReceiverId() {
-		return receiverId;
+	public User getReceiver() {
+		return receiver;
 	}
 
-	public void setReceiverId(Long receiverId) {
-		this.receiverId = receiverId;
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
 	}
 
 	public String getSubject() {
