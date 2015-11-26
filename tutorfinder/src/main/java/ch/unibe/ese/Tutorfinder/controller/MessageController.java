@@ -42,9 +42,17 @@ public class MessageController {
 	public ModelAndView messages(Principal authUser, @RequestParam(value = "inbox", required = false) String inbox,
 			@RequestParam(value = "outbox", required = false) String outbox) {
 		ModelAndView model = new ModelAndView("messagesOverview");
-
-		//TODO handling requestParam
-		model = prepareMessageOverview(model, authUser);
+		
+		User tmpUser = userService.getUserByPrincipal(authUser);
+		model.addObject("authUser", tmpUser);
+		
+		if(inbox != null) {
+			model.addObject("inbox", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
+		} else if (outbox != null) {
+			model.addObject("outbox", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
+		} else {
+			model.addObject("unread", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
+		}
 
 		return model;
 	}
@@ -87,25 +95,4 @@ public class MessageController {
 		return model;
 	}
 
-	/**
-	 * Prepares the model for the {@code messagesOverview.html} site, which
-	 * means it adds the {@code inbox}, {@code outbox} and {@code unread}
-	 * {@link Message}s of the {@link Principal} in the model.
-	 * 
-	 * @param model
-	 *            a new {@code messagesOverview.html}
-	 * @param authUser
-	 *            {@link Principal} actual logged in user
-	 * @return model with the new objects
-	 */
-	private ModelAndView prepareMessageOverview(ModelAndView model, Principal authUser) {
-		User tmpUser = userService.getUserByPrincipal(authUser);
-		model.addObject("authUser", tmpUser);
-
-		model.addObject("inbox", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
-		model.addObject("outbox", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
-		model.addObject("unread", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
-
-		return model;
-	}
 }
