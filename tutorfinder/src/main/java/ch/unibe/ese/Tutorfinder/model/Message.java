@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -17,8 +18,6 @@ import javax.validation.constraints.NotNull;
  * {@code timestamp} is used to show when the message was send from the sender<br>
  * {@code message} contains a message of the length 1048<br>
  * {@code isRead} indicates whether the message is read by the receiver or not<br>
- * {@code senderDeleted} indicates whether the sender has deleted the message or not<br>
- * {@code receiverDeleted} indicates whether the receiver has deleted the message or not<br>
  * 
  * @version	1.0
  *
@@ -46,12 +45,10 @@ public class Message {
 	private String subject;
 	
 	@NotNull
-	@Column(length = 1048)
+	@Lob
 	private String message;
 
 	private boolean isRead = false;
-	private boolean senderDeleted = false;
-	private boolean receiverDeleted = false;
 
 	/* Getters and Setters */
 	public Long getId() {
@@ -110,22 +107,6 @@ public class Message {
 		this.isRead = isRead;
 	}
 
-	public boolean isSenderDeleted() {
-		return senderDeleted;
-	}
-
-	public void setSenderDeleted(boolean senderDeleted) {
-		this.senderDeleted = senderDeleted;
-	}
-
-	public boolean isReceiverDeleted() {
-		return receiverDeleted;
-	}
-
-	public void setReceiverDeleted(boolean receiverDeleted) {
-		this.receiverDeleted = receiverDeleted;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -154,8 +135,7 @@ public class Message {
 	@Override
 	public String toString() {
 		return "Message [id=" + id + ", timestamp=" + timestamp + ", sender=" + sender + ", receiver=" + receiver
-				+ ", message=" + message + ", isRead=" + isRead + ", senderDeleted=" + senderDeleted
-				+ ", receiverDeleted=" + receiverDeleted + "]";
+				+ ", message=" + message + ", isRead=" + isRead + "]";
 	}
 
 }

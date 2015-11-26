@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
@@ -31,6 +32,7 @@ public class Profile {
 	@NotNull
 	private String email;
 
+	@Lob
 	private String biography;
 	
 	private String region;

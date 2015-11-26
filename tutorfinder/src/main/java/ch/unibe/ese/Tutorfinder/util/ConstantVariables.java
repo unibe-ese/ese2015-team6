@@ -48,7 +48,7 @@ public class ConstantVariables {
 	
 	public static final String OUTBOX = "outbox";
 	
-	public static final String TRASH = "trash";
+	public static final String TRASH = "unread";
 	
 }
 

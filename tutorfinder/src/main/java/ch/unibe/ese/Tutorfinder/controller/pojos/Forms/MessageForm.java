@@ -15,12 +15,6 @@ public class MessageForm {
 	@NotNull
 	private Long receiverId;
 
-	@NotNull
-	private String receiverFirstName;
-
-	@NotNull
-	private String receiverLastName;
-
 	@NotBlank(message = ConstantVariables.SUBJECT_ERRORMESSAGE)
 	private String subject;
 
@@ -35,22 +29,6 @@ public class MessageForm {
 
 	public void setReceiverId(Long receiverId) {
 		this.receiverId = receiverId;
-	}
-
-	public String getReceiverFirstName() {
-		return receiverFirstName;
-	}
-
-	public void setReceiverFirstName(String receiverFirstName) {
-		this.receiverFirstName = receiverFirstName;
-	}
-
-	public String getReceiverLastName() {
-		return receiverLastName;
-	}
-
-	public void setReceiverLastName(String receiverLastName) {
-		this.receiverLastName = receiverLastName;
 	}
 
 	public String getSubject() {
