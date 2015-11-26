@@ -8,6 +8,18 @@
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
 
+<script>
+/*<![CDATA[*/
+function closePopup() {
+	document.getElementById('fade').style.display='none';
+	var elements = document.getElementsByClassName('white_content');
+	for (var i in elements) {
+		elements[i].style.display='none';
+	}
+};
+/*]]>*/
+</script>
+
 </head>
 <body>
 
@@ -75,6 +87,29 @@
 					onclick="document.getElementById('timetableBox').style.display='block';document.getElementById('fade').style.display='block'">Update
 					availability</button>
 			</div>
+			
+			<div id="changeRoleButton" sec:authorize="hasRole('ROLE_STUDENT')">
+				<button type="button"
+					onclick="document.getElementById('changeRoleBox').style.display='block';document.getElementById('fade').style.display='block'">Become a Tutor</button>
+			</div>
+			
+			<div id="changeRoleBox" class="white_content" sec:authorize="hasRole('ROLE_STUDENT')">
+				<form action="#" method="post" th:action="@{/changeRole}" 
+					th:object="${passwordConfirmationForm}" name="passwordConfirmationForm">
+					<div class="control-group">
+						<label class="control-label" for="password">Please confirm the change with the password</label>
+						<div class="controls">
+							<input type="password" th:name="password"
+								maxlength="35" th:value="*{password}" /> <span class="error"
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+							</span>
+						</div>
+					</div>
+					<button type="submit" name="apply" class="btn btn-primary">Apply</button>
+					<button type="button"
+								onclick="closePopup()">Cancel</button>
+				</form>
+			</div>
 
 			<!-- PopupBox -->
 			<div id="timetableBox" class="white_content">
@@ -117,15 +152,15 @@
 						<div class="Button">
 							<button type="submit" name="save" class="btn btn-primary">Save</button>
 							<button type="button"
-								onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'">Close</button>
-						</div><br />
-						<span class="error" th:if="${#fields.hasErrors('global')}"
-						th:errors="*{global}"></span>
+								onclick="closePopup()">Close</button>
+						</div>
+						<br /> <span class="error" th:if="${#fields.hasErrors('global')}"
+							th:errors="*{global}"></span>
 					</div>
 				</form>
 			</div>
 			<div id="fade" class="black_overlay"
-				onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'"></div>
+				onclick="closePopup()"></div>
 		</div>
 		<div id="rightSide">
 			<form id="userInfoBox" action="#" th:object="${updateProfileForm}"
@@ -181,7 +216,7 @@
 							password</label>
 						<div class="controls">
 							<input type="password" th:name="confirmPassword" tabindex="4"
-								maxlength="25" /> <span class="error" 
+								maxlength="25" /> <span class="error"
 								th:if="${#fields.hasErrors('confirmPassword')}"
 								th:errors="*{confirmPassword}"> Passwords do not match </span> <span
 								class="error" th:if="${#fields.hasErrors('global')}"
@@ -216,7 +251,7 @@
 
 							<div class="controls">
 								<input type="text" th:name="region" tabindex="6" maxlength="255"
-									th:value="*{region}" /> <span class="error" 
+									th:value="*{region}" /> <span class="error"
 									th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></span>
 							</div>
 						</div>

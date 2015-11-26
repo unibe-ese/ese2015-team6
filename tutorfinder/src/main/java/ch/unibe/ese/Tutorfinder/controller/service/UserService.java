@@ -29,4 +29,11 @@ public interface UserService {
 	 */
 	public User save(User user);
 
+	/**
+	 * takes a {@link user} and changes it {@code role} to {@code Tutor}
+	 * 
+	 * @param user which wants to become a tutor
+	 * @return user, which is now an tutor
+	 */
+	public User changeToTutor(User user);
 }
