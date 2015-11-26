@@ -18,7 +18,6 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
-import ch.unibe.ese.Tutorfinder.model.Message;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
