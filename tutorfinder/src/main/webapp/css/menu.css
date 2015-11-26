@@ -50,7 +50,7 @@ nav>ul>li>a:before {
 	right: 0;
 	width: 80%;
 	height: 1.5px;
-	bottom: -1px;
+	bottom: -3px;
 	background-color: lightgray;
 	visibility: hidden;
 	-webkit-transform: scaleX(0);
