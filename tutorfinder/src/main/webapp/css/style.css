@@ -1,18 +1,57 @@
 @import url("/css/menu.css");
+
 @import url("/css/timetable.css");
+
 @import url("/css/timeslots.css");
+
 @import url("/css/pikaday.css");
-@import url("/css/below800.css") (max-width: 800px);
+
+@import url("/css/below800.css") ( max-width
+	:
+	800px);
 
 @import url(https://fonts.googleapis.com/css?family=Cookie);
 
 /* Resets Browser specific rules */
-* {margin: 0;padding: 0;outline: none;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
-*:after, *:before { -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
-article,aside,details,figcaption,figure,footer,header,hgroup,nav,section {  display: block;}
-html {font-size: 100%;height: auto !important;height: 100%;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;}
-.clear {display: block;	}
-.clear::after {clear: both;content: ".";display: block;height: 1px;visibility: hidden;}
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+*:after, *:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav,
+	section {
+	display: block;
+}
+
+html {
+	font-size: 100%;
+	height: auto !important;
+	height: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+.clear {
+	display: block;
+}
+
+.clear::after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 1px;
+	visibility: hidden;
+}
 
 html, body {
 	display: table;
@@ -21,7 +60,6 @@ html, body {
 	margin: 0;
 	font-family: Helvetica, sans-serif;
 	font-size: 20px;
-	
 	background-image: url("/img/bg/body.png");
 	background-repeat: repeat;
 }
@@ -29,20 +67,32 @@ html, body {
 header {
 	display: table-row;
 	height: 85px;
-	
 	background-color: gray;
-	
-/* 	background-image: url("/img/bg/header_footer.png"); */
-/* 	background-repeat: repeat; */
 }
 
-#footer {
+footer {
+	position: relative;
 	display: table-row;
 	height: 40px;
-	
 	background-color: gray;
-/* 	background-image: url("/img/bg/header_footer.png"); */
-/* 	background-repeat: repeat; */
+}
+
+footer > div {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+footer > div > p {
+	margin-right: 12%;
+		
+	font-size: 15px;	
+	color: white;
 }
 
 #wrapper {
@@ -70,10 +120,6 @@ header {
 #content-wrapper {
 	display: table;
 	height: 100%;
-}
-
-#search {
-	padding-top: 10px;
 }
 
 /* Login and Register */
@@ -116,7 +162,6 @@ fieldset {
 .leftSide {
 	display: table-cell;
 	width: 50%;
-	
 	padding-left: 10%;
 }
 
@@ -132,17 +177,14 @@ fieldset {
 	width: 100%;
 	padding-left: 20px;
 	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 /*EditProfile*/
 #availability {
 	margin-top: 50px;
 	margin-bottom: 10px;
-}
-
-#results a {
-	color: orange;
-	text-decoration: underline;
 }
 
 #tutorSubjectBox {
@@ -167,7 +209,7 @@ fieldset {
 	text-decoration: none;
 }
 
-#Bio h3{
+#Bio h3 {
 	margin-bottom: 0;
 }
 
@@ -179,13 +221,76 @@ fieldset {
 	padding: 5px;
 }
 
-.result {
-	display: inline-block;
-	margin-right: 10px;
+#welcome {
+	display: table;
+	height: 100%;
 }
 
-/* Timetable */
+#welcome>h1 {
+	display: table-row;
+}
 
+#welcome>p {
+	padding: 30px;
+	padding-left: 0;
+	display: table-cell;
+}
+
+#search>form {
+	display: flex;
+	padding-bottom: 3px;
+	border-bottom: solid 2px lightgray;
+}
+
+#search input {
+	font-size: large;
+	padding-left: 5px;
+	width: 300px;
+	height: 30px;
+}
+
+#search button {
+	
+}
+
+#results>div {
+	position: relative; 
+	display : inline-block;
+	margin-top: 10px;
+	margin-right: 20px;
+	vertical-align: top;
+	display: inline-block;
+	
+	color: black;
+	text-decoration: none;
+}
+
+#results a > span {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+#results .name {
+	font-weight: bold;
+}
+
+#results .rating {
+	position: relative;
+	z-index: 2;
+	font-size: small;
+}
+
+#results #subjects {
+	position: relative;
+	z-index: 2;
+	font-size: medium;
+	max-height: 80px;
+	overflow-y: auto;
+}
 
 .error {
 	display: inline-block;
@@ -210,15 +315,13 @@ fieldset {
 }
 
 .breakable {
-  -ms-word-break: break-all;
-  word-break: break-word;
-
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  /* Adds a hyphen where the word breaks, if supported (No Blink) */
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
+	-ms-word-break: break-all;
+	word-break: break-word;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	/* Adds a hyphen where the word breaks, if supported (No Blink) */
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+	hyphens: auto;
 }

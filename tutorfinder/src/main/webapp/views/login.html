@@ -5,10 +5,23 @@
 <title>Login</title>
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
+
+<script>
+	function showRegisterBox() {
+		document.getElementById('registerBox').style.display = 'table-cell';
+		document.getElementById('loginBox').style.display = 'none'
+	}
+
+	function showLoginBox() {
+		document.getElementById('registerBox').style.display = 'none';
+		document.getElementById('loginBox').style.display = 'table-cell'
+	}
+</script>
 </head>
 
 <body>
-	<header th:include="fragments/header:: (${#authorization.expression('isAuthenticated()')}? header : nouser)"></header>
+	<header
+		th:include="fragments/header:: (${#authorization.expression('isAuthenticated()')}? header : nouser)"></header>
 	<div id="wrapper">
 		<div id="sidebar"></div>
 		<div id="content">
@@ -18,9 +31,10 @@
 
 			<div id="content-wrapper">
 				<div id="infoBox">
-					Welcome to the Tutorfinder-website of Team 6. Here it is possible
-					to find a tutor for a subject you want to improve or to offer your
-					help, if you are already experienced in a subject.<br />
+					<h1>Welcome to Tutorfinder!</h1>
+					<p>Here it is possible to find a tutor for a subject you want
+						to improve or to offer your help, if you are already experienced
+						in a subject.</p>
 				</div>
 
 
@@ -28,12 +42,12 @@
 
 					<form th:name='loginForm' th:action="${loginUrl}" method="post">
 						<fieldset>
-					<div th:text="${msg}">You have been logged out</div>
-						<div class="error" th:if="${error != null}" th:text="${error}">Invalid
-							username and/or password</div>
+							<div th:text="${msg}">You have been logged out</div>
+							<div class="error" th:if="${error != null}" th:text="${error}">Invalid
+								username and/or password</div>
 							<p>
-								<input type='email' id="email" name='email' placeholder="E-Mail address"
-									autofocus="autofocus" />
+								<input type='email' id="email" name='email'
+									placeholder="E-Mail address" autofocus="autofocus" />
 							</p>
 							<p>
 								<input type='password' id="password" name='password'
@@ -91,8 +105,9 @@
 
 							<p>
 								<input type="password" th:name="confirmPassword" tabindex="4"
-									maxlength="25" required="required" min="8" placeholder="Confirm Password" /> <span
-									class="error" th:if="${#fields.hasErrors('confirmPassword')}"
+									maxlength="25" required="required" min="8"
+									placeholder="Confirm Password" /> <span class="error"
+									th:if="${#fields.hasErrors('confirmPassword')}"
 									th:errors="*{confirmPassword}"> Invalid Input </span> <span
 									class="error" th:if="${#fields.hasErrors('global')}"
 									th:errors="*{global}"> Passwords do not match</span>
@@ -119,19 +134,8 @@
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
 
-	<script>
-		function showRegisterBox() {
-			document.getElementById('registerBox').style.display = 'table-cell';
-			document.getElementById('loginBox').style.display = 'none'
-		}
-
-		function showLoginBox() {
-			document.getElementById('registerBox').style.display = 'none';
-			document.getElementById('loginBox').style.display = 'table-cell'
-		}
-	</script>
 	<script th:if="${switch == true}" type="text/javascript">
-		showRegisterBox()
+		showRegisterBox();
 	</script>
 
 </body>

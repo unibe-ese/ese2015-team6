@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div th:fragment="results" id="results">
+		<h1>
+			Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
+		</h1>
+		<div th:each="foundTutor : ${Result}"
+			th:if="${foundTutor != null}">
+			<a th:href="@{'/showProfile'(userId=${foundTutor.key.id})}"><span></span></a>
+			<img th:src="@{|/img/profPic/${foundTutor.key.id}.png|}" onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
+				alt="Profile picture" width="192" height="192" src="../../img/default-avatar.jpg" />
+				<div>
+				<span class="name" th:text="|${foundTutor.key.firstName} ${foundTutor.key.lastName}|">Max Muster</span> 
+				<span class="rating" th:title="|Based on ${foundTutor.key.profile.countedRatings} ratings|"
+					th:if="${foundTutor.key.profile.rating != null}" th:text="|Rating: ${foundTutor.key.profile.rating}|"
+					>Rating: 4.5</span>
+				</div>
+				<div id="subjects">
+					<span class="subject" th:each="subject : ${foundTutor.value}">
+						<span th:if="${subject != null}" 
+						th:text="|${subject.name} (${subject.grade})|"
+						>Subject</span><br />
+					</span>
+				</div>
+		</div>
+	</div>
+
+	<div th:fragment="welcome" id="welcome">
+		<h1>Welcome to tutorfinder!</h1>
+		<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+			diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+			erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+			et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+			Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+			sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+			dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+			et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+			takimata sanctus est Lorem ipsum dolor sit amet.</p>
+			
+		<p>Ut wisi enim ad minim veniam, quis nostrud exerci tation
+			ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+			consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
+			velit esse</p>
+	</div>
+</body>
+</html>
