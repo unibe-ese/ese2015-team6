@@ -35,6 +35,10 @@ public class Profile {
 	
 	private String region;
 	
+	private String university;
+	
+	private String language;
+	
 	@NumberFormat(style=Style.CURRENCY)
 	private BigDecimal wage;
 	
@@ -137,6 +141,22 @@ public class Profile {
 	public String toString() {
 		return "Profile [id=" + id + ", email=" + email + ", biography=" + biography + ", region=" + region + ", wage="
 				+ wage + "]";
+	}
+
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	
 }

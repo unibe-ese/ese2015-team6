@@ -51,7 +51,7 @@ window.onload = function(){
 					th:text="|Rating: ${Profile.rating}|">Rating: 4.5</h2>
 
 				<div id="Bio" class="breakable"
-					th:if="${DisplayedUser.role} == TUTOR">
+					th:if="${Profile.biography} != null">
 					<h3>Short biography</h3>
 					<p th:text="${Profile.biography}">Lorem ipsum dolor sit amet,
 						consetetur sadipscing elitr, sed diam nonumy eirmod tempor
@@ -67,21 +67,28 @@ window.onload = function(){
 			</div>
 			<div id="userInfoBox" class="rightSide">
 
-				<p th:if="${DisplayedUser.role} == TUTOR">
-					<b>Region:</b> <span th:text="${Profile.region}"> Bern</span>
-				</p>
+				<div th:if="${Profile.language} != null">
+					<b>Languages:</b> <span th:text="${Profile.language}"> DE, EN</span>
+				</div>
+				<div th:if="${Profile.university} != null">
+					<b>Attended University:</b> <span th:text="${Profile.university}"> Uni Bern</span>
+				</div>
+				<div th:if="${Profile.region} != null">
+					<b>Teaching region:</b> <span th:text="${Profile.region}"> Bern</span>
+				</div>
 
-				<p th:if="${DisplayedUser.role} == TUTOR">
+				<div th:if="${Profile.wage} != 0.00">
 					<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
-				</p>
-				<p>
-					<b th:if="${Subjects != null}">Teaching:</b><br /> <span
-						th:each="subject:${Subjects}" th:if="${subject != null}"> <small
+				</div>
+				<div th:if="${!Subjects.isEmpty()}">
+					<b>Teaching:</b>
+					<div
+						th:each="subject:${Subjects}" th:if="${subject != null}"> <span
 						th:text="|${subject.name} (Grade ${subject.grade})|">
 							SubjectOne (Grade 5.0)<br /> SubjectTwo (Grade 5.5)<br />
-					</small><br />
 					</span>
-				</p>
+					</div>
+				</div>
 
 				<div
 					th:if="${authUser.id!=DisplayedUser.id and __${DisplayedUser.role}__ == TUTOR}">

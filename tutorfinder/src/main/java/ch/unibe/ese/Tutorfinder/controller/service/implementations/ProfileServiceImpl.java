@@ -75,7 +75,9 @@ public class ProfileServiceImpl implements ProfileService {
 		profile.setBiography(updateProfileForm.getBiography());
 		profile.setRegion(updateProfileForm.getRegion());
 		profile.setWage(updateProfileForm.getWage());
-
+		profile.setLanguage(updateProfileForm.getLanguage());
+		profile.setUniversity(updateProfileForm.getUniversity());
+		
 		profile = profileDao.save(profile); // save object to DB
 
 		return profile;
