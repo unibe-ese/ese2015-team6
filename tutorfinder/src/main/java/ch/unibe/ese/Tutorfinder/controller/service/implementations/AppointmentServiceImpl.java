@@ -32,6 +32,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Autowired
 	ProfileService profileService;
 
+	/**
+	 * Constructor for testing purposes
+	 * 
+	 * @param appointmentDao
+	 * @param profileService
+	 */
+	@Autowired
+	public AppointmentServiceImpl(AppointmentDao appointmentDao, ProfileService profileService) {
+		this.appointmentDao = appointmentDao;
+		this.profileService = profileService;
+	}
+	
 	public MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student) {
 		BigDecimal wage = tutor.getProfile().getWage();
 		LocalDate date = appForm.getDate();

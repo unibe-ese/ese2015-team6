@@ -6,6 +6,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.security.Principal;
 
@@ -24,6 +25,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/test.xml"})
@@ -128,5 +130,29 @@ public class UserServiceImplTest {
 				
 		//WHEN
 		userService.getUserByPrincipal(this.mockAuthUser);
+	}
+	
+	@Test
+	public void testChangeToTutorWhenStudent() {
+		when(userDao.save(mockUser)).then(returnsFirstArg());
+		when(mockUser.getRole()).thenReturn(ConstantVariables.STUDENT);
+		
+		userService.changeToTutor(this.mockUser);
+		
+		verify(mockUser).setRole(ConstantVariables.TUTOR);
+	}
+	
+	@Test
+	public void testChangeToTutorWhenTutor() {
+		when(mockUser.getRole()).thenReturn(ConstantVariables.TUTOR);
+		
+		User tmpUser = userService.changeToTutor(this.mockUser);
+		
+		assertEquals(this.mockUser, tmpUser);
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void testChangedToTutorWhenNull() {
+		userService.changeToTutor(null);
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,6 +44,18 @@ public class UserServiceImpl implements UserService {
 		assert (user != null);
 		user = userDao.save(user);
 		assert (user != null);
+		return user;
+	}
+
+	@Override
+	public User changeToTutor(User user) {
+		assert (user != null);
+		
+		if(!user.getRole().equals(ConstantVariables.TUTOR)){
+			user.setRole(ConstantVariables.TUTOR);
+			return userDao.save(user);
+		}
+
 		return user;
 	}
 

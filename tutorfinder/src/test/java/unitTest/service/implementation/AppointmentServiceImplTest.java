@@ -34,6 +34,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
+import ch.unibe.ese.Tutorfinder.controller.service.implementations.AppointmentServiceImpl;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
@@ -63,7 +64,7 @@ public class AppointmentServiceImplTest {
 	@Mock
 	private Timetable mockTimetable;
 	@Mock
-	private ProfileService profileService;
+	private ProfileService mockProfileService;
 	
 	private ArrayList<Appointment> appList = new ArrayList<Appointment>();
 	private ArrayList<AppointmentPlaceholder> appointmentsList = new ArrayList<AppointmentPlaceholder>();
@@ -424,8 +425,9 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testRatueTutorForAppointment() {
+		this.appointmentService = new AppointmentServiceImpl(this.appointmentDao, this.mockProfileService);
+		
 		when(appointmentDao.findOne(anyLong())).thenReturn(this.mockAppointment);
-		when(appointmentDao.save(mockAppointment)).thenReturn(this.mockAppointment);
 		when(appointmentDao.findAllByTutor(mockTutor)).thenReturn(this.appList);
 		when(mockAppointment.getRating()).thenReturn(BigDecimal.ONE);
 		when(mockAppointment.getTutor()).thenReturn(this.mockTutor);
@@ -434,8 +436,8 @@ public class AppointmentServiceImplTest {
 		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
 		
 		verify(mockAppointment).setRating(BigDecimal.ONE);
-		verify(mockProfile).setCountedRatings((BigDecimal.ONE).longValue());
-		//FIXME test the last line of this method right... something does not work...
+		verify(appointmentDao).save(eq(mockAppointment));
+		verify(mockProfileService).updateRating(eq(mockTutor), any(BigDecimal.class), any(BigDecimal.class));
 	}
 	
 	@Test
@@ -475,8 +477,5 @@ public class AppointmentServiceImplTest {
 	public void testRatueTutorForAppointmentWhenRatingIsNull() {
 		appointmentService.rateTutorForAppointment(new Long(1), null);
 	}
-	
-	
-	
-	
+
 }
