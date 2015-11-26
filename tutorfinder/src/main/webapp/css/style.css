@@ -78,14 +78,19 @@ footer {
 }
 
 footer > div {
+	display: flex;
 	position: absolute;
+	height: 100%;
 	top: 0;
 	right: 0;
-	bottom: 0;
 	left: 0;
-	display: flex;
+	bottom: 0;
 	justify-content: flex-end;
 	align-items: center;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+footer > div { position:relative; }
 }
 
 footer > div > p {
