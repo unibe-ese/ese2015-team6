@@ -27,6 +27,9 @@ public class DateFormatter implements Formatter<LocalDate> {
 		return dateFormat.format(object);
 	}
 
+	/**
+	 * Pattern is chosen that way because of the HTML5 date picker's output
+	 */
 	private DateTimeFormatter createDateFormat() {
 		final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		return dateFormat;

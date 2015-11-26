@@ -1,98 +1,132 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org">
+	xmlns:sec="http://www.thymeleaf.org" class="no-js">
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Profile</title>
-<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css"/>
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
+<script th:src="@{/js/modernizr-custom.js}"></script>
+<script th:src="@{/js/moment.js}"></script>
+<script th:src="@{/js/pikaday.js}"></script>
+
+<script type="text/javascript">
+window.onload = function(){
+	if (!Modernizr.inputtypes.date) {
+		document.getElementById('datebutton').style.display = 'none';
+		var picker = new Pikaday({ 
+			field: document.getElementById('date'), 
+			firstDay: 1,
+			format: 'YYYY-MM-DD',
+			minDate: moment().toDate(),
+			onSelect: function() {
+				document.getElementById('datebutton').click();
+			}
+		});
+	}	
+};
+</script>
+
 </head>
 
-<body>
+<body lang="en">
 
-    <div th:include="header::header"></div>
-    
-    <div id="content">
-	<!-- 
-		Profile picture 
-	-->
-	<img th:src="@{|/img/profPic/${DisplayedUser.id}.png|}"
-		onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
-		alt="Profile picture" width="192" height="192"
-		src="../../img/default-avatar.jpg" />
-	
+	<header th:include="fragments/header::header"></header>
+	<div id="wrapper">
+		<div id="sidebar"></div>
+		<div id="content">
 
-	<!-- 
-		Profile name 
-	-->
-	
-	<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
-		Nachname</h1>
-		
-	<h2 th:title="|Number of ratings: ${Profile.countedRatings}|" th:if="${Profile.rating != null}" th:text="|Rating: ${Profile.rating}|">Rating: 4.5</h2>
+			<div id="userAvatarBox" class="leftSide">
+				<img th:src="@{|/img/profPic/${DisplayedUser.id}.png|}"
+					onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
+					alt="Profile picture" width="192" height="192"
+					src="../../img/default-avatar.jpg" />
 
-    </div>
-	
-	<!-- The following information are only shown if it is the profile from an tutor -->
-	<div class="userInfoBox" th:if="${DisplayedUser.role} == TUTOR">
-		<!-- 
-	    	Biography 
-	    -->
-		<h3>Short biography</h3>
-		<p style="width: 700px" th:text="${Profile.biography}">Lorem ipsum
-			dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-			tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-			voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-			Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-			dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-			elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-			magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-			justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-			takimata sanctus est Lorem ipsum dolor sit amet.</p>
+				<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
+					Nachname</h1>
 
+				<h2 th:title="|Number of ratings: ${Profile.countedRatings}|"
+					th:if="${Profile.rating != null}"
+					th:text="|Rating: ${Profile.rating}|">Rating: 4.5</h2>
 
-		<!-- 
-			Region 
-		-->
-		<p>
-			<b>Region:</b> <span th:text="${Profile.region}"> Bern</span>
-		</p>
-
-		<!-- 
-			Wage 
-		-->
-		<p>
-			<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
-		</p>
-		<p>
-			<b th:if="${Subjects != null}">Teaching:</b><br /> <span
-				th:each="subject:${Subjects}" th:if="${subject != null}"> <small
-				th:text="|${subject.name} (Grade ${subject.grade})|">
-					SubjectOne (Grade 5.0)<br /> SubjectTwo (Grade 5.5)<br />
-			</small><br />
-			</span>
-		</p>
-
-		<div th:if = "${authUser.id!=DisplayedUser.id}">
-			<form action="#" method="post"
-				th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
-				th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
-				<input type="date" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:field="*{date}" name="date" required="required"/>
-				<!-- TODO Implement alternative picker for browsers without html5 support -->
-				<button type="submit" name="getDate">Get Appointments</button>
-				<!--<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>-->
-				<span class="error" th:if="${error_message != null}" th:text="${error_message}">Enter a valid date (yyyy-MM-dd)</span>
-				<div th:each="appointment:*{appointments}">
-					<span
-						th:text="|${appointment.timeslot}:00 Status: ${appointment.availability}|">18:00
-						Status: AVAILABLE </span>
-					<button type="submit" name="request"
-						th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
-						th:value="${appointment.timeslot}">Request</button>
+				<div id="Bio" class="breakable"
+					th:if="${Profile.biography} != null">
+					<h3>Short biography</h3>
+					<p th:text="${Profile.biography}">Lorem ipsum dolor sit amet,
+						consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+						invidunt ut labore et dolore magna aliquyam erat, sed diam
+						voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+						Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+						dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+						elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+						magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+						justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+						takimata sanctus est Lorem ipsum dolor sit amet.</p>
 				</div>
-			</form>
+			</div>
+			<div id="userInfoBox" class="rightSide">
+
+				<div th:if="${Profile.language} != null">
+					<b>Languages:</b> <span th:text="${Profile.language}"> DE, EN</span>
+				</div>
+				<div th:if="${Profile.university} != null">
+					<b>Attended University:</b> <span th:text="${Profile.university}"> Uni Bern</span>
+				</div>
+				<div th:if="${Profile.region} != null">
+					<b>Teaching region:</b> <span th:text="${Profile.region}"> Bern</span>
+				</div>
+
+				<div th:if="${Profile.wage} != 0.00">
+					<b>Wage:</b> <span th:text="${Profile.wage}"> 25.00</span> CHF/h
+				</div>
+				<div th:if="${!Subjects.isEmpty()}">
+					<b>Teaching:</b>
+					<div
+						th:each="subject:${Subjects}" th:if="${subject != null}"> <span
+						th:text="|${subject.name} (Grade ${subject.grade})|">
+							SubjectOne (Grade 5.0)<br /> SubjectTwo (Grade 5.5)<br />
+					</span>
+					</div>
+				</div>
+
+				<div
+					th:if="${authUser.id!=DisplayedUser.id and __${DisplayedUser.role}__ == TUTOR}">
+					<form action="#" method="post"
+						th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
+						th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">
+
+						<fieldset>
+							<legend>Make an Appointment:</legend>
+							<input type="date" id="date"
+								th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"
+								th:field="*{date}" name="date" required="required" />
+							<button type="submit" id="datebutton" name="getDate">Show
+								Availability</button>
+							<!--<span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Enter a valid date (yyyy-MM-dd format)</span>-->
+							<div id="timeslots">
+								<span class="error" th:if="${error_message != null}"
+									th:text="${error_message}">Enter a valid date
+									(yyyy-MM-dd)</span>
+								<div th:each="appointment:*{appointments}">
+									<label id="timeslot"
+										th:attr="title=${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE ? 'Click to send a request':''}">
+										<span th:class="${appointment.availability}"
+										th:text="|${appointment.timeslot}:00 - ${(appointment.timeslot + 1)%24}:00|">18:00
+											- 19:00 </span> <input type="submit" name="request"
+										th:if="${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE}"
+										th:value="${appointment.timeslot}" />
+									</label>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+
+			</div>
 		</div>
+		<div id="sidebar"></div>
 	</div>
-	
+	<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

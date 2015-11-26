@@ -129,7 +129,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getPastAppointments(User tutor, Availability availability) {
 		assert (tutor != null && availability != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailability(tutor, availability);
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(tutor, availability);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -152,7 +152,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getFutureAppointments(User tutor, Availability availability) {
 		assert (tutor != null && availability != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailability(tutor, availability);
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(tutor, availability);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -190,7 +190,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getPendingAppointments(User student) {
 		assert (student != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailability(student, Availability.RESERVED);
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.RESERVED);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -208,12 +208,35 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 		return newAppointments;
 	}
+	
+	@Override
+	public List<Appointment> getFutureAppointmentsAsStudent(User student) {
+		assert (student != null);
 
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.ARRANGED);
+
+		Timestamp timestampNow = new Timestamp((new Date()).getTime());
+
+		List<Appointment> visitedAppointments = new ArrayList<Appointment>();
+
+		if (appointments != null) {
+			for (Appointment appointment : appointments) {
+				if (appointment != null) {
+					int compareResult = timestampNow.compareTo(appointment.getTimestamp());
+					if (compareResult <= 0)
+						visitedAppointments.add(appointment);
+				}
+			}
+		}
+
+		return visitedAppointments;
+	}
+	
 	@Override
 	public List<Appointment> getPastAppointmentsAsStudent(User student) {
 		assert (student != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailability(student, Availability.ARRANGED);
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.ARRANGED);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 

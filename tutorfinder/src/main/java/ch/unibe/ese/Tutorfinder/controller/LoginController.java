@@ -1,7 +1,5 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -12,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +47,14 @@ public class LoginController {
 	}
 
 	/**
+	 * Defines the SignupForm as a ModelAttribute
+	 */
+	@ModelAttribute("signupForm")
+	public SignupForm getSignupForm() {
+		return new SignupForm();
+	}
+
+	/**
 	 * Redirects the {@code /} and {@code /home} to the 
 	 * {@code login.html} page
 	 * @return redirection to login
@@ -57,7 +64,62 @@ public class LoginController {
 		return "redirect:login";
 	}
     
-    /**
+	/**
+	 * Redirects the {@code /register} to the {@code login.html} page
+	 * 
+	 * @return redirection to login
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String register() {
+		return "redirect:/login?register";
+	}
+
+	/**
+	 * Redirects the {@code /success} to the {@code findTutor.html} page
+	 * 
+	 * @return redirection to login
+	 */
+	@RequestMapping(value = "/success", method = RequestMethod.GET)
+	public String success() {
+		return "redirect:findTutor";
+	
+	}
+
+	/**
+	 * Maps the /login page to the login form (login.html) and provides optional
+	 * parameters for displaying messages
+	 * 
+	 * @param error displays invalid credentials message
+	 * @param logout displays successful logout message
+	 * @return ModelAndView for Spring Framework
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+							  @RequestParam(value = "logout", required = false) String logout,
+							  @RequestParam(value = "register", required = false) String register,
+							  @RequestParam(value = "success", required = false) String success) {
+		ModelAndView model = new ModelAndView("login");
+		if (error != null) {
+			model.addObject("error", "Invalid username or password!");
+		}
+	
+		if (logout != null) {
+			model.addObject("msg", "You've been logged out successfully");
+		}
+		
+		if (register != null) {
+			model.addObject("switch", true);
+		}
+		
+		if (success != null) {
+			model.addObject("msg", "Registration complete. Please login below");
+		}
+		model.addObject("loginUrl", "/login");
+		
+		return model;
+	}
+
+	/**
      * Loads the {@link User}'s input from the {@link SignupForm} and
      * creates with this information a new entry in the database.
      * After this is happens, it is possible for the user to login and
@@ -72,93 +134,24 @@ public class LoginController {
      * 			the login page with the necessary error messages
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView create(@Valid SignupForm signupForm, BindingResult result, RedirectAttributes redirectAttributes) {
-    	ModelAndView model;    	
+    public String create(@Valid @ModelAttribute("signupForm") SignupForm signupForm, BindingResult result, RedirectAttributes redirectAttributes) {
     	if (!result.hasErrors()) {
             try {
             	registerService.saveFrom(signupForm);
-            	model = new ModelAndView("signupCompleted");
-            	
+            	return "redirect:/login?success";
 
             } catch (InvalidEmailException e) {
             	result.rejectValue("email", "", e.getMessage());
-            	model = new ModelAndView("login");
-            	switchPage(model);
             }
-
-        } else {
-        	model = new ModelAndView("login");
-        	switchPage(model);
-        }   	
-    	return model;
-    }
-
-	private void switchPage(ModelAndView model) {
-		model.addObject("loginBoxVisibility", "hidden");
-		model.addObject("registerBoxVisibility", "visible");
-		model.addObject("registerCancelButtonAction", "window.location.href='/login'");
-	}
-    
-    /**
-	 * Redirects the {@code /register} to the {@code login.html} page
-	 * 
-	 * @return redirection to login
-	 */
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register() {
+    	}
+    	redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.signupForm", result);
+    	redirectAttributes.addFlashAttribute("signupForm", signupForm);
     	return "redirect:/login?register";
+    	
     }
     
+    
     /**
-	 * Maps the /login page to the login form (login.html) and provides optional
-	 * parameters for displaying messages
-	 * 
-	 * @param error displays invalid credentials message
-	 * @param logout displays successful logout message
-	 * @return ModelAndView for Springframework
-	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, @RequestParam(value = "register", required = false) String register) {
-
-		String loginBoxVis = "visible";
-		String registerBoxVis = "hidden";
-		
-		ModelAndView model = new ModelAndView("login");
-		if (error != null) {
-			model.addObject("error", "Invalid username or password!");
-		}
-		
-		if (register != null){
-			loginBoxVis = "hidden";
-			registerBoxVis = "visible";
-		}
-
-		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
-		}
-		model.addObject("loginBoxVisibility", loginBoxVis);
-		model.addObject("registerBoxVisibility", registerBoxVis);
-		model.addObject("loginUrl", "/login");
-		model.addObject("signupForm", new SignupForm());
-		
-		model.addObject("registerCancelButtonAction", "document.getElementById('registerBox').style.visibility='hidden'; document.getElementById('loginBox').style.visibility='visible'");
-		
-		return model;
-	}
-
-	/**
-	 * Redirects the {@code /success} to the {@code findTutor.html} page
-	 * 
-	 * @return redirection to login
-	 */
-	@RequestMapping(value = "/success", method = RequestMethod.GET)
-	public String success() {
-		return "redirect:findTutor";
-
-	}
-
-	/**
 	 * Handles logout of the user by invalidating his session.
 	 * 
 	 * @param request
@@ -172,22 +165,5 @@ public class LoginController {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return "redirect:/login?logout";
-	}
-
-	/**
-	 * Displays custom access denied page with optional message displaying username
-	 * 
-	 * @param user authenticated {@link Principal} user object 
-	 * @return
-	 */
-	@RequestMapping(value = "/403", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView accessDenied(Principal user) {
-
-		ModelAndView model = new ModelAndView("403");
-		if (user != null) {
-			model.addObject("msg", "Name: " + user.getName());
-		}
-		return model;
-
 	}
 }

@@ -106,10 +106,8 @@ public class UpdateProfileController {
 		if (!result.hasErrors()) {
 			try {
 				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
-				// TODO show success message to the user
 			} catch (InvalidProfileException e) {
 				model.addObject("page_error", e.getMessage());
-				// TODO show error massage to the user
 			}
 		}
 		model = prepareFormService.prepareForm(authUser, model);
