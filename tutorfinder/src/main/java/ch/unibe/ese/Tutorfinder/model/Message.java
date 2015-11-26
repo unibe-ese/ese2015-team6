@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -34,11 +35,11 @@ public class Message {
 	private Timestamp timestamp;
 
 	@ManyToOne
-	@Column(name = "sender")
+	@JoinColumn(name = "sender")
 	private User sender;
 
 	@ManyToOne
-	@Column(name = "receiver")
+	@JoinColumn(name = "receiver")
 	private User receiver;
 
 	@NotNull

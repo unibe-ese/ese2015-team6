@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+<title>Messages</title>
+
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
+
+</head>
+<body>
+	<header th:include="fragments/header::header"></header>
+	<div id="wrapper">
+		<div id="sidebar"></div>
+		<div id="content" class="full">
+			<h1>Message overview</h1>
+			<div id="leftSide">
+				<select id="viewBox">
+					<option value="unread">Unread</option>
+					<option value="inbox">Inbox</option>
+					<option value="outbox">Outbox</option>
+				</select>
+				<div id="messageList"></div>
+			</div>
+			<div class="messageList">
+				<div id="inbox">
+					<span th:each="message:${inbox}" th:if="${message != null}">
+						<strong>From:</strong> <small th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
+							Student</small><br /> <strong th:text="|${message.subject}|">
+							Subject</strong> <br /> <i
+						th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
+						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
+							21:00</i>
+					</span>
+				</div>
+				<div id="outbox">
+					<span th:each="message:${outbox}" th:if="${message != null}">
+						<strong>To:</strong> <small th:text="|${message.receiver.firstName} ${message.receiver.lastName}|">Max
+							Student</small> <br /> <strong th:text="|${message.subject}|">
+							Subject</strong> <br /> <i
+						th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
+						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
+							21:00</i>
+					</span>
+				</div>
+				<div id="unreadbox">
+					<span th:each="message:${unread}" th:if="${message != null}">
+						<strong>From:</strong> <small th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
+							Student</small><br /> <strong th:text="|${message.subject}|">
+							Subject</strong> <br /> <i
+						th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
+						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
+							21:00</i>
+					</span>
+				</div>
+			</div>
+			<div id="MessageBox"></div>
+		</div>
+		<div id="sidebar"></div>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

@@ -43,7 +43,6 @@ public class MessageController {
 		ModelAndView model = new ModelAndView("messagesOverview");
 		
 		User tmpUser = userService.getUserByPrincipal(authUser);
-		model.addObject("authUser", tmpUser);
 		
 		if(inbox != null) {
 			model.addObject("inbox", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
