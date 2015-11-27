@@ -6,7 +6,6 @@ package ch.unibe.ese.Tutorfinder.controller.pojos.Forms;
  * @version	1.0
  *
  */
-public class FindTutorForm {
-	
+public class FindTutorFilterForm {
 	
 }

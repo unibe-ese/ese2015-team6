@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectException;
-import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorForm;
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorFilterForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Profile;
@@ -51,7 +51,7 @@ public class FindTutorController {
 				model = new ModelAndView("findTutor");
 			}
 		}
-		model.addObject("findTutorForm", new FindTutorForm());
+		model.addObject("findTutorForm", new FindTutorFilterForm());
 		return model;
 	}
 	
@@ -65,7 +65,7 @@ public class FindTutorController {
 	 * @return redirection to /findTutor with the query {@code String}
 	 */
 	@RequestMapping(value="/submit", method=RequestMethod.POST)
-	public String submit(@Valid FindTutorForm form, BindingResult result) {
+	public String submit(@Valid FindTutorFilterForm form, BindingResult result) {
 		return "";//TODO return value
 	}
 

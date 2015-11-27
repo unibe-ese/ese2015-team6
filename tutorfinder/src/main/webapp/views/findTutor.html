@@ -15,17 +15,17 @@
 		<div id="content">
 
 			<div id="search" class="full">
-				<form id="search"
-					th:autocomplete="off" th:name="findTutorForm">
-					<fieldset>
-						<div>
-							<input type="search" th:name="q" th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
-								maxlength="45" required="required"/>
-							<button>Search</button>
-						</div>
-					</fieldset>
+				<form th:autocomplete="off">
+					<input type="search" th:name="q"
+						th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
+						maxlength="45" required="required" />
+					<button>Search</button>
 				</form>
-				<div th:replace="fragments/results:: (${param.q != null}? results : welcome)">
+				<form>
+					<fieldset></fieldset>
+				</form>
+				<div
+					th:replace="fragments/results:: (${param.q != null}? results : welcome)">
 				</div>
 			</div>
 		</div>
