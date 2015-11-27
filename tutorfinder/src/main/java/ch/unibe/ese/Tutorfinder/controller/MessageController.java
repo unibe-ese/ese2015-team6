@@ -42,20 +42,16 @@ public class MessageController {
 	 * @return ModelAndView for Spring framework with the users messagesOverview
 	 */
 	@RequestMapping(value = "/messages", method = RequestMethod.GET)
-	public ModelAndView messages(Principal authUser, @RequestParam(value = "view", required = false) String view,
+	public ModelAndView messages(Principal authUser, @RequestParam(value = "view", required = true) String view,
 			@RequestParam(value = "show", required = false) Long show) {
 		ModelAndView model = new ModelAndView("messagesOverview");
 
 		User tmpUser = userService.getUserByPrincipal(authUser);
 
-		if (view != null) {
-			if (view.equals(ConstantVariables.INBOX)) {
-				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
-			} else if (view.equals(ConstantVariables.OUTBOX)) {
-				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
-			} else {
-				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
-			}
+		if (view.equals(ConstantVariables.INBOX)) {
+			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
+		} else if (view.equals(ConstantVariables.OUTBOX)) {
+			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
 		} else {
 			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
 		}
