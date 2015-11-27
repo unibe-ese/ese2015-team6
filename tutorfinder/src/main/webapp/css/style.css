@@ -71,21 +71,17 @@ header {
 }
 
 footer {
-	position: relative;
 	display: table-row;
 	height: 40px;
 	background-color: gray;
 }
 
 footer > div {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+	height: inherit;
+	width: 100%;
 }
 
 footer > div > p {
