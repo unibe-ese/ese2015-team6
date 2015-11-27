@@ -71,7 +71,6 @@ header {
 }
 
 footer {
-	position: relative;
 	display: table-row;
 	height: 40px;
 	background-color: gray;
@@ -79,18 +78,10 @@ footer {
 
 footer > div {
 	display: flex;
-	position: absolute;
-	height: 100%;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
 	justify-content: flex-end;
 	align-items: center;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
-footer > div { position:relative; }
+	height: inherit;
+	width: 100%;
 }
 
 footer > div > p {
