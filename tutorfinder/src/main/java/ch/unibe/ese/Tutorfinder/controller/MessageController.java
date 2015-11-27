@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
+import ch.unibe.ese.Tutorfinder.model.Message;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
@@ -47,16 +49,29 @@ public class MessageController {
 		ModelAndView model = new ModelAndView("messagesOverview");
 
 		User tmpUser = userService.getUserByPrincipal(authUser);
-
+		
+		List<Message> tmpMessageList;
 		if (view.equals(ConstantVariables.INBOX)) {
-			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
+			tmpMessageList =  messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser);
 		} else if (view.equals(ConstantVariables.OUTBOX)) {
-			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
+			tmpMessageList =  messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser);
 		} else {
-			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
+			tmpMessageList =  messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser);
+		}
+		model.addObject("messageList", tmpMessageList);
+		
+		//marks message as read
+		if (show != null) {
+			Long messageId = (tmpMessageList.get(show.intValue())).getId();
+			messageService.markMessageAsRead(messageId, tmpUser);
 		}
 
 		return model;
+	}
+	
+	@RequestMapping(value = "/message")
+	public String messages() {
+		return "forward:/messages?view=unread";
 	}
 
 	@RequestMapping(value = "/newMessage", params = "newMessage", method = RequestMethod.POST)
@@ -82,7 +97,7 @@ public class MessageController {
 		if (!result.hasErrors()) {
 			try {
 				messageService.saveFrom(messageForm, authUser);
-				model = messages(authUser, ConstantVariables.OUTBOX, null);
+				model = messages(authUser, ConstantVariables.OUTBOX, new Long(0));
 
 			} catch (InvalidMessageException e) {
 				model.addObject("page_error", e.getMessage());

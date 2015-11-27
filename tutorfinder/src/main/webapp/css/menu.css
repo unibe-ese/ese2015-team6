@@ -94,7 +94,7 @@ nav>ul>li a+div>ul>li {
 }
 
 nav>ul>li:hover>div {
-	height: 105px;
+	height: 140px;
 }
 
 /* ---------- Dropdown animation ---------- */
