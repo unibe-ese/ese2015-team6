@@ -7,8 +7,8 @@
 <body>
 
 	<div th:fragment="results" id="results" class="full">
-		<h1>
-			Showing Tutors for <span th:text="${param.q[0]}">Subject</span>
+		<h1 th:if="${Result[0] == null}">
+			Sorry, we could not find any tutors for <span th:text="|'${param.q[0]}'|">Subject</span>
 		</h1>
 		<div th:each="foundTutor : ${Result}"
 			th:if="${foundTutor != null}">
@@ -17,15 +17,16 @@
 				alt="Profile picture" width="192" height="192" src="../../img/default-avatar.jpg" />
 				<div>
 				<span class="name" th:text="|${foundTutor.key.firstName} ${foundTutor.key.lastName}|">Max Muster</span> 
-				<span class="rating" th:title="|Based on ${foundTutor.key.profile.countedRatings} ratings|"
-					th:if="${foundTutor.key.profile.rating != null}" th:text="|Rating: ${foundTutor.key.profile.rating}|"
-					>Rating: 4.5</span>
+				<span class="rating" th:title="|Average rating of ${foundTutor.key.profile.rating} based on ${foundTutor.key.profile.countedRatings} ratings|"
+					th:if="${foundTutor.key.profile.rating != null}" th:text="|Rating: ${foundTutor.key.profile.rating} (${foundTutor.key.profile.countedRatings})|"
+					>Rating: 4.5 (4)</span>
 				</div>
 				<div id="subjects">
 					<span class="subject" th:each="subject : ${foundTutor.value}">
 						<span th:if="${subject != null}" 
+						th:title="|${foundTutor.key.firstName} ${foundTutor.key.lastName} offers help for ${subject.name} where he received a grade of ${subject.grade}|"
 						th:text="|${subject.name} (${subject.grade})|"
-						>Subject</span><br />
+						>Subject (5.0)</span><br />
 					</span>
 				</div>
 		</div>
