@@ -10,9 +10,8 @@
 	href="../css/style.css" />
 <script>
 	/*<![CDATA[*/
-	function showMessage(x) {
-		var path = document.location.href;
-		var id = path + "&show=" + x + "";
+	function showMessage(show, view) {
+		var id = "messages?view=" + view + "&show=" + show + "";
 		document.location.href = id;
 	};
 	/*]]>*/
@@ -27,11 +26,10 @@
 			<div id="leftSide">
 				<a th:href="@{/messages}" href="/message.html">Unread</a> <a
 					th:href="@{/messages?view=inbox}" href="/message.html">Inbox</a> <a
-					th:href="@{/messages?view=outbox}" href="/message.html">Outbox</a>
-			</div>
-			<div class="messageList">
-					<span th:each="message : ${messageList}" th:if="${message != null}"
-						th:onClick="'javascript:showMessage(\'' + ${message.id} + '\');'">
+					th:href="@{/messages?view=outbox}" href="/message.html">Outbox</a><br />
+				<div class="messageList">
+					<span th:each="message, iter : ${messageList}" th:if="${message != null}"
+						th:onClick="'javascript:showMessage(\'' + ${iter.index} + '\', \'' + ${param.view[0]} + '\');'" th:id="${iter.index}">
 						<strong>From:</strong> <small
 						th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
 							Student</small><br /> <strong th:text="|${message.subject}|">
@@ -41,19 +39,24 @@
 							21:00</i><br />
 					</span>
 
+				</div>
 			</div>
+			<div id="rightSide">
+				<div id="MessageBox" th:if="${param.show != null}">
+					<strong>From:</strong> <small
+						th:text="|${messageList[ __${param.show[0]}__ ].sender.firstName} ${messageList[' __${param.show[0]}__ '].sender.lastName}|">Max
+						Student</small><br /> <strong>To:</strong> <small
+						th:text="|${messageList[ __${param.show[0]}__ ].receiver.firstName} ${messageList[ __${param.show[0]}__ ].receiver.lastName}|">Max
+						Student</small><br /> <strong th:text="|${messageList[ __${param.show[0]}__ ].subject}|">
+						Subject</strong> <br /> <i
+						th:text="|${messageList[ __${param.show[0]}__ ].timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${messageList[ __${param.show[0]}__ ].timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${messageList[ __${param.show[0]}__ ].timestamp.toLocalDateTime().toLocalDate().getYear()}
+						${messageList[ __${param.show[0]}__ ].timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
+						21:00</i><br />
+					<p th:text="|${messageList[ __${param.show[0]}__ ].message}|" />
+				</div>
+			</div>
+			<div id="newMessagePopop">
 			
-			<div id="MessageBox" th:if="${param.show != null}">
-				<strong>From:</strong> <small
-					th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
-					Student</small><br /> <strong>To:</strong> <small
-					th:text="|${message.receiver.firstName} ${message.receiver.lastName}|">Max
-					Student</small><br /> <strong th:text="|${message.subject}|">
-					Subject</strong> <br /> <i
-					th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
-						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
-					21:00</i><br />
-				<p th:text="|${message.message}|" />
 			</div>
 		</div>
 		<div id="sidebar"></div>

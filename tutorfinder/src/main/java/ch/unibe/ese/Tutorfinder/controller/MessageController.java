@@ -18,7 +18,6 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
-import ch.unibe.ese.Tutorfinder.model.Message;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
@@ -52,40 +51,16 @@ public class MessageController {
 		if (view != null) {
 			if (view.equals(ConstantVariables.INBOX)) {
 				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
-				addMessageToModel(show, model, tmpUser);
 			} else if (view.equals(ConstantVariables.OUTBOX)) {
 				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
-				addMessageToModel(show, model, tmpUser);
 			} else {
 				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
-				addMessageToModel(show, model, tmpUser);
 			}
 		} else {
 			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
-			addMessageToModel(show, model, tmpUser);
 		}
 
 		return model;
-	}
-
-	/**
-	 * Adds a message object to the model if the show parameter is not null
-	 * 
-	 * @param show
-	 *            holds the id of a message, else no message is displayed
-	 * @param model
-	 *            which needs to be updated
-	 * @param authUser
-	 *            actual logged in user
-	 */
-	private void addMessageToModel(Long show, ModelAndView model, User authUser) {
-		if (show != null) {
-			messageService.markMessageAsRead(show, authUser);
-			Message tmpMessage = messageService.getMessageById(show);
-			if ((messageService.getMessageByBox(ConstantVariables.INBOX, authUser)).contains(tmpMessage)) {
-				model.addObject("message", tmpMessage);
-			}
-		}
 	}
 
 	@RequestMapping(value = "/newMessage", params = "newMessage", method = RequestMethod.POST)
