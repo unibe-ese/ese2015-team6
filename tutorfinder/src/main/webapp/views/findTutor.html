@@ -7,6 +7,7 @@
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
 </head>
+
 <body>
 	<header th:include="fragments/header::header"></header>
 	<div id="wrapper">
@@ -14,13 +15,13 @@
 		<div id="content">
 
 			<div id="search" class="full">
-				<form action="#" th:object="${findTutorForm}" th:action="@{/submit}"
-					th:autocomplete="off" method="post" th:name="findTutorForm">
+				<form id="search"
+					th:autocomplete="off" th:name="findTutorForm">
 					<fieldset>
 						<div>
-							<input type="search" th:name="subject" tabindex="2"
-								maxlength="45" required="required" />
-							<button type="submit" class="btn btn-primary">Search</button>
+							<input type="search" th:name="q" th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
+								maxlength="45" required="required"/>
+							<button>Search</button>
 						</div>
 					</fieldset>
 				</form>

@@ -66,7 +66,7 @@ public class FindTutorController {
 	 */
 	@RequestMapping(value="/submit", method=RequestMethod.POST)
 	public String submit(@Valid FindTutorForm form, BindingResult result) {
-		return "redirect:/findTutor?q=" + form.getSubject();
+		return "";//TODO return value
 	}
 
 }
