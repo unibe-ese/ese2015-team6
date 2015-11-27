@@ -1,8 +1,6 @@
 package unitTest.service.implementation;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 
 import java.util.LinkedList;
@@ -18,7 +16,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 import ch.unibe.ese.Tutorfinder.model.Subject;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -35,7 +32,6 @@ public class FindTutorServiceImplTest {
 	
 	private Subject mockSubject;
 	private User mockUser;
-	private FindTutorForm findTutorForm = new FindTutorForm();
 	private LinkedList<Subject> subjectList = new LinkedList<Subject>();
 	
 	@Before
@@ -47,34 +43,6 @@ public class FindTutorServiceImplTest {
 		
 		subjectList.add(this.mockSubject);
 		
-	}
-	
-	@Test
-	public void testGetUsersFrom() {
-		//GIVEN
-		LinkedList<User> tmpMockUser = new LinkedList<User>();
-		tmpMockUser.add(this.mockUser);
-		when(subjectDao.findByName(anyString())).thenReturn(this.subjectList);
-		when(mockSubject.getUser()).thenReturn(this.mockUser);
-
-		//WHEN
-		Iterable<User> tmpUser = findTutorService.getUsersFrom(this.findTutorForm);
-		
-		//THEN
-		assertEquals(tmpUser, tmpMockUser);
-	}
-	
-	@Test
-	public void testGetNullUsersFrom() {
-		//GIVEN
-		when(subjectDao.findByName(anyString())).thenReturn(this.subjectList);
-		when(mockSubject.getUser()).thenReturn(null);
-
-		//WHEN
-		Iterable<User> tmpUser = findTutorService.getUsersFrom(this.findTutorForm);
-		
-		//THEN
-		assertEquals(tmpUser, new LinkedList<User>());
 	}
 	
 	@Test
