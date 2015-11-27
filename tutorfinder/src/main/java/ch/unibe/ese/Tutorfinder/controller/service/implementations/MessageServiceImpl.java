@@ -72,4 +72,10 @@ public class MessageServiceImpl implements MessageService {
 		return newMessage;
 	}
 
+	@Override
+	public Message getMessageById(Long id) {
+		assert (id != null);
+		return messageDao.findOne(id);
+	}
+
 }

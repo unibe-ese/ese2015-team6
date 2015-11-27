@@ -8,7 +8,15 @@
 
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
-
+<script>
+	/*<![CDATA[*/
+	function showMessage(x) {
+		var path = document.location.href;
+		var id = path + "&show=" + x + "";
+		document.location.href = id;
+	};
+	/*]]>*/
+</script>
 </head>
 <body>
 	<header th:include="fragments/header::header"></header>
@@ -17,46 +25,36 @@
 		<div id="content" class="full">
 			<h1>Message overview</h1>
 			<div id="leftSide">
-				<select id="viewBox">
-					<option value="unread">Unread</option>
-					<option value="inbox">Inbox</option>
-					<option value="outbox">Outbox</option>
-				</select>
-				<div id="messageList"></div>
+				<a th:href="@{/messages}" href="/message.html">Unread</a> <a
+					th:href="@{/messages?view=inbox}" href="/message.html">Inbox</a> <a
+					th:href="@{/messages?view=outbox}" href="/message.html">Outbox</a>
 			</div>
 			<div class="messageList">
-				<div id="inbox">
-					<span th:each="message:${inbox}" th:if="${message != null}">
-						<strong>From:</strong> <small th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
+					<span th:each="message : ${messageList}" th:if="${message != null}"
+						th:onClick="'javascript:showMessage(\'' + ${message.id} + '\');'">
+						<strong>From:</strong> <small
+						th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
 							Student</small><br /> <strong th:text="|${message.subject}|">
 							Subject</strong> <br /> <i
 						th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
-						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
-							21:00</i>
+						${message.timestamp.toLocalDateTime().toLocalTime()} |">26.11.2015
+							21:00</i><br />
 					</span>
-				</div>
-				<div id="outbox">
-					<span th:each="message:${outbox}" th:if="${message != null}">
-						<strong>To:</strong> <small th:text="|${message.receiver.firstName} ${message.receiver.lastName}|">Max
-							Student</small> <br /> <strong th:text="|${message.subject}|">
-							Subject</strong> <br /> <i
-						th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
-						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
-							21:00</i>
-					</span>
-				</div>
-				<div id="unreadbox">
-					<span th:each="message:${unread}" th:if="${message != null}">
-						<strong>From:</strong> <small th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
-							Student</small><br /> <strong th:text="|${message.subject}|">
-							Subject</strong> <br /> <i
-						th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
-						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
-							21:00</i>
-					</span>
-				</div>
+
 			</div>
-			<div id="MessageBox"></div>
+			
+			<div id="MessageBox" th:if="${param.show != null}">
+				<strong>From:</strong> <small
+					th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
+					Student</small><br /> <strong>To:</strong> <small
+					th:text="|${message.receiver.firstName} ${message.receiver.lastName}|">Max
+					Student</small><br /> <strong th:text="|${message.subject}|">
+					Subject</strong> <br /> <i
+					th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
+						${message.timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
+					21:00</i><br />
+				<p th:text="|${message.message}|" />
+			</div>
 		</div>
 		<div id="sidebar"></div>
 	</div>

@@ -18,6 +18,7 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
+import ch.unibe.ese.Tutorfinder.model.Message;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
@@ -35,24 +36,56 @@ public class MessageController {
 	 * @param authUser
 	 *            actually logged in user, is used to get the users messages
 	 *            information and shows it to the user to allow reading them
+	 * @param inbox
+	 *            is not null when the inbox needs to be shown
+	 * @param outbox
+	 *            is not null when the outbox needs to be shown
 	 * @return ModelAndView for Spring framework with the users messagesOverview
 	 */
 	@RequestMapping(value = "/messages", method = RequestMethod.GET)
-	public ModelAndView messages(Principal authUser, @RequestParam(value = "inbox", required = false) String inbox,
-			@RequestParam(value = "outbox", required = false) String outbox) {
+	public ModelAndView messages(Principal authUser, @RequestParam(value = "view", required = false) String view,
+			@RequestParam(value = "show", required = false) Long show) {
 		ModelAndView model = new ModelAndView("messagesOverview");
-		
+
 		User tmpUser = userService.getUserByPrincipal(authUser);
-		
-		if(inbox != null) {
-			model.addObject("inbox", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
-		} else if (outbox != null) {
-			model.addObject("outbox", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
+
+		if (view != null) {
+			if (view.equals(ConstantVariables.INBOX)) {
+				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.INBOX, tmpUser));
+				addMessageToModel(show, model, tmpUser);
+			} else if (view.equals(ConstantVariables.OUTBOX)) {
+				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.OUTBOX, tmpUser));
+				addMessageToModel(show, model, tmpUser);
+			} else {
+				model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
+				addMessageToModel(show, model, tmpUser);
+			}
 		} else {
-			model.addObject("unread", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
+			model.addObject("messageList", messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser));
+			addMessageToModel(show, model, tmpUser);
 		}
 
 		return model;
+	}
+
+	/**
+	 * Adds a message object to the model if the show parameter is not null
+	 * 
+	 * @param show
+	 *            holds the id of a message, else no message is displayed
+	 * @param model
+	 *            which needs to be updated
+	 * @param authUser
+	 *            actual logged in user
+	 */
+	private void addMessageToModel(Long show, ModelAndView model, User authUser) {
+		if (show != null) {
+			messageService.markMessageAsRead(show, authUser);
+			Message tmpMessage = messageService.getMessageById(show);
+			if ((messageService.getMessageByBox(ConstantVariables.INBOX, authUser)).contains(tmpMessage)) {
+				model.addObject("message", tmpMessage);
+			}
+		}
 	}
 
 	@RequestMapping(value = "/newMessage", params = "newMessage", method = RequestMethod.POST)
@@ -76,19 +109,19 @@ public class MessageController {
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("messagesOvervice");
 		if (!result.hasErrors()) {
-            try {
-            	messageService.saveFrom(messageForm, authUser);
-            	model = messages(authUser, null, ConstantVariables.OUTBOX);
+			try {
+				messageService.saveFrom(messageForm, authUser);
+				model = messages(authUser, ConstantVariables.OUTBOX, null);
 
-            } catch (InvalidMessageException e) {
-            	model.addObject("page_error", e.getMessage());
-            }
-        } else {
-        	User tmpUser = userService.getUserByPrincipal(authUser);
-    		model.addObject("authUser", tmpUser);
-        	
-        	model.addObject("messageForm", messageForm);
-        } 
+			} catch (InvalidMessageException e) {
+				model.addObject("page_error", e.getMessage());
+			}
+		} else {
+			User tmpUser = userService.getUserByPrincipal(authUser);
+			model.addObject("authUser", tmpUser);
+
+			model.addObject("messageForm", messageForm);
+		}
 
 		return model;
 	}

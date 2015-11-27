@@ -43,4 +43,12 @@ public interface MessageService {
 	 * @return the new created and saved message
 	 */
 	public Message saveFrom(MessageForm messageForm, Principal authUser);
+
+	/**
+	 * Search in the database for a message with the given id
+	 * 
+	 * @param id for searching the Message, not null
+	 * @return Message with the given id
+	 */
+	public Message getMessageById(Long id);
 }
