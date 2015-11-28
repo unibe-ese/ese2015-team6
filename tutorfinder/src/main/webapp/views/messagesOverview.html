@@ -14,13 +14,13 @@
 	<header th:include="fragments/header::header"></header>
 	<div id="wrapper">
 		<div id="sidebar"></div>
-		<div id="content" class="full">
+		<div id="content">
+			<div class="leftSide">
 			<h1>Message overview</h1>
-			<div id="leftSide">
 				<a th:href="@{/messages?view=unread}" href="/message.html">Unread</a>
 				<a th:href="@{/messages?view=inbox}" href="/message.html">Inbox</a>
 				<a th:href="@{/messages?view=outbox}" href="/message.html">Outbox</a><br />
-				<div class="messageList" th:with="view=${param.view[0]}"
+				<div id="messageList" th:with="view=${param.view[0]}"
 					th:unless="${param.view == null}">
 					<div th:each="message, iter : ${messageList}"
 						th:if="${message != null}">
@@ -38,16 +38,13 @@
 
 				</div>
 			</div>
-			<div id="rightSide">
-				<div id="MessageBox" th:with="show=${param.show[0]}"
-					th:unless="${param.show == null}" th:if="${show != null}">
+			<div class="rightSide">
+				<div id="messageBox" th:with="show=${param.show[0]}"
+					th:if="${param.show != null}">
 					<h2>Message</h2>
 					<a th:if="${authUser.id != messageList[__${show}__].sender.id}"
 						th:href="@{/newMessage(receiver=${messageList[__${show}__].sender.id})}"
-						href="/newMessage">Answer</a> <a
-						th:if="${authUser.id != messageList[__${show}__].receiver.id}"
-						th:href="@{/newMessage(receiver=${messageList[__${show}__].receiver.id})}"
-						href="/newMessage">Rewrite</a> <strong>From:</strong> <a
+						href="/newMessage">Answer</a><strong>From:</strong> <a
 						th:href="@{/showProfile(userId=${messageList[__${show}__].sender.id})}"
 						href="/showProfile"
 						th:text="|${messageList[ __${show}__].sender.firstName} ${messageList[' __${show}__'].sender.lastName}|">Max

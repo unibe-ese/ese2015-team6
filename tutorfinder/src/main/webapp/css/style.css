@@ -177,6 +177,18 @@ fieldset {
 	padding-bottom: 10px;
 }
 
+#messageList > div {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: solid lightgray 1px;
+}
+
+#messageBox {
+	margin: 5px;
+	border: solid gray 2px;
+	height: inherit;
+}
+
 /*EditProfile*/
 #availability {
 	margin-top: 50px;
