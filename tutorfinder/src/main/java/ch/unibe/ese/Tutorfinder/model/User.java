@@ -138,6 +138,4 @@ public class User {
 				+ role + ", profile=" + profile + "]";
 	}
 	
-	
-
 }

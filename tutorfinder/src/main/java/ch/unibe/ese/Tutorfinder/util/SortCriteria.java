@@ -1,5 +1,6 @@
 package ch.unibe.ese.Tutorfinder.util;
 
+
 public enum SortCriteria {
 	
 	/**

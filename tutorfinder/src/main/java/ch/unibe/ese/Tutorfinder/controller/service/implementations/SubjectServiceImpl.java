@@ -81,4 +81,17 @@ public class SubjectServiceImpl implements SubjectService {
 		return tmpSubjects;
 	}
 
+	@Override
+	public double getAverageGradeByUser(User user) {
+		ArrayList<Subject> tmpSubjects = subjectDao.findAllByUser(user);
+		double sum = 0d;
+		for(Subject subject : tmpSubjects) {
+			double grade = subject.getGrade();
+			assert (grade <= 6d && grade >= 1d);
+			sum += grade;
+		}
+		double average = sum/tmpSubjects.size();
+		return average;
+	}
+
 }

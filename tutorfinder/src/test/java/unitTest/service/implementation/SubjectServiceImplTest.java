@@ -144,4 +144,28 @@ public class SubjectServiceImplTest {
 		subjectService.getAllSubjectsByUser(this.mockUser);
 		
 	}
+	
+	@Test
+	public void testGetAverageGradeByUser() {
+		this.subjectList.add(this.mockSubject);
+		this.subjectList.add(this.mockSubject);
+		this.subjectList.add(this.mockSubject);
+		
+		when(subjectDao.findAllByUser(mockUser)).thenReturn(subjectList);
+		
+		for (double var1 = 0; var1 <= 6.0; var1 = var1+0.5) {
+			for (double var2 = 0; var2 <= 6.0; var2 = var2+0.5) {
+				for (double var3 = 0; var3 <= 6.0; var3 = var3+0.5) {
+					for (double var4 = 0; var4 <= 6.0; var4 = var4+0.5) {
+						double testAverage = (var1 + var2 + var3 + var4)/4;
+						when(mockSubject.getGrade()).thenReturn(var1, var2, var3, var4);
+						double got = subjectService.getAverageGradeByUser(mockUser);
+						assertEquals(testAverage, got, testAverage);
+					}
+				}
+			}
+		}
+		
+	}
+	
 }
