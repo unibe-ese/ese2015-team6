@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,9 +65,12 @@ public class MessageController {
 		
 		//marks message as read
 		if (show != null) {
-			Long messageId = (tmpMessageList.get(show.intValue())).getId();
-			messageService.markMessageAsRead(messageId, tmpUser);
+			Message tmpMessage = tmpMessageList.get(show.intValue());
+			if (tmpUser != tmpMessage.getReceiver()) {
+			messageService.markMessageAsRead(tmpMessage.getId(), tmpUser);
+			}
 		}
+		model.addObject("authUser", tmpUser);
 
 		return model;
 	}
@@ -74,18 +80,24 @@ public class MessageController {
 		return "forward:/messages?view=unread";
 	}
 
-	@RequestMapping(value = "/newMessage", params = "newMessage", method = RequestMethod.POST)
+	@RequestMapping(value = "/newMessage", params = "receiver", method = RequestMethod.GET)
 	public ModelAndView newMessage(Principal authUser, final HttpServletRequest req) {
-		ModelAndView model = new ModelAndView("messagesOverview");
+		ModelAndView model;
 
 		User tmpUser = userService.getUserByPrincipal(authUser);
-		model.addObject("authUser", tmpUser);
-
-		final Long receiverId = Long.valueOf(req.getParameter("newMessage"));
+		
+		final Long receiverId = Long.valueOf(req.getParameter("receiver"));
+		
+		if (tmpUser.getId() != receiverId) {
 		MessageForm messageForm = new MessageForm();
 		messageForm.setReceiver(userService.getUserById(receiverId));
-
+		messageForm.setReceiverId(receiverId);
+		model = new ModelAndView("newMessage");
 		model.addObject("messageForm", messageForm);
+		model.addObject("authUser", tmpUser);
+		} else {
+			model = new ModelAndView("findTutor");
+		}
 
 		return model;
 	}
@@ -93,14 +105,18 @@ public class MessageController {
 	@RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
 	public ModelAndView sendMessage(Principal authUser, @Valid MessageForm messageForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		ModelAndView model = new ModelAndView("messagesOvervice");
+		ModelAndView model = new ModelAndView("messagesOverview");
 		if (!result.hasErrors()) {
 			try {
 				messageService.saveFrom(messageForm, authUser);
-				model = messages(authUser, ConstantVariables.OUTBOX, new Long(0));
+				model = new ModelAndView("findTutor");
 
 			} catch (InvalidMessageException e) {
+				model = new ModelAndView("newMessage");
+				model.addObject("messageForm", messageForm);
+				model.addObject("authUser", userService.getUserByPrincipal(authUser));
 				model.addObject("page_error", e.getMessage());
+				//TODO show error message
 			}
 		} else {
 			User tmpUser = userService.getUserByPrincipal(authUser);
@@ -110,6 +126,16 @@ public class MessageController {
 		}
 
 		return model;
+	}
+	
+	/**
+	 * Converts empty fields to null values
+	 * 
+	 * @param binder
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 
 }

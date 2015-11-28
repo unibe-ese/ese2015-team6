@@ -2,8 +2,6 @@ package ch.unibe.ese.Tutorfinder.controller.pojos.Forms;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
@@ -13,13 +11,16 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
  */
 public class MessageForm {
 
-	@NotNull
+	
 	private User receiver;
+	
+	@NotNull
+	private Long receiverId;
 
-	@NotBlank(message = ConstantVariables.SUBJECT_ERRORMESSAGE)
+	@NotNull(message = ConstantVariables.SUBJECT_ERRORMESSAGE)
 	private String subject;
-
-	@NotBlank(message = ConstantVariables.MESSAGE_ERRORMESSAGE)
+	
+	@NotNull(message = ConstantVariables.MESSAGE_ERRORMESSAGE)
 	private String message;
 
 	
@@ -30,6 +31,14 @@ public class MessageForm {
 
 	public void setReceiver(User receiver) {
 		this.receiver = receiver;
+	}
+
+	public Long getReceiverId() {
+		return receiverId;
+	}
+
+	public void setReceiverId(Long receiverId) {
+		this.receiverId = receiverId;
 	}
 
 	public String getSubject() {

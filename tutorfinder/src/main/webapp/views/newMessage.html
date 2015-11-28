@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org" class="no-js">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Message</title>
+<link rel="stylesheet" th:href="@{/css/style.css}"
+	href="../css/style.css" />
+
+<script>
+	/*<![CDATA[*/
+	function cancel(userId) {
+		var id = "showProfile?userId=" + userId + "";
+		document.location.href = id;
+	};
+	/*]]>*/
+</script>
+
+</head>
+
+<body lang="en">
+
+	<header th:include="fragments/header::header"></header>
+	<div id="wrapper">
+		<div id="sidebar"></div>
+
+		<div id="content">
+			<div id="newMessageBox">
+				<form id="newMessageBox" action="#" th:action="@{/sendMessage}"
+					th:object="${messageForm}" th:name="messageForm" method="post">
+					<div>
+						<Strong>To:</Strong> <a
+							th:href="@{/showProfile(userId=${messageForm.receiver.id})}"
+							href="showProfile(userId=${messageForm.receiver.id})}"
+							th:text="|${messageForm.receiver.firstName} ${messageForm.receiver.lastName}|">Max
+							Muster</a>
+					</div>
+					<fieldset>
+					<input type="hidden" th:name="receiverId" th:value="*{receiverId}" />
+					</fieldset>
+					<fieldset>
+						<input type="text" th:name="subject" th:value="*{subject}"
+							tabindex="1" maxlength="255" required="required"
+							placeholder="Subject" /> <span class="error"
+							th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></span>
+					</fieldset>
+					<fieldset>
+						<textarea rows="5" cols="50" tabindex="2" th:value="*{message}"
+							th:field="*{message}" placeholder="message">
+						</textarea>
+						<span class="error" th:if="${#fields.hasErrors('message')}"
+							th:errors="*{message}"></span>
+					</fieldset>
+					<div>
+						<button type="submit">Send</button>
+						<button type="button"
+							th:onClick="'javascript:cancel(\'' + ${messageForm.receiver.id} + '\');'">Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="sidebar"></div>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

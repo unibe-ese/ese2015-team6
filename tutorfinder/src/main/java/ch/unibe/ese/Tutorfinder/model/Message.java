@@ -104,7 +104,7 @@ public class Message {
 		return isRead;
 	}
 
-	public void setRead(boolean isRead) {
+	public void setIsRead(boolean isRead) {
 		this.isRead = isRead;
 	}
 

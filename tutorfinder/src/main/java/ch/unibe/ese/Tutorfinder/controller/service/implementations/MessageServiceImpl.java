@@ -48,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
 		assert (tmpMessage != null);
 		
 		if (tmpMessage.getReceiver().equals(authUser)) {
-			tmpMessage.setRead(true);
+			tmpMessage.setIsRead(true);
 			tmpMessage = messageDao.save(tmpMessage);
 		}
 		return tmpMessage;
@@ -61,7 +61,7 @@ public class MessageServiceImpl implements MessageService {
 		
 		Message newMessage = new Message();
 		
-		newMessage.setReceiver(messageForm.getReceiver());
+		newMessage.setReceiver(userService.getUserById(messageForm.getReceiverId()));
 		newMessage.setSender(userService.getUserByPrincipal(authUser));
 		newMessage.setTimestamp(new Timestamp((new Date()).getTime()));
 		newMessage.setMessage(messageForm.getMessage());
