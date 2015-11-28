@@ -1,6 +1,6 @@
 package ch.unibe.ese.Tutorfinder.util;
 
-public enum SortOrder {
+public enum SortCriteria {
 	
 	/**
 	 * The singleton instance for an order by rating.
@@ -21,7 +21,7 @@ public enum SortOrder {
 	/**
      * Private cache of all the constants.
      */
-    private static final SortOrder[] ENUMS = SortOrder.values();
+    private static final SortCriteria[] ENUMS = SortCriteria.values();
 	
 	
     /**
@@ -35,7 +35,7 @@ public enum SortOrder {
      * @param availability  the availability to represent, from 0 (Unavailable) to 3 (Arranged)
      * @return the availability singleton, not null
      */
-    public static SortOrder of(int sortOrder) {
+    public static SortCriteria of(int sortOrder) {
         assert (sortOrder >= 0 || sortOrder <= ENUMS.length);
         return ENUMS[sortOrder];
     }

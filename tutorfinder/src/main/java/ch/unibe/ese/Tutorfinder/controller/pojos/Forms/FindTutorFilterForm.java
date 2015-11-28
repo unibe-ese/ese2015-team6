@@ -8,4 +8,5 @@ package ch.unibe.ese.Tutorfinder.controller.pojos.Forms;
  */
 public class FindTutorFilterForm {
 	
+	
 }
