@@ -21,9 +21,11 @@
 						maxlength="45" required="required" />
 					<button>Search</button>
 				</form>
-				<form>
+				<form th:object="*{FindTutorFilterForm}" name="FindTutorFilterForm">
 					<fieldset>
-					<select></select>
+					<select name="criteria">
+					<option th:each=""></option>
+					</select>
 					</fieldset>
 				</form>
 				<div

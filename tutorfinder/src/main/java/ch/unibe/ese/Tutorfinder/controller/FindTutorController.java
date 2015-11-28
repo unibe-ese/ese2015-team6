@@ -51,7 +51,7 @@ public class FindTutorController {
 				model = new ModelAndView("findTutor");
 			}
 		}
-		model.addObject("findTutorForm", new FindTutorFilterForm());
+		model.addObject("findTutorFilterForm", new FindTutorFilterForm());
 		return model;
 	}
 	
