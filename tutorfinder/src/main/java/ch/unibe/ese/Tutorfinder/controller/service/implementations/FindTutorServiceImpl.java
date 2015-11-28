@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import javax.swing.SortOrder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +77,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 				}
 
 			};
+			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
 			break;
 			
 		case GRADE:
@@ -87,6 +90,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 					return average1.compareTo(average2);
 				}
 			};
+			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
 			break;
 			
 		case ALPHABETICAL:
@@ -97,6 +101,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 					return o1.getLastName().compareToIgnoreCase(o2.getLastName());
 				}
 			};
+			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
 		break;
 		}
 

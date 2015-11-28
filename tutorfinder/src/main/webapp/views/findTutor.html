@@ -22,7 +22,9 @@
 					<button>Search</button>
 				</form>
 				<form>
-					<fieldset></fieldset>
+					<fieldset>
+					<select></select>
+					</fieldset>
 				</form>
 				<div
 					th:replace="fragments/results:: (${param.q != null}? results : welcome)">
