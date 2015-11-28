@@ -25,6 +25,20 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired 
 	UserService userService;
 	
+	public MessageServiceImpl() {
+		
+	}
+	/**
+	 * Constructor for testing purposes
+	 * 
+	 * @param messageDao
+	 * @param userService
+	 */
+	public MessageServiceImpl(MessageDao messageDao, UserService userService) {
+		this.messageDao = messageDao;
+		this.userService = userService;
+	}
+	
 	@Override
 	public List<Message> getMessageByBox(String box, User authUser) {
 		assert (box != null && !box.isEmpty());
@@ -58,6 +72,7 @@ public class MessageServiceImpl implements MessageService {
 	@Transactional
 	public Message saveFrom(MessageForm messageForm, Principal authUser){
 		assert (messageForm != null);
+		assert (authUser != null);
 		
 		Message newMessage = new Message();
 		

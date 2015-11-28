@@ -43,11 +43,9 @@
 					alt="Profile picture" width="192" height="192"
 					src="../../img/default-avatar.jpg" />
 
-				<form id="newMessage" th:if="${authUser.id!=DisplayedUser.id}" action="#" method="get"
-					th:action="@{/newMessage}">
-					<button id="receiver" type="submit" name="receiver"
-						th:value="${DisplayedUser.id}">Message</button>
-				</form>
+				<a th:if="${authUser.id!=DisplayedUser.id}" th:unless="${param.userId == null}" th:with="userId=${param.userId[0]}"
+					th:href="@{/newMessage(receiver=__${userId}__)}"
+					href="/newMessage">Message</a>
 
 				<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
 					Nachname</h1>
@@ -96,7 +94,7 @@
 						</span>
 					</div>
 				</div>
-				
+
 				<div
 					th:if="${__${authUser.id!=DisplayedUser.id}__ and __${DisplayedUser.role == 'TUTOR'}__}">
 					<form action="#" method="post"
