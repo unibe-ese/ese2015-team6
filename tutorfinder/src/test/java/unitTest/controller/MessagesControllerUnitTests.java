@@ -1,7 +1,6 @@
 package unitTest.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
@@ -32,8 +31,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.MessageController;
+import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
@@ -126,7 +125,7 @@ public class MessagesControllerUnitTests {
 	}
 	
 	@Test
-	public void testMessagesDefaultBox() {
+	public void testMessagesUnreadBox() {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockMessageService.getMessageByBox(eq(ConstantVariables.UNREAD), eq(mockUser))).thenReturn(this.messageList);
 		
@@ -136,6 +135,16 @@ public class MessagesControllerUnitTests {
 		assertEquals("messagesOverview", gotMav.getViewName());
 		assertTrue(gotMav.getModel().containsKey("messageList"));
 		assertTrue(gotMav.getModel().containsKey("authUser"));
+	}
+	
+	@Test
+	public void testMessagesDefaultBox() {
+		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
+		when(mockMessageService.getMessageByBox(eq(ConstantVariables.UNREAD), eq(mockUser))).thenReturn(this.messageList);
+		
+		ModelAndView gotMav = controller.messages(mockAuthUser, null, null);
+		
+		assertEquals("redirect:messages?view="+ ConstantVariables.UNREAD, gotMav.getViewName());
 	}
 	
 	@Test
@@ -170,14 +179,6 @@ public class MessagesControllerUnitTests {
 	}
 	
 	@Test
-	public void testMessage() {
-		String got = controller.messages();
-		
-		assertFalse(got.isEmpty());
-		assertEquals(got, "forward:/messages?view=unread");
-	}
-	
-	@Test
 	public void testNewMessage() {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockUserService.getUserById(anyLong())).thenReturn(this.mockOtherUser);
@@ -188,7 +189,6 @@ public class MessagesControllerUnitTests {
 		
 		assertEquals("newMessage", gotMav.getViewName());
 		assertTrue(gotMav.getModel().containsKey("messageForm"));
-		assertTrue(gotMav.getModel().containsKey("authUser"));
 	}
 	
 	@Test

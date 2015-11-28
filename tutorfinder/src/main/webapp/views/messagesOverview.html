@@ -40,12 +40,22 @@
 			</div>
 			<div id="rightSide">
 				<div id="MessageBox" th:with="show=${param.show[0]}"
-					th:unless="${param.show == null}">
-					<strong>From:</strong> <small
+					th:unless="${param.show == null}" th:if="${show != null}">
+					<h2>Message</h2>
+					<a th:if="${authUser.id != messageList[__${show}__].sender.id}"
+						th:href="@{/newMessage(receiver=${messageList[__${show}__].sender.id})}"
+						href="/newMessage">Answer</a> <a
+						th:if="${authUser.id != messageList[__${show}__].receiver.id}"
+						th:href="@{/newMessage(receiver=${messageList[__${show}__].receiver.id})}"
+						href="/newMessage">Rewrite</a> <strong>From:</strong> <a
+						th:href="@{/showProfile(userId=${messageList[__${show}__].sender.id})}"
+						href="/showProfile"
 						th:text="|${messageList[ __${show}__].sender.firstName} ${messageList[' __${show}__'].sender.lastName}|">Max
-						Student</small><br /> <strong>To:</strong> <small
+						Student</a><br /> <strong>To:</strong> <a
+						th:href="@{/showProfile(userId=${messageList[__${show}__].receiver.id})}"
+						href="/showProfile"
 						th:text="|${messageList[ __${show}__].receiver.firstName} ${messageList[ __${show}__].receiver.lastName}|">Max
-						Student</small><br /> <strong
+						Student</a><br /> <strong
 						th:text="|${messageList[ __${show}__].subject}|"> Subject</strong>
 					<br /> <i
 						th:text="|${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getYear()}
