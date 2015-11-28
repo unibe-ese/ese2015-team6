@@ -35,6 +35,18 @@ public class MessageController {
 	UserService userService;
 
 	/**
+	 * Constructor for testing purposes
+	 * 
+	 * @param messageService
+	 * @param userService
+	 */
+	@Autowired
+	public MessageController(MessageService messageService, UserService userService) {
+		this.messageService = messageService;
+		this.userService = userService;
+	}
+	
+	/**
 	 * Maps the /messages page to the {@code messagesOverview.html}.
 	 * 
 	 * @param authUser
@@ -105,7 +117,7 @@ public class MessageController {
 	@RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
 	public ModelAndView sendMessage(Principal authUser, @Valid MessageForm messageForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		ModelAndView model = new ModelAndView("messagesOverview");
+		ModelAndView model;
 		if (!result.hasErrors()) {
 			try {
 				messageService.saveFrom(messageForm, authUser);
@@ -119,6 +131,8 @@ public class MessageController {
 				//TODO show error message
 			}
 		} else {
+			model = new ModelAndView("newMessage");
+			
 			User tmpUser = userService.getUserByPrincipal(authUser);
 			model.addObject("authUser", tmpUser);
 

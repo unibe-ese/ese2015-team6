@@ -41,7 +41,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/test.xml"})
-public class UpdateProfileControllerTest {
+public class UpdateProfileControllerUnitTests {
 
 	UpdateProfileController controller;
 	
