@@ -109,7 +109,7 @@ public class MessageController {
 		if (!result.hasErrors()) {
 			try {
 				messageService.saveFrom(messageForm, authUser);
-				model = new ModelAndView("findTutor");
+				model = new ModelAndView("redirect:messages?view="+ ConstantVariables.OUTBOX+"&show=0");
 
 			} catch (InvalidMessageException e) {
 				model = new ModelAndView("newMessage");
