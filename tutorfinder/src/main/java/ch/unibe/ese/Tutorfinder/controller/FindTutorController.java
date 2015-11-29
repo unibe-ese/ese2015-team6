@@ -53,12 +53,6 @@ public class FindTutorController {
 		}
 		return filterForm;
 	}
-	
-	@ModelAttribute("findTutorFilterForm")
-	private void setFindTutorFilterForm(FindTutorFilterForm form) {
-		assert form!= null;
-		this.filterForm = form;
-	}
 
 	/**
 	 * Maps the /findTutor pages to the {@code findTutor.html} view.
@@ -102,7 +96,7 @@ public class FindTutorController {
 			RedirectAttributes redirect) {
 		assert !result.hasErrors() : "The form has an error where it shouldn't have any\n"+result.getAllErrors();
 		findTutorService.generateComparatorFrom(form);
-		this.setFindTutorFilterForm(form);
+		this.filterForm = form;
 		redirect.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", result);
 		if (query != null)
 			return "redirect:findTutor?q=" + query;

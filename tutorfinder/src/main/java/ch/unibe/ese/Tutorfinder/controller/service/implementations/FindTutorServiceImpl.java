@@ -51,7 +51,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 
 	@Override
 	public Map<User, List<Subject>> getSubjectsSorted(String query) {
-		assert (comparator != null);
+		assert comparator != null:"Comparator was not initialized";
 		Map<User, List<Subject>> queryResult = this.getSubjectsFrom(query);
 		Map<User, List<Subject>> sortedResult = new TreeMap<User, List<Subject>>(comparator);
 		sortedResult.putAll(queryResult);
@@ -84,7 +84,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 				}
 
 			};
-			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
+			if (form.getOrder().equals(SortOrder.DESCENDING)) comparator = comparator.reversed();
 			break;
 			
 		case GRADE:
@@ -100,7 +100,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 					return compared;
 				}
 			};
-			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
+			if (form.getOrder().equals(SortOrder.DESCENDING)) comparator = comparator.reversed();
 			break;
 			
 		case ALPHABETICAL:
@@ -113,7 +113,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 					return compared;
 				}
 			};
-			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
+			if (form.getOrder().equals(SortOrder.DESCENDING)) comparator = comparator.reversed();
 		break;
 		}
 
