@@ -2,6 +2,7 @@ package ch.unibe.ese.Tutorfinder.controller;
 
 import java.security.Principal;
 
+import javax.swing.SortOrder;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
+import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -35,38 +37,41 @@ public class FindTutorController {
 	FindTutorService findTutorService;
 	@Autowired
 	UserService userService;
-	
+
 	FindTutorFilterForm filterForm;
-	private boolean orderSet = false;
-	
+
 	/**
-	 * Defines the SignupForm as a ModelAttribute
+	 * Defines and initializes the findTutorFilterForm as a ModelAttribute and prepares the comparator with default settings
 	 */
 	@ModelAttribute("findTutorFilterForm")
 	public FindTutorFilterForm getFindTutorFilterForm() {
-		if (filterForm == null) filterForm = new FindTutorFilterForm();
+		if (filterForm == null) {
+			filterForm = new FindTutorFilterForm();
+			filterForm.setCriteria(SortCriteria.RATING);
+			filterForm.setOrder(SortOrder.DESCENDING);
+			findTutorService.generateComparatorFrom(filterForm);
+		}
 		return filterForm;
 	}
-	
+
 	/**
 	 * Maps the /findTutor pages to the {@code findTutor.html} view.
 	 * 
-	 * @param authUser {@link Principal}
-	 * @param query	{@code String} for searching for matching {@link Subject}s
-	 * @return {@link ModelAndView} with links to the corresponding {@link Tutor}s {@link Profile}s
+	 * @param authUser
+	 *            {@link Principal}
+	 * @param query
+	 *            {@code String} for searching for matching {@link Subject}s
+	 * @return {@link ModelAndView} with links to the corresponding
+	 *         {@link Tutor}s {@link Profile}s
 	 */
-	@RequestMapping(value = "/findTutor", method=RequestMethod.GET)
+	@RequestMapping(value = "/findTutor", method = RequestMethod.GET)
 	public ModelAndView findTutor(Principal authUser, @RequestParam(value = "q", required = false) String query) {
 		ModelAndView model = new ModelAndView("findTutor");
 		String action = "submit";
 		if (query != null && !query.equals("")) {
 			try {
 				action = "submit?q=" + query;
-				if (orderSet) {
-					model.addObject("Result", findTutorService.getSubjectsSorted(query));
-				} else {
-					model.addObject("Result", findTutorService.getSubjectsFrom(query));
-				}
+				model.addObject("Result", findTutorService.getSubjectsSorted(query));
 			} catch (NoTutorsForSubjectException e) {
 				model = new ModelAndView("findTutor");
 			}
@@ -74,23 +79,26 @@ public class FindTutorController {
 		model.addObject("formaction", action);
 		return model;
 	}
-	
+
 	/**
-	 * Starts the query for an {@link Subject} named equals to the
-	 * input {@code String} or which has an substring that matches it.
-	 * When a subject is found, it will be shown under the search engine.
+	 * Starts the query for an {@link Subject} named equals to the input
+	 * {@code String} or which has an substring that matches it. When a subject
+	 * is found, it will be shown under the search engine.
 	 * 
-	 * @param form holds the query {@code String}
+	 * @param form
+	 *            holds the query {@code String}
 	 * @param result
 	 * @return redirection to /findTutor with the query {@code String}
 	 */
-	@RequestMapping(value="/submit", method=RequestMethod.POST)
-	public String submit(@RequestParam(value = "q", required = false) String query, @Valid @ModelAttribute("findTutorFilterForm") FindTutorFilterForm form, BindingResult result, RedirectAttributes redirect) {
+	@RequestMapping(value = "/submit", method = RequestMethod.POST)
+	public String submit(@RequestParam(value = "q", required = false) String query,
+			@Valid @ModelAttribute("findTutorFilterForm") FindTutorFilterForm form, BindingResult result,
+			RedirectAttributes redirect) {
 		findTutorService.generateComparatorFrom(form);
 		filterForm = form;
-		orderSet = true;
 		redirect.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", result);
-		if (query != null) return "redirect:findTutor?q=" + query;
+		if (query != null)
+			return "redirect:findTutor?q=" + query;
 		return "redirect:findTutor";
 	}
 
