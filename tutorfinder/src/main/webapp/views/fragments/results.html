@@ -7,7 +7,7 @@
 <body>
 
 	<div th:fragment="results" id="results" class="full">
-		<h1 th:if="${Result[0] == null}">
+		<h1 th:if="${Result.isEmpty()}">
 			Sorry, we could not find any tutors for <span th:text="|'${param.q[0]}'|">Subject</span>
 		</h1>
 		<div th:each="foundTutor : ${Result}"
