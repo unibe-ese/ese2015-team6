@@ -43,16 +43,19 @@
 					alt="Profile picture" width="192" height="192"
 					src="../../img/default-avatar.jpg" />
 
-				<a th:if="${authUser.id!=DisplayedUser.id}" th:unless="${param.userId == null}" th:with="userId=${param.userId[0]}"
-					th:href="@{/newMessage(receiver=__${userId}__)}"
-					href="/newMessage">Message</a>
-
 				<h1 th:text="|${DisplayedUser.firstName} ${DisplayedUser.lastName}|">Vorname
 					Nachname</h1>
 
 				<h2 th:title="|Number of ratings: ${Profile.countedRatings}|"
 					th:if="${Profile.rating != null}"
 					th:text="|Rating: ${Profile.rating}|">Rating: 4.5</h2>
+
+				<a th:if="${authUser.id!=DisplayedUser.id}"
+					th:unless="${param.userId == null}"
+					th:with="userId=${param.userId[0]}"
+					th:href="@{/newMessage(receiver=__${userId}__)}" href="/newMessage"><img
+					id="newMessage" class="action-icon"
+					th:src="@{|/img/bg/newMessage.png|}" src="unread.png" /></a>
 
 				<div id="Bio" class="breakable" th:if="${Profile.biography} != null">
 					<h3>Short biography</h3>
