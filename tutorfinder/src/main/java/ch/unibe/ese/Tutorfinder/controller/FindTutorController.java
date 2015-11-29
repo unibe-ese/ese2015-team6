@@ -44,7 +44,7 @@ public class FindTutorController {
 	 * Defines and initializes the findTutorFilterForm as a ModelAttribute and prepares the comparator with default settings
 	 */
 	@ModelAttribute("findTutorFilterForm")
-	public FindTutorFilterForm getFindTutorFilterForm() {
+	private FindTutorFilterForm getFindTutorFilterForm() {
 		if (filterForm == null) {
 			filterForm = new FindTutorFilterForm();
 			filterForm.setCriteria(SortCriteria.RATING);
@@ -52,6 +52,12 @@ public class FindTutorController {
 			findTutorService.generateComparatorFrom(filterForm);
 		}
 		return filterForm;
+	}
+	
+	@ModelAttribute("findTutorFilterForm")
+	private void setFindTutorFilterForm(FindTutorFilterForm form) {
+		assert form!= null;
+		this.filterForm = form;
 	}
 
 	/**
@@ -94,8 +100,9 @@ public class FindTutorController {
 	public String submit(@RequestParam(value = "q", required = false) String query,
 			@Valid @ModelAttribute("findTutorFilterForm") FindTutorFilterForm form, BindingResult result,
 			RedirectAttributes redirect) {
+		assert !result.hasErrors() : "The form has an error where it shouldn't have any\n"+result.getAllErrors();
 		findTutorService.generateComparatorFrom(form);
-		filterForm = form;
+		this.setFindTutorFilterForm(form);
 		redirect.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", result);
 		if (query != null)
 			return "redirect:findTutor?q=" + query;

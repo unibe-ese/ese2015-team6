@@ -54,6 +54,7 @@
 		<property name="formatters">
 			<set>
 				<bean class="ch.unibe.ese.Tutorfinder.conversion.DateFormatter" />
+				<bean class="ch.unibe.ese.Tutorfinder.conversion.SortCriteriaFormatter" />
 			</set>
 		</property>
 	</bean>

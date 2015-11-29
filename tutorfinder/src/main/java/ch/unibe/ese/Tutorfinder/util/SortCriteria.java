@@ -47,6 +47,15 @@ public enum SortCriteria {
         return ENUMS[sortOrder];
     }
     
+    public static SortCriteria forName(String name) {
+    	for(SortCriteria element : ENUMS) {
+    		if (name.equals(element.s)) {
+    			return element;
+    		}
+    	}
+    	throw new RuntimeException();
+    }
+    
     /**
      * Gets the availability {@code int} value.
      * <p>
@@ -54,12 +63,12 @@ public enum SortCriteria {
      *
      * @return the sort order as an integer representation
      */
-    public int getValue() {
+    public Integer getValue() {
         return ordinal();
     }
     
     public String toString() {
     	return s;
     }
-
+    
 }

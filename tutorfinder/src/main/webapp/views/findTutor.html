@@ -19,8 +19,6 @@
 					<input type="search" th:name="q"
 						th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
 						maxlength="45" required="required" />
-					<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" />
 					<button>Search</button>
 				</form>
 				<form th:action="${formaction}" th:object="${findTutorFilterForm}" name="findTutorFilterForm" method="post" action="">
