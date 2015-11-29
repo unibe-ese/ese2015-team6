@@ -7,17 +7,23 @@ public enum SortCriteria {
 	 * The singleton instance for an order by rating.
 	 * This has the numeric value of {@code 0}.
 	 */
-	RATING,
+	RATING("Rating"),
 	/**
 	 * The singleton instance for an order by grade.
 	 * This has the numeric value of {@code 1}.
 	 */
-	GRADE,
+	GRADE("Average grade"),
 	/**
 	 * The singleton instance for an order by alphabet.
 	 * This has the numeric value of {@code 2}.
 	 */
-	ALPHABETICAL;
+	ALPHABETICAL("Name");
+	
+	private String s;
+	
+	private SortCriteria(String s) {
+		this.s = s;
+	}
 	
 	/**
      * Private cache of all the constants.
@@ -50,6 +56,10 @@ public enum SortCriteria {
      */
     public int getValue() {
         return ordinal();
+    }
+    
+    public String toString() {
+    	return s;
     }
 
 }
