@@ -19,12 +19,18 @@
 					<input type="search" th:name="q"
 						th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
 						maxlength="45" required="required" />
+					<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
 					<button>Search</button>
 				</form>
-				<form th:action="@{submit}" th:object="${FindTutorFilterForm}" name="FindTutorFilterForm" method="post" action="">
-					<select name="criteria">
+				<form th:action="${formaction}" th:object="${findTutorFilterForm}" name="findTutorFilterForm" method="post" action="">
+					<select th:field="*{criteria}" name="criteria">
 					<option th:each="criteria : ${T(ch.unibe.ese.Tutorfinder.util.SortCriteria).values()}" th:value="${criteria}"
-					th:text="${criteria}"></option>
+					th:text="${criteria}" th:selected="${criteria}"></option>
+					</select>
+					<select th:field="*{order}" name="order">
+					<option th:each="order : ${T(javax.swing.SortOrder).values()}" th:value="${order}"
+					th:text="${order}" th:selected="${order}" th:unless="${order == T(javax.swing.SortOrder).UNSORTED}"></option>
 					</select>
 					<button>Set</button>
 				</form>

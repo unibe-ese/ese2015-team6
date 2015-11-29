@@ -7,10 +7,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorFilterForm;
@@ -34,8 +36,18 @@ public class FindTutorController {
 	@Autowired
 	UserService userService;
 	
+	FindTutorFilterForm filterForm;
 	private boolean orderSet = false;
-
+	
+	/**
+	 * Defines the SignupForm as a ModelAttribute
+	 */
+	@ModelAttribute("findTutorFilterForm")
+	public FindTutorFilterForm getFindTutorFilterForm() {
+		if (filterForm == null) filterForm = new FindTutorFilterForm();
+		return filterForm;
+	}
+	
 	/**
 	 * Maps the /findTutor pages to the {@code findTutor.html} view.
 	 * 
@@ -46,8 +58,10 @@ public class FindTutorController {
 	@RequestMapping(value = "/findTutor", method=RequestMethod.GET)
 	public ModelAndView findTutor(Principal authUser, @RequestParam(value = "q", required = false) String query) {
 		ModelAndView model = new ModelAndView("findTutor");
+		String action = "submit";
 		if (query != null && !query.equals("")) {
 			try {
+				action = "submit?q=" + query;
 				if (orderSet) {
 					model.addObject("Result", findTutorService.getSubjectsSorted(query));
 				} else {
@@ -57,7 +71,7 @@ public class FindTutorController {
 				model = new ModelAndView("findTutor");
 			}
 		}
-		model.addObject("findTutorFilterForm", new FindTutorFilterForm());
+		model.addObject("formaction", action);
 		return model;
 	}
 	
@@ -71,9 +85,12 @@ public class FindTutorController {
 	 * @return redirection to /findTutor with the query {@code String}
 	 */
 	@RequestMapping(value="/submit", method=RequestMethod.POST)
-	public String submit(@Valid FindTutorFilterForm form, BindingResult result) {
+	public String submit(@RequestParam(value = "q", required = false) String query, @Valid @ModelAttribute("findTutorFilterForm") FindTutorFilterForm form, BindingResult result, RedirectAttributes redirect) {
 		findTutorService.generateComparatorFrom(form);
+		filterForm = form;
 		orderSet = true;
+		redirect.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", result);
+		if (query != null) return "redirect:findTutor?q=" + query;
 		return "redirect:findTutor";
 	}
 
