@@ -27,6 +27,7 @@
 
 		<div id="content">
 			<div id="newMessageBox">
+			<h1>New Message</h1>
 				<form id="newMessageBox" action="#" th:action="@{/sendMessage}"
 					th:object="${messageForm}" th:name="messageForm" method="post">
 					<div>
@@ -47,7 +48,7 @@
 					</fieldset>
 					<fieldset>
 						<textarea rows="5" cols="50" tabindex="2" th:value="*{message}"
-							th:field="*{message}" placeholder="message">
+							th:field="*{message}" placeholder="Message">
 						</textarea>
 						<span class="error" th:if="${#fields.hasErrors('message')}"
 							th:errors="*{message}"></span>
