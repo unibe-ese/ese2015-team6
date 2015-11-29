@@ -308,24 +308,26 @@ fieldset {
 }
 
 #results>div {
-	position: relative; 
 	display : inline-block;
 	margin-top: 10px;
 	margin-right: 20px;
 	vertical-align: top;
-	display: inline-block;
 	
 	color: black;
 	text-decoration: none;
 }
 
-#results a > span {
+.linkparent a>span {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
 	z-index: 1;
+}
+
+.linkparent {
+	position: relative; 
 }
 
 #results .name {

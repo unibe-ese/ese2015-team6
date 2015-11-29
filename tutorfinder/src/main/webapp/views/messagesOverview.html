@@ -28,10 +28,10 @@
 				</div>
 				<div id="messageList" th:with="view=${param.view[0]}"
 					th:unless="${param.view == null}">
-					<div th:each="message, iter : ${messageList}"
+					<div class="linkparent" th:each="message, iter : ${messageList}"
 						th:if="${message != null}">
-						<a th:href="@{/messages(view=${view},show=${iter.index})}"
-							href="/message.html"><div><strong>From:</strong> <small
+						<a th:href="@{/messages(view=${view},show=${iter.index})}"><span></span></a>
+						<strong>From:</strong> <small
 							th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
 								Student</small><br /> <strong th:text="|${message.subject}|">
 								Subject</strong> <img id="unreadMessage"
@@ -40,7 +40,7 @@
 							src="unread.png" /><br /> <i
 							th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
 						${message.timestamp.toLocalDateTime().toLocalTime()} |">26.11.2015
-								21:00</i></div></a>
+								21:00</i>
 					</div>
 
 				</div>
