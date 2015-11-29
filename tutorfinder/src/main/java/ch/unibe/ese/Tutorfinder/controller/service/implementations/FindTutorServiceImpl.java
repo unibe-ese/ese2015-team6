@@ -1,5 +1,6 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,12 +69,18 @@ public class FindTutorServiceImpl implements FindTutorService {
 				public int compare(User o1, User o2) {
 					Profile profile1 = o1.getProfile();
 					Profile profile2 = o2.getProfile();
-					int comparedRating = profile1.getRating().compareTo(profile2.getRating());
-					if (comparedRating == 0) {
+					BigDecimal rating1 = profile1.getRating();
+					if (rating1 == null) rating1 = BigDecimal.ZERO;
+					BigDecimal rating2 = profile2.getRating();
+					if (rating2 == null) rating2 = BigDecimal.ZERO;
+					int compared = rating1.compareTo(rating2);
+					if (compared == 0) {
 						Long nr1 = new Long(profile1.getCountedRatings());
 						Long nr2 = new Long(profile2.getCountedRatings());
-						return nr1.compareTo(nr2);
-					} else return comparedRating;
+						compared = nr1.compareTo(nr2);
+						if (compared == 0) compared = fallback(o1,o2);
+					}
+					return compared;
 				}
 
 			};
@@ -87,7 +94,10 @@ public class FindTutorServiceImpl implements FindTutorService {
 				public int compare(User o1, User o2) {
 					Double average1 =  subjectService.getAverageGradeByUser(o1);
 					Double average2 =  subjectService.getAverageGradeByUser(o2);
-					return average1.compareTo(average2);
+					
+					int compared = average1.compareTo(average2);
+					if (compared == 0) compared = fallback(o1,o2);
+					return compared;
 				}
 			};
 			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
@@ -98,13 +108,29 @@ public class FindTutorServiceImpl implements FindTutorService {
 
 				@Override
 				public int compare(User o1, User o2) {
-					return o1.getLastName().compareToIgnoreCase(o2.getLastName());
+					int compared = o1.getLastName().compareToIgnoreCase(o2.getLastName());
+					if (compared == 0) compared = fallback(o1,o2);
+					return compared;
 				}
 			};
 			if (form.getOrder() == SortOrder.DESCENDING) comparator.reversed();
 		break;
 		}
 
+	}
+
+	/**
+	 * Fallback method for comparators
+	 * @param o2 
+	 * @param o1 
+	 * @return compareTo of two users IDs
+	 */
+	protected int fallback(User o1, User o2) {
+		Long id1 = o1.getId();
+		Long id2 = o2.getId();
+		int compared = id1.compareTo(id2);
+		assert compared != 0 || o1.equals(o2) : "User id is supposed to be unique!";
+		return compared;
 	}
 
 	public Comparator<User> getComparator() {

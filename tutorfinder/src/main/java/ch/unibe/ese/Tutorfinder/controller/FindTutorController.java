@@ -33,6 +33,8 @@ public class FindTutorController {
 	FindTutorService findTutorService;
 	@Autowired
 	UserService userService;
+	
+	private boolean orderSet = false;
 
 	/**
 	 * Maps the /findTutor pages to the {@code findTutor.html} view.
@@ -46,7 +48,11 @@ public class FindTutorController {
 		ModelAndView model = new ModelAndView("findTutor");
 		if (query != null && !query.equals("")) {
 			try {
-				model.addObject("Result", findTutorService.getSubjectsFrom(query));
+				if (orderSet) {
+					model.addObject("Result", findTutorService.getSubjectsSorted(query));
+				} else {
+					model.addObject("Result", findTutorService.getSubjectsFrom(query));
+				}
 			} catch (NoTutorsForSubjectException e) {
 				model = new ModelAndView("findTutor");
 			}
@@ -66,7 +72,9 @@ public class FindTutorController {
 	 */
 	@RequestMapping(value="/submit", method=RequestMethod.POST)
 	public String submit(@Valid FindTutorFilterForm form, BindingResult result) {
-		return "redirect:findTutor";//TODO return value
+		findTutorService.generateComparatorFrom(form);
+		orderSet = true;
+		return "redirect:findTutor";
 	}
 
 }

@@ -21,11 +21,12 @@
 						maxlength="45" required="required" />
 					<button>Search</button>
 				</form>
-				<form th:object="${FindTutorFilterForm}" name="FindTutorFilterForm" method="post">
+				<form th:action="@{submit}" th:object="${FindTutorFilterForm}" name="FindTutorFilterForm" method="post" action="">
 					<select name="criteria">
 					<option th:each="criteria : ${T(ch.unibe.ese.Tutorfinder.util.SortCriteria).values()}" th:value="${criteria}"
 					th:text="${criteria}"></option>
 					</select>
+					<button>Set</button>
 				</form>
 				<div
 					th:replace="fragments/results:: (${param.q != null}? results : welcome)">
