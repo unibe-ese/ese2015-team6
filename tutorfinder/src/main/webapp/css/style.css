@@ -177,6 +177,29 @@ fieldset {
 	padding-bottom: 10px;
 }
 
+/* messageOverview */
+
+#messageNavigation ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: solid black 2px;
+}
+
+#messageNavigation ul li {
+	display: inline;
+}
+
+#messageNavigation ul li a {
+	text-decoration: none;
+	color: black;
+}
+
+#messageList a {
+	text-decoration: none;
+	color: black;
+}
+
 #messageList > div {
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -185,8 +208,31 @@ fieldset {
 
 #messageBox {
 	margin: 5px;
-	border: solid gray 2px;
 	height: inherit;
+}
+
+#message {
+	padding: 5px;
+	border: solid lightgray 2px;
+	height: inherit;
+}
+
+#answer {
+	float: right;
+}
+
+#messageBox p {
+	padding: 5px;
+	border-top: solid lightgray 1px;
+}
+
+#unreadMessage {
+	float: right;
+}
+
+.action-icon {
+	width: 30px;
+	height: 20px;
 }
 
 /*EditProfile*/

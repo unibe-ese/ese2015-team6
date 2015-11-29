@@ -16,24 +16,31 @@
 		<div id="sidebar"></div>
 		<div id="content">
 			<div class="leftSide">
-			<h1>Message overview</h1>
-				<a th:href="@{/messages?view=unread}" href="/message.html">Unread</a>
-				<a th:href="@{/messages?view=inbox}" href="/message.html">Inbox</a>
-				<a th:href="@{/messages?view=outbox}" href="/message.html">Outbox</a><br />
+				<h1>Message overview</h1>
+				<div id="messageNavigation">
+					<ul>
+						<li><a th:href="@{/messages?view=unread}"
+							href="/message.html">Unread</a></li>
+						<li><a th:href="@{/messages?view=inbox}" href="/message.html">Inbox</a></li>
+						<li><a th:href="@{/messages?view=outbox}"
+							href="/message.html">Outbox</a></li>
+					</ul>
+				</div>
 				<div id="messageList" th:with="view=${param.view[0]}"
 					th:unless="${param.view == null}">
 					<div th:each="message, iter : ${messageList}"
 						th:if="${message != null}">
 						<a th:href="@{/messages(view=${view},show=${iter.index})}"
-							href="/message.html"><strong>From:</strong> <small
+							href="/message.html"><div><strong>From:</strong> <small
 							th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
 								Student</small><br /> <strong th:text="|${message.subject}|">
-								Subject</strong> <strong
-							th:if="${__${!message.read}__ and __${message.receiver == authUser}__ }">New</strong><br />
-							<i
+								Subject</strong> <img id="unreadMessage"
+							th:if="${__${!message.read}__ and __${message.receiver == authUser}__ }"
+							class="action-icon" th:src="@{|/img/bg/newMessage.png|}"
+							src="unread.png" /><br /> <i
 							th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
 						${message.timestamp.toLocalDateTime().toLocalTime()} |">26.11.2015
-								21:00</i></a>
+								21:00</i></div></a>
 					</div>
 
 				</div>
@@ -42,23 +49,30 @@
 				<div id="messageBox" th:with="show=${param.show[0]}"
 					th:if="${param.show != null}">
 					<h2>Message</h2>
-					<a th:if="${authUser.id != messageList[__${show}__].sender.id}"
-						th:href="@{/newMessage(receiver=${messageList[__${show}__].sender.id})}"
-						href="/newMessage">Answer</a><strong>From:</strong> <a
-						th:href="@{/showProfile(userId=${messageList[__${show}__].sender.id})}"
-						href="/showProfile"
-						th:text="|${messageList[ __${show}__].sender.firstName} ${messageList[' __${show}__'].sender.lastName}|">Max
-						Student</a><br /> <strong>To:</strong> <a
-						th:href="@{/showProfile(userId=${messageList[__${show}__].receiver.id})}"
-						href="/showProfile"
-						th:text="|${messageList[ __${show}__].receiver.firstName} ${messageList[ __${show}__].receiver.lastName}|">Max
-						Student</a><br /> <strong
-						th:text="|${messageList[ __${show}__].subject}|"> Subject</strong>
-					<br /> <i
-						th:text="|${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getYear()}
+					<div id="message">
+						<div id="messageHeader">
+							<strong>From:</strong> <a
+								th:href="@{/showProfile(userId=${messageList[__${show}__].sender.id})}"
+								href="/showProfile"
+								th:text="|${messageList[ __${show}__].sender.firstName} ${messageList[' __${show}__'].sender.lastName}|">Max
+								Student</a> <a id="answer"
+								th:if="${authUser.id != messageList[__${show}__].sender.id}"
+								th:href="@{/newMessage(receiver=${messageList[__${show}__].sender.id})}"
+								href="/newMessage"><img class="action-icon"
+								th:src="@{|/img/bg/AnswerMessage.png|}" src="reply.png" /></a><br />
+							<strong>To:</strong> <a
+								th:href="@{/showProfile(userId=${messageList[__${show}__].receiver.id})}"
+								href="/showProfile"
+								th:text="|${messageList[ __${show}__].receiver.firstName} ${messageList[ __${show}__].receiver.lastName}|">Max
+								Student</a><br /> <strong
+								th:text="|${messageList[ __${show}__].subject}|">
+								Subject</strong> <br /> <i
+								th:text="|${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalDate().getYear()}
 						${messageList[ __${show}__].timestamp.toLocalDateTime().toLocalTime()}|">26.11.2015
-						21:00</i><br />
-					<p th:text="|${messageList[ __${show}__].message}|" />
+								21:00</i><br />
+						</div>
+						<p th:text="|${messageList[ __${show}__].message}|" />
+					</div>
 				</div>
 			</div>
 			<div id="newMessagePopop"></div>
