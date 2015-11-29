@@ -34,4 +34,8 @@ public interface FindTutorService {
 	 * @return Sorted {@link Map} of class TreeMap
 	 */
 	public Map<User, List<Subject>> getSubjectsSorted(String query);
+
+	void setComparator(Comparator<User> comparator);
+
+	Comparator<User> getComparator();
 }

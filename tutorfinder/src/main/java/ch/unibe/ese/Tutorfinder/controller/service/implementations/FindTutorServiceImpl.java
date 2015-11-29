@@ -31,6 +31,11 @@ public class FindTutorServiceImpl implements FindTutorService {
 	@Autowired SubjectService subjectService;
 
 	private Comparator<User> comparator;
+	
+	@Autowired
+	public FindTutorServiceImpl(SubjectService subjectService) {
+		this.subjectService = subjectService;
+	}
 
 	@Override
 	public Map<User, List<Subject>> getSubjectsFrom(String query) {
@@ -133,10 +138,12 @@ public class FindTutorServiceImpl implements FindTutorService {
 		return compared;
 	}
 
+	@Override
 	public Comparator<User> getComparator() {
 		return comparator;
 	}
 
+	@Override
 	public void setComparator(Comparator<User> comparator) {
 		this.comparator = comparator;
 	}
