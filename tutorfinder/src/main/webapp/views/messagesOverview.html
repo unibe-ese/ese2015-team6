@@ -34,8 +34,8 @@
 						th:if="${message != null}">
 						<a th:href="@{/messages(view=${view},show=${iter.index})}"><span
 							th:unless="${param.show == null}"
-							th:class="${param.show[0]} eq ${iter.index} ? activeMessage"></span><span th:if="${param.show == null}"></span></a> <strong>From:</strong>
-						<small
+							th:class="${param.show[0]} eq ${iter.index} ? activeMessage"></span><span
+							th:if="${param.show == null}"></span></a> <strong>From:</strong> <small
 							th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
 							Student</small><br /> <strong th:text="|${message.subject}|">
 							Subject</strong> <img id="unreadMessage"
@@ -61,6 +61,7 @@
 								th:text="|${messageList[ __${show}__].sender.firstName} ${messageList[' __${show}__'].sender.lastName}|">Max
 								Student</a> <a id="answer"
 								th:if="${authUser.id != messageList[__${show}__].sender.id}"
+								title="Answer"
 								th:href="@{/newMessage(receiver=${messageList[__${show}__].sender.id})}"
 								href="/newMessage"><img class="action-icon"
 								th:src="@{|/img/bg/AnswerMessage.png|}" src="reply.png" /></a><br />

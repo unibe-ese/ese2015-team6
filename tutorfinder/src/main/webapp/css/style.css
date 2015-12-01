@@ -184,7 +184,7 @@ fieldset {
 }
 
 h2 {
-	padding-top: 10px;
+	padding-top: 15px;
 }
 
 .last {
@@ -230,6 +230,7 @@ h2 {
 a.activeLink {
 	background-color: lightgrey;
 	border-radius: 5px;
+	color: black;
 }
 
 .activeMessage {
