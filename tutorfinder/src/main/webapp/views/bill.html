@@ -18,10 +18,19 @@
 	<h1>Bill for this month:</h1>
 	<p th:text="|${balance} Fr.|">0 Fr.</p>
 	<br />
-	<div th:if="${Bills != null}">
-		<h1>Past Bills:</h1>
+	<div th:if="${UnpaidBills != null}">
+		<h1>unpaid bills:</h1>
 	</div>
-	<div th:each="bill : ${Bills}" th:if="${bill != null}"> 
+	<div th:each="bill : ${UnpaidBills}" th:if="${bill != null}"> 
+		<p th:text="|${bill.year} ${bill.month} ${bill.amount} Fr.|">
+							1970 January 0</p>
+
+		</div>
+		
+	<div th:if="${PaidBills != null}">
+		<h1>paid bills:</h1>
+	</div>
+	<div th:each="bill : ${PaidBills}" th:if="${bill != null}"> 
 		<p th:text="|${bill.year} ${bill.month} ${bill.amount} Fr.|">
 							1970 January 0</p>
 
