@@ -32,12 +32,12 @@ nav>ul>li>a {
 	line-height: 56px;
 	text-decoration: none;
 	color: #ccc;
+	transition: color .3s;
 }
 
 /* ---------- First level animation ---------- */
 nav>ul>li>a:hover {
 	color: white;
-	transition: color .3s;
 }
 
 nav>ul>li>a:before {

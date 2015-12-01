@@ -28,7 +28,7 @@
 						</fieldset>
 					</form>
 					<form th:action="${formaction}" th:object="${findTutorFilterForm}"
-						name="findTutorFilterForm" method="post" action="">
+						name="findTutorFilterForm" method="post" action="" id="filter">
 						<label>Sort by: </label>
 						<select th:field="*{criteria}" name="criteria">
 							<option
