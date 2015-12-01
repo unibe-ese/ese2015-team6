@@ -16,7 +16,8 @@ import ch.unibe.ese.Tutorfinder.controller.service.implementations.BillServiceIm
 	SubjectServiceImplTest.class,
 	AppointmentServiceImplTest.class,
 	PrepareFormServiceImplTest.class,
-	BillServiceImplTest.class
+	BillServiceImplTest.class,
+	MessageServiceImplTest.class
 })
 /**
  * Test suite including all service implementation unit tests

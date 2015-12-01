@@ -112,6 +112,15 @@ public interface AppointmentService {
 	 * @param student for which the arranged appointments in the past are searched
 	 * @return A list of appointments with the {@link Availability} {@code Arranged}
 	 */
+	public List<Appointment> getFutureAppointmentsAsStudent(User student);
+	
+	/**
+	 * Searches all {@code Arranged} {@link Appointment}s of an {@code Student} and
+	 * returns only the appointments which are in the past.
+	 * 
+	 * @param student for which the arranged appointments in the past are searched
+	 * @return A list of appointments with the {@link Availability} {@code Arranged}
+	 */
 	public List<Appointment> getPastAppointmentsAsStudent(User student);
 	
 	/**

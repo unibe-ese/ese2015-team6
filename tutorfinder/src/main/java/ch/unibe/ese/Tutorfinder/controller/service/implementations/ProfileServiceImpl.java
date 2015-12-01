@@ -51,31 +51,38 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Transactional
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) {
-		
-		assert(updateProfileForm != null);
-		assert(user != null);
-		
+
+		assert (updateProfileForm != null);
+		assert (user != null);
+
 		updateMainInformation(updateProfileForm, user);
 		Profile profile = updateUserProfileInformation(updateProfileForm, user);
 		updateProfileForm.setId(profile.getId());
 		return updateProfileForm;
 	}
+
 	/**
 	 * updates the profile of a given {@link User}
-	 * @param updateProfileForm that contains the new profile information
-	 * @param user of which the profile information should be updated cannot be null
+	 * 
+	 * @param updateProfileForm
+	 *            that contains the new profile information
+	 * @param user
+	 *            of which the profile information should be updated cannot be
+	 *            null
 	 * @return updated profile
 	 */
 	private Profile updateUserProfileInformation(UpdateProfileForm updateProfileForm, User user) {
-		
-		assert(user != null);
-		assert(updateProfileForm != null);
-		
+
+		assert (user != null);
+		assert (updateProfileForm != null);
+
 		Profile profile = profileDao.findByEmail(user.getEmail());
 		profile.setBiography(updateProfileForm.getBiography());
 		profile.setRegion(updateProfileForm.getRegion());
 		profile.setWage(updateProfileForm.getWage());
-
+		profile.setLanguage(updateProfileForm.getLanguage());
+		profile.setUniversity(updateProfileForm.getUniversity());
+		
 		profile = profileDao.save(profile); // save object to DB
 
 		return profile;
@@ -83,43 +90,41 @@ public class ProfileServiceImpl implements ProfileService {
 
 	/**
 	 * Updates the data of a given {@link User}
-	 * @param updateProfileForm that contains the new user data
-	 * @param user of which the data should be updated
+	 * 
+	 * @param updateProfileForm
+	 *            that contains the new user data
+	 * @param user
+	 *            of which the data should be updated
 	 */
 	private void updateMainInformation(UpdateProfileForm updateProfileForm, User user) {
-		
-		assert(user != null);
-		assert(updateProfileForm != null);
-		
+
+		assert (user != null);
+		assert (updateProfileForm != null);
+
 		user.setFirstName(updateProfileForm.getFirstName());
 		user.setLastName(updateProfileForm.getLastName());
 		if (updateProfileForm.getPassword() != null) {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			String encPwd = encoder.encode(updateProfileForm.getPassword());
-			if (!user.getPassword().equals(encPwd)) {
-				user.setPassword(encPwd);
-			}
+			user.setPassword(encoder.encode(updateProfileForm.getPassword()));
 		}
 
 		userService.save(user); // save object to DB
-		
+
 	}
-	
+
 	@Override
 	public void updateRating(User tutor, BigDecimal rating, BigDecimal countedRating) {
-		assert(tutor != null);
-		assert(rating != null);
-		assert(countedRating != null && countedRating != BigDecimal.ZERO);
-		
+		assert (tutor != null);
+		assert (rating != null);
+		assert (countedRating != null && countedRating != BigDecimal.ZERO);
+
 		Profile tmpProfile = tutor.getProfile();
 		tmpProfile.setRating(rating);
-		
+
 		Long countingRates = countedRating.longValue();
 		tmpProfile.setCountedRatings(countingRates);
-		
+
 		profileDao.save(tmpProfile);
 	}
-	
-	
 
 }

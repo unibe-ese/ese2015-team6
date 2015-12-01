@@ -44,6 +44,10 @@ public class UpdateProfileForm {
 	@Min(value = ConstantVariables.WAGE_VALUE, 
 			message = ConstantVariables.WAGE_ERRORMESSAGE)
 	private BigDecimal wage;
+	
+	private String university;
+	
+	private String language;
 
 	
 	/* Getters and Setters */
@@ -109,6 +113,22 @@ public class UpdateProfileForm {
 
 	public void setWage(BigDecimal wage) {
 		this.wage = wage;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
 	}
 
 }

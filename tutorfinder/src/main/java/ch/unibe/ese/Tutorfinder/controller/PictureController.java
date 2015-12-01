@@ -65,7 +65,6 @@ public class PictureController {
 			}
 		} else {
 			model = new ModelAndView("updateProfile");
-			// TODO show error massage to the user
 		}
 		model = prepareFormService.prepareForm(authUser, model);
 		return model;

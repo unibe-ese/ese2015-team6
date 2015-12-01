@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
@@ -31,9 +32,14 @@ public class Profile {
 	@NotNull
 	private String email;
 
+	@Lob
 	private String biography;
 	
 	private String region;
+	
+	private String university;
+	
+	private String language;
 	
 	@NumberFormat(style=Style.CURRENCY)
 	private BigDecimal wage;
@@ -137,6 +143,22 @@ public class Profile {
 	public String toString() {
 		return "Profile [id=" + id + ", email=" + email + ", biography=" + biography + ", region=" + region + ", wage="
 				+ wage + "]";
+	}
+
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	
 }

@@ -1,0 +1,33 @@
+#timeslots {
+	box-sizing: border-box;
+}
+
+#timeslot span {
+	display: inline-block;
+	margin-top: 10px;
+	padding: 3px;
+	font-size: medium;
+}
+
+#timeslot span.AVAILABLE {
+	cursor: pointer;
+}
+
+#timeslot input {
+	visibility: hidden;
+}
+
+.AVAILABLE {
+	background-color: lightgreen;
+	border: solid darkgreen 1px;
+}
+
+.RESERVED {
+	background-color: yellow;
+	border: solid orange 1px;
+}
+
+.ARRANGED {
+	background-color: orange;
+	border: solid red 1px;
+}

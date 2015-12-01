@@ -8,8 +8,8 @@
 
 	<!-- Whitelist for not secured content -->
 	<http pattern="/" security="none" />
-	<http pattern="/img/*" security="none" />
-	<http pattern="/css/*" security="none" />
+	<http pattern="/img/bg/**" security="none" />
+	<http pattern="/css/**" security="none" />
 	<http pattern="/register" security="none" />
 	<http pattern="/create" security="none" />
 	<http pattern="/favicon.ico" security="none" />
@@ -21,13 +21,9 @@
 		<!-- URLs to intercept for access -->
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/home" access="permitAll" />
-		<intercept-url pattern="/403" access="permitAll" />
 		<intercept-url pattern="/timetable" access="hasAnyRole('ROLE_TUTOR')" />
 		<intercept-url pattern="/timetable" access="hasAnyRole('ROLE_TUTOR')" />
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_STUDENT','ROLE_TUTOR')" />
-
-		<!-- access denied page -->
-		<access-denied-handler error-page="/403" />
 
 		<form-login login-page="/login" 
 			default-target-url="/success"
@@ -42,7 +38,7 @@
 	</http>
 
 	<!-- Select users and user_roles from database -->
-	<authentication-manager>
+	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
 		<password-encoder hash="bcrypt"/>
 			<jdbc-user-service data-source-ref="mainDataSource"

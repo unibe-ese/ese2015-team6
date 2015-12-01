@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
@@ -32,6 +33,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Autowired
 	ProfileService profileService;
 
+	/**
+	 * Constructor for testing purposes
+	 * 
+	 * @param appointmentDao
+	 * @param profileService
+	 */
+	@Autowired
+	public AppointmentServiceImpl(AppointmentDao appointmentDao, ProfileService profileService) {
+		this.appointmentDao = appointmentDao;
+		this.profileService = profileService;
+	}
+	
+	@Transactional
 	public MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student) {
 		BigDecimal wage = tutor.getProfile().getWage();
 		LocalDate date = appForm.getDate();
@@ -115,7 +129,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getPastAppointments(User tutor, Availability availability) {
 		assert (tutor != null && availability != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailability(tutor, availability);
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(tutor, availability);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -138,7 +152,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getFutureAppointments(User tutor, Availability availability) {
 		assert (tutor != null && availability != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailability(tutor, availability);
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(tutor, availability);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -178,7 +192,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			int year) {
 		assert(tutor != null && availability  != null);
 		
-		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailability(tutor, availability);
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(tutor, availability);
 		List<Appointment> newAppointments = new ArrayList<Appointment>();
 		
 		LocalDate tmpDate;
@@ -202,7 +216,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getPendingAppointments(User student) {
 		assert (student != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailability(student, Availability.RESERVED);
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.RESERVED);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -220,12 +234,35 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 		return newAppointments;
 	}
+	
+	@Override
+	public List<Appointment> getFutureAppointmentsAsStudent(User student) {
+		assert (student != null);
 
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.ARRANGED);
+
+		Timestamp timestampNow = new Timestamp((new Date()).getTime());
+
+		List<Appointment> visitedAppointments = new ArrayList<Appointment>();
+
+		if (appointments != null) {
+			for (Appointment appointment : appointments) {
+				if (appointment != null) {
+					int compareResult = timestampNow.compareTo(appointment.getTimestamp());
+					if (compareResult <= 0)
+						visitedAppointments.add(appointment);
+				}
+			}
+		}
+
+		return visitedAppointments;
+	}
+	
 	@Override
 	public List<Appointment> getPastAppointmentsAsStudent(User student) {
 		assert (student != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailability(student, Availability.ARRANGED);
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.ARRANGED);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 

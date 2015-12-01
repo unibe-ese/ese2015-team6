@@ -43,10 +43,6 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 public class PrepareFormServiceImplTest {
 
 	@Autowired
-	TimetableService timetableService;
-	@Autowired
-	SubjectService subjectService;
-	@Autowired
 	UserDao userDao;
 	@Autowired
 	ProfileDao profileDao;
@@ -121,6 +117,7 @@ public class PrepareFormServiceImplTest {
 		assertTrue(gotMav.getModel().containsKey("updateSubjectsForm"));
 		assertTrue(gotMav.getModel().containsKey("updateProfileForm"));
 		assertTrue(gotMav.getModel().containsKey("updateTimetableForm"));
+		assertTrue(gotMav.getModel().containsKey("passwordConfirmationForm"));
 		assertEquals(mockUser, gotMav.getModel().get("authUser"));
 	}
 

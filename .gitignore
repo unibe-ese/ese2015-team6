@@ -179,5 +179,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Dreamweaver
+_notes/
+
 # Profile pictures
 /tutorfinder/src/main/webapp/img/profPic/*

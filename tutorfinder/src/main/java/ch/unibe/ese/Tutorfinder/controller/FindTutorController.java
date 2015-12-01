@@ -16,7 +16,8 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectExceptio
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
-import ch.unibe.ese.Tutorfinder.model.User;
+import ch.unibe.ese.Tutorfinder.model.Profile;
+import ch.unibe.ese.Tutorfinder.model.Subject;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -51,8 +52,6 @@ public class FindTutorController {
 			}
 		}
 		model.addObject("findTutorForm", new FindTutorForm());
-		User tmpAuthUser = userService.getUserByPrincipal(authUser);
-		model.addObject("authUser", tmpAuthUser);
 		return model;
 	}
 	
@@ -67,7 +66,7 @@ public class FindTutorController {
 	 */
 	@RequestMapping(value="/submit", method=RequestMethod.POST)
 	public String submit(@Valid FindTutorForm form, BindingResult result) {
-		return "redirect:/findTutor?q=" + form.getSubject();
+		return "";//TODO return value
 	}
 
 }

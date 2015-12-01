@@ -8,137 +8,166 @@
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
 
+<script>
+/*<![CDATA[*/
+function closePopup() {
+	document.getElementById('fade').style.display='none';
+	var elements = document.getElementsByClassName('white_content');
+	for (var i in elements) {
+		elements[i].style.display='none';
+	}
+};
+/*]]>*/
+</script>
+
 </head>
 <body>
 
-	<div th:include="header::header"></div>
-
-	<div id="content">
-		<div id="leftSide">
-			<!-- 
+	<header th:include="fragments/header::header"></header>
+	<div id="wrapper">
+		<div id="sidebar"></div>
+		<div id="content">
+			<div class="leftSide">
+				<!-- 
 		ProfilePicture form
 		Shows the actual picture and allows the user to upload an new picture
 	-->
-			<form id="userAvatarBox" action="#" method="POST"
-				th:action="@{/uploadImage}" enctype="multipart/form-data">
-				<img th:src="@{|/img/profPic/${authUser.id}.png|}"
-					onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'"
-					alt="Profile picture" width="192" height="192"
-					src="../../img/default-avatar.jpg" /><br /> Upload new profile
-				picture: <br /> <input type="file" name="file" accept="image/*" />
-				<br /> <input type="submit" value="Upload" />
-			</form>
-			<br />
+				<form id="userAvatarBox" action="#" method="POST"
+					th:action="@{/uploadImage}" enctype="multipart/form-data">
+					<img th:src="@{|/img/profPic/${authUser.id}.png|}"
+						onerror="this.onerror=null; this.src='../img/default-avatar.jpg;'"
+						alt="Profile picture" width="192" height="192"
+						src="../../img/default-avatar.jpg" /><br /> Upload new profile
+					picture: <br /> <input type="file" name="file" accept="image/*" />
+					<br /> <input type="submit" value="Upload" />
+				</form>
+				<br />
 
-			<form id="tutorSubjectBox" action="#" method="post"
-				th:action="@{/editSubjects}" th:object="${updateSubjectsForm}"
-				name="updateSubjectsForm">
-				<!-- The follow form-tags are only shown if it is the profile from an tutor -->
-				<div sec:authorize="hasRole('ROLE_TUTOR')">
-					<!-- 
+				<form id="tutorSubjectBox" action="#" method="post"
+					th:action="@{/editSubjects}" th:object="${updateSubjectsForm}"
+					name="updateSubjectsForm">
+					<!-- The follow form-tags are only shown if it is the profile from an tutor -->
+					<div sec:authorize="hasRole('ROLE_TUTOR')">
+						<!-- 
 				Teaching Subjects 
 			-->
-					<h3>Teaching Subjects</h3>
-					<table id="subjectTable">
-						<thead>
-							<tr>
-								<th>Subject</th>
-								<th>Grade</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="row,rowStat : *{rows}">
-								<!-- for each row in rows -->
-								<td><input type="text"
-									th:field="*{rows[__${rowStat.index}__].subject}"
-									value="Subject name" required="required" /></td>
-								<td><input type="number"
-									th:field="*{rows[__${rowStat.index}__].grade}" min="1.0"
-									max="6.0" step="0.5" value="5.0" /></td>
-								<td>
-									<button type="submit" name="remRow" th:value="${rowStat.index}">Remove</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+						<h3>Teaching Subjects</h3>
+						<table id="subjectTable">
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Grade</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="row,rowStat : *{rows}">
+									<!-- for each row in rows -->
+									<td><input type="text"
+										th:field="*{rows[__${rowStat.index}__].subject}"
+										value="Subject name" required="required" /></td>
+									<td><input type="number"
+										th:field="*{rows[__${rowStat.index}__].grade}" min="1.0"
+										max="6.0" step="0.5" value="5.0" /></td>
+									<td>
+										<button type="submit" name="remRow"
+											th:value="${rowStat.index}">Remove</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 
-					<button type="submit" name="addRow">Add subject</button>
-					<button type="submit" name="save" class="btn btn-primary">Save</button>
-					<span class="error" th:if="${#fields.hasErrors('global')}"
-						th:errors="*{global}">Subject can't be added twice</span>
+						<button type="submit" name="addRow">Add subject</button>
+						<button type="submit" name="save" class="btn btn-primary">Save</button>
+						<span class="error" th:if="${#fields.hasErrors('global')}"
+							th:errors="*{global}">Subject can't be added twice</span>
 
-				</div>
-			</form>
+					</div>
+				</form>
 
 			<div id="availability" sec:authorize="hasRole('ROLE_TUTOR')">
 				<button type="button"
 					onclick="document.getElementById('timetableBox').style.display='block';document.getElementById('fade').style.display='block'">Update
 					availability</button>
 			</div>
-
-			<!-- PopupBox -->
-			<div id="timetableBox" class="white_content">
-				<form action="#" method="post" th:action="@{/updateTimetable}"
-					th:object="${updateTimetableForm}" name="updateTimetableForm">
-					<!-- The follow form-tags are only shown if it is the profile from an tutor -->
-					<div sec:authorize="hasRole('ROLE_TUTOR')">
-						<!-- 
-					Timetable
-				-->
-						<div class="Table">
-							<div class="Title">
-								<p>Timetable for availability</p>
-							</div>
-							<div class="Heading" id="timeTable">
-								<div class="Row">
-									<div class="Cell">Hour</div>
-									<div class="Cell">MON</div>
-									<div class="Cell">TUE</div>
-									<div class="Cell">WED</div>
-									<div class="Cell">THU</div>
-									<div class="Cell">FRI</div>
-									<div class="Cell">SAT</div>
-									<div class="Cell">SUN</div>
-								</div>
-							</div>
-							<div class="Body">
-								<div class="Row" th:each="rows,rowStat : *{timetable}">
-									<!-- for each hour in a day -->
-									<div class="Cell">
-										<span th:text="${rowStat.index} + ':00'">00:00</span>
-									</div>
-									<div class="Cell" th:each="columns,colStat : ${rows}">
-										<input type="checkbox"
-											th:field="*{timetable[__${rowStat.index}__][__${colStat.index}__]}" />
-									</div>
-								</div>
-							</div>
+			
+			<div id="changeRoleButton" sec:authorize="hasRole('ROLE_STUDENT')">
+				<button type="button"
+					onclick="document.getElementById('changeRoleBox').style.display='block';document.getElementById('fade').style.display='block'">Become a Tutor</button>
+			</div>
+			
+			<div id="changeRoleBox" class="white_content" sec:authorize="hasRole('ROLE_STUDENT')">
+				<form action="#" method="post" th:action="@{/changeRole}" 
+					th:object="${passwordConfirmationForm}" name="passwordConfirmationForm">
+					<div class="control-group">
+						<label class="control-label" for="password">Please confirm the change with the password</label>
+						<div class="controls">
+							<input type="password" th:name="password"
+								maxlength="35" th:value="*{password}" /> <span class="error"
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+							</span>
 						</div>
-						<div class="Button">
-							<button type="submit" name="save" class="btn btn-primary">Save</button>
-							<button type="button"
-								onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'">Close</button>
-						</div><br />
-						<span class="error" th:if="${#fields.hasErrors('global')}"
-						th:errors="*{global}"></span>
 					</div>
+					<button type="submit" name="apply" class="btn btn-primary">Apply</button>
+					<button type="button"
+								onclick="closePopup()">Cancel</button>
 				</form>
 			</div>
-			<div id="fade" class="black_overlay"
-				onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'"></div>
-		</div>
-		<div id="rightSide">
-			<form id="userInfoBox" action="#" th:object="${updateProfileForm}"
-				th:action="@{/update}" th:name="updateProfileForm"
-				th:autocomplete="off" method="post">
+
+				<!-- PopupBox -->
+				<div id="timetableBox" class="white_content">
+					<form action="#" method="post" th:action="@{/updateTimetable}"
+						th:object="${updateTimetableForm}" name="updateTimetableForm">
+						<!-- The follow form-tags are only shown if it is the profile from an tutor -->
+						<div sec:authorize="hasRole('ROLE_TUTOR')">
+							<!-- 
+					Timetable
+				-->
+							<div class="Table">
+								<div class="Heading">
+									<div class="Row">
+										<div class="Cell">Hour</div>
+										<div class="Cell">MON</div>
+										<div class="Cell">TUE</div>
+										<div class="Cell">WED</div>
+										<div class="Cell">THU</div>
+										<div class="Cell">FRI</div>
+										<div class="Cell">SAT</div>
+										<div class="Cell">SUN</div>
+									</div>
+								</div>
+								<div class="Body">
+									<div class="Row" th:each="rows,rowStat : *{timetable}">
+										<!-- for each hour in a day -->
+										<div class="Cell">
+											<span th:text="${rowStat.index} + ':00'">00:00</span>
+										</div>
+										<div class="Cell" th:each="columns,colStat : ${rows}">
+											<input type="checkbox"
+												th:field="*{timetable[__${rowStat.index}__][__${colStat.index}__]}" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="Button">
+								<button type="submit" name="save" class="btn btn-primary">Save</button>
+								<button type="button"
+									onclick="document.getElementById('timetableBox').style.display='none';document.getElementById('fade').style.display='none'">Close</button>
+							</div>
+							<br /> <span class="error"
+								th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></span>
+						</div>
+					</form>
+				</div>
+				<div id="fade" class="black_overlay"
+					onclick="closePopup()"></div>
+			</div>
+			<form id="userInfoBox" class="rightSide" action="#"
+				th:object="${updateProfileForm}" th:action="@{/update}"
+				th:name="updateProfileForm" th:autocomplete="off" method="post">
 				<fieldset>
-					<!--
-	        	First name field
-	        	Placeholder loads the saved value on the server connected to the user's profile.
-        	-->
-					<div class="control-group">
-						<label class="control-label" for="firstName">First name</label>
-						<div class="controls">
+					<div>
+						<label>First name</label>
+						<div>
 							<input type="text" th:name="firstName" tabindex="1"
 								maxlength="255" th:value="*{firstName}" /> <span class="error"
 								th:if="${#fields.hasErrors('firstName')}"
@@ -146,26 +175,21 @@
 						</div>
 					</div>
 
-					<!--
-	        	Last name field
-	        	Placeholder loads the saved value on the server connected to the user's profile.
-        	-->
-					<div class="control-group">
-						<label class="control-label" for="lastName">Last name</label>
-						<div class="controls">
+					<div>
+						<label>Last name</label>
+						<div>
 							<input type="text" th:name="lastName" tabindex="2"
 								maxlength="255" th:value="*{lastName}" /> <span class="error"
 								th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
 							</span>
 						</div>
 					</div>
+				</fieldset>
+				<fieldset>
 
-					<!-- 
-				Password field
-			 -->
-					<div class="control-group">
-						<label class="control-label" for="password">Password</label>
-						<div class="controls">
+					<div>
+						<label>Password</label>
+						<div>
 							<input type="password" th:name="password" tabindex="3"
 								maxlength="25" /> <span class="error"
 								th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
@@ -173,15 +197,11 @@
 						</div>
 					</div>
 
-					<!-- 
-				Confirm password field
-			 -->
-					<div class="control-group">
-						<label class="control-label" for="confirmPassword">Confirm
-							password</label>
-						<div class="controls">
+					<div>
+						<label>Confirm password</label>
+						<div>
 							<input type="password" th:name="confirmPassword" tabindex="4"
-								maxlength="25" /> <span class="error" 
+								maxlength="25" /> <span class="error"
 								th:if="${#fields.hasErrors('confirmPassword')}"
 								th:errors="*{confirmPassword}"> Passwords do not match </span> <span
 								class="error" th:if="${#fields.hasErrors('global')}"
@@ -189,70 +209,71 @@
 								does not match</span>
 						</div>
 					</div>
-
-					<!-- The follow form-tags are only shown if it is the profile from an tutor -->
-					<div sec:authorize="hasRole('ROLE_TUTOR')">
-						<!--
-		        	Biography field
-		        	Placeholder loads the saved value on the server connected to the user's profile.
-	        	-->
-						<div class="control-group">
-							<label class="control-label" for="biography">Biography</label>
-							<div class="controls">
-								<textarea rows="5" cols="50" tabindex="1" maxlength="255"
-									th:value="*{biography}" th:field="*{biography}">
+				</fieldset>
+				<fieldset>
+					<div>
+						<label>Biography</label>
+						<div>
+							<textarea rows="5" cols="50" tabindex="1"
+								th:value="*{biography}" th:field="*{biography}">
 						</textarea>
-								<span class="error" th:if="${#fields.hasErrors('biography')}"
-									th:errors="*{biography}"></span>
-							</div>
+							<span class="error" th:if="${#fields.hasErrors('biography')}"
+								th:errors="*{biography}"></span>
 						</div>
+					</div>
+					<div>
+						<label>Attended University</label>
+						<div>
+							<input type="text" th:name="university" tabindex="1"
+								maxlength="255" th:value="*{university}" /> <span class="error"
+								th:if="${#fields.hasErrors('university')}"
+								th:errors="*{university}"> </span>
+						</div>
+					</div>
+					<div>
+						<label>Languages</label>
+						<div>
+							<input type="text" th:name="language" tabindex="1"
+								maxlength="255" th:value="*{language}" /> <span class="error"
+								th:if="${#fields.hasErrors('language')}"
+								th:errors="*{language}"> </span>
+						</div>
+					</div>
+				</fieldset>
 
-						<!-- 
-		        	Region field 
-		        	Placeholder loads the saved value on the server connected to the user's profile
-		        -->
-						<div class="control-group">
-							<label class="control-label" for="region">Region</label>
-
-							<div class="controls">
+					<fieldset sec:authorize="hasRole('ROLE_TUTOR')">
+						<div>
+							<label>Teaching region</label>
+							<div>
 								<input type="text" th:name="region" tabindex="6" maxlength="255"
-									th:value="*{region}" /> <span class="error" 
+									th:value="*{region}" /> <span class="error"
 									th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></span>
 							</div>
 						</div>
 
-						<!-- 
-		        	Wage field 
-		        	Placeholder loads the saved value on the server connected to the user's profile
-		        -->
-						<div class="control-group">
-							<label class="control-label" for="wage">Wage in CHF</label>
+						<div>
+							<label>Wage in CHF</label>
 
-							<div class="controls">
+							<div>
 								<input type="number" th:name="wage" th:value="*{wage}"
 									tabindex="1" min="0.00" max="200.00" step="0.05" value="5.0" />
 								<span th:if="${#fields.hasErrors('wage')}" th:errors="*{wage}"></span>
 							</div>
 						</div>
-					</div>
+					</fieldset>
 
 
-					<div class="form-actions">
-
-						<!-- 
-					Button to save the changes, 
-					loads again the uploadProfile page with the new information.
-				-->
-						<button type="submit" class="btn btn-primary">Save</button>
-
+					<div>
+						<button type="submit">Save</button>
 					</div>
 
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
-				</fieldset>
 			</form>
 		</div>
+		<div id="sidebar"></div>
 
 	</div>
+	<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>
