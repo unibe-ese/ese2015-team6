@@ -78,7 +78,7 @@ public class ShowProfileController {
 	 * 
 	 * @param authUser
 	 *            {@link Principal}
-	 * @return ModelAndView for Springframework with the users profile.
+	 * @return ModelAndView with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId", required = false) Long userId,

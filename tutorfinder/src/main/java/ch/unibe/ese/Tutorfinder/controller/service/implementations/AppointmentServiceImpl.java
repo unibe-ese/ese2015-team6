@@ -107,7 +107,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			dateTime = dateTime.plusHours(hours);
 			Timestamp timestamp = Timestamp.valueOf(dateTime);
 
-			if (this.findByTutorAndTimestamp(tutor, timestamp) == null) {
+			if (this.findByTutorAndTimestamp(tutor, timestamp) == null && 0 > LocalDateTime.now().compareTo(dateTime) ) {
 				AppointmentPlaceholder placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
 				tmpList.add(placeholder);
 			}

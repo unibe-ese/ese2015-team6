@@ -171,13 +171,27 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testLoadAppointments() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate date = LocalDate.parse("2015-11-07", formatter);
+		DayOfWeek dow = null;
+		LocalDate date = null;
+		for(long i = 0; dow != DayOfWeek.SATURDAY; i++) {
+			date = LocalDate.now().plusYears(1).plusDays(i);
+			dow = date.getDayOfWeek();
+		}
 		
 		List<AppointmentPlaceholder> gotList = appointmentService.loadAppointments(timetableList, mockTutor, date);
 		
 		assertEquals(Availability.AVAILABLE, gotList.get(0).getAvailability());
 		assertEquals(DayOfWeek.SATURDAY, gotList.get(0).getDow());
+	}
+	
+	@Test
+	public void testNotLoadPastAppointments() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse("2015-11-07", formatter);
+		
+		List<AppointmentPlaceholder> gotList = appointmentService.loadAppointments(timetableList, mockTutor, date);
+		
+		assertTrue(gotList.isEmpty());
 	}
 	
 	@Test

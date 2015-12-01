@@ -117,6 +117,7 @@
 								<span class="error" th:if="${error_message != null}"
 									th:text="${error_message}">Enter a valid date
 									(yyyy-MM-dd)</span>
+								<p th:if="*{appointments != null} and *{appointments.isEmpty()} and ${param.date != null}">There are no slots for this day</p>
 								<div th:each="appointment:*{appointments}">
 									<label id="timeslot"
 										th:attr="title=${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE ? 'Click to send a request':''}">
