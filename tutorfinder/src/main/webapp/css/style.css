@@ -176,6 +176,38 @@ fieldset {
 	padding-bottom: 10px;
 }
 
+/* AppointmentOverview */
+.appointmentRow {
+	margin-top: 50px;
+	display: table-row;
+}
+
+.appointmentRow a {
+	text-decoration: none;
+	color: blue;
+}
+
+h2 {
+	padding-top: 15px;
+}
+
+.last {
+	height: 100%;
+}
+
+.appointmentCell {
+	padding-left: 10px;
+	vertical-align: top;
+	display: inline-block;
+	width: 50%;
+	max-height: 185px;
+	overflow-y: auto;
+}
+
+.appointmentContent {
+	padding-bottom: 10px;
+}
+
 /* messageOverview */
 
 #messageNavigation ul {
@@ -191,7 +223,28 @@ fieldset {
 
 #messageNavigation ul li a {
 	text-decoration: none;
+	color: blue;
+}
+
+#messageNavigation ul li a:hover {
+	background-color: lightgrey;
+	border-radius: 5px;
+}
+
+a.activeLink {
+	background-color: lightgrey;
+	border-radius: 5px;
 	color: black;
+}
+
+.activeMessage {
+	background-color: rgba(173, 216, 230, 0.3);
+	border-radius: 10px;
+}
+
+#messageHeader a {
+	text-decoration: none;
+	color: blue;
 }
 
 #messageList a {

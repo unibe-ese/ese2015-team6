@@ -53,6 +53,7 @@
 				<a th:if="${authUser.id!=DisplayedUser.id}"
 					th:unless="${param.userId == null}"
 					th:with="userId=${param.userId[0]}"
+					th:title="|Write a message to ${DisplayedUser.firstName} ${DisplayedUser.lastName}|"
 					th:href="@{/newMessage(receiver=__${userId}__)}" href="/newMessage"><img
 					id="newMessage" class="action-icon"
 					th:src="@{|/img/bg/newMessage.png|}" src="unread.png" /></a>
