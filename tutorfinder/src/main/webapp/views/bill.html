@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Bill</title>
+<title>Find Tutor</title>
 <link rel="stylesheet" th:href="@{/css/style.css}"
 	href="../css/style.css" />
 </head>
 
 <body>
-
+	<header th:include="fragments/header::header"></header>
+	<div id="wrapper">
+		<div id="sidebar"></div>
+		<div id="content">
+		<div class="full">
+		
 	<h1>Bill for this month:</h1>
-	<h1 th:text="|${balance} Fr.|">0 Fr.</h1>
-	
+	<p th:text="|${balance} Fr.|">0 Fr.</p>
+	<br />
 	<div th:if="${Bills != null}">
 		<h1>Past Bills:</h1>
 	</div>
 	<div th:each="bill : ${Bills}" th:if="${bill != null}"> 
-		<span th:text="|${bill.year} ${bill.month} ${bill.amount} Fr.|">
-							1970 January 0</span>
+		<p th:text="|${bill.year} ${bill.month} ${bill.amount} Fr.|">
+							1970 January 0</p>
 
+		</div>
+		</div>
 	</div>
-
+	<div id="sidebar"></div>
+	</div>
+	<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>
