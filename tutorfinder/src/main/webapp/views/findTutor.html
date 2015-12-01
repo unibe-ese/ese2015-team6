@@ -15,11 +15,15 @@
 		<div id="content">
 
 			<div id="search" class="full">
-				<form th:autocomplete="off">
-					<input type="search" th:name="q"
-						th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
-						maxlength="45" required="required" />
-					<button>Search</button>
+				<form id="search"
+					th:autocomplete="off" th:name="findTutorForm">
+					<fieldset>
+						<div>
+							<input type="search" th:name="q" th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
+								maxlength="45" required="required" autofocus="autofocus"/>
+							<button>Search</button>
+						</div>
+					</fieldset>
 				</form>
 				<form th:action="${formaction}" th:object="${findTutorFilterForm}" name="findTutorFilterForm" method="post" action="">
 					<select th:field="*{criteria}" name="criteria">

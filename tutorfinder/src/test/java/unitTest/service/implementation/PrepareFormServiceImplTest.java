@@ -43,10 +43,6 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 public class PrepareFormServiceImplTest {
 
 	@Autowired
-	TimetableService timetableService;
-	@Autowired
-	SubjectService subjectService;
-	@Autowired
 	UserDao userDao;
 	@Autowired
 	ProfileDao profileDao;

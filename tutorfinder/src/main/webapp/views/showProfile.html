@@ -12,20 +12,20 @@
 <script th:src="@{/js/pikaday.js}"></script>
 
 <script type="text/javascript">
-window.onload = function(){
-	if (!Modernizr.inputtypes.date) {
-		document.getElementById('datebutton').style.display = 'none';
-		var picker = new Pikaday({ 
-			field: document.getElementById('date'), 
-			firstDay: 1,
-			format: 'YYYY-MM-DD',
-			minDate: moment().toDate(),
-			onSelect: function() {
-				document.getElementById('datebutton').click();
-			}
-		});
-	}	
-};
+	window.onload = function() {
+		if (!Modernizr.inputtypes.date) {
+			document.getElementById('datebutton').style.display = 'none';
+			var picker = new Pikaday({
+				field : document.getElementById('date'),
+				firstDay : 1,
+				format : 'YYYY-MM-DD',
+				minDate : moment().toDate(),
+				onSelect : function() {
+					document.getElementById('datebutton').click();
+				}
+			});
+		}
+	};
 </script>
 
 </head>
@@ -50,8 +50,14 @@ window.onload = function(){
 					th:if="${Profile.rating != null}"
 					th:text="|Rating: ${Profile.rating}|">Rating: 4.5</h2>
 
-				<div id="Bio" class="breakable"
-					th:if="${Profile.biography} != null">
+				<a th:if="${authUser.id!=DisplayedUser.id}"
+					th:unless="${param.userId == null}"
+					th:with="userId=${param.userId[0]}"
+					th:href="@{/newMessage(receiver=__${userId}__)}" href="/newMessage"><img
+					id="newMessage" class="action-icon"
+					th:src="@{|/img/bg/newMessage.png|}" src="unread.png" /></a>
+
+				<div id="Bio" class="breakable" th:if="${Profile.biography} != null">
 					<h3>Short biography</h3>
 					<p th:text="${Profile.biography}">Lorem ipsum dolor sit amet,
 						consetetur sadipscing elitr, sed diam nonumy eirmod tempor
@@ -68,13 +74,16 @@ window.onload = function(){
 			<div id="userInfoBox" class="rightSide">
 
 				<div th:if="${Profile.language} != null">
-					<b>Languages:</b> <span th:text="${Profile.language}"> DE, EN</span>
+					<b>Languages:</b> <span th:text="${Profile.language}"> DE,
+						EN</span>
 				</div>
 				<div th:if="${Profile.university} != null">
-					<b>Attended University:</b> <span th:text="${Profile.university}"> Uni Bern</span>
+					<b>Attended University:</b> <span th:text="${Profile.university}">
+						Uni Bern</span>
 				</div>
 				<div th:if="${Profile.region} != null">
-					<b>Teaching region:</b> <span th:text="${Profile.region}"> Bern</span>
+					<b>Teaching region:</b> <span th:text="${Profile.region}">
+						Bern</span>
 				</div>
 
 				<div th:if="${Profile.wage} != 0.00">
@@ -82,16 +91,15 @@ window.onload = function(){
 				</div>
 				<div th:if="${!Subjects.isEmpty()}">
 					<b>Teaching:</b>
-					<div
-						th:each="subject:${Subjects}" th:if="${subject != null}"> <span
-						th:text="|${subject.name} (Grade ${subject.grade})|">
+					<div th:each="subject:${Subjects}" th:if="${subject != null}">
+						<span th:text="|${subject.name} (Grade ${subject.grade})|">
 							SubjectOne (Grade 5.0)<br /> SubjectTwo (Grade 5.5)<br />
-					</span>
+						</span>
 					</div>
 				</div>
 
 				<div
-					th:if="${authUser.id!=DisplayedUser.id and __${DisplayedUser.role}__ == TUTOR}">
+					th:if="${__${authUser.id!=DisplayedUser.id}__ and __${DisplayedUser.role == 'TUTOR'}__}">
 					<form action="#" method="post"
 						th:action="@{|/updateForm?userId=${DisplayedUser.id}|}"
 						th:object="${makeAppointmentsForm}" name="makeAppointmentsForm">

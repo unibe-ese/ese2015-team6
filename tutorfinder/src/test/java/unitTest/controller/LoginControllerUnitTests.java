@@ -1,6 +1,7 @@
 package unitTest.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -69,28 +70,28 @@ public class LoginControllerUnitTests {
 	public void testHome() {
 		String got = controller.home();
 
-		assertTrue(!got.isEmpty());
+		assertFalse(got.isEmpty());
 	}
 	
 	@Test
 	public void testRegister() {
 		String got = controller.register();
 		
-		assertTrue(!got.isEmpty());
+		assertFalse(got.isEmpty());
 	}
 	
 	@Test
 	public void testSuccess() {
 		String got = controller.success();
 		
-		assertTrue(!got.isEmpty());
+		assertFalse(got.isEmpty());
 	}
 	
 	@Test
 	public void testLogoutWithoutAuthentication() {
 		String got = controller.logoutPage(mockRequest, mockResponse);
 		
-		assertTrue(!got.isEmpty());
+		assertFalse(got.isEmpty());
 	}
 
 	@Test

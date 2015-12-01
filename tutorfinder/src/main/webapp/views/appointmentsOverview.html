@@ -100,7 +100,7 @@
 						</a> &nbsp; <span class="control-group"
 							th:if="${appointment.rating == null}"> <input
 							type="number" th:name="rating" th:value="*{rating}" min="0.0"
-							max="5.0" step="0.5" placeholder="4.0" required="required" />
+							max="5.0" step="0.5" placeholder="0.0" required="required" />
 							<button type="submit" name="rate" th:value="${appointment.id}">rate</button>
 						</span> <span th:if="${appointment.rating != null}"
 							th:text="|Rating: ${appointment.rating}|">Rating: 4.5</span>

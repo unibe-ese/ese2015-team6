@@ -13,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	FindTutorServiceImplTest.class,
 	SubjectServiceImplTest.class,
 	AppointmentServiceImplTest.class,
-	PrepareFormServiceImplTest.class
+	PrepareFormServiceImplTest.class,
+	MessageServiceImplTest.class
 })
 /**
  * Test suite including all service implementation unit tests

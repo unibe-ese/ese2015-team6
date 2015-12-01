@@ -177,6 +177,71 @@ fieldset {
 	padding-bottom: 10px;
 }
 
+/* messageOverview */
+
+#messageNavigation ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: solid black 2px;
+}
+
+#messageNavigation ul li {
+	display: inline;
+}
+
+#messageNavigation ul li a {
+	text-decoration: none;
+	color: black;
+}
+
+#messageList a {
+	text-decoration: none;
+	color: black;
+}
+
+#messageList > div {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: solid lightgray 1px;
+}
+
+#messageBox {
+	margin: 5px;
+	height: inherit;
+}
+
+#message {
+	padding: 5px;
+	border: solid lightgray 2px;
+	height: inherit;
+}
+
+#answer {
+	float: right;
+}
+
+#messageBox p {
+	padding: 5px;
+	border-top: solid lightgray 1px;
+}
+
+#unreadMessage {
+	float: right;
+}
+
+#newMessage {
+	float: none;
+	margin: 5px;
+	margin-left: 0;
+
+}
+
+.action-icon {
+	width: 30px;
+	height: 20px;
+}
+
 /*EditProfile*/
 #availability {
 	margin-top: 50px;
@@ -250,24 +315,26 @@ fieldset {
 }
 
 #results>div {
-	position: relative; 
 	display : inline-block;
 	margin-top: 10px;
 	margin-right: 20px;
 	vertical-align: top;
-	display: inline-block;
 	
 	color: black;
 	text-decoration: none;
 }
 
-#results a > span {
+.linkparent a>span {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
 	z-index: 1;
+}
+
+.linkparent {
+	position: relative; 
 }
 
 #results .name {
