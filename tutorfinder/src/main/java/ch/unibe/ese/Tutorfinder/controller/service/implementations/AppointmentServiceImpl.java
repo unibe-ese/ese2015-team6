@@ -152,7 +152,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getFutureAppointments(User tutor, Availability availability) {
 		assert (tutor != null && availability != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(tutor, availability);
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampAsc(tutor, availability);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -216,7 +216,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getPendingAppointments(User student) {
 		assert (student != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.RESERVED);
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampAsc(student, Availability.RESERVED);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
@@ -239,7 +239,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getFutureAppointmentsAsStudent(User student) {
 		assert (student != null);
 
-		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(student, Availability.ARRANGED);
+		List<Appointment> appointments = appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampAsc(student, Availability.ARRANGED);
 
 		Timestamp timestampNow = new Timestamp((new Date()).getTime());
 
