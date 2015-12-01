@@ -177,6 +177,33 @@ fieldset {
 	padding-bottom: 10px;
 }
 
+/* AppointmentOverview */
+.appointmentRow {
+	margin-top: 50px;
+	display: table-row;
+}
+
+h2 {
+	padding-top: 10px;
+}
+
+.last {
+	height: 100%;
+}
+
+.appointmentCell {
+	padding-left: 10px;
+	vertical-align: top;
+	display: inline-block;
+	width: 50%;
+	max-height: 185px;
+	overflow-y: auto;
+}
+
+.appointmentContent {
+	padding-bottom: 10px;
+}
+
 /* messageOverview */
 
 #messageNavigation ul {
