@@ -1,11 +1,8 @@
 package unitTest.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -85,7 +82,7 @@ public class ShowProfileControllerUnitTests {
 		when(mockTutor.getId()).thenReturn(1l);
 		when(mockPrepareService.prepareModelByUserId(eq(mockAuthUser), anyLong(), any(ModelAndView.class))).thenReturn(new ModelAndView());
 
-		ModelAndView gotMav = controller.profile(mockAuthUser, mockTutor.getId());
+		ModelAndView gotMav = controller.profile(mockAuthUser, mockTutor.getId(), null, mockRedirectAttributes);
 		
 		assertTrue(gotMav.getModel().containsKey("makeAppointmentsForm"));
 	}
@@ -134,21 +131,21 @@ public class ShowProfileControllerUnitTests {
 		when(mockAppointmentService.loadAppointments(null, mockTutor, date)).thenReturn(appointmentList);
 		when(mockPrepareService.prepareModelByUserId(eq(mockAuthUser), anyLong(), any(ModelAndView.class))).then(AdditionalAnswers.returnsLastArg());
 		
-		ModelAndView gotMav = controller.getDate(mockAuthUser, mockTutor.getId(), mockAppointmentsForm, mockResult, mockRedirectAttributes);
-		
-		assertEquals(mockAppointmentsForm, gotMav.getModel().get("makeAppointmentsForm"));
+		String got = controller.getDate(mockTutor.getId(), mockAppointmentsForm, mockResult, mockRedirectAttributes);
+		String dateString = got.substring(got.length()-10);
+		assertEquals(date, LocalDate.parse(dateString));
 	}
 	
 	@Test
 	public void testGetDateWithErrors() {
 		when(mockTutor.getId()).thenReturn(1l);
 		when(mockResult.hasErrors()).thenReturn(true);
-		when(mockPrepareService.prepareModelByUserId(eq(mockAuthUser), anyLong(), any(ModelAndView.class))).then(AdditionalAnswers.returnsLastArg());
+		when(mockRedirectAttributes.addFlashAttribute(any(String.class), any(String.class))).thenReturn(mockRedirectAttributes);
 		
-		ModelAndView gotMav = controller.getDate(mockAuthUser, mockTutor.getId(), mockAppointmentsForm, mockResult, mockRedirectAttributes);
+		String got = controller.getDate(mockTutor.getId(), mockAppointmentsForm, mockResult, mockRedirectAttributes);
 		
-		assertTrue(gotMav.getModel().containsKey("error_message"));
-		assertEquals(mockAppointmentsForm, gotMav.getModel().get("makeAppointmentsForm"));
+		verify(mockRedirectAttributes).addFlashAttribute(any(String.class), any(String.class));
+		assertTrue(got.contains("redirect:"));
 	}
 
 }
