@@ -185,6 +185,29 @@ public class AppointmentServiceImpl implements AppointmentService {
 			return appointmentDao.findOne(appointmentId);
 		}
 	}
+	
+	@Override
+	public List<Appointment> getAppointmentsForMonthAndYear(User tutor, Availability availability, int month,
+			int year) {
+		assert(tutor != null && availability  != null);
+		
+		List<Appointment> appointments = appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(tutor, availability);
+		List<Appointment> newAppointments = new ArrayList<Appointment>();
+		
+		LocalDate tmpDate;
+		if(appointments != null) {
+			for(Appointment appointment : appointments) {
+				if(appointment != null) {
+					tmpDate = appointment.getTimestamp().toLocalDateTime().toLocalDate();
+					if(tmpDate.getMonthValue() == month && tmpDate.getYear() == year)
+						newAppointments.add(appointment);
+				}
+			}
+			
+		}
+		
+		return newAppointments;
+	}
 
 	@Override
 	public List<Appointment> getPendingAppointments(User student) {

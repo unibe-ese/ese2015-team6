@@ -14,6 +14,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	SubjectServiceImplTest.class,
 	AppointmentServiceImplTest.class,
 	PrepareFormServiceImplTest.class,
+	BillServiceImplTest.class,
 	MessageServiceImplTest.class
 })
 /**

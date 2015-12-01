@@ -512,7 +512,7 @@ public class AppointmentServiceImplTest {
 		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
 		
 		verify(mockAppointment).setRating(BigDecimal.ONE);
-	}
+	}           
 	
 	@Test(expected=AssertionError.class)
 	public void testRatueTutorForAppointmentWhenIdIsNull() {
@@ -522,6 +522,61 @@ public class AppointmentServiceImplTest {
 	@Test(expected=AssertionError.class)
 	public void testRatueTutorForAppointmentWhenRatingIsNull() {
 		appointmentService.rateTutorForAppointment(new Long(1), null);
+	}
+	
+	@Test 
+	public void getAppointmentsForMonthAndYearTest() {
+	//GIVEN
+		LocalDate tmpDate = LocalDate.now();
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp(new Date().getTime()));
+		     when(appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(mockTutor, Availability.ARRANGED)).thenReturn(appList);                                      
+	//WHEN
+		     List<Appointment> testList = appointmentService.getAppointmentsForMonthAndYear(mockTutor, Availability.ARRANGED, 
+		    		 																			tmpDate.getMonthValue(), tmpDate.getYear());     
+	//THEN
+		     assertTrue(testList != null);
+		     assertTrue(testList.size() == 1);
+		     assertTrue(testList.get(0).equals(mockAppointment));
+	}
+	
+	@Test 
+	public void getAppointmentsForMonthAndYearTestDataBaseReturnsNull() {
+	//GIVEN
+		LocalDate tmpDate = LocalDate.now();
+		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp(new Date().getTime()));
+		     when(appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(mockTutor, Availability.ARRANGED)).thenReturn(null);                                      
+	//WHEN
+		     List<Appointment> testList = appointmentService.getAppointmentsForMonthAndYear(mockTutor, Availability.ARRANGED, 
+		    		 																			tmpDate.getMonthValue(), tmpDate.getYear());     
+	//THEN
+		     assertTrue(testList != null);
+		     assertTrue(testList.size() == 0);
+		    
+	}
+	
+	public void getAppointmentsForMonthAndYearTestAppointmontOlderThanAMonth() {
+		
+		//GIVEN
+				LocalDate tmpDate = LocalDate.now();
+				when(mockAppointment.getTimestamp()).thenReturn(new Timestamp(0));
+				     when(appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(mockTutor, Availability.ARRANGED)).thenReturn(null);                                      
+			//WHEN
+				     List<Appointment> testList = appointmentService.getAppointmentsForMonthAndYear(mockTutor, Availability.ARRANGED, 
+				    		 																			tmpDate.getMonthValue(), tmpDate.getYear());     
+			//THEN
+				     assertTrue(testList != null);
+				     assertTrue(testList.size() == 0);
+		
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void getAppointmentsForMonthAndYearTestWhenTutorisNull() {
+	  appointmentService.getAppointmentsForMonthAndYear(null, Availability.ARRANGED, 1, 2015);    
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void getAppointmentsForMonthAndYearTestWhenAvailabilityisNull() {
+	  appointmentService.getAppointmentsForMonthAndYear(mockTutor, null, 1, 2015);    
 	}
 
 }
