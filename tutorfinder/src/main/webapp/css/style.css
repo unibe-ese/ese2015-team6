@@ -183,6 +183,11 @@ fieldset {
 	display: table-row;
 }
 
+.appointmentRow a {
+	text-decoration: none;
+	color: blue;
+}
+
 h2 {
 	padding-top: 15px;
 }

@@ -81,15 +81,16 @@ public class MessageController {
 		} else {
 			tmpMessageList = messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser);
 		}
-		model.addObject("messageList", tmpMessageList);
-
+		
 		// marks message as read
 		if (show != null) {
 			Message tmpMessage = tmpMessageList.get(show.intValue());
 			if (tmpUser != tmpMessage.getReceiver()) {
-				messageService.markMessageAsRead(tmpMessage.getId(), tmpUser);
+				tmpMessage = messageService.markMessageAsRead(tmpMessage.getId(), tmpUser);
+				tmpMessageList.set(show.intValue(), tmpMessage);
 			}
 		}
+		model.addObject("messageList", tmpMessageList);
 		model.addObject("authUser", tmpUser);
 
 		return model;
