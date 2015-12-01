@@ -1,8 +1,7 @@
 @import url("/css/menu.css");
-
 @import url("/css/timetable.css");
-
 @import url("/css/timeslots.css");
+@import url("/css/findTutor.css");
 
 @import url("/css/pikaday.css");
 
@@ -297,32 +296,7 @@ fieldset {
 	display: table-cell;
 }
 
-#search>form {
-	display: flex;
-	padding-bottom: 3px;
-	border-bottom: solid 2px lightgray;
-}
 
-#search input {
-	font-size: large;
-	padding-left: 5px;
-	width: 300px;
-	height: 30px;
-}
-
-#search button {
-	
-}
-
-#results>div {
-	display : inline-block;
-	margin-top: 10px;
-	margin-right: 20px;
-	vertical-align: top;
-	
-	color: black;
-	text-decoration: none;
-}
 
 .linkparent a>span {
 	position: absolute;
@@ -335,24 +309,6 @@ fieldset {
 
 .linkparent {
 	position: relative; 
-}
-
-#results .name {
-	font-weight: bold;
-}
-
-#results .rating {
-	position: relative;
-	z-index: 2;
-	font-size: small;
-}
-
-#results #subjects {
-	position: relative;
-	z-index: 2;
-	font-size: medium;
-	max-height: 80px;
-	overflow-y: auto;
 }
 
 .error {
