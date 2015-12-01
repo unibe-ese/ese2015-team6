@@ -40,13 +40,21 @@ public class FindTutorController {
 	@Autowired
 	FindTutorFilterForm filterForm;
 
+	@Autowired
+	public FindTutorController(FindTutorService findTutorService, UserService userService,
+			FindTutorFilterForm filterForm) {
+		this.findTutorService = findTutorService;
+		this.userService = userService;
+		this.filterForm = filterForm;
+	}
+
 	/**
 	 * Maps the /findTutor pages to the {@code findTutor.html} view.
 	 * 
 	 * @param authUser
 	 *            {@link Principal}
 	 * @param query
-	 *            {@code String} for searching for matching {@link Subject}s
+	 *            {@code String} for searching for matching {@link Subject}
 	 * @return {@link ModelAndView} with links to the corresponding
 	 *         {@link Tutor}s {@link Profile}s
 	 */
@@ -65,6 +73,7 @@ public class FindTutorController {
 		}
 		model.addObject("findTutorFilterForm", filterForm);
 		model.addObject("formaction", action);
+		model.addObject("user", userService.getUserByPrincipal(authUser));
 		return model;
 	}
 
@@ -79,15 +88,14 @@ public class FindTutorController {
 	 * @return redirection to /findTutor with the query {@code String}
 	 */
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
-	public String submit(@RequestParam(value = "q", required = false) String query,
-			@Valid FindTutorFilterForm form, BindingResult result,
-			RedirectAttributes redirect) {
-		assert !result.hasErrors() : "The form has an error where it shouldn't have any\n"+result.getAllErrors();
+	public String submit(@RequestParam(value = "q", required = false) String query, @Valid FindTutorFilterForm form,
+			BindingResult result, RedirectAttributes redirect) {
+		assert !result.hasErrors() : "The form has an error where it shouldn't have any\n" + result.getAllErrors();
 		redirect.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", result);
-		
+
 		filterForm.setCriteria(form.getCriteria());
 		filterForm.setOrder(form.getOrder());
-		
+
 		if (query != null)
 			return "redirect:findTutor?q=" + query;
 		return "redirect:findTutor";
