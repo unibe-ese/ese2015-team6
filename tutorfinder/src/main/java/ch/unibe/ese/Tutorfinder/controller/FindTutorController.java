@@ -32,12 +32,12 @@ import ch.unibe.ese.Tutorfinder.model.Subject;
 public class FindTutorController {
 
 	@Autowired
-	FindTutorService findTutorService;
+	private FindTutorService findTutorService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	FindTutorFilterForm filterForm;
+	private FindTutorFilterForm filterForm;
 
 	@Autowired
 	public FindTutorController(FindTutorService findTutorService, UserService userService,
@@ -79,14 +79,14 @@ public class FindTutorController {
 	 * 
 	 * @param form
 	 *            holds the query {@code String}
-	 * @param result
+	 * @param bindingResult
 	 * @return redirection to /findTutor with the query {@code String}
 	 */
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	public String submit(@RequestParam(value = "q", required = false) String query, @Valid FindTutorFilterForm form,
-			BindingResult result, RedirectAttributes redirect) {
-		assert !result.hasErrors() : "The form has an error where it shouldn't have any\n" + result.getAllErrors();
-		redirect.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", result);
+			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		assert !bindingResult.hasErrors() : "The form has an error where it shouldn't have any\n" + bindingResult.getAllErrors();
+		redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", bindingResult);
 
 		filterForm.setCriteria(form.getCriteria());
 		filterForm.setOrder(form.getOrder());
