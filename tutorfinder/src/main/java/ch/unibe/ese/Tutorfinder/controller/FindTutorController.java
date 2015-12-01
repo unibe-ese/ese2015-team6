@@ -2,13 +2,12 @@ package ch.unibe.ese.Tutorfinder.controller;
 
 import java.security.Principal;
 
-import javax.swing.SortOrder;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +20,6 @@ import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Subject;
-import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -31,6 +29,7 @@ import ch.unibe.ese.Tutorfinder.util.SortCriteria;
  *
  */
 @Controller
+@Scope("session")
 public class FindTutorController {
 
 	@Autowired
@@ -38,21 +37,8 @@ public class FindTutorController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
 	FindTutorFilterForm filterForm;
-
-	/**
-	 * Defines and initializes the findTutorFilterForm as a ModelAttribute and prepares the comparator with default settings
-	 */
-	@ModelAttribute("findTutorFilterForm")
-	private FindTutorFilterForm getFindTutorFilterForm() {
-		if (filterForm == null) {
-			filterForm = new FindTutorFilterForm();
-			filterForm.setCriteria(SortCriteria.RATING);
-			filterForm.setOrder(SortOrder.DESCENDING);
-			findTutorService.generateComparatorFrom(filterForm);
-		}
-		return filterForm;
-	}
 
 	/**
 	 * Maps the /findTutor pages to the {@code findTutor.html} view.
@@ -71,11 +57,13 @@ public class FindTutorController {
 		if (query != null && !query.equals("")) {
 			try {
 				action = "submit?q=" + query;
+				findTutorService.generateComparatorFrom(filterForm);
 				model.addObject("Result", findTutorService.getSubjectsSorted(query));
 			} catch (NoTutorsForSubjectException e) {
 				model = new ModelAndView("findTutor");
 			}
 		}
+		model.addObject("findTutorFilterForm", filterForm);
 		model.addObject("formaction", action);
 		return model;
 	}
@@ -92,12 +80,14 @@ public class FindTutorController {
 	 */
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	public String submit(@RequestParam(value = "q", required = false) String query,
-			@Valid @ModelAttribute("findTutorFilterForm") FindTutorFilterForm form, BindingResult result,
+			@Valid FindTutorFilterForm form, BindingResult result,
 			RedirectAttributes redirect) {
 		assert !result.hasErrors() : "The form has an error where it shouldn't have any\n"+result.getAllErrors();
-		findTutorService.generateComparatorFrom(form);
-		this.filterForm = form;
 		redirect.addFlashAttribute("org.springframework.validation.BindingResult.findTutorFilterForm", result);
+		
+		filterForm.setCriteria(form.getCriteria());
+		filterForm.setOrder(form.getOrder());
+		
 		if (query != null)
 			return "redirect:findTutor?q=" + query;
 		return "redirect:findTutor";

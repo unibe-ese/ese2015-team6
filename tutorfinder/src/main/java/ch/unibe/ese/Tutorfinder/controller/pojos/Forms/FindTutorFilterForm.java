@@ -3,6 +3,9 @@ package ch.unibe.ese.Tutorfinder.controller.pojos.Forms;
 import javax.swing.SortOrder;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 
 /**
@@ -11,12 +14,19 @@ import ch.unibe.ese.Tutorfinder.util.SortCriteria;
  * @version	1.0
  *
  */
+@Component
+@Scope("session")
 public class FindTutorFilterForm {
 	
 	@NotNull
 	SortCriteria criteria;
 	@NotNull
 	SortOrder order;
+	
+	public FindTutorFilterForm() {
+		criteria=SortCriteria.RATING;
+		order=SortOrder.DESCENDING;
+	}
 	
 	public SortCriteria getCriteria() {
 		return criteria;

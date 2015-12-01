@@ -178,12 +178,13 @@ public class FindTutorServiceImplTest {
 		assertEquals(0, testVal);
 	}
 	
-	//@Test //TODO Can't mock equals so important cases can't be tested
+	//@Test //TODO Can't mock equals so some cases can't be tested
 	public void testFallbackException() {
 		form.setCriteria(SortCriteria.RATING);
 		form.setOrder(SortOrder.ASCENDING);
 		
 		findTutorService.generateComparatorFrom(form);
+		@SuppressWarnings("unused")
 		Comparator<User> testComparator = findTutorService.getComparator();
 		when(mockUser.getProfile()).thenReturn(mockProfile);
 		
