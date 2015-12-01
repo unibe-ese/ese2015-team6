@@ -1,6 +1,7 @@
 package unitTest.service.implementation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -17,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -35,9 +35,6 @@ import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/test.xml"})
 public class FindTutorServiceImplTest {
-
-	@Autowired
-	SubjectDao subjectDao;
 	
 	FindTutorService findTutorService;
 	
@@ -53,6 +50,8 @@ public class FindTutorServiceImplTest {
 	private User mockUser;
 	@Mock
 	private SubjectService mockSubjectService;
+	@Mock
+	SubjectDao mockDao;
 	
 	private LinkedList<Subject> subjectList = new LinkedList<Subject>();
 	
@@ -68,13 +67,13 @@ public class FindTutorServiceImplTest {
 		subjectList.add(this.mockSubject);
 		form = new FindTutorFilterForm();
 		
-		findTutorService = new FindTutorServiceImpl(mockSubjectService);
+		findTutorService = new FindTutorServiceImpl(mockSubjectService, mockDao);
 	}
 	
 	@Test
 	public void testGetSubjectsFrom() {
 		//GIVEN
-		when(subjectDao.findAll()).thenReturn(this.subjectList);
+		when(mockDao.findAll()).thenReturn(this.subjectList);
 		when(mockSubject.getName()).thenReturn("TestSubject");
 		when(mockSubject.getUser()).thenReturn(this.mockUser);
 		
@@ -87,10 +86,10 @@ public class FindTutorServiceImplTest {
 	
 	@Test
 	public void testGetSubjectsSorted() {
-		when(subjectDao.findAll()).thenReturn(this.subjectList);
+		when(mockDao.findAll()).thenReturn(this.subjectList);
 		when(mockSubject.getName()).thenReturn("TestSubject");
 		when(mockSubject.getUser()).thenReturn(this.mockUser);
-		when(subjectDao.findAll()).thenReturn(subjectList);
+		when(mockDao.findAll()).thenReturn(subjectList);
 		
 		findTutorService.setComparator(mockComparator);
 		Map<User, List<Subject>> tmpSubjectList = findTutorService.getSubjectsSorted("TestSubject");
@@ -150,7 +149,40 @@ public class FindTutorServiceImplTest {
 		
 		when(mockSubjectService.getAverageGradeByUser(mockUser)).thenReturn(5d, 5d);
 		testVal = testComparator.compare(mockUser, mockUser);
-		assertNotEquals(0, testVal);
+		assertEquals(0, testVal);
+	}
+	
+	@Test
+	public void testSortingByNameAsc() {
+		form.setCriteria(SortCriteria.ALPHABETICAL);
+		form.setOrder(SortOrder.ASCENDING);
+		
+		findTutorService.generateComparatorFrom(form);
+		Comparator<User> testComparator = findTutorService.getComparator();
+		
+		when(mockUser.getLastName()).thenReturn("a", "b");
+		int testVal = testComparator.compare(mockUser, mockUser);
+		assertEquals(-1, testVal);
+		
+		when(mockUser.getLastName()).thenReturn("b", "a");
+		testVal = testComparator.compare(mockUser, mockUser);
+		assertEquals(1, testVal);
+		
+		
+		when(mockUser.getLastName()).thenReturn("a", "a");
+		when(mockUser.getFirstName()).thenReturn("a", "b");
+		testVal = testComparator.compare(mockUser, mockUser);
+		assertEquals(-1, testVal);
+		
+		when(mockUser.getLastName()).thenReturn("a", "a");
+		when(mockUser.getFirstName()).thenReturn("b", "a");
+		testVal = testComparator.compare(mockUser, mockUser);
+		assertEquals(1, testVal);
+		
+		when(mockUser.getLastName()).thenReturn("a", "a");
+		when(mockUser.getFirstName()).thenReturn("a", "a");
+		testVal = testComparator.compare(mockUser, mockUser);
+		assertEquals(0, testVal);
 	}
 	
 	@Test

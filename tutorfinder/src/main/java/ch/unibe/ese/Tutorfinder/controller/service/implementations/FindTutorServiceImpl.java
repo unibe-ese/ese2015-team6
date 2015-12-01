@@ -33,8 +33,9 @@ public class FindTutorServiceImpl implements FindTutorService {
 	private Comparator<User> comparator;
 	
 	@Autowired
-	public FindTutorServiceImpl(SubjectService subjectService) {
+	public FindTutorServiceImpl(SubjectService subjectService, SubjectDao subjectDao) {
 		this.subjectService = subjectService;
+		this.subjectDao = subjectDao;
 	}
 
 	@Override
@@ -114,6 +115,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 				@Override
 				public int compare(User o1, User o2) {
 					int compared = o1.getLastName().compareToIgnoreCase(o2.getLastName());
+					if (compared == 0) compared = o1.getFirstName().compareTo(o2.getFirstName());
 					if (compared == 0) compared = fallback(o1,o2);
 					return compared;
 				}
