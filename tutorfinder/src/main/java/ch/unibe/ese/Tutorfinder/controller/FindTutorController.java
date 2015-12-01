@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.NoTutorsForSubjectException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.FindTutorFilterForm;
 import ch.unibe.ese.Tutorfinder.controller.service.FindTutorService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
@@ -63,13 +62,9 @@ public class FindTutorController {
 		ModelAndView model = new ModelAndView("findTutor");
 		String action = "submit";
 		if (query != null && !query.equals("")) {
-			try {
-				action = "submit?q=" + query;
-				findTutorService.generateComparatorFrom(filterForm);
-				model.addObject("Result", findTutorService.getSubjectsSorted(query));
-			} catch (NoTutorsForSubjectException e) {
-				model = new ModelAndView("findTutor");
-			}
+			action = "submit?q=" + query;
+			findTutorService.generateComparatorFrom(filterForm);
+			model.addObject("Result", findTutorService.getSubjectsSorted(query));
 		}
 		model.addObject("findTutorFilterForm", filterForm);
 		model.addObject("formaction", action);
