@@ -17,30 +17,34 @@
 		<div id="content">
 			<div class="leftSide">
 				<h1>Message overview</h1>
-				<div id="messageNavigation">
+				<div id="messageNavigation" th:with="view=${param.view[0]}"
+					th:unless="${param.view == null}">
 					<ul>
-						<li><a th:href="@{/messages?view=unread}"
-							href="/message.html">Unread</a></li>
-						<li><a th:href="@{/messages?view=inbox}" href="/message.html">Inbox</a></li>
-						<li><a th:href="@{/messages?view=outbox}"
-							href="/message.html">Outbox</a></li>
+						<li><a th:class="${view} eq 'unread' ? activeLink"
+							th:href="@{/messages?view=unread}" href="/message.html">Unread</a></li>
+						<li><a th:class="${view} eq 'inbox' ? activeLink"
+							th:href="@{/messages?view=inbox}" href="/message.html">Inbox</a></li>
+						<li><a th:class="${view} eq 'outbox' ? activeLink"
+							th:href="@{/messages?view=outbox}" href="/message.html">Outbox</a></li>
 					</ul>
 				</div>
 				<div id="messageList" th:with="view=${param.view[0]}"
 					th:unless="${param.view == null}">
 					<div class="linkparent" th:each="message, iter : ${messageList}"
 						th:if="${message != null}">
-						<a th:href="@{/messages(view=${view},show=${iter.index})}"><span></span></a>
-						<strong>From:</strong> <small
+						<a th:href="@{/messages(view=${view},show=${iter.index})}"><span
+							th:unless="${param.show == null}"
+							th:class="${param.show[0]} eq ${iter.index} ? activeMessage"></span><span th:if="${param.show == null}"></span></a> <strong>From:</strong>
+						<small
 							th:text="|${message.sender.firstName} ${message.sender.lastName}|">Max
-								Student</small><br /> <strong th:text="|${message.subject}|">
-								Subject</strong> <img id="unreadMessage"
+							Student</small><br /> <strong th:text="|${message.subject}|">
+							Subject</strong> <img id="unreadMessage"
 							th:if="${__${!message.read}__ and __${message.receiver == authUser}__ }"
 							class="action-icon" th:src="@{|/img/bg/newMessage.png|}"
 							src="unread.png" /><br /> <i
 							th:text="|${message.timestamp.toLocalDateTime().toLocalDate().getDayOfMonth()}.${message.timestamp.toLocalDateTime().toLocalDate().getMonthValue()}.${message.timestamp.toLocalDateTime().toLocalDate().getYear()}
 						${message.timestamp.toLocalDateTime().toLocalTime()} |">26.11.2015
-								21:00</i>
+							21:00</i>
 					</div>
 
 				</div>

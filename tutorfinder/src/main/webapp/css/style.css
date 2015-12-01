@@ -219,7 +219,27 @@ h2 {
 
 #messageNavigation ul li a {
 	text-decoration: none;
-	color: black;
+	color: blue;
+}
+
+#messageNavigation ul li a:hover {
+	background-color: lightgrey;
+	border-radius: 5px;
+}
+
+a.activeLink {
+	background-color: lightgrey;
+	border-radius: 5px;
+}
+
+.activeMessage {
+	background-color: rgba(173, 216, 230, 0.3);
+	border-radius: 10px;
+}
+
+#messageHeader a {
+	text-decoration: none;
+	color: blue;
 }
 
 #messageList a {
