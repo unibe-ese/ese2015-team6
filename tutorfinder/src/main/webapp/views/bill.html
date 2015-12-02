@@ -20,7 +20,7 @@
 	<h1>Bill for this month:</h1>
 	<p th:text="|${balance} Fr.|">0 Fr.</p>
 	<br />
-	<div th:if="${UnpaidBills != null}">
+	<div th:unless="${UnpaidBills.isEmpty()}">
 		<h1>unpaid bills:</h1>
 	</div>
 	<div th:each="bill : ${UnpaidBills}" th:if="${bill != null}"> 
@@ -31,7 +31,7 @@
 
 		</div>
 	<br />	
-	<div th:if="${PaidBills != null}">
+	<div th:unless="${PaidBills.isEmpty()}">
 		<h1>paid bills:</h1>
 	</div>
 	<div th:each="bill : ${PaidBills}" th:if="${bill != null}"> 
