@@ -269,6 +269,7 @@ function closePopup() {
 
 					<div>
 						<button type="submit">Save</button>
+						<span class="info" th:text="${update_msg}">Your info has been saved</span>
 					</div>
 
 					<input type="hidden" name="${_csrf.parameterName}"
