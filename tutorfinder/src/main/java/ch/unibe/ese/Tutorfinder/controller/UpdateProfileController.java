@@ -74,10 +74,10 @@ public class UpdateProfileController {
 	 *         profile.
 	 */
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
-	public ModelAndView editProfile(Principal authUser) {
+	public ModelAndView editProfile(Principal authUser, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("updateProfile");
-
 		model = prepareFormService.prepareForm(authUser, model);
+		model.addAllObjects(redirectAttributes.getFlashAttributes());
 		return model;
 	}
 
@@ -101,19 +101,17 @@ public class UpdateProfileController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView update(Principal authUser, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		ModelAndView model = new ModelAndView("updateProfile");
+		ModelAndView model = new ModelAndView("redirect:/editProfile");
 		
 		if (!result.hasErrors()) {
 			try {
 				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
-				model.addObject("update_msg","Your profile information has been updated");
+				redirectAttributes.addFlashAttribute("update_msg","Your profile information has been updated");
 			} catch (InvalidProfileException e) {
-				model.addObject("page_error", e.getMessage());
+				redirectAttributes.addFlashAttribute("page_error", e.getMessage());
 			}
 		}
-		model = prepareFormService.prepareForm(authUser, model);
-		model.addObject("updateProfileForm", updateProfileForm);
-
+		redirectAttributes.addFlashAttribute("updateProfileForm", updateProfileForm);
 		return model;
 	}
 

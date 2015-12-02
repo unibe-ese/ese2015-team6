@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
@@ -43,20 +44,18 @@ public class TimetableController {
 	 */
 	@RequestMapping(value = "/updateTimetable", method = RequestMethod.POST)
 	public ModelAndView updateTimetable(@Valid UpdateTimetableForm updateTimetableForm, BindingResult result,
-			Principal authUser) {
-		ModelAndView model = new ModelAndView("updateProfile");
+			Principal authUser, RedirectAttributes redirectAttributes) {
+		ModelAndView model = new ModelAndView("redirect:/editProfile");
 		if (!result.hasErrors()) {
 			try {
 				timetableService.saveFrom(updateTimetableForm, authUser);
-				model.addObject("timetable_msg", "Your availability has been updated");
+				redirectAttributes.addFlashAttribute("timetable_msg", "Your availability has been updated");
 			} catch (InvalidTimetableException e) {
 				result.reject("error", e.getMessage());
-				model = new ModelAndView("updateProfile");
+				redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateTimetableForm", result);
 			}
 		}
-
-		model = prepareFormService.prepareForm(authUser, model);
-		model.addObject("updateTimetableForm", updateTimetableForm);
+		redirectAttributes.addFlashAttribute("updateTimetableForm", updateTimetableForm);
 		return model;
 	}
 

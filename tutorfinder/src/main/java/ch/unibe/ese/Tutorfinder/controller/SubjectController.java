@@ -52,18 +52,17 @@ public class SubjectController {
 	@RequestMapping(value = "/editSubjects", params = "save", method = RequestMethod.POST)
 	public ModelAndView updateSubjects(Principal authUser, @Valid UpdateSubjectsForm updateSubjectsForm,
 			BindingResult result, RedirectAttributes redirectAttributes) {
-		ModelAndView model = new ModelAndView("updateProfile");
+		ModelAndView model = new ModelAndView("redirect:/editProfile");
 
 		if (!result.hasErrors()) {
 			try {
 				subjectService.saveFrom(updateSubjectsForm, authUser);
-				model.addObject("subject_msg", "Your subjects have been updated");
+				redirectAttributes.addFlashAttribute("subject_msg", "Your subjects have been updated");
 			} catch (InvalidSubjectException e) {
 				result.reject("error", e.getMessage());
-				model = new ModelAndView("updateProfile");
+				redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateSubjectsForm", result);
 			}
-			model = prepareFormService.prepareForm(authUser, model);
-			model.addObject("updateSubjectsForm", updateSubjectsForm);
+			redirectAttributes.addFlashAttribute("updateSubjectsForm", updateSubjectsForm);
 		} else {
 		}
 		return model;
