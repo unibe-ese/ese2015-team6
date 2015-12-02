@@ -24,7 +24,8 @@
 		<h1>unpaid bills:</h1>
 	</div>
 	<div th:each="bill : ${UnpaidBills}" th:if="${bill != null}"> 
-		<span th:text="|${bill.year} ${bill.month} ${bill.total} Fr. x ${bill.percentage} = ${bill.amount} Fr.|">
+		<span th:text="|${bill.year} ${bill.month}|"></span> <span class="small"  th:text="|(${bill.total} Fr. x ${bill.percentage})|"></span> 
+		<span th:text="|${bill.amount} Fr.|">
 							1970 January 0</span> 
 		<a th:href="@{'/bill'(payId=${bill.id})}"> Pay</a>
 
@@ -34,8 +35,9 @@
 		<h1>paid bills:</h1>
 	</div>
 	<div th:each="bill : ${PaidBills}" th:if="${bill != null}"> 
-		<span th:text="|${bill.year} ${bill.month} ${bill.total} Fr. x ${bill.percentage} = ${bill.amount} Fr.|">
-							1970 January 0</span>
+		<span th:text="|${bill.year} ${bill.month}|"></span> <span class="small"  th:text="|(${bill.total} Fr. x ${bill.percentage})|"></span> 
+		<span th:text="|${bill.amount} Fr.|">
+							1970 January 0</span> 
 
 		</div>
 		</div>
