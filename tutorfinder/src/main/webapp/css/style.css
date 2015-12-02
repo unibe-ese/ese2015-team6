@@ -108,6 +108,7 @@ footer > div > p {
 	display: inline-table;
 	height: 100%;
 	width: 100%;
+	padding-bottom: 10px;
 	background-color: white;
 	border-style: none solid none solid;
 	border-color: #ddd;
@@ -246,6 +247,14 @@ h2 {
 	padding-top: 20px;
 }
 
+#userInfoBox {
+	margin-left: 15%;
+}
+
+#userInfoBox > div {
+	margin-bottom: 10px;
+}
+
 .headerLogo {
 	font-family: 'Cookie', cursive;
 	float: left;
@@ -283,7 +292,14 @@ h2 {
 	display: table-cell;
 }
 
+#subjects > ul {
+	list-style: none;
+	padding-left: 15px;
+}
 
+#subjects ul li {
+	font-size: 0.75em;
+}
 
 .linkparent a>span {
 	position: absolute;
