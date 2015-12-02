@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
+
 @Entity
 public class Bill {
 	
@@ -30,6 +32,33 @@ public class Bill {
 	@NotNull
 	private BigDecimal amount;
 	
+	@NotNull
+	private PaymentStatus paymentStatus;
+	
+	@NotNull
+	private BigDecimal total;
+	
+	@NotNull
+	private BigDecimal percentage;
+	
+	public BigDecimal getTotal() {
+		return total;
+	}
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+	public BigDecimal getPercentage() {
+		return percentage;
+	}
+	public void setPercentage(BigDecimal percentage) {
+		this.percentage = percentage;
+	}
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
 	/* Constructor */
 	public Bill() {
 		super();
@@ -73,6 +102,12 @@ public class Bill {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	
