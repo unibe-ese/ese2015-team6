@@ -23,7 +23,9 @@ function closePopup() {
 </head>
 <body>
 
-	<header th:include="fragments/header::header"></header>
+	<header 
+	th:include="fragments/header:: ${#authorization.expression('hasRole(''ROLE_TUTOR'')')}? tutorheader : studentheader">
+	</header>
 	<div id="wrapper">
 		<div id="sidebar"></div>
 		<div id="content">

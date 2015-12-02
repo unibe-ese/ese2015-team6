@@ -92,8 +92,11 @@ nav>ul>li a+div>ul>li {
 	height: 35px;
 }
 
-nav>ul>li:hover>div {
+.tutormenu>ul>li:hover>div {
 	height: 175px;
+}
+.studentmenu>ul>li:hover>div {
+	height: 140px;
 }
 
 /* ---------- Dropdown animation ---------- */
