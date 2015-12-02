@@ -77,17 +77,6 @@ public class LoginController {
 	}
 
 	/**
-	 * Redirects the {@code /success} to the {@code findTutor.html} page
-	 * 
-	 * @return redirection to login
-	 */
-	@RequestMapping(value = "/success", method = RequestMethod.GET)
-	public String success() {
-		return "redirect:findTutor";
-	
-	}
-
-	/**
 	 * Maps the /login page to the login form (login.html) and provides optional
 	 * parameters for displaying messages
 	 * 
