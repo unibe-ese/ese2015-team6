@@ -2,6 +2,7 @@
 @import url("/css/timetable.css");
 @import url("/css/timeslots.css");
 @import url("/css/findTutor.css");
+@import url("/css/message.css");
 
 @import url("/css/pikaday.css");
 
@@ -208,87 +209,6 @@ h2 {
 	padding-bottom: 10px;
 }
 
-/* messageOverview */
-
-#messageNavigation ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	border-bottom: solid black 2px;
-}
-
-#messageNavigation ul li {
-	display: inline;
-}
-
-#messageNavigation ul li a {
-	text-decoration: none;
-	color: blue;
-}
-
-#messageNavigation ul li a:hover {
-	background-color: lightgrey;
-	border-radius: 5px;
-}
-
-a.activeLink {
-	background-color: lightgrey;
-	border-radius: 5px;
-	color: black;
-}
-
-.activeMessage {
-	background-color: rgba(173, 216, 230, 0.3);
-	border-radius: 10px;
-}
-
-#messageHeader a {
-	text-decoration: none;
-	color: blue;
-}
-
-#messageList a {
-	text-decoration: none;
-	color: black;
-}
-
-#messageList > div {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	border-bottom: solid lightgray 1px;
-}
-
-#messageBox {
-	margin: 5px;
-	height: inherit;
-}
-
-#message {
-	padding: 5px;
-	border: solid lightgray 2px;
-	height: inherit;
-}
-
-#answer {
-	float: right;
-}
-
-#messageBox p {
-	padding: 5px;
-	border-top: solid lightgray 1px;
-}
-
-#unreadMessage {
-	float: right;
-}
-
-#newMessage {
-	float: none;
-	margin: 5px;
-	margin-left: 0;
-
-}
-
 .action-icon {
 	width: 30px;
 	height: 20px;
@@ -408,4 +328,19 @@ a.activeLink {
 	-ms-transition: none !important;
  	-o-transition: none !important;
  	transition: none !important;
+}
+
+#content > h1 {
+	margin: 0;
+	padding: 0;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+.strong {
+	font-weight: bold;
+}
+
+.small {
+	font-size: medium;
 }
