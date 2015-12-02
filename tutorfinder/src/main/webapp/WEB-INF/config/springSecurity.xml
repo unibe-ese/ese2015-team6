@@ -26,7 +26,7 @@
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_STUDENT','ROLE_TUTOR')" />
 
 		<form-login login-page="/login" 
-			default-target-url="/success"
+			default-target-url="/findTutor"
 			authentication-failure-url="/login?error" 
 			username-parameter="email"
 			password-parameter="password" />

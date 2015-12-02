@@ -81,13 +81,6 @@ public class LoginControllerUnitTests {
 	}
 	
 	@Test
-	public void testSuccess() {
-		String got = controller.success();
-		
-		assertFalse(got.isEmpty());
-	}
-	
-	@Test
 	public void testLogoutWithoutAuthentication() {
 		String got = controller.logoutPage(mockRequest, mockResponse);
 		
