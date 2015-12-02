@@ -21,12 +21,14 @@
 
 <body lang="en">
 
-	<header th:include="fragments/header::header"></header>
+	<header 
+	th:include="fragments/header:: ${#authorization.expression('hasRole(''ROLE_TUTOR'')')}? tutorheader : studentheader">
+	</header>
 	<div id="wrapper">
 		<div id="sidebar"></div>
 
 		<div id="content">
-			<div id="newMessageBox">
+			<div id="newMessageBox" class="full">
 			<h1>New Message</h1>
 				<form id="newMessageBox" action="#" th:action="@{/sendMessage}"
 					th:object="${messageForm}" th:name="messageForm" method="post">
@@ -48,7 +50,7 @@
 					</fieldset>
 					<fieldset>
 						<textarea rows="5" cols="50" tabindex="2" th:value="*{message}"
-							th:field="*{message}" placeholder="Message">
+							th:field="*{message}" placeholder="Message" wrap="hard">
 						</textarea>
 						<span class="error" th:if="${#fields.hasErrors('message')}"
 							th:errors="*{message}"></span>

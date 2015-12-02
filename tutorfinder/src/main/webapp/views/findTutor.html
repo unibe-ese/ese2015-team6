@@ -9,23 +9,44 @@
 </head>
 
 <body>
-	<header th:include="fragments/header::header"></header>
+	<header 
+	th:include="fragments/header:: ${#authorization.expression('hasRole(''ROLE_TUTOR'')')}? tutorheader : studentheader">
+	</header>
 	<div id="wrapper">
 		<div id="sidebar"></div>
 		<div id="content">
 
-			<div id="search" class="full">
-				<form id="search"
-					th:autocomplete="off" th:name="findTutorForm">
-					<fieldset>
-						<div>
-							<input type="search" th:name="q" th:attr="value=${param.q != null? param.q[0] : ''}" tabindex="2"
-								maxlength="45" required="required" autofocus="autofocus"/>
-							<button>Search</button>
-						</div>
-					</fieldset>
-				</form>
-				<div th:replace="fragments/results:: (${param.q != null}? results : welcome)">
+			<div class="full">
+				<div id="search">
+					<form th:autocomplete="off" th:name="findTutorForm">
+						<fieldset>
+							<div>
+								<input type="search" th:name="q"
+									th:attr="value=${param.q != null? param.q[0] : ''}"
+									tabindex="2" maxlength="45"
+									autofocus="autofocus" placeholder="Search..." />
+								<input type="submit" value=""/>
+							</div>
+						</fieldset>
+					</form>
+					<form th:action="${formaction}" th:object="${findTutorFilterForm}"
+						name="findTutorFilterForm" method="post" action="" id="filter">
+						<label>Sort by: </label>
+						<select th:field="*{criteria}" name="criteria">
+							<option
+								th:each="criteria : ${T(ch.unibe.ese.Tutorfinder.util.SortCriteria).values()}"
+								th:value="${criteria}" th:text="${criteria}"
+								th:selected="${criteria}"></option>
+						</select> <select th:field="*{order}" name="order">
+							<option th:each="order : ${T(javax.swing.SortOrder).values()}"
+								th:value="${order}" th:text="${order}" th:selected="${order}"
+								th:unless="${order == T(javax.swing.SortOrder).UNSORTED}"></option>
+						</select>
+						<button>Set</button>
+					</form>
+				</div>
+				<div
+					th:replace="fragments/results:: (${param.q} != null and not${param.q[0].isEmpty()}? results : welcome)">
 				</div>
 			</div>
 		</div>

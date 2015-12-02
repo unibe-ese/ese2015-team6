@@ -11,7 +11,7 @@
 			Sorry, we could not find any tutors for <span th:text="|'${param.q[0]}'|">Subject</span>
 		</h1>
 		<div class="linkparent" th:each="foundTutor : ${Result}"
-			th:if="${foundTutor != null}">
+			th:if="${foundTutor} != null" th:unless="${foundTutor.key.id} == ${user.id}">
 			<a th:href="@{'/showProfile'(userId=${foundTutor.key.id})}"><span></span></a>
 			<img th:src="@{|/img/profPic/${foundTutor.key.id}.png|}" onerror="this.onerror=null; this.src='/img/default-avatar.jpg;'"
 				alt="Profile picture" width="192" height="192" src="../../img/default-avatar.jpg" />

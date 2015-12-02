@@ -23,7 +23,9 @@ function closePopup() {
 </head>
 <body>
 
-	<header th:include="fragments/header::header"></header>
+	<header 
+	th:include="fragments/header:: ${#authorization.expression('hasRole(''ROLE_TUTOR'')')}? tutorheader : studentheader">
+	</header>
 	<div id="wrapper">
 		<div id="sidebar"></div>
 		<div id="content">
@@ -80,7 +82,7 @@ function closePopup() {
 						<button type="submit" name="save" class="btn btn-primary">Save</button>
 						<span class="error" th:if="${#fields.hasErrors('global')}"
 							th:errors="*{global}">Subject can't be added twice</span>
-
+						<span class="info" th:text="${subject_msg}">Your info has been saved</span>
 					</div>
 				</form>
 
@@ -88,6 +90,7 @@ function closePopup() {
 				<button type="button"
 					onclick="document.getElementById('timetableBox').style.display='block';document.getElementById('fade').style.display='block'">Update
 					availability</button>
+				<span class="info" th:text="${timetable_msg}">Your info has been saved</span>
 			</div>
 			
 			<div id="changeRoleButton" sec:authorize="hasRole('ROLE_STUDENT')">
@@ -214,7 +217,7 @@ function closePopup() {
 					<div>
 						<label>Biography</label>
 						<div>
-							<textarea rows="5" cols="50" tabindex="1"
+							<textarea rows="5" cols="50" tabindex="5"
 								th:value="*{biography}" th:field="*{biography}">
 						</textarea>
 							<span class="error" th:if="${#fields.hasErrors('biography')}"
@@ -224,19 +227,21 @@ function closePopup() {
 					<div>
 						<label>Attended University</label>
 						<div>
-							<input type="text" th:name="university" tabindex="1"
+							<input type="text" th:name="university" tabindex="6"
 								maxlength="255" th:value="*{university}" /> <span class="error"
 								th:if="${#fields.hasErrors('university')}"
 								th:errors="*{university}"> </span>
+								<!-- FIXME data not loaded out of database -->
 						</div>
 					</div>
 					<div>
 						<label>Languages</label>
 						<div>
-							<input type="text" th:name="language" tabindex="1"
+							<input type="text" th:name="language" tabindex="7"
 								maxlength="255" th:value="*{language}" /> <span class="error"
 								th:if="${#fields.hasErrors('language')}"
 								th:errors="*{language}"> </span>
+								<!-- FIXME data not loaded out of database -->
 						</div>
 					</div>
 				</fieldset>
@@ -245,7 +250,7 @@ function closePopup() {
 						<div>
 							<label>Teaching region</label>
 							<div>
-								<input type="text" th:name="region" tabindex="6" maxlength="255"
+								<input type="text" th:name="region" tabindex="8" maxlength="255"
 									th:value="*{region}" /> <span class="error"
 									th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></span>
 							</div>
@@ -256,7 +261,7 @@ function closePopup() {
 
 							<div>
 								<input type="number" th:name="wage" th:value="*{wage}"
-									tabindex="1" min="0.00" max="200.00" step="0.05" value="5.0" />
+									tabindex="9" min="0.00" max="200.00" step="0.05" value="5.0" />
 								<span th:if="${#fields.hasErrors('wage')}" th:errors="*{wage}"></span>
 							</div>
 						</div>
@@ -265,6 +270,7 @@ function closePopup() {
 
 					<div>
 						<button type="submit">Save</button>
+						<span class="info" th:text="${update_msg}">Your info has been saved</span>
 					</div>
 
 					<input type="hidden" name="${_csrf.parameterName}"

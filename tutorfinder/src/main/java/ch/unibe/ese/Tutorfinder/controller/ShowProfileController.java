@@ -71,26 +71,35 @@ public class ShowProfileController {
 		this.subjectService = subjectService;
 		this.prepareService = prepareService;
 	}
-	
-	//TODO Implement date as a parameter
+
+	// TODO Implement date as a parameter
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.html}.
 	 * 
 	 * @param authUser
 	 *            {@link Principal}
-	 * @return ModelAndView for Springframework with the users profile.
+	 * @return ModelAndView with the users profile.
 	 */
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
-	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId", required = false) Long userId) {
+	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId", required = false) Long userId,
+			@RequestParam(value = "date", required = false) LocalDate date, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("showProfile");
-		
+
 		if (userId == null) {
 			userId = userService.getUserByPrincipal(authUser).getId();
 		}
+		MakeAppointmentsForm appForm = new MakeAppointmentsForm();
+		if (date != null) {
+			User user = userService.getUserById(userId);
+			DayOfWeek dow = date.getDayOfWeek();
+			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
+			appForm.setDate(date);
+			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
+		}
 
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
-		model.addObject("makeAppointmentsForm", new MakeAppointmentsForm());
-
+		model.addObject("makeAppointmentsForm", appForm);
+		model.addAllObjects(redirectAttributes.getFlashAttributes());
 		return model;
 	}
 
@@ -146,23 +155,13 @@ public class ShowProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "/updateForm", params = "getDate", method = RequestMethod.POST)
-	public ModelAndView getDate(Principal authUser, @RequestParam(value = "userId") long userId,
-			@Valid MakeAppointmentsForm appForm, BindingResult result, RedirectAttributes redirectAttributes) {
-
-		ModelAndView model = new ModelAndView("showProfile");
+	public String getDate(@RequestParam(value = "userId") long userId, @Valid MakeAppointmentsForm appForm,
+			BindingResult result, RedirectAttributes redirectAttributes) {
 
 		if (!result.hasErrors()) {
-			User user = userService.getUserById(userId);
-			LocalDate date = appForm.getDate();
-			DayOfWeek dow = date.getDayOfWeek();
-			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
-			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
-		} else {
-			model.addObject("error_message", "Enter a valid date (yyyy-MM-dd)");
+			return "redirect:showProfile?userId=" + userId + "&date=" + appForm.getDate();
 		}
-
-		model.addObject("makeAppointmentsForm", appForm);
-		model = prepareService.prepareModelByUserId(authUser, userId, model);
-		return model;
+		redirectAttributes.addFlashAttribute("error_message", "Enter a valid date (yyyy-MM-dd)");
+		return "redirect:showProfile?userId=" + userId;
 	}
 }

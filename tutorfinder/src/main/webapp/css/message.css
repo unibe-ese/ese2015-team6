@@ -1,0 +1,97 @@
+#messages {
+	display: table;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#messages #overview {
+	display: table-cell;
+	min-width: 350px;
+	vertical-align: top;
+}
+
+#messageBox {
+	overflow: auto;
+	display: table-cell;
+	padding-left: 15px;
+	padding-bottom: 15px;
+	padding-top: 24px;
+	width: 100%;
+}
+
+#messages #overview #box ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: solid black 2px;
+}
+
+#messages #overview #box ul li {
+	display: inline;
+}
+
+#messages #overview #box ul li a {
+	color: blue;
+}
+
+
+#messages #overview #box a.active {
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#messages #list .activeMessage {
+	background-color: rgba(112, 220, 255, 0.3);
+}
+
+#messages #list {
+	overflow: auto;
+}
+
+#messages #list > div {
+	padding: 5px;
+	border-bottom: solid lightgray 1px;
+}
+
+#messageHeader a {
+	text-decoration: none;
+	color: blue;
+}
+
+#messageList a {
+	text-decoration: none;
+	color: black;
+}
+
+#message {
+	padding: 5px;
+	border: solid lightgray 2px;
+	height: inherit;
+}
+
+#answer {
+	float: right;
+}
+
+#messageBox textarea {
+	resize: none;
+    overflow: hidden;
+    min-height: 50px;
+	width: 100%;
+	font-family: Helvetica, sans-serif;
+	padding: 5px;
+	border: none;
+	border-top: solid lightgray 1px;
+}
+
+#unreadMessage {
+	float: right;
+}
+
+#newMessage {
+	float: none;
+	margin: 5px;
+	margin-left: 0;
+
+}

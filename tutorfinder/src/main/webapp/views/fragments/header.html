@@ -6,9 +6,9 @@
 </head>
 
 <body>
-	<div th:fragment="header">
+	<div th:fragment="tutorheader" class="preload">
 		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">Tutorfinder</a>
-		<nav role="navigation">
+		<nav role="navigation" class="tutormenu">
 			<ul>
 				<li><a th:href="@{/findTutor}" href="/findTutor.html">Search</a></li>
 				<li><a th:href="@{'/showProfile'}" href="showProfile.html"><span sec:authentication="name">example@test.ch</span><span class="caret"></span></a>
@@ -24,6 +24,35 @@
 				</li>
 			</ul>
 		</nav>
+		<script type="text/javascript">
+		$(window).load(function() {
+  			$("header").removeClass("preload");
+		});
+		</script>
+	</div>
+	
+	<div th:fragment="studentheader" class="preload">
+		<a class="headerLogo" th:href="@{/findTutor}" href="login.html">Tutorfinder</a>
+		<nav role="navigation" class="studentmenu">
+			<ul>
+				<li><a th:href="@{/findTutor}" href="/findTutor.html">Search</a></li>
+				<li><a th:href="@{'/showProfile'}" href="showProfile.html"><span sec:authentication="name">example@test.ch</span><span class="caret"></span></a>
+					<div>
+						<ul>
+							<li><a th:href="@{'/editProfile'}" href="editProfile.html">Edit Profile</a></li>
+							<li><a th:href="@{/appointments}" href="appointmentsOverview.html">Appointments</a></li>
+							<li><a th:href="@{/messages}" href="messagesOverview.html">Messages</a></li>
+							<li class="logout"><a th:href="@{/logout}" href="login.html">Logout</a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<script type="text/javascript">
+		$(window).load(function() {
+  			$("header").removeClass("preload");
+		});
+		</script>
 	</div>
 
 	<div th:fragment="nouser">

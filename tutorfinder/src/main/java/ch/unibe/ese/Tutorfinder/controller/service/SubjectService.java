@@ -30,5 +30,7 @@ public interface SubjectService {
 	 * entries with the same subject name
 	 */
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal user) throws InvalidSubjectException;
+	
+	public double getAverageGradeByUser(User user);
 
 }

@@ -1,8 +1,8 @@
 @import url("/css/menu.css");
-
 @import url("/css/timetable.css");
-
 @import url("/css/timeslots.css");
+@import url("/css/findTutor.css");
+@import url("/css/message.css");
 
 @import url("/css/pikaday.css");
 
@@ -183,8 +183,13 @@ fieldset {
 	display: table-row;
 }
 
+.appointmentRow a {
+	text-decoration: none;
+	color: blue;
+}
+
 h2 {
-	padding-top: 10px;
+	padding-top: 15px;
 }
 
 .last {
@@ -202,66 +207,6 @@ h2 {
 
 .appointmentContent {
 	padding-bottom: 10px;
-}
-
-/* messageOverview */
-
-#messageNavigation ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	border-bottom: solid black 2px;
-}
-
-#messageNavigation ul li {
-	display: inline;
-}
-
-#messageNavigation ul li a {
-	text-decoration: none;
-	color: black;
-}
-
-#messageList a {
-	text-decoration: none;
-	color: black;
-}
-
-#messageList > div {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	border-bottom: solid lightgray 1px;
-}
-
-#messageBox {
-	margin: 5px;
-	height: inherit;
-}
-
-#message {
-	padding: 5px;
-	border: solid lightgray 2px;
-	height: inherit;
-}
-
-#answer {
-	float: right;
-}
-
-#messageBox p {
-	padding: 5px;
-	border-top: solid lightgray 1px;
-}
-
-#unreadMessage {
-	float: right;
-}
-
-#newMessage {
-	float: none;
-	margin: 5px;
-	margin-left: 0;
-
 }
 
 .action-icon {
@@ -324,32 +269,7 @@ h2 {
 	display: table-cell;
 }
 
-#search>form {
-	display: flex;
-	padding-bottom: 3px;
-	border-bottom: solid 2px lightgray;
-}
 
-#search input {
-	font-size: large;
-	padding-left: 5px;
-	width: 300px;
-	height: 30px;
-}
-
-#search button {
-	
-}
-
-#results>div {
-	display : inline-block;
-	margin-top: 10px;
-	margin-right: 20px;
-	vertical-align: top;
-	
-	color: black;
-	text-decoration: none;
-}
 
 .linkparent a>span {
 	position: absolute;
@@ -362,24 +282,6 @@ h2 {
 
 .linkparent {
 	position: relative; 
-}
-
-#results .name {
-	font-weight: bold;
-}
-
-#results .rating {
-	position: relative;
-	z-index: 2;
-	font-size: small;
-}
-
-#results #subjects {
-	position: relative;
-	z-index: 2;
-	font-size: medium;
-	max-height: 80px;
-	overflow-y: auto;
 }
 
 .error {
@@ -404,6 +306,10 @@ h2 {
 	overflow: visible;
 }
 
+.info {
+	font-size: small;
+}
+
 .breakable {
 	-ms-word-break: break-all;
 	word-break: break-word;
@@ -414,4 +320,27 @@ h2 {
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto;
 	hyphens: auto;
+}
+
+.preload * {
+	-webkit-transition: none !important;
+ 	-moz-transition: none !important;
+	-ms-transition: none !important;
+ 	-o-transition: none !important;
+ 	transition: none !important;
+}
+
+#content > h1 {
+	margin: 0;
+	padding: 0;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+.strong {
+	font-weight: bold;
+}
+
+.small {
+	font-size: medium;
 }

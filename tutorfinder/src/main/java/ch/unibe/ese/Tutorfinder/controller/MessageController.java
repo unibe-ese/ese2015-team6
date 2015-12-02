@@ -81,15 +81,23 @@ public class MessageController {
 		} else {
 			tmpMessageList = messageService.getMessageByBox(ConstantVariables.UNREAD, tmpUser);
 		}
-		model.addObject("messageList", tmpMessageList);
 
 		// marks message as read
 		if (show != null) {
-			Message tmpMessage = tmpMessageList.get(show.intValue());
-			if (tmpUser != tmpMessage.getReceiver()) {
-				messageService.markMessageAsRead(tmpMessage.getId(), tmpUser);
+			if (show < tmpMessageList.size()) {
+				Message tmpMessage = tmpMessageList.get(show.intValue());
+				if (tmpUser != tmpMessage.getReceiver()) {
+					tmpMessage = messageService.markMessageAsRead(tmpMessage.getId(), tmpUser);
+					tmpMessageList.set(show.intValue(), tmpMessage);
+				}
+			} else if ( show > 0) {
+				show--;
+				return new ModelAndView("redirect:messages?view=" + view + "&show=" + show);
+			} else {
+				return new ModelAndView("redirect:messages?view=" + view);
 			}
 		}
+		model.addObject("messageList", tmpMessageList);
 		model.addObject("authUser", tmpUser);
 
 		return model;

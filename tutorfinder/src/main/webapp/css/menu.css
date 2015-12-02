@@ -27,7 +27,6 @@ nav>ul>li {
 
 nav>ul>li>a {
 	position: relative;
-	color: #ccc;
 	padding: 0 24px;
 	border-left: solid thin lightgray;
 	line-height: 56px;
@@ -93,8 +92,11 @@ nav>ul>li a+div>ul>li {
 	height: 35px;
 }
 
-nav>ul>li:hover>div {
+.tutormenu>ul>li:hover>div {
 	height: 175px;
+}
+.studentmenu>ul>li:hover>div {
+	height: 140px;
 }
 
 /* ---------- Dropdown animation ---------- */

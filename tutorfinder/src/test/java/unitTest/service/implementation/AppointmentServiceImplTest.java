@@ -171,13 +171,27 @@ public class AppointmentServiceImplTest {
 	
 	@Test
 	public void testLoadAppointments() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate date = LocalDate.parse("2015-11-07", formatter);
+		DayOfWeek dow = null;
+		LocalDate date = null;
+		for(long i = 0; dow != DayOfWeek.SATURDAY; i++) {
+			date = LocalDate.now().plusYears(1).plusDays(i);
+			dow = date.getDayOfWeek();
+		}
 		
 		List<AppointmentPlaceholder> gotList = appointmentService.loadAppointments(timetableList, mockTutor, date);
 		
 		assertEquals(Availability.AVAILABLE, gotList.get(0).getAvailability());
 		assertEquals(DayOfWeek.SATURDAY, gotList.get(0).getDow());
+	}
+	
+	@Test
+	public void testNotLoadPastAppointments() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse("2015-11-07", formatter);
+		
+		List<AppointmentPlaceholder> gotList = appointmentService.loadAppointments(timetableList, mockTutor, date);
+		
+		assertTrue(gotList.isEmpty());
 	}
 	
 	@Test
@@ -252,7 +266,7 @@ public class AppointmentServiceImplTest {
 	@Test
 	public void testGetFutureAppointments() {
 		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
-		when(appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampDesc(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
+		when(appointmentDao.findAllByTutorAndAvailabilityOrderByTimestampAsc(mockTutor, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpList = appointmentService.getFutureAppointments(this.mockTutor, Availability.ARRANGED);
 		
@@ -335,7 +349,7 @@ public class AppointmentServiceImplTest {
 	@Test
 	public void testGetPendingAppointments() {
 		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
-		when(appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(mockStudent, Availability.RESERVED)).thenReturn(this.appList);
+		when(appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampAsc(mockStudent, Availability.RESERVED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpAppList = appointmentService.getPendingAppointments(this.mockStudent);
 		
@@ -380,7 +394,7 @@ public class AppointmentServiceImplTest {
 	@Test
 	public void testGetFutureAppointmentAsStudent() {
 		when(mockAppointment.getTimestamp()).thenReturn(new Timestamp((new Date()).getTime() + 9999999));
-		when(appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampDesc(mockStudent, Availability.ARRANGED)).thenReturn(this.appList);
+		when(appointmentDao.findAllByStudentAndAvailabilityOrderByTimestampAsc(mockStudent, Availability.ARRANGED)).thenReturn(this.appList);
 		
 		List<Appointment> tmpAppList = appointmentService.getFutureAppointmentsAsStudent(this.mockStudent);
 		

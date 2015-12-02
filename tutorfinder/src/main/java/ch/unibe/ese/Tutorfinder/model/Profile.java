@@ -116,6 +116,22 @@ public class Profile {
 	public void setCountedRatings(long countedRatings) {
 		this.countedRatings = countedRatings;
 	}
+	
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
 	@Override
 	public int hashCode() {
@@ -145,20 +161,4 @@ public class Profile {
 				+ wage + "]";
 	}
 
-	public String getUniversity() {
-		return university;
-	}
-
-	public void setUniversity(String university) {
-		this.university = university;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-	
 }
