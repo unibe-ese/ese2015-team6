@@ -48,6 +48,7 @@ public class TimetableController {
 		if (!result.hasErrors()) {
 			try {
 				timetableService.saveFrom(updateTimetableForm, authUser);
+				model.addObject("timetable_msg", "Your availability has been updated");
 			} catch (InvalidTimetableException e) {
 				result.reject("error", e.getMessage());
 				model = new ModelAndView("updateProfile");

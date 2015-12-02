@@ -82,7 +82,7 @@ function closePopup() {
 						<button type="submit" name="save" class="btn btn-primary">Save</button>
 						<span class="error" th:if="${#fields.hasErrors('global')}"
 							th:errors="*{global}">Subject can't be added twice</span>
-
+						<span class="info" th:text="${subject_msg}">Your info has been saved</span>
 					</div>
 				</form>
 
@@ -90,6 +90,7 @@ function closePopup() {
 				<button type="button"
 					onclick="document.getElementById('timetableBox').style.display='block';document.getElementById('fade').style.display='block'">Update
 					availability</button>
+				<span class="info" th:text="${timetable_msg}">Your info has been saved</span>
 			</div>
 			
 			<div id="changeRoleButton" sec:authorize="hasRole('ROLE_STUDENT')">

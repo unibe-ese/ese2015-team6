@@ -57,6 +57,7 @@ public class SubjectController {
 		if (!result.hasErrors()) {
 			try {
 				subjectService.saveFrom(updateSubjectsForm, authUser);
+				model.addObject("subject_msg", "Your subjects have been updated");
 			} catch (InvalidSubjectException e) {
 				result.reject("error", e.getMessage());
 				model = new ModelAndView("updateProfile");
