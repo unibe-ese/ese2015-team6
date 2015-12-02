@@ -152,7 +152,21 @@ fieldset {
 #registerBox {
 	display: none;
 	vertical-align: middle;
-	text-align: center;
+}
+
+#registerBox .error {
+	font-size: 0.8em;	
+}
+
+#registerBox form{
+	display: flex;
+	justify-content: center;
+	align-items: middle;
+}
+
+
+#registerBox form input{
+	font-size: 1.1em;
 }
 
 .leftSide {
@@ -292,17 +306,6 @@ h2 {
 	color: #800000;
 	font-weight: normal;
 	font-size: medium;
-	overflow: visible;
-}
-
-#registerBox .error {
-	display: inline-block;
-	padding: 2px;
-	background-color: #ff8080;
-	border: solid 2px red;
-	color: #800000;
-	font-weight: normal;
-	font-size: smaller;
 	overflow: visible;
 }
 

@@ -45,6 +45,7 @@
 				</div>
 				<div id="list" th:with="view=${param.view[0]}"
 					th:unless="${param.view == null}">
+					<p th:if="${messageList.isEmpty()}">No messages to display</p>
 					<div class="linkparent" th:each="message, iter : ${messageList}"
 						th:if="${message != null}">
 						<a th:href="@{/messages(view=${view},show=${iter.index})}">
