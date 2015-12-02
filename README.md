@@ -43,4 +43,4 @@ have the follow profiles as demo.
   * Lineare Algebra
   * Analysis
   * Human-Computer-Interface
-  * Computernetzwork
+  * Computernetwork
