@@ -32,7 +32,9 @@
 
 <body lang="en">
 
-	<header th:include="fragments/header::header"></header>
+	<header 
+	th:include="fragments/header:: ${#authorization.expression('hasRole(''ROLE_TUTOR'')')}? tutorheader : studentheader">
+	</header>
 	<div id="wrapper">
 		<div id="sidebar"></div>
 		<div id="content">
@@ -53,6 +55,7 @@
 				<a th:if="${authUser.id!=DisplayedUser.id}"
 					th:unless="${param.userId == null}"
 					th:with="userId=${param.userId[0]}"
+					th:title="|Write a message to ${DisplayedUser.firstName} ${DisplayedUser.lastName}|"
 					th:href="@{/newMessage(receiver=__${userId}__)}" href="/newMessage"><img
 					id="newMessage" class="action-icon"
 					th:src="@{|/img/bg/newMessage.png|}" src="unread.png" /></a>
@@ -116,6 +119,7 @@
 								<span class="error" th:if="${error_message != null}"
 									th:text="${error_message}">Enter a valid date
 									(yyyy-MM-dd)</span>
+								<p th:if="*{appointments != null} and *{appointments.isEmpty()} and ${param.date != null}">There are no slots for this day</p>
 								<div th:each="appointment:*{appointments}">
 									<label id="timeslot"
 										th:attr="title=${appointment.availability == T(ch.unibe.ese.Tutorfinder.util.Availability).AVAILABLE ? 'Click to send a request':''}">

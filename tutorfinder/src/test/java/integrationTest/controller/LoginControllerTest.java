@@ -34,7 +34,8 @@ public class LoginControllerTest {
 
 
 	@Before public void setup() {
-	this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build(); } 
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build(); 
+	} 
 
 	@Test
 	public void ValidSignUpTest() throws Exception {

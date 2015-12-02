@@ -107,7 +107,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			dateTime = dateTime.plusHours(hours);
 			Timestamp timestamp = Timestamp.valueOf(dateTime);
 
-			if (this.findByTutorAndTimestamp(tutor, timestamp) == null) {
+			if (this.findByTutorAndTimestamp(tutor, timestamp) == null && 0 > LocalDateTime.now().compareTo(dateTime) ) {
 				AppointmentPlaceholder placeholder = new AppointmentPlaceholder(date.getDayOfWeek(), hours);
 				tmpList.add(placeholder);
 			}
@@ -166,7 +166,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 						newAppointments.add(appointment);
 				}
 			}
-		} 
+		}
 
 		return newAppointments;
 	}
@@ -185,7 +185,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 			return appointmentDao.findOne(appointmentId);
 		}
 	}
-
 	
 	@Override
 	public List<Appointment> getAppointmentsForMonthAndYear(User tutor, Availability availability, int month,
@@ -209,8 +208,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 		
 		return newAppointments;
 	}
-	
-
 
 	@Override
 	public List<Appointment> getPendingAppointments(User student) {
@@ -311,4 +308,5 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 
 	}
+
 }

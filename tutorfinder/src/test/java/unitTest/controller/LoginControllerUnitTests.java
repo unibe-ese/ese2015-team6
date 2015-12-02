@@ -71,6 +71,7 @@ public class LoginControllerUnitTests {
 		String got = controller.home();
 
 		assertFalse(got.isEmpty());
+		assertEquals("redirect:login", got);
 	}
 	
 	@Test
@@ -78,13 +79,7 @@ public class LoginControllerUnitTests {
 		String got = controller.register();
 		
 		assertFalse(got.isEmpty());
-	}
-	
-	@Test
-	public void testSuccess() {
-		String got = controller.success();
-		
-		assertFalse(got.isEmpty());
+		assertEquals("redirect:/login?register", got);
 	}
 	
 	@Test
@@ -92,6 +87,7 @@ public class LoginControllerUnitTests {
 		String got = controller.logoutPage(mockRequest, mockResponse);
 		
 		assertFalse(got.isEmpty());
+		assertEquals("redirect:/login?logout", got);
 	}
 
 	@Test
@@ -126,15 +122,29 @@ public class LoginControllerUnitTests {
 	
 	@Test
 	public void testLogin() {
-		ModelAndView got = controller.login(null, null, null, null);
+		ModelAndView got = controller.login(null, null, null, null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
 	}
 	
 	@Test
+	public void testLoginWithAuthUser() {
+		ModelAndView got = controller.login(this.mockPrincipal, null, null, null, null);
+		
+		assertEquals("redirect:/findTutor", got.getViewName());
+	}
+	@Test
+	public void testLoginParamSucces() {
+		ModelAndView got = controller.login(null, null, null, null, "success");
+		
+		assertEquals("login", got.getViewName());
+		assertTrue(got.getModel().containsKey("msg"));
+	}
+	
+	@Test
 	public void testLoginParamError() {
-		ModelAndView got = controller.login("error", null, null, null);
+		ModelAndView got = controller.login(null,"error", null, null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
@@ -143,7 +153,7 @@ public class LoginControllerUnitTests {
 	
 	@Test
 	public void testLoginParamLogout() {
-		ModelAndView got = controller.login(null, "logout", null, null);
+		ModelAndView got = controller.login(null, null, "logout", null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
@@ -152,7 +162,7 @@ public class LoginControllerUnitTests {
 	
 	@Test
 	public void testLoginParamRegister() {
-		ModelAndView got = controller.login(null, null, "register", null);
+		ModelAndView got = controller.login(null, null, null, "register", null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));

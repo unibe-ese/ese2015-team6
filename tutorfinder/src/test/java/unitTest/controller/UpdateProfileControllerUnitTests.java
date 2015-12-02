@@ -1,7 +1,6 @@
 package unitTest.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.AdditionalAnswers.returnsSecondArg;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -60,7 +59,7 @@ public class UpdateProfileControllerUnitTests {
 	@Mock
 	private BindingResult mockBindingResult;
 	@Mock
-	private RedirectAttributes mockRedirectAttributs;
+	private RedirectAttributes mockRedirectAttributes;
 	@Mock
 	private ModelAndView mockModel;
 	@Mock
@@ -96,7 +95,7 @@ public class UpdateProfileControllerUnitTests {
 	public void testEditProfile() {
 		when(mockPrepareFormService.prepareForm(eq(mockAuthUser), any(ModelAndView.class))).thenReturn(this.mockModel);
 		
-		ModelAndView gotMav = controller.editProfile(this.mockAuthUser);
+		ModelAndView gotMav = controller.editProfile(this.mockAuthUser, mockRedirectAttributes);
 		
 		assertEquals(mockModel, gotMav);
 	}
@@ -108,10 +107,10 @@ public class UpdateProfileControllerUnitTests {
 		when(mockBindingResult.hasErrors()).thenReturn(false);
 		
 		controller.update(this.mockAuthUser, this.updateProfileForm, 
-				this.mockBindingResult, this.mockRedirectAttributs);
+				this.mockBindingResult, this.mockRedirectAttributes);
 		
 		verify(mockProfileService).saveFrom(eq(this.updateProfileForm), eq(mockUser));
-		verify(mockModel).addObject(eq("updateProfileForm"), eq(this.updateProfileForm));
+		verify(mockRedirectAttributes).addFlashAttribute(eq("updateProfileForm"), eq(this.updateProfileForm));
 	}
 	
 	@Test
@@ -120,9 +119,9 @@ public class UpdateProfileControllerUnitTests {
 		when(mockBindingResult.hasErrors()).thenReturn(true);
 		
 		controller.update(this.mockAuthUser, this.updateProfileForm, 
-				this.mockBindingResult, this.mockRedirectAttributs);
+				this.mockBindingResult, this.mockRedirectAttributes);
 		
-		verify(mockModel).addObject(eq("updateProfileForm"), eq(this.updateProfileForm));
+		verify(mockRedirectAttributes).addFlashAttribute(eq("updateProfileForm"), eq(this.updateProfileForm));
 	}
 	
 	@Test
@@ -132,12 +131,12 @@ public class UpdateProfileControllerUnitTests {
 		when(mockPrepareFormService.prepareForm(eq(mockAuthUser), any(ModelAndView.class))).then(returnsSecondArg());
 		when(mockBindingResult.hasErrors()).thenReturn(false);
 		
-		ModelAndView gotMav = controller.update(this.mockAuthUser, this.updateProfileForm, 
-				this.mockBindingResult, this.mockRedirectAttributs);
+		controller.update(this.mockAuthUser, this.updateProfileForm, 
+				this.mockBindingResult, this.mockRedirectAttributes);
 		
 		verify(mockProfileService).saveFrom(eq(this.updateProfileForm), eq(mockUser));
-		assertTrue(gotMav.getModel().containsKey("page_error"));
-		assertTrue(gotMav.getModel().containsKey("updateProfileForm"));
+		verify(mockRedirectAttributes).addFlashAttribute(eq("page_error"), any(String.class));
+		verify(mockRedirectAttributes).addFlashAttribute(eq("updateProfileForm"), any(Object.class));
 	}
 	
 	@Test
@@ -153,7 +152,7 @@ public class UpdateProfileControllerUnitTests {
 				new UsernamePasswordAuthenticationToken("test@example.ch", "testPassword"));
 		
 		ModelAndView gotMav = controller.becomeTutor(this.mockAuthUser, this.passwordConfirmationForm, 
-				mockBindingResult, this.mockRedirectAttributs);
+				mockBindingResult, this.mockRedirectAttributes);
 		
 		verify(mockUserService).getUserByPrincipal(eq(mockAuthUser));
 		verify(mockUserService).changeToTutor(eq(mockUser));
@@ -170,7 +169,7 @@ public class UpdateProfileControllerUnitTests {
 		when(mockPrepareFormService.prepareForm(eq(mockAuthUser), any(ModelAndView.class))).then(returnsSecondArg());
 		
 		ModelAndView gotMav = controller.becomeTutor(this.mockAuthUser, this.passwordConfirmationForm, 
-				mockBindingResult, this.mockRedirectAttributs);
+				mockBindingResult, this.mockRedirectAttributes);
 		
 		verify(mockUserService).getUserByPrincipal(eq(mockAuthUser));
 		verify(mockPrepareFormService).prepareForm(eq(mockAuthUser), any(ModelAndView.class));
@@ -183,7 +182,7 @@ public class UpdateProfileControllerUnitTests {
 		when(mockUserService.getUserByPrincipal(eq(mockAuthUser))).thenReturn(this.mockUser);
 		
 		ModelAndView gotMav = controller.becomeTutor(this.mockAuthUser, this.passwordConfirmationForm, 
-				mockBindingResult, this.mockRedirectAttributs);
+				mockBindingResult, this.mockRedirectAttributes);
 		
 		verify(mockUserService).getUserByPrincipal(eq(mockAuthUser));
 		assertEquals("updateProfile", gotMav.getViewName());

@@ -93,14 +93,18 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 	}
 	
 	@Override
-	public UpdateProfileForm getFormWithValues(Principal user) {
-		assert(user != null);
+	public UpdateProfileForm getFormWithValues(Principal authUser) {
+		assert(authUser != null);
+		User user = userService.getUserByPrincipal(authUser);
+		Profile profile = getUsersProfile(authUser);
 		UpdateProfileForm tmpForm = new UpdateProfileForm();
-		tmpForm.setFirstName((userService.getUserByPrincipal(user)).getFirstName());
-		tmpForm.setLastName((userService.getUserByPrincipal(user)).getLastName());
-		tmpForm.setBiography(getUsersProfile(user).getBiography());
-		tmpForm.setRegion(getUsersProfile(user).getRegion());
-		tmpForm.setWage(getUsersProfile(user).getWage());
+		tmpForm.setFirstName(user.getFirstName());
+		tmpForm.setLastName(user.getLastName());
+		tmpForm.setBiography(profile.getBiography());
+		tmpForm.setRegion(profile.getRegion());
+		tmpForm.setWage(profile.getWage());
+		tmpForm.setUniversity(profile.getUniversity());
+		tmpForm.setLanguage(profile.getLanguage());
 
 		return tmpForm;
 	}

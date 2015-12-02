@@ -1,5 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -75,17 +77,6 @@ public class LoginController {
 	}
 
 	/**
-	 * Redirects the {@code /success} to the {@code findTutor.html} page
-	 * 
-	 * @return redirection to login
-	 */
-	@RequestMapping(value = "/success", method = RequestMethod.GET)
-	public String success() {
-		return "redirect:findTutor";
-	
-	}
-
-	/**
 	 * Maps the /login page to the login form (login.html) and provides optional
 	 * parameters for displaying messages
 	 * 
@@ -94,11 +85,16 @@ public class LoginController {
 	 * @return ModelAndView for Spring Framework
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+	public ModelAndView login(Principal authUser,
+							  @RequestParam(value = "error", required = false) String error,
 							  @RequestParam(value = "logout", required = false) String logout,
 							  @RequestParam(value = "register", required = false) String register,
 							  @RequestParam(value = "success", required = false) String success) {
 		ModelAndView model = new ModelAndView("login");
+		if (authUser!= null) {
+			model = new ModelAndView("redirect:/findTutor");
+			return model;
+		}
 		if (error != null) {
 			model.addObject("error", "Invalid username or password!");
 		}
