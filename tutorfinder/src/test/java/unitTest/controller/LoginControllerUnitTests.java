@@ -126,7 +126,7 @@ public class LoginControllerUnitTests {
 	
 	@Test
 	public void testLogin() {
-		ModelAndView got = controller.login(null, null, null, null);
+		ModelAndView got = controller.login(null, null, null, null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
@@ -134,7 +134,7 @@ public class LoginControllerUnitTests {
 	
 	@Test
 	public void testLoginParamError() {
-		ModelAndView got = controller.login("error", null, null, null);
+		ModelAndView got = controller.login(null,"error", null, null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
@@ -143,7 +143,7 @@ public class LoginControllerUnitTests {
 	
 	@Test
 	public void testLoginParamLogout() {
-		ModelAndView got = controller.login(null, "logout", null, null);
+		ModelAndView got = controller.login(null, null, "logout", null, null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
@@ -152,7 +152,7 @@ public class LoginControllerUnitTests {
 	
 	@Test
 	public void testLoginParamRegister() {
-		ModelAndView got = controller.login(null, null, "register", null);
+		ModelAndView got = controller.login(null, null, null, "register", null);
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
