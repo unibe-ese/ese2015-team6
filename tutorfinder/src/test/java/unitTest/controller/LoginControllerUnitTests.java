@@ -71,6 +71,7 @@ public class LoginControllerUnitTests {
 		String got = controller.home();
 
 		assertFalse(got.isEmpty());
+		assertEquals("redirect:login", got);
 	}
 	
 	@Test
@@ -78,6 +79,7 @@ public class LoginControllerUnitTests {
 		String got = controller.register();
 		
 		assertFalse(got.isEmpty());
+		assertEquals("redirect:/login?register", got);
 	}
 	
 	@Test
@@ -85,6 +87,7 @@ public class LoginControllerUnitTests {
 		String got = controller.logoutPage(mockRequest, mockResponse);
 		
 		assertFalse(got.isEmpty());
+		assertEquals("redirect:/login?logout", got);
 	}
 
 	@Test
@@ -123,6 +126,20 @@ public class LoginControllerUnitTests {
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("loginUrl"));
+	}
+	
+	@Test
+	public void testLoginWithAuthUser() {
+		ModelAndView got = controller.login(this.mockPrincipal, null, null, null, null);
+		
+		assertEquals("redirect:/findTutor", got.getViewName());
+	}
+	@Test
+	public void testLoginParamSucces() {
+		ModelAndView got = controller.login(null, null, null, null, "success");
+		
+		assertEquals("login", got.getViewName());
+		assertTrue(got.getModel().containsKey("msg"));
 	}
 	
 	@Test

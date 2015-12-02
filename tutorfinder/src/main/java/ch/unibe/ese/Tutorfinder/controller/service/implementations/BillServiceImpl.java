@@ -18,6 +18,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.BillDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.util.Availability;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
+import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -72,10 +73,11 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public List<Bill> getBills(User user) {
+	public List<Bill> getBills(User user, PaymentStatus paymentStatus) {
 		assert(user != null);
+		assert(paymentStatus != null);
 		
-		return billDao.findAllByTutor(user);
+		return billDao.findAllByTutorAndPaymentStatus(user, paymentStatus);
 	}
 
 	@Override
@@ -106,11 +108,16 @@ public class BillServiceImpl implements BillService {
 		List<Appointment> tmpList = appointmentService.getAppointmentsForMonthAndYear(tutor, Availability.ARRANGED,
 				monthValue, year);
 		
+		BigDecimal totalWage = totalWage(tmpList);
+		
 		tmpBill.setMonthValue(monthValue);
 		tmpBill.setMonth(getMonth(monthValue));
 		tmpBill.setYear(year);
 		tmpBill.setTutor(tutor);
-		tmpBill.setAmount(totalWage(tmpList).multiply(ConstantVariables.PERCENTAGE));
+		tmpBill.setAmount(totalWage.multiply(ConstantVariables.PERCENTAGE));
+		tmpBill.setPaymentStatus(PaymentStatus.UNPAID);
+		tmpBill.setPercentage(ConstantVariables.PERCENTAGE);
+		tmpBill.setTotal(totalWage);
 		billDao.save(tmpBill);
 		
 		
@@ -129,6 +136,18 @@ public class BillServiceImpl implements BillService {
 		assert(monthValue >= 1);
 		assert(monthValue <= 12);
 	    return new DateFormatSymbols().getMonths()[monthValue-1];
+	}
+
+	@Override
+	public void pay(User User, long billId) {
+		Bill tmpBill = billDao.findById(billId);
+		
+		if(tmpBill != null && tmpBill.getTutor().equals(User)) {
+			tmpBill.setPaymentStatus(PaymentStatus.PAID);
+			billDao.save(tmpBill);
+		}
+		
+		
 	}
 
 }

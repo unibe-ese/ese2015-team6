@@ -30,6 +30,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.BillDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.util.Availability;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
+import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/test.xml" })
@@ -70,7 +71,7 @@ public class BillServiceImplTest {
 		tmpList.add(mockBill);
 		when(billDao.findAllByTutor(eq(tutor))).thenReturn(tmpList);
 		
-		List<Bill> testList = billServiceImpl.getBills(tutor);
+		List<Bill> testList = billServiceImpl.getBills(tutor, PaymentStatus.UNPAID);
 		
 		verify(billDao, times(1)).findAllByTutor(tutor);
 		assertTrue(tmpList.equals(testList));
@@ -136,7 +137,7 @@ public class BillServiceImplTest {
 	 
 	@Test(expected=AssertionError.class)
 	public void getBillsNullTest() {
-		billServiceImpl.getBills(null);
+		billServiceImpl.getBills(null, PaymentStatus.UNPAID);
 	}
 
 }

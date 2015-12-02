@@ -12,8 +12,6 @@ public interface SubjectDao extends CrudRepository<Subject, Long> {
 
 	Subject findById (long id);
 	
-	ArrayList<Subject> findAllById (long id);
-	
 	ArrayList<Subject> findAllByUser (User user);
 	
 	LinkedList<Subject> findByName(String name);

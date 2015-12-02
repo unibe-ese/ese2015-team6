@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.unibe.ese.Tutorfinder.model.Bill;
 import ch.unibe.ese.Tutorfinder.model.User;
+import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 
 public interface BillService {
 	
@@ -21,11 +22,13 @@ public interface BillService {
 	 * @param user whose bills should be returned
 	 * @return List of {@link Bill}s of the given {@link User}
 	 */
-	public List<Bill> getBills(User user); 
+	public List<Bill> getBills(User user, PaymentStatus paymentStatus); 
 	
 	/**
 	 * updates the bills for the previous month
 	 */
 	public void updateMonthlyBills();
+
+	public void pay(User User, long BillId);  
 
 }

@@ -49,7 +49,7 @@ public enum Availability {
      * @throws AvailabilityException if the availability is invalid
      */
     public static Availability of(int availability) {
-        if (availability < 0 || availability > 4) {
+        if (availability < 0 || availability > 3) {
             throw new AvailabilityException("Invalid value for Availability: " + availability);
         }
         return ENUMS[availability];
