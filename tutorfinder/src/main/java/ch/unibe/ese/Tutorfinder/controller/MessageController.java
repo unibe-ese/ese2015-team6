@@ -86,7 +86,7 @@ public class MessageController {
 		if (show != null) {
 			if (show < tmpMessageList.size()) {
 				Message tmpMessage = tmpMessageList.get(show.intValue());
-				if (tmpUser != tmpMessage.getReceiver()) {
+				if (tmpUser.equals(tmpMessage.getReceiver())) {
 					tmpMessage = messageService.markMessageAsRead(tmpMessage.getId(), tmpUser);
 					tmpMessageList.set(show.intValue(), tmpMessage);
 				}

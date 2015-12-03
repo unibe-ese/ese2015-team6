@@ -151,7 +151,7 @@ public class MessagesControllerUnitTests {
 	public void testMessagesWithShow() {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockMessageService.getMessageByBox(eq(ConstantVariables.UNREAD), eq(mockUser))).thenReturn(this.messageList);
-		when(mockMessage.getReceiver()).thenReturn(this.mockOtherUser);
+		when(mockMessage.getReceiver()).thenReturn(this.mockUser);
 		when(mockMessage.getId()).thenReturn(Long.valueOf(0));
 		
 		ModelAndView gotMav = controller.messages(mockAuthUser, ConstantVariables.UNREAD, Long.valueOf(0));
@@ -167,7 +167,7 @@ public class MessagesControllerUnitTests {
 	public void testMessagesWithShowButNotReceiver() {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockMessageService.getMessageByBox(eq(ConstantVariables.UNREAD), eq(mockUser))).thenReturn(this.messageList);
-		when(mockMessage.getReceiver()).thenReturn(this.mockUser);
+		when(mockMessage.getReceiver()).thenReturn(this.mockOtherUser);
 		when(mockMessage.getId()).thenReturn(Long.valueOf(0));
 		
 		ModelAndView gotMav = controller.messages(mockAuthUser, ConstantVariables.UNREAD, Long.valueOf(0));
