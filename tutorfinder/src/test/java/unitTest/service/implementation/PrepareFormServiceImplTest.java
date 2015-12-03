@@ -81,7 +81,7 @@ public class PrepareFormServiceImplTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		ReflectionTestUtils.setField(mockUser, "id", new Long(1));
+		ReflectionTestUtils.setField(mockUser, "id", Long.valueOf(1));
 		ReflectionTestUtils.setField(mockUser, "email", "test@test.ch");
 		ReflectionTestUtils.setField(mockUser, "firstName", "TestFirstName");
 		ReflectionTestUtils.setField(mockUser, "lastName", "TestLastName");

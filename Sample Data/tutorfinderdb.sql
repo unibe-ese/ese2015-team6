@@ -27,7 +27,7 @@ REPLACE INTO `profile` (`id`, `biography`, `countedRatings`, `email`, `language`
 (1, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', NULL, 'ese@example.ch', 'English', NULL, 'Bern and agglomeration', 'Bern', '45.00'),
 (2, 'This should be a biography', NULL, 'tutor@example.ch', 'German, English, French', NULL, 'Bern and agglomeration', 'Bern', '50.00'),
 (3, NULL, 0, 'student@example.ch', NULL, NULL, NULL, NULL, '0.00'),
-(4, 'This should be a biography', NULL, 'julia@example', 'German, English, Italian', NULL, 'Bern and agglomeration', 'Bern', '55.00'),
+(4, 'This should be a biography', NULL, 'julia@example.ch', 'German, English, Italian', NULL, 'Bern and agglomeration', 'Bern', '55.00'),
 (5, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', NULL, 'sofia@example.ch', 'German, English, Rhaeto-Romanic', NULL, 'Bern and agglomeration', 'Bern', '60.00');
 
 --

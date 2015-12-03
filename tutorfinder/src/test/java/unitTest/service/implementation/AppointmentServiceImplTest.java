@@ -322,7 +322,7 @@ public class AppointmentServiceImplTest {
 	public void testUdateAppointmentToReserved() {
 		when(appointmentDao.findOne(anyLong())).thenReturn(this.mockAppointment);
 		
-		Appointment tmpAppointment = appointmentService.updateAppointment(Availability.RESERVED, new Long(1));
+		Appointment tmpAppointment = appointmentService.updateAppointment(Availability.RESERVED, Long.valueOf(1));
 		
 		assertEquals(this.mockAppointment, tmpAppointment);
 	}
@@ -331,14 +331,14 @@ public class AppointmentServiceImplTest {
 	public void testUdateAppointmentToAvailability() {
 		when(appointmentDao.findOne(anyLong())).thenReturn(this.mockAppointment);
 		
-		Appointment tmpAppointment = appointmentService.updateAppointment(Availability.AVAILABLE, new Long(1));
+		Appointment tmpAppointment = appointmentService.updateAppointment(Availability.AVAILABLE, Long.valueOf(1));
 		
 		assertNull(tmpAppointment);
 	}
 	
 	@Test(expected=AssertionError.class)
 	public void testUpdateAppointmentNullAvailability() {
-		appointmentService.updateAppointment(null, new Long(1));
+		appointmentService.updateAppointment(null, Long.valueOf(1));
 	}
 	
 	@Test(expected=AssertionError.class)
@@ -493,7 +493,7 @@ public class AppointmentServiceImplTest {
 		when(mockAppointment.getTutor()).thenReturn(this.mockTutor);
 		when(mockTutor.getProfile()).thenReturn(mockProfile);
 		
-		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
+		appointmentService.rateTutorForAppointment(Long.valueOf(1), BigDecimal.ONE);
 		
 		verify(mockAppointment).setRating(BigDecimal.ONE);
 		verify(appointmentDao).save(eq(mockAppointment));
@@ -509,7 +509,7 @@ public class AppointmentServiceImplTest {
 		when(mockAppointment.getTutor()).thenReturn(this.mockTutor);
 		when(mockTutor.getProfile()).thenReturn(mockProfile);
 		
-		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
+		appointmentService.rateTutorForAppointment(Long.valueOf(1), BigDecimal.ONE);
 		
 		verify(mockAppointment).setRating(BigDecimal.ONE);
 	}
@@ -523,7 +523,7 @@ public class AppointmentServiceImplTest {
 		when(mockAppointment.getTutor()).thenReturn(this.mockTutor);
 		when(mockTutor.getProfile()).thenReturn(mockProfile);
 		
-		appointmentService.rateTutorForAppointment(new Long(1), BigDecimal.ONE);
+		appointmentService.rateTutorForAppointment(Long.valueOf(1), BigDecimal.ONE);
 		
 		verify(mockAppointment).setRating(BigDecimal.ONE);
 	}           
@@ -535,7 +535,7 @@ public class AppointmentServiceImplTest {
 	
 	@Test(expected=AssertionError.class)
 	public void testRatueTutorForAppointmentWhenRatingIsNull() {
-		appointmentService.rateTutorForAppointment(new Long(1), null);
+		appointmentService.rateTutorForAppointment(Long.valueOf(1), null);
 	}
 	
 	@Test 

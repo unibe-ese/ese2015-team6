@@ -31,6 +31,7 @@ public class Timetable {
 	@GeneratedValue
 	private long id;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="user")
 	private User user;
@@ -69,6 +70,7 @@ public class Timetable {
 	}
 	
 	public void setUser(User user) {
+		assert user != null : "Timetables user is not allowed to be null!";
 		this.user = user;
 	}
 	
@@ -77,6 +79,7 @@ public class Timetable {
 	}
 	
 	public void setDay(DayOfWeek day) {
+		assert day != null : "Timetables day is not allowed to be null!";
 		this.day = day;
 	}
 	

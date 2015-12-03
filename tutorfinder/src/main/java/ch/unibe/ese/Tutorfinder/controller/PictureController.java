@@ -48,8 +48,10 @@ public class PictureController {
 				User tmpUser = userService.getUserByPrincipal(authUser);
 				File dir = new File(rootPath + File.separator + "src" + File.separator + "main" + File.separator
 						+ "webapp" + File.separator + "img" + File.separator + "profPic");
-				if (!dir.exists())
-					dir.mkdirs();
+				if (!dir.exists()) {
+					boolean directoryCreation = dir.mkdirs();
+					assert directoryCreation : "Directory is not created!";
+				}
 
 				// Create the file on server
 				File serverFile = new File(dir.getAbsolutePath() + File.separator + tmpUser.getId() + ".png");

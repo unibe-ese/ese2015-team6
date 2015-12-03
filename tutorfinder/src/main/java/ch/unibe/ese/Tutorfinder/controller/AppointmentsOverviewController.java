@@ -78,7 +78,7 @@ public class AppointmentsOverviewController {
 	public ModelAndView decline(final HttpServletRequest req, Principal authUser) {
 		ModelAndView model = new ModelAndView("appointmentsOverview");
 
-		final long appointmentId = Long.valueOf(req.getParameter("decline"));
+		final Long appointmentId = Long.valueOf(req.getParameter("decline"));
 		appointmentService.updateAppointment(Availability.AVAILABLE, appointmentId);
 
 		model = prepareAppointmentsOverview(model, authUser);
@@ -102,7 +102,7 @@ public class AppointmentsOverviewController {
 	public ModelAndView confirm(final HttpServletRequest req, Principal authUser) {
 		ModelAndView model = new ModelAndView("appointmentsOverview");
 
-		final long appointmentId = Long.valueOf(req.getParameter("confirm"));
+		final Long appointmentId = Long.valueOf(req.getParameter("confirm"));
 		appointmentService.updateAppointment(Availability.ARRANGED, appointmentId);
 
 		model = prepareAppointmentsOverview(model, authUser);
@@ -131,7 +131,7 @@ public class AppointmentsOverviewController {
 			BindingResult result) {
 		ModelAndView model = new ModelAndView("appointmentsOverview");
 
-		final long appointmentId = Long.valueOf(req.getParameter("rate"));
+		final Long appointmentId = Long.valueOf(req.getParameter("rate"));
 		appointmentService.rateTutorForAppointment(appointmentId, form.getRating());
 
 		model = prepareAppointmentsOverview(model, authUser);

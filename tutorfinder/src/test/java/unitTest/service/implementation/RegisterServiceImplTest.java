@@ -34,7 +34,7 @@ public class RegisterServiceImplTest {
 	@Before
 	public void setUp() {
 		this.signupForm = new SignupForm();
-		this.signupForm.setId(new Long(1));
+		this.signupForm.setId(Long.valueOf(1));
 		this.signupForm.setEmail("form@test.ch");
 		this.signupForm.setFirstName("testFirstName");
 		this.signupForm.setLastName("testLastName");

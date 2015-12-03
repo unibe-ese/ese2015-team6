@@ -36,7 +36,7 @@ import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 public class FindTutorControllerUnitTests {
 	
 	private FindTutorController findTutorController;
-	String testQuery = new String("testQuery");
+	String testQuery = "testQuery";
 	
 	@Mock
 	private FindTutorService mockFindTutorService;

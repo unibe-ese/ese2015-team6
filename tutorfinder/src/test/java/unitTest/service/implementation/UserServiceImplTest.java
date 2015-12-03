@@ -86,7 +86,7 @@ public class UserServiceImplTest {
 		when(userDao.findById(anyLong())).thenReturn(this.mockUser);
 		
 		//WHEN		
-		User tmpUser = userService.getUserById(new Long(1));
+		User tmpUser = userService.getUserById(Long.valueOf(1));
 		
 		//THEN
 		assertEquals(tmpUser, this.mockUser);
@@ -103,7 +103,7 @@ public class UserServiceImplTest {
 		when(userDao.findOne(anyLong())).thenReturn(null);
 				
 		//WHEN
-		userService.getUserById(new Long(1));
+		userService.getUserById(Long.valueOf(1));
 	}
 	
 	@Test

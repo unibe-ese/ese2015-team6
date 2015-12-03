@@ -59,8 +59,7 @@ public class User {
 		return id;
 	}
 
-	public void setId(Long id) {
-		assert id != null : "Users id is not allowed to be null!";
+	public void setId(long id) {
 		this.id = id;
 	}
 
