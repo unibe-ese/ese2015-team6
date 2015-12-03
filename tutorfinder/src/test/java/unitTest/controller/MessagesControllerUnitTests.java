@@ -200,7 +200,7 @@ public class MessagesControllerUnitTests {
 		
 		ModelAndView gotMav = controller.newMessage(this.mockAuthUser, this.mockReq);
 		
-		assertEquals("findTutor", gotMav.getViewName());
+		assertEquals("redirect:findTutor", gotMav.getViewName());
 	}
 	
 	@Test

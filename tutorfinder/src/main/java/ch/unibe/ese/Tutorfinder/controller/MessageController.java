@@ -130,7 +130,7 @@ public class MessageController {
 			model = new ModelAndView("newMessage");
 			model.addObject("messageForm", messageForm);
 		} else {
-			model = new ModelAndView("findTutor");
+			model = new ModelAndView("redirect:findTutor");
 		}
 
 		return model;
@@ -169,7 +169,7 @@ public class MessageController {
 
 			User tmpUser = userService.getUserByPrincipal(authUser);
 			model.addObject("authUser", tmpUser);
-
+			messageForm.setReceiver(userService.getUserById(messageForm.getReceiverId()));
 			model.addObject("messageForm", messageForm);
 		}
 
