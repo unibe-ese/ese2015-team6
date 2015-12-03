@@ -29,9 +29,9 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class AppointmentServiceImpl implements AppointmentService {
 
 	@Autowired
-	AppointmentDao appointmentDao;
+	private AppointmentDao appointmentDao;
 	@Autowired
-	ProfileService profileService;
+	private ProfileService profileService;
 
 	/**
 	 * Constructor for testing purposes

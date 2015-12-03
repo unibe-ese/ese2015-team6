@@ -45,7 +45,7 @@ public class ConstantVariables {
 	public static final BigDecimal PERCENTAGE = BigDecimal.valueOf(0.05);
 
 	/* Minimum Revenue */
-	public static final BigDecimal MIN_REVENUE=BigDecimal.valueOf(0.05);
+	private static final BigDecimal MIN_REVENUE=BigDecimal.valueOf(0.05);
 	
 	/* Minimum for wage, is calculated with the percentage so that this will at least be equals to the MIN_REVENUE */
 	public static final BigDecimal MIN_WAGE = MIN_REVENUE.divide(PERCENTAGE);

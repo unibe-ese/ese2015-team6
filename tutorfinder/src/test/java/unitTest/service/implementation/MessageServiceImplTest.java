@@ -198,18 +198,4 @@ public class MessageServiceImplTest {
 		messageService.saveFrom(this.messageForm, null);
 	}
 	
-	@Test
-	public void testGetMessageById() {
-		when(messageDao.findOne(anyLong())).thenReturn(this.mockMessage);
-		
-		Message tmpMessage = messageService.getMessageById(Long.valueOf(1));
-		
-		assertEquals(this.mockMessage, tmpMessage);
-	}
-	
-	@Test(expected=AssertionError.class)
-	public void testGetMessageByNullId() {
-		messageService.getMessageById(null);
-	}
-	
 }

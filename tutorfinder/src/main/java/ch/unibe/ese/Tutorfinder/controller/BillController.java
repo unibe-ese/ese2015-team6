@@ -18,10 +18,10 @@ import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 public class BillController {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	BillService billService;
+	private BillService billService;
 
 	@RequestMapping(value = "/bill", method=RequestMethod.GET)
 	public ModelAndView bill(Principal authUser, @RequestParam(value = "payId", required = false) Long BillId) {

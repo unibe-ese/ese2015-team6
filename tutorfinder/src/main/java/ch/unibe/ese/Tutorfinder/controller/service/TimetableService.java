@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.time.DayOfWeek;
 import java.util.List;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
@@ -19,9 +18,8 @@ public interface TimetableService {
 	 * @param updateTimetableForm containing information what timetables should be saved
 	 * @param user {@link Principal}
 	 * @return updateTimetableForm unchanged as given
-	 * @throws InvalidTimetableException
 	 */
-	public UpdateTimetableForm saveFrom(UpdateTimetableForm updateTimetableForm, Principal user) throws InvalidTimetableException;
+	public UpdateTimetableForm saveFrom(UpdateTimetableForm updateTimetableForm, Principal user);
 
 	/**
 	 * finds all timetable entries in the database for a given user

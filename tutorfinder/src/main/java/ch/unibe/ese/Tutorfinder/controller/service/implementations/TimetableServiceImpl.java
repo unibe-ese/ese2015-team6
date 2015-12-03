@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
@@ -27,14 +26,15 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 @Service
 public class TimetableServiceImpl implements TimetableService {
 	
-	@Autowired	UserDao userDao;
-	@Autowired	TimetableDao timetableDao;
+	@Autowired	
+	private UserDao userDao;
+	@Autowired	
+	private TimetableDao timetableDao;
 	
 	public TimetableServiceImpl() {}
 	
 	@Transactional
-	public UpdateTimetableForm saveFrom(UpdateTimetableForm updateTimetableForm, Principal authUser)
-			throws InvalidTimetableException {
+	public UpdateTimetableForm saveFrom(UpdateTimetableForm updateTimetableForm, Principal authUser) {
 		assert(updateTimetableForm != null && authUser != null);
 		
 		User user = userDao.findByEmail(authUser.getName());

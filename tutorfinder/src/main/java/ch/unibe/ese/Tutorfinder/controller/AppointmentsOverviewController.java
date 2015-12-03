@@ -28,9 +28,9 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
 public class AppointmentsOverviewController {
 
 	@Autowired
-	AppointmentService appointmentService;
+	private AppointmentService appointmentService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	/**
 	 * Constructor for testing purposes
@@ -150,7 +150,7 @@ public class AppointmentsOverviewController {
 	 *            {@link Principal} actual logged in user
 	 * @return model with the new objects
 	 */
-	public ModelAndView prepareAppointmentsOverview(ModelAndView model, Principal authUser) {
+	private ModelAndView prepareAppointmentsOverview(ModelAndView model, Principal authUser) {
 		User tmpUser = userService.getUserByPrincipal(authUser);
 		model.addObject("authUser", tmpUser);
 

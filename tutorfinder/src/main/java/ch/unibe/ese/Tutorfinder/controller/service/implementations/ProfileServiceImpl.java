@@ -18,10 +18,10 @@ import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 public class ProfileServiceImpl implements ProfileService {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	ProfileDao profileDao;
+	private ProfileDao profileDao;
 
 	public ProfileServiceImpl() {
 

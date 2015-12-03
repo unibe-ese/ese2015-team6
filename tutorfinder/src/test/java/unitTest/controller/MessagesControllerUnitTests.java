@@ -2,7 +2,6 @@ package unitTest.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -32,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.MessageController;
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
@@ -226,26 +224,6 @@ public class MessagesControllerUnitTests {
 		assertEquals(this.mockUser, gotMav.getModel().get("authUser"));
 		assertEquals(this.messageForm, gotMav.getModel().get("messageForm"));
 		
-	}
-	
-	@Test
-	public void testSendMessageWhenInvalidMessageException() {
-		when(mockBindingResult.hasErrors()).thenReturn(false);
-		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
-		when(mockMessageService.saveFrom(any(MessageForm.class), eq(mockAuthUser))).thenThrow(new InvalidMessageException("Test Exception"));
-		
-		ModelAndView gotMav = controller.sendMessage(this.mockAuthUser, this.messageForm, this.mockBindingResult, this.mockRedirectAttributes);
-		
-		verify(mockMessageService).saveFrom(eq(messageForm), eq(mockAuthUser));
-		assertEquals("newMessage", gotMav.getViewName());
-		assertTrue(gotMav.getModel().containsKey("messageForm"));
-		assertTrue(gotMav.getModel().containsKey("authUser"));
-		assertTrue(gotMav.getModel().containsKey("page_error"));
-		assertEquals(this.mockUser, gotMav.getModel().get("authUser"));
-		assertEquals(this.messageForm, gotMav.getModel().get("messageForm"));
-		assertEquals("Test Exception", gotMav.getModel().get("page_error"));
-	}
-	
-	
+	}	
 	
 }

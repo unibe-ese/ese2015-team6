@@ -1,8 +1,12 @@
 package unitTest.controller;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -30,7 +34,6 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
-import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
@@ -57,8 +60,6 @@ public class ShowProfileControllerUnitTests {
 	@Mock
 	private TimetableService mockTimetableService;
 	@Mock
-	private SubjectService mockSubjectService;
-	@Mock
 	private PrepareFormService mockPrepareService;
 	@Mock
 	private MakeAppointmentsForm mockAppointmentsForm;
@@ -73,8 +74,8 @@ public class ShowProfileControllerUnitTests {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		controller = new ShowProfileController(mockAppointmentService, mockUserService, mockProfileService,
-				mockTimetableService, mockSubjectService, mockPrepareService);
+		controller = new ShowProfileController(mockAppointmentService, mockUserService,
+				mockTimetableService, mockPrepareService);
 	}
 
 	@Test

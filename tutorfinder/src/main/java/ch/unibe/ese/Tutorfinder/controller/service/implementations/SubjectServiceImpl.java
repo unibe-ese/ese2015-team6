@@ -30,9 +30,9 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 public class SubjectServiceImpl implements SubjectService {
 
 	@Autowired
-	SubjectDao subjectDao;
+	private SubjectDao subjectDao;
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
 
 	public SubjectServiceImpl() {
 	}

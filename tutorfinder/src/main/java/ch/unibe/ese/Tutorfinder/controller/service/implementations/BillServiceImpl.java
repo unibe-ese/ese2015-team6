@@ -24,13 +24,13 @@ import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 public class BillServiceImpl implements BillService {
 	
 	@Autowired
-	AppointmentService appointmentService;
+	private AppointmentService appointmentService;
 	
 	@Autowired
-	BillDao billDao;
+	private BillDao billDao;
 	
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
 	
 	
 	

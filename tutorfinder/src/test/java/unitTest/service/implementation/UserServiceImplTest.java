@@ -83,7 +83,7 @@ public class UserServiceImplTest {
 	@Test
 	public void testGetUserById() {
 		//GIVEN
-		when(userDao.findById(anyLong())).thenReturn(this.mockUser);
+		when(userDao.findOne(anyLong())).thenReturn(this.mockUser);
 		
 		//WHEN		
 		User tmpUser = userService.getUserById(Long.valueOf(1));

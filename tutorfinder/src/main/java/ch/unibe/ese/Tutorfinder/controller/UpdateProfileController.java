@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.PasswordConfirmationForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
@@ -39,11 +38,11 @@ import ch.unibe.ese.Tutorfinder.model.User;
 public class UpdateProfileController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	ProfileService profileService;
+	private ProfileService profileService;
 	@Autowired
-	PrepareFormService prepareFormService;
+	private PrepareFormService prepareFormService;
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -104,12 +103,8 @@ public class UpdateProfileController {
 		ModelAndView model = new ModelAndView("redirect:/editProfile");
 		
 		if (!result.hasErrors()) {
-			try {
-				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
-				redirectAttributes.addFlashAttribute("update_msg","Your profile information has been updated");
-			} catch (InvalidProfileException e) {
-				redirectAttributes.addFlashAttribute("page_error", e.getMessage());
-			}
+			profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
+			redirectAttributes.addFlashAttribute("update_msg","Your profile information has been updated");
 		}
 		redirectAttributes.addFlashAttribute("updateProfileForm", updateProfileForm);
 		return model;
@@ -160,7 +155,7 @@ public class UpdateProfileController {
 	 * @param binder
 	 */
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	private void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 }

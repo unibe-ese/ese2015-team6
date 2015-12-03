@@ -21,9 +21,9 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class MessageServiceImpl implements MessageService {
 
 	@Autowired
-	MessageDao messageDao;
+	private MessageDao messageDao;
 	@Autowired 
-	UserService userService;
+	private UserService userService;
 	
 	public MessageServiceImpl() {
 		
@@ -85,12 +85,6 @@ public class MessageServiceImpl implements MessageService {
 		newMessage = messageDao.save(newMessage);
 		
 		return newMessage;
-	}
-
-	@Override
-	public Message getMessageById(Long id) {
-		assert (id != null);
-		return messageDao.findOne(id);
 	}
 
 }

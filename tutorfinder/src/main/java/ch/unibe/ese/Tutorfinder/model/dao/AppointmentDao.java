@@ -13,8 +13,6 @@ public interface AppointmentDao extends CrudRepository<Appointment, Long> {
 	
 	ArrayList<Appointment> findAllByTutor (User tutor);
 	
-	ArrayList<Appointment> findAllByStudent (User student);
-	
 	Appointment findByTutorAndTimestamp (User tutor, Timestamp timestamp);
 	
 	ArrayList<Appointment> findAllByTutorAndAvailabilityOrderByTimestampDesc (User tutor, Availability availability);
