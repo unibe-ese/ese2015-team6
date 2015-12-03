@@ -1,5 +1,12 @@
 package util;
 
+import java.security.Principal;
+import java.util.List;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ch.unibe.ese.Tutorfinder.model.Profile;
@@ -48,6 +55,13 @@ public class TestUtility {
 		testProfileTwo = profileDao.save(testProfileTwo);
 		testUserTwo.setProfile(testProfileTwo);
 		testUserTwo = userDao.save(testUserTwo);
+	}
+	
+	public static Principal createPrincipal(String username, String password, String authoritie) {
+		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(authoritie);
+		Authentication authentication = 
+		        new UsernamePasswordAuthenticationToken(username,password, authorities);
+		return authentication;
 	}
 	
 }
