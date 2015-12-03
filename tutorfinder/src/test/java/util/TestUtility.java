@@ -9,8 +9,8 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 public class TestUtility {
-	private static User testUser;
-	private static Profile testProfile;
+	public static User testUser;
+	public static Profile testProfile;
 	
 	public static void initialize() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -30,5 +30,4 @@ public class TestUtility {
 		testUser = userDao.save(testUser);
 	}
 	
-	public static final User TEST_USER = testUser;
 }
