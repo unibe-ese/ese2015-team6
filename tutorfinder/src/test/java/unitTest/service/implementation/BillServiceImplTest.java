@@ -69,11 +69,11 @@ public class BillServiceImplTest {
 	public void getBillsTest() {
 		ArrayList<Bill> tmpList = new ArrayList<Bill>();
 		tmpList.add(mockBill);
-		when(billDao.findAllByTutor(eq(tutor))).thenReturn(tmpList);
+		when(billDao.findAllByTutorAndPaymentStatus(eq(tutor), eq(PaymentStatus.UNPAID))).thenReturn(tmpList);
 		
 		List<Bill> testList = billServiceImpl.getBills(tutor, PaymentStatus.UNPAID);
 		
-		verify(billDao, times(1)).findAllByTutor(tutor);
+		verify(billDao, times(1)).findAllByTutorAndPaymentStatus(tutor, PaymentStatus.UNPAID);
 		assertTrue(tmpList.equals(testList));
 	}
 	

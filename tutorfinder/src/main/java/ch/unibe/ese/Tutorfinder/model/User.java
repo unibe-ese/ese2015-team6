@@ -45,6 +45,7 @@ public class User {
 	@NotNull
 	private String role;
 	
+	@NotNull
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Profile profile;
 	
@@ -58,7 +59,8 @@ public class User {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
+		assert id != null : "Users id is not allowed to be null!";
 		this.id = id;
 	}
 
@@ -67,6 +69,7 @@ public class User {
 	}
 
 	public void setFirstName(String firstName) {
+		assert firstName != null : "Users firstName is not allowed to be null!";
 		this.firstName = firstName;
 	}
 
@@ -75,6 +78,7 @@ public class User {
 	}
 
 	public void setLastName(String lastName) {
+		assert lastName != null : "Users lastName is not allowed to be null!";
 		this.lastName = lastName;
 	}
 
@@ -83,6 +87,7 @@ public class User {
 	}
 
 	public void setEmail(String email) {
+		assert email != null : "Users email is not allowed to be null!";
 		this.email = email;
 	}
 
@@ -91,6 +96,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
+		assert password != null : "Users password is not allowed to be null!";
 		this.password = password;
 	}
 
@@ -99,6 +105,7 @@ public class User {
 	}
 
 	public void setRole(String role) {
+		assert role != null : "Users role is not allowed to be null!";
 		this.role = role;
 	}
 
@@ -107,6 +114,7 @@ public class User {
 	}
 
 	public void setProfile(Profile profile) {
+		assert profile != null : "Users profile is not allowed to be null!";
 		this.profile = profile;
 	}
 
