@@ -40,7 +40,6 @@ public class FindTutorServiceImpl implements FindTutorService {
 
 	@Override
 	public Map<User, List<Subject>> getSubjectsFrom(String query) {
-		// TODO (maybe) implement search engine by hibernate
 		LinkedList<Subject> subjectList = new LinkedList<Subject>();
 		Iterable<Subject> subjectIterable = subjectDao.findAll();
 		for (Subject subject : subjectIterable) {

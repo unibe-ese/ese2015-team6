@@ -72,7 +72,6 @@ public class ShowProfileController {
 		this.prepareService = prepareService;
 	}
 
-	// TODO Implement date as a parameter
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.html}.
 	 * 
