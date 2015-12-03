@@ -12,63 +12,56 @@ import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 
 @Entity
 public class Bill {
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
+	@NotNull
 	@ManyToOne
 	private User tutor;
-	
+
 	@NotNull
 	private String month;
-	
+
 	@NotNull
 	private int monthValue;
-	
+
 	@NotNull
 	private int year;
-	
+
 	@NotNull
 	private BigDecimal amount;
-	
+
 	@NotNull
 	private PaymentStatus paymentStatus;
-	
+
 	@NotNull
 	private BigDecimal total;
-	
+
 	@NotNull
 	private BigDecimal percentage;
-	
-	public BigDecimal getTotal() {
-		return total;
-	}
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
-	public BigDecimal getPercentage() {
-		return percentage;
-	}
-	public void setPercentage(BigDecimal percentage) {
-		this.percentage = percentage;
-	}
-	public PaymentStatus getPaymentStatus() {
-		return paymentStatus;
-	}
-	public void setPaymentStatus(PaymentStatus paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
+
 	/* Constructor */
 	public Bill() {
 		super();
 	}
-	/*Getters and Setters */
+
+	/* Getters and Setters */
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public User getTutor() {
 		return tutor;
 	}
 
 	public void setTutor(User tutor) {
+		assert tutor != null : "Bills tutor is not allowed to be null!";
 		this.tutor = tutor;
 	}
 
@@ -77,13 +70,14 @@ public class Bill {
 	}
 
 	public void setMonth(String month) {
+		assert month != null : "Bills month is not allowed to be null!";
 		this.month = month;
 	}
-	
+
 	public int getMonthValue() {
 		return monthValue;
 	}
-	
+
 	public void setMonthValue(int monthValue) {
 		this.monthValue = monthValue;
 	}
@@ -101,15 +95,35 @@ public class Bill {
 	}
 
 	public void setAmount(BigDecimal amount) {
+		assert amount != null : "Bills amount is not allowed to be null!";
 		this.amount = amount;
 	}
-	public long getId() {
-		return id;
+
+	public BigDecimal getTotal() {
+		return total;
 	}
-	public void setId(long id) {
-		this.id = id;
+
+	public void setTotal(BigDecimal total) {
+		assert total != null : "Bills total is not allowed to be null!";
+		this.total = total;
 	}
-	
-	
-	
+
+	public BigDecimal getPercentage() {
+		return percentage;
 	}
+
+	public void setPercentage(BigDecimal percentage) {
+		assert percentage != null : "Bills percentage is not allowed to be null!";
+		this.percentage = percentage;
+	}
+
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		assert paymentStatus != null : "Bills paymentStatus is not allowed to be null!";
+		this.paymentStatus = paymentStatus;
+	}
+
+}

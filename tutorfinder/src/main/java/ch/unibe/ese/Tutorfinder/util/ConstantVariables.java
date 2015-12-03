@@ -41,10 +41,15 @@ public class ConstantVariables {
 
 	public static final int DAYS = 7;
 	
-
 	/* Percentage of Wage that is owed to the site*/
 	public static final BigDecimal PERCENTAGE = BigDecimal.valueOf(0.05);
 
+	/* Minimum Revenue */
+	public static final BigDecimal MIN_REVENUE=BigDecimal.valueOf(0.05);
+	
+	/* Minimum for wage, is calculated with the percentage so that this will at least be equals to the MIN_REVENUE */
+	public static final BigDecimal MIN_WAGE = MIN_REVENUE.divide(PERCENTAGE);
+	
 	/* Message constants */
 	public static final String SUBJECT_ERRORMESSAGE = "Please enter a subject!";
 	

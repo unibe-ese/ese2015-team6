@@ -74,6 +74,7 @@ public class Profile {
 	}
 
 	public void setEmail(String email) {
+		assert email != null : "Profiles email is not allowed to be null!";
 		this.email = email;
 	}
 

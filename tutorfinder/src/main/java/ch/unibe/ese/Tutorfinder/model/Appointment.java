@@ -39,10 +39,12 @@ public class Appointment {
 	@GeneratedValue
 	private long id;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="tutor")
 	private User tutor;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="student")
 	private User student;
@@ -91,6 +93,7 @@ public class Appointment {
 	}
 
 	public void setTutor(User tutor) {
+		assert tutor != null : "Appointments tutor is not allowed to be null!";
 		this.tutor = tutor;
 	}
 
@@ -99,6 +102,7 @@ public class Appointment {
 	}
 
 	public void setStudent(User student) {
+		assert student != null : "Appointments student is not allowed to be null!";
 		this.student = student;
 	}
 
@@ -107,6 +111,7 @@ public class Appointment {
 	}
 
 	public void setTimestamp(Timestamp timestamp) {
+		assert timestamp != null : "Appointments timestamp is not allowed to be null!";
 		this.timestamp = timestamp;
 	}
 
@@ -115,6 +120,7 @@ public class Appointment {
 	}
 
 	public void setDay(DayOfWeek day) {
+		assert day != null : "Appointments day is not allowed to be null!";
 		this.day = day;
 	}
 	
@@ -123,6 +129,7 @@ public class Appointment {
 	}
 
 	public void setAvailability(Availability availability) {
+		assert availability != null : "Appointments availability is not allowed to be null!";
 		this.availability = availability;
 	}
 
@@ -131,6 +138,7 @@ public class Appointment {
 	}
 
 	public void setWage(BigDecimal wage) {
+		assert wage != null : "Appointments wage is not allowed to be null!";
 		this.wage = wage;
 	}
 	
