@@ -79,7 +79,7 @@ public class UpdateProfileControllerUnitTests {
 		this.updateProfileForm.setFirstName("testFirstName");
 		this.updateProfileForm.setLastName("testLastName");
 		this.updateProfileForm.setBiography("testBiography");
-		this.updateProfileForm.setId(new Long(1));
+		this.updateProfileForm.setId(Long.valueOf(1));
 		this.updateProfileForm.setRegion("testRegion");
 		this.updateProfileForm.setWage(new BigDecimal(50));
 		

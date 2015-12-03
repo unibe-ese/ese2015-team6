@@ -54,7 +54,7 @@ public class TimetableServiceImplTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks( this );
 		
-		this.updateTimetableForm.setId(new Long(1));
+		this.updateTimetableForm.setId(Long.valueOf(1));
 		for(Boolean[] row : this.timetable) {
 			Arrays.fill(row, false);
 		}

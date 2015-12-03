@@ -138,7 +138,7 @@ public class ProfileServiceImplTest {
 		when(profileDao.findOne(anyLong())).thenReturn(this.mockProfile);
 				
 		//WHEN
-		Profile tmpProfile = profileService.getProfileById(new Long(1));
+		Profile tmpProfile = profileService.getProfileById(Long.valueOf(1));
 				
 		//THEN
 		assertEquals(tmpProfile, this.mockProfile);
@@ -155,7 +155,7 @@ public class ProfileServiceImplTest {
 		when(profileDao.findOne(anyLong())).thenReturn(null);
 				
 		//WHEN
-		profileService.getProfileById(new Long(1));
+		profileService.getProfileById(Long.valueOf(1));
 	}
 	
 	@Test

@@ -117,7 +117,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 			@Override
 			public int compare(AppointmentPlaceholder o1, AppointmentPlaceholder o2) {
-				return Integer.valueOf(o1.getTimeslot()).compareTo(Integer.valueOf(o2.getTimeslot()));
+				return Integer.compare(o1.getTimeslot(), o2.getTimeslot());
+				//return Integer.valueOf(o1.getTimeslot()).compareTo(Integer.valueOf(o2.getTimeslot()));
 			}
 		};
 
