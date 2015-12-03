@@ -140,11 +140,12 @@ public class BillServiceImpl implements BillService {
 	    return new DateFormatSymbols().getMonths()[monthValue-1];
 	}
 
-	@Override
-	public void pay(User User, long billId) {
+	@Override 
+	public void pay(User user, long billId) {
+		assert user != null : "User should not be null";
 		Bill tmpBill = billDao.findById(billId);
 		
-		if(tmpBill != null && tmpBill.getTutor().equals(User)) {
+		if(tmpBill != null && tmpBill.getTutor().equals(user)) {
 			tmpBill.setPaymentStatus(PaymentStatus.PAID);
 			billDao.save(tmpBill);
 		}
