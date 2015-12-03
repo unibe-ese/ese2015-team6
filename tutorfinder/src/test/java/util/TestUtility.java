@@ -4,6 +4,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
+import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
+import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 public class TestUtility {
@@ -20,7 +22,12 @@ public class TestUtility {
 		testUser.setRole(ConstantVariables.TUTOR);
 		testProfile = new Profile(testUser.getEmail());
 		testProfile.setWage(ConstantVariables.MIN_WAGE);
+	}
+	
+	public static void setUp(UserDao userDao, ProfileDao profileDao) {
+		testProfile = profileDao.save(testProfile);
 		testUser.setProfile(testProfile);
+		testUser = userDao.save(testUser);
 	}
 	
 	public static final User TEST_USER = testUser;
