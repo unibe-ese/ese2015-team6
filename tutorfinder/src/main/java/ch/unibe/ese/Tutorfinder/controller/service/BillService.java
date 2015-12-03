@@ -29,6 +29,11 @@ public interface BillService {
 	 */
 	public void updateMonthlyBills();
 
+	/**
+	 * takes the Id of an unpaid {@link Bill} and sets its payment status to true
+	 * @param User must correspond to the user that is saved in the bill, cannot be null
+	 * @param BillId id of the bill that should be paid, cannot be null
+	 */
 	public void pay(User User, long BillId);  
 
 }
