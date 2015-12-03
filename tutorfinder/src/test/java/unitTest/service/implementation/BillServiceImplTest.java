@@ -7,6 +7,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -56,6 +57,9 @@ public class BillServiceImplTest {
 	
 	@Mock
 	User tutor;
+	
+	@Mock
+	User differentTutor;
 	
 	
 	@Before
@@ -130,6 +134,44 @@ public class BillServiceImplTest {
 		
 	}
 	
+	@Test
+	public void payTest() {
+		//GIVEN
+		when(billDao.findById(1)).thenReturn(mockBill);
+		when(mockBill.getTutor()).thenReturn(tutor);
+		
+		//WHEN
+		billServiceImpl.pay(tutor, 1);
+		
+		//THEN
+		verify(mockBill, times(1)).setPaymentStatus(PaymentStatus.PAID);
+	}
+	
+	@Test
+	public void payTestUsersDoNotCorrespond() {
+		//Given
+		when(billDao.findById(1)).thenReturn(mockBill);
+		when(mockBill.getTutor()).thenReturn(differentTutor);
+		
+		//WHEN
+		billServiceImpl.pay(tutor, 1);
+		
+		//THEN
+		verify(mockBill, never()).setPaymentStatus(any(PaymentStatus.class));		
+	}
+	
+	@Test
+	public void payTestDBReturnsNull() {
+		//Given
+		when(billDao.findById(1)).thenReturn(null);
+		
+		//WHEN
+		billServiceImpl.pay(tutor, 1);
+		
+		//THEN
+		verify(billDao, never()).save(any(Bill.class));
+	}
+	
 	@Test(expected=AssertionError.class)
 	public void getBillForCurrentMonthNullTest() {
 		billServiceImpl.getBillForCurrentMonth(null);
@@ -138,6 +180,11 @@ public class BillServiceImplTest {
 	@Test(expected=AssertionError.class)
 	public void getBillsNullTest() {
 		billServiceImpl.getBills(null, PaymentStatus.UNPAID);
+	}
+	
+	@Test(expected=AssertionError.class)
+	public void payUserisNullTest() {
+		billServiceImpl.pay(null, 0L);
 	}
 
 }

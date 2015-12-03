@@ -32,8 +32,8 @@ public interface BillService {
 	/**
 	 * takes the Id of an unpaid {@link Bill} and sets its payment status to true
 	 * @param User must correspond to the user that is saved in the bill, cannot be null
-	 * @param BillId id of the bill that should be paid, cannot be null
+	 * @param BillId id of the bill that should be paid
 	 */
-	public void pay(User User, long BillId);  
+	public void pay(User user, long BillId);  
 
 }
