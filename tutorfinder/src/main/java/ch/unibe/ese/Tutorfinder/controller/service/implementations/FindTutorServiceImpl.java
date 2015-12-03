@@ -81,8 +81,8 @@ public class FindTutorServiceImpl implements FindTutorService {
 					if (rating2 == null) rating2 = BigDecimal.ZERO;
 					int compared = rating1.compareTo(rating2);
 					if (compared == 0) {
-						Long nr1 = new Long(profile1.getCountedRatings());
-						Long nr2 = new Long(profile2.getCountedRatings());
+						Long nr1 = Long.valueOf((profile1.getCountedRatings()));
+						Long nr2 = Long.valueOf((profile2.getCountedRatings()));
 						compared = nr1.compareTo(nr2);
 						if (compared == 0) compared = fallback(o1,o2);
 					}

@@ -34,10 +34,12 @@ public class Message {
 	@Column(name = "timestamp")
 	private Timestamp timestamp;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "sender")
 	private User sender;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "receiver")
 	private User receiver;
@@ -49,6 +51,7 @@ public class Message {
 	@Lob
 	private String message;
 
+	@NotNull
 	private boolean isRead = false;
 
 	/* Getters and Setters */
@@ -56,7 +59,7 @@ public class Message {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -65,6 +68,7 @@ public class Message {
 	}
 
 	public void setTimestamp(Timestamp timestamp) {
+		assert timestamp != null : "Messages timestamp is not allowed to be null!";
 		this.timestamp = timestamp;
 	}
 
@@ -73,6 +77,7 @@ public class Message {
 	}
 
 	public void setSender(User sender) {
+		assert sender != null : "Messages sender is not allowed to be null!";
 		this.sender = sender;
 	}
 
@@ -81,6 +86,7 @@ public class Message {
 	}
 
 	public void setReceiver(User receiver) {
+		assert receiver != null : "Messages receiver is not allowed to be null!";
 		this.receiver = receiver;
 	}
 
@@ -89,6 +95,7 @@ public class Message {
 	}
 
 	public void setSubject(String subject) {
+		assert subject != null : "Messages subject is not allowed to be null!";
 		this.subject = subject;
 	}
 
@@ -97,6 +104,7 @@ public class Message {
 	}
 
 	public void setMessage(String message) {
+		assert message != null : "Messages message is not allowed to be null!";
 		this.message = message;
 	}
 

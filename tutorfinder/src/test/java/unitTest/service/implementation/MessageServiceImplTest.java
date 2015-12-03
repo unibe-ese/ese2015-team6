@@ -63,7 +63,7 @@ public class MessageServiceImplTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks( this );
 		
-		this.mockMessage.setId(new Long(1));
+		this.mockMessage.setId(Long.valueOf(1));
 		this.mockMessage.setIsRead(false);
 		this.mockMessage.setMessage("This is a Message");
 		this.mockMessage.setReceiver(this.mockUser);
@@ -74,7 +74,7 @@ public class MessageServiceImplTest {
 		this.messageForm.setMessage("This is a Message");
 		this.messageForm.setSubject("This is a Subject");
 		this.messageForm.setReceiver(this.mockUser);
-		this.messageForm.setReceiverId(new Long(1));
+		this.messageForm.setReceiverId(Long.valueOf(1));
 
 		this.messageList.add(this.mockMessage);
 		
@@ -128,7 +128,7 @@ public class MessageServiceImplTest {
 		when(mockMessage.getReceiver()).thenReturn(this.mockUser);
 		when(messageDao.save(mockMessage)).thenReturn(this.mockMessage);
 		
-		Message tmpMessage = messageService.markMessageAsRead(new Long(1), this.mockUser);
+		Message tmpMessage = messageService.markMessageAsRead(Long.valueOf(1), this.mockUser);
 		
 		verify(mockMessage).setIsRead(true);
 		verify(messageDao).save(eq(mockMessage));
@@ -140,7 +140,7 @@ public class MessageServiceImplTest {
 		when(messageDao.findOne(anyLong())).thenReturn(this.mockMessage);
 		when(mockMessage.getReceiver()).thenReturn(this.mockUser);
 		
-		Message tmpMessage = messageService.markMessageAsRead(new Long(1), this.mockSender);
+		Message tmpMessage = messageService.markMessageAsRead(Long.valueOf(1), this.mockSender);
 		
 		assertEquals(this.mockMessage, tmpMessage);
 	}
@@ -149,12 +149,12 @@ public class MessageServiceImplTest {
 	public void testMarkMessageAsReadWhenNoMessageExist() {
 		when(messageDao.findOne(anyLong())).thenReturn(null);
 		
-		messageService.markMessageAsRead(new Long(1), this.mockUser);
+		messageService.markMessageAsRead(Long.valueOf(1), this.mockUser);
 	}
 	
 	@Test(expected=AssertionError.class)
 	public void testMarkMessageAsReadWhenNullUser() {
-		messageService.markMessageAsRead(new Long(1), null);
+		messageService.markMessageAsRead(Long.valueOf(1), null);
 	}
 	
 	@Test(expected=AssertionError.class)
@@ -199,7 +199,7 @@ public class MessageServiceImplTest {
 	public void testGetMessageById() {
 		when(messageDao.findOne(anyLong())).thenReturn(this.mockMessage);
 		
-		Message tmpMessage = messageService.getMessageById(new Long(1));
+		Message tmpMessage = messageService.getMessageById(Long.valueOf(1));
 		
 		assertEquals(this.mockMessage, tmpMessage);
 	}

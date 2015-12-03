@@ -78,7 +78,7 @@ public class MessagesControllerUnitTests {
 	public void setUp() {
 		MockitoAnnotations.initMocks( this );
 		
-		this.mockMessage.setId(new Long(1));
+		this.mockMessage.setId(Long.valueOf(1));
 		this.mockMessage.setIsRead(false);
 		this.mockMessage.setMessage("This is a Message");
 		this.mockMessage.setReceiver(this.mockUser);
@@ -90,7 +90,7 @@ public class MessagesControllerUnitTests {
 		this.messageForm.setMessage("This is a Message");
 		this.messageForm.setSubject("This is a Subject");
 		this.messageForm.setReceiver(this.mockUser);
-		this.messageForm.setReceiverId(new Long(1));
+		this.messageForm.setReceiverId(Long.valueOf(1));
 
 		messageList = new ArrayList<Message>();
 		this.messageList.add(this.mockMessage);
@@ -152,12 +152,12 @@ public class MessagesControllerUnitTests {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockMessageService.getMessageByBox(eq(ConstantVariables.UNREAD), eq(mockUser))).thenReturn(this.messageList);
 		when(mockMessage.getReceiver()).thenReturn(this.mockOtherUser);
-		when(mockMessage.getId()).thenReturn(new Long(0));
+		when(mockMessage.getId()).thenReturn(Long.valueOf(0));
 		
-		ModelAndView gotMav = controller.messages(mockAuthUser, ConstantVariables.UNREAD, new Long(0));
+		ModelAndView gotMav = controller.messages(mockAuthUser, ConstantVariables.UNREAD, Long.valueOf(0));
 
 		verify(mockMessageService).getMessageByBox(eq(ConstantVariables.UNREAD), eq(this.mockUser));
-		verify(mockMessageService).markMessageAsRead(new Long(0), this.mockUser);
+		verify(mockMessageService).markMessageAsRead(Long.valueOf(0), this.mockUser);
 		assertEquals("messagesOverview", gotMav.getViewName());
 		assertTrue(gotMav.getModel().containsKey("messageList"));
 		assertTrue(gotMav.getModel().containsKey("authUser"));
@@ -168,9 +168,9 @@ public class MessagesControllerUnitTests {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockMessageService.getMessageByBox(eq(ConstantVariables.UNREAD), eq(mockUser))).thenReturn(this.messageList);
 		when(mockMessage.getReceiver()).thenReturn(this.mockUser);
-		when(mockMessage.getId()).thenReturn(new Long(0));
+		when(mockMessage.getId()).thenReturn(Long.valueOf(0));
 		
-		ModelAndView gotMav = controller.messages(mockAuthUser, ConstantVariables.UNREAD, new Long(0));
+		ModelAndView gotMav = controller.messages(mockAuthUser, ConstantVariables.UNREAD, Long.valueOf(0));
 
 		verify(mockMessageService).getMessageByBox(eq(ConstantVariables.UNREAD), eq(this.mockUser));
 		assertEquals("messagesOverview", gotMav.getViewName());
@@ -183,7 +183,7 @@ public class MessagesControllerUnitTests {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockUserService.getUserById(anyLong())).thenReturn(this.mockOtherUser);
 		when(mockReq.getParameter(anyString())).thenReturn("0");
-		when(mockUser.getId()).thenReturn(new Long(1));
+		when(mockUser.getId()).thenReturn(Long.valueOf(1));
 		
 		ModelAndView gotMav = controller.newMessage(this.mockAuthUser, this.mockReq);
 		
@@ -196,7 +196,7 @@ public class MessagesControllerUnitTests {
 		when(mockUserService.getUserByPrincipal(mockAuthUser)).thenReturn(this.mockUser);
 		when(mockUserService.getUserById(anyLong())).thenReturn(this.mockOtherUser);
 		when(mockReq.getParameter(anyString())).thenReturn("0");
-		when(mockUser.getId()).thenReturn(new Long(0));
+		when(mockUser.getId()).thenReturn(Long.valueOf(0));
 		
 		ModelAndView gotMav = controller.newMessage(this.mockAuthUser, this.mockReq);
 		

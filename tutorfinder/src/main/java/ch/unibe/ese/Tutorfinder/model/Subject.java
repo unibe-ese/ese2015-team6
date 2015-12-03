@@ -28,6 +28,7 @@ public class Subject {
 	@GeneratedValue
 	private long id;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="user")
 	private User user;
@@ -58,6 +59,7 @@ public class Subject {
 	}
 
 	public void setUser(User user) {
+		assert user != null : "Subjects user is not allowed to be null!";
 		this.user = user;
 	}
 
@@ -66,6 +68,7 @@ public class Subject {
 	}
 
 	public void setName(String name) {
+		assert name != null : "Subjects name is not allowed to be null!";
 		this.name = name;
 	}
 

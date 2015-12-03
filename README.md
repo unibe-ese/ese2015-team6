@@ -25,13 +25,15 @@ https://www.fluidui.com/editor/live/preview/p_11b002272439085d2f39b9f67bd5014e.1
 [3]: http://www.tutorialspoint.com/maven/maven_environment_setup.htm
 
 ## Sample Data:
-Import the _tutorfinderdb_.sql file from the Sample Data folder into you database and you will 
+Import the tutorfinderdb.sql file from the Sample Data folder into you database and you will 
 have the follow profiles as demo.
 
 * ##### Email / Password / Role
-  * ese@example.ch / software / Tutor
-  * student@example.ch / software / Student
-  * tutor@example.ch / software / Tutor
+  * ese@example.ch / 123456789 / Tutor
+  * student@example.ch / 123456789 / Student
+  * tutor@example.ch / 123456789 / Tutor
+  * julia@example.ch / 123456789 / Tutor
+  * sofia@example.ch / 123456789 / Tutor
 
 * #####  Available Subjects:
   * ESE
@@ -39,3 +41,6 @@ have the follow profiles as demo.
   * Programming 2
   * Management
   * Lineare Algebra
+  * Analysis
+  * Human-Computer-Interface
+  * Computernetwork

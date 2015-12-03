@@ -1,7 +1,5 @@
 package ch.unibe.ese.Tutorfinder.controller.service.implementations;
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,7 +55,7 @@ public class RegisterServiceImpl implements RegisterService {
 		}
 		//adds an profile to the tutor connected by email
 		Profile profile = new Profile(user.getEmail());
-		profile.setWage(BigDecimal.ZERO);
+		profile.setWage(ConstantVariables.MIN_WAGE);
 		user.setProfile(profile);
 
 		user = userDao.save(user); // save object to DB

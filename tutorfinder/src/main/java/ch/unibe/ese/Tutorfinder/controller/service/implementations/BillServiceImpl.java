@@ -51,7 +51,9 @@ public class BillServiceImpl implements BillService {
 		LocalDate tmpDate = LocalDate.now();
 		List<Appointment> tmpList = appointmentService.getAppointmentsForMonthAndYear(user, Availability.ARRANGED,
 										tmpDate.getMonthValue(), tmpDate.getYear());
-		return totalWage(tmpList).multiply(ConstantVariables.PERCENTAGE);
+		BigDecimal result =  totalWage(tmpList).multiply(ConstantVariables.PERCENTAGE);
+		result = result.setScale(2);
+		return result;
 	}
 
 	/**
