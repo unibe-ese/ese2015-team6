@@ -18,16 +18,20 @@
 							<li><a th:href="@{/appointments}" href="appointmentsOverview.html">Appointments</a></li>
 							<li><a th:href="@{/messages}" href="messagesOverview.html">Messages</a></li>
 							<li><a th:href="@{/bill}" href="bill.html">Bill</a></li>
-							<li class="logout"><a th:href="@{/logout}" href="login.html">Logout</a></li>
+							<li class="logout"><a onclick="doLogout()" href="javascript:void(0)">Logout</a></li>
 						</ul>
 					</div>
 				</li>
 			</ul>
 		</nav>
+		<form style="display:none;" th:action="@{/logout}" method="post">
+			<input type="submit" id="logout"/>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</form>
 		<script type="text/javascript">
-		$(window).load(function() {
-  			$("header").removeClass("preload");
-		});
+			function doLogout() {
+				document.getElementById('logout').click();
+			}
 		</script>
 	</div>
 	

@@ -81,14 +81,6 @@ public class LoginControllerUnitTests {
 		assertFalse(got.isEmpty());
 		assertEquals("redirect:/login?register", got);
 	}
-	
-	@Test
-	public void testLogoutWithoutAuthentication() {
-		String got = controller.logoutPage(mockRequest, mockResponse);
-		
-		assertFalse(got.isEmpty());
-		assertEquals("redirect:/login?logout", got);
-	}
 
 	@Test
 	public void testCreate() {
@@ -121,14 +113,6 @@ public class LoginControllerUnitTests {
 	}
 	
 	@Test
-	public void testLogin() {
-		ModelAndView got = controller.login(null, null, null, null, null);
-		
-		assertEquals("login", got.getViewName());
-		assertTrue(got.getModel().containsKey("loginUrl"));
-	}
-	
-	@Test
 	public void testLoginWithAuthUser() {
 		ModelAndView got = controller.login(this.mockPrincipal, null, null, null, null);
 		
@@ -140,32 +124,6 @@ public class LoginControllerUnitTests {
 		
 		assertEquals("login", got.getViewName());
 		assertTrue(got.getModel().containsKey("msg"));
-	}
-	
-	@Test
-	public void testLoginParamError() {
-		ModelAndView got = controller.login(null,"error", null, null, null);
-		
-		assertEquals("login", got.getViewName());
-		assertTrue(got.getModel().containsKey("loginUrl"));
-		assertTrue(got.getModel().containsKey("error"));
-	}
-	
-	@Test
-	public void testLoginParamLogout() {
-		ModelAndView got = controller.login(null, null, "logout", null, null);
-		
-		assertEquals("login", got.getViewName());
-		assertTrue(got.getModel().containsKey("loginUrl"));
-		assertTrue(got.getModel().containsKey("msg"));
-	}
-	
-	@Test
-	public void testLoginParamRegister() {
-		ModelAndView got = controller.login(null, null, null, "register", null);
-		
-		assertEquals("login", got.getViewName());
-		assertTrue(got.getModel().containsKey("loginUrl"));
 	}
 	
 }

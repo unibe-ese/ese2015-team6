@@ -40,7 +40,7 @@
 
 				<div id="loginBox">
 
-					<form th:name='loginForm' th:action="${loginUrl}" method="post">
+					<form th:action="${null}" method="post">
 						<fieldset>
 							<div th:text="${msg}">You have been logged out</div>
 							<div class="error" th:if="${error != null}" th:text="${error}">Invalid
@@ -55,10 +55,10 @@
 							</p>
 
 							<p>
-								<input id="loginButton" name="submit" type="submit"
+								<input type="submit"
 									value="Login" />
 
-								<button id="registerButton" type="button"
+								<button type="button"
 									onClick="showRegisterBox()">Register</button>
 							</p>
 

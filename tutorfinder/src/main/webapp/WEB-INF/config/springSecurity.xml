@@ -8,6 +8,7 @@
 
 	<!-- Whitelist for not secured content -->
 	<http pattern="/" security="none" />
+	<http pattern="/home" security="none" />
 	<http pattern="/img/bg/**" security="none" />
 	<http pattern="/css/**" security="none" />
 	<http pattern="/register" security="none" />
@@ -20,7 +21,6 @@
 
 		<!-- URLs to intercept for access -->
 		<intercept-url pattern="/login" access="permitAll" />
-		<intercept-url pattern="/home" access="permitAll" />
 		<intercept-url pattern="/timetable" access="hasAnyRole('ROLE_TUTOR')" />
 		<intercept-url pattern="/timetable" access="hasAnyRole('ROLE_TUTOR')" />
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_STUDENT','ROLE_TUTOR')" />
@@ -30,8 +30,7 @@
 			authentication-failure-url="/login?error" 
 			username-parameter="email"
 			password-parameter="password" />
-		<logout logout-url="/logout" 
-			logout-success-url="/login?logout"
+		<logout logout-url="/logout"
 			invalidate-session="true"/>
 		<!-- enable csrf protection -->
 		<csrf />

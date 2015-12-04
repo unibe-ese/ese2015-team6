@@ -2,14 +2,9 @@ package ch.unibe.ese.Tutorfinder.controller;
 
 import java.security.Principal;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -110,7 +105,6 @@ public class LoginController {
 		if (success != null) {
 			model.addObject("msg", "Registration complete. Please login below");
 		}
-		model.addObject("loginUrl", "/login");
 		
 		return model;
 	}
@@ -143,23 +137,5 @@ public class LoginController {
     	redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.signupForm", result);
     	redirectAttributes.addFlashAttribute("signupForm", signupForm);
     	return "redirect:/login?register";
-    	
     }
-    
-    
-    /**
-	 * Handles logout of the user by invalidating his session.
-	 * 
-	 * @param request
-	 * @param response
-	 * @return redirection to login screen
-	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		return "redirect:/login?logout";
-	}
 }
