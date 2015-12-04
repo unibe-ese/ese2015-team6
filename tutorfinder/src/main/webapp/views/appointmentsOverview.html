@@ -43,7 +43,8 @@
 				${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
 				${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)}, Tutor:|">
 							2015-11-16 17:00:00 Monday, Tutor: <br />
-						</span> <a th:href="@{'/showProfile'(userId=${appointment.tutor.id})}">
+						</span> <a th:href="@{'/showProfile'(userId=${appointment.tutor.id},
+								date=${appointment.timestamp.toLocalDateTime().toLocalDate().format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE)})}">
 							<span
 							th:text="|${appointment.tutor.firstName} ${appointment.tutor.lastName}|">Max
 								Muster</span>
@@ -87,7 +88,8 @@
 				${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
 				${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)}, Tutor:|">
 							2015-11-16 17:00:00 Monday, Tutor: </span> <a
-							th:href="@{'/showProfile'(userId=${appointment.tutor.id})}">
+							th:href="@{'/showProfile'(userId=${appointment.tutor.id},
+								date=${appointment.timestamp.toLocalDateTime().toLocalDate().format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE)})}">
 							<span
 							th:text="|${appointment.tutor.firstName} ${appointment.tutor.lastName}|">Max
 								Muster</span>
@@ -109,7 +111,7 @@
 					${appointment.timestamp.toLocalDateTime().toLocalTime()} - 
 					${appointment.timestamp.toLocalDateTime().toLocalTime().plusHours(1)}, Tutor:|">
 								2015-11-16 17:00:00 Monday, Tutor: </span> <a
-								th:href="@{'/showProfile'(userId=${appointment.student.id})}">
+								th:href="@{'/showProfile'(userId=${appointment.tutor.id})}">
 								<span
 								th:text="|${appointment.tutor.firstName} ${appointment.tutor.lastName}|">Max
 									Muster</span>
