@@ -107,12 +107,12 @@ public class Appointment {
 	}
 
 	public Timestamp getTimestamp() {
-		return timestamp;
+		return new Timestamp(this.timestamp.getTime());
 	}
 
 	public void setTimestamp(Timestamp timestamp) {
 		assert timestamp != null : "Appointments timestamp is not allowed to be null!";
-		this.timestamp = timestamp;
+		this.timestamp = new Timestamp(timestamp.getTime());
 	}
 
 	public DayOfWeek getDay() {
