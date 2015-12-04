@@ -64,12 +64,12 @@ public class Message {
 	}
 
 	public Timestamp getTimestamp() {
-		return timestamp;
+		return new Timestamp(timestamp.getTime());
 	}
 
 	public void setTimestamp(Timestamp timestamp) {
 		assert timestamp != null : "Messages timestamp is not allowed to be null!";
-		this.timestamp = timestamp;
+		this.timestamp = new Timestamp(timestamp.getTime());
 	}
 
 	public User getSender() {
