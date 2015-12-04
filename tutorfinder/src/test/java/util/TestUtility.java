@@ -16,6 +16,9 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 public class TestUtility {
+	public static final String FIRST_USER_USERNAME="user@provider.tld";
+	public static final String SECOND_USER_USERNAME="userTwo@provider.tld";
+	
 	public static User testUser;
 	public static User testUserTwo;
 	public static Profile testProfile;
@@ -26,7 +29,7 @@ public class TestUtility {
 		
 		/* Test user number one */
 		testUser = new User();
-		testUser.setEmail("user@provider.tld");
+		testUser.setEmail(FIRST_USER_USERNAME);
 		testUser.setPassword(encoder.encode("password"));
 		testUser.setFirstName("FirstName");
 		testUser.setLastName("LastName");
@@ -36,7 +39,7 @@ public class TestUtility {
 		
 		/* Test user number two */
 		testUserTwo = new User();
-		testUserTwo.setEmail("userTwo@provider.tld");
+		testUserTwo.setEmail(SECOND_USER_USERNAME);
 		testUserTwo.setPassword(encoder.encode("password"));
 		testUserTwo.setFirstName("FirstNameTwo");
 		testUserTwo.setLastName("LastNameTwo");

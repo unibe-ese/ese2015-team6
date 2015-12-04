@@ -54,7 +54,7 @@ public class LoginControllerTest {
     }
     
 	@Before 
-	public void setup() {
+	public void setUp() {
 		this.mockMvc = MockMvcBuilders
 				.webAppContextSetup(this.wac)
 				.apply(springSecurity())
@@ -63,7 +63,7 @@ public class LoginControllerTest {
 	} 
 
 	@Test
-	public void ValidSignUpTest() throws Exception {
+	public void validSignUpTest() throws Exception {
 		this.mockMvc.perform(post("/create").param("email", "test@test.test")
 			.param("firstName", "test")
 			.param("lastName", "test")
@@ -75,7 +75,7 @@ public class LoginControllerTest {
 		}
 	
 	@Test
-	public void InvalidEmail() throws AssertionError, java.lang.Exception {
+	public void invalidEmail() throws AssertionError, java.lang.Exception {
 		this.mockMvc.perform(post("/create").param("email", "invalidEmail")
 			.param("firstName", "test")
 			.param("lastName", "test")
@@ -88,7 +88,7 @@ public class LoginControllerTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void NullFirstName() throws Exception {
+	public void nullFirstName() throws Exception {
 		this.mockMvc.perform(post("/create").param("email", "test@test.test")
 			.param(null, "test")
 			.param("lastName", "test")
@@ -99,7 +99,7 @@ public class LoginControllerTest {
 	}
 	
 	@Test
-	public void RegisterMapping() throws Exception {
+	public void registerMapping() throws Exception {
 		this.mockMvc.perform(get("/register"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("/login?register"));

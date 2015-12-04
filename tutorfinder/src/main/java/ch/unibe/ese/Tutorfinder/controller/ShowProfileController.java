@@ -84,7 +84,7 @@ public class ShowProfileController {
 			appForm.setDate(date);
 			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
 		} else if (userId != null) {
-			model = new ModelAndView("redirect:showProfile?userId=" + userId + "&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+			model = new ModelAndView("forward:showProfile?userId=" + userId + "&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE));
 			return model; //TODO Test that flashAttributes persist over this redirection
 		}
 
