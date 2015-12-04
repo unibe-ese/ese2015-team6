@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,9 +76,6 @@ public class ShowProfileController {
 			@RequestParam(value = "date", required = false) LocalDate date, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("showProfile");
 
-		if (userId == null) {
-			userId = userService.getUserByPrincipal(authUser).getId();
-		}
 		MakeAppointmentsForm appForm = new MakeAppointmentsForm();
 		if (date != null) {
 			User user = userService.getUserById(userId);
@@ -85,8 +83,14 @@ public class ShowProfileController {
 			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
 			appForm.setDate(date);
 			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
+		} else if (userId != null) {
+			model = new ModelAndView("redirect:showProfile?userId=" + userId + "&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+			return model; //TODO Test that flashAttributes persist over this redirection
 		}
 
+		if (userId == null) {
+			userId = userService.getUserByPrincipal(authUser).getId();
+		}
 		model = prepareService.prepareModelByUserId(authUser, userId, model);
 		model.addObject("makeAppointmentsForm", appForm);
 		model.addAllObjects(redirectAttributes.getFlashAttributes());
