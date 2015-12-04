@@ -3,7 +3,6 @@ package unitTest.service.implementation;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -170,19 +169,23 @@ public class MessageServiceImplTest {
 	@Test
 	public void testSaveFrom() {
 		this.messageService = new MessageServiceImpl(this.messageDao, this.mockUserService);
-		//FIXME the second mockUserService is overwritten by the first
+
 		when(messageDao.save(any(Message.class))).thenReturn(this.mockMessage);
 		when(mockUserService.getUserById(anyLong())).thenReturn(this.mockUser);
 		when(mockUserService.getUserByPrincipal(eq(MockPrincipal))).thenReturn(this.mockSender);
 		
 		Message tmpMessage = messageService.saveFrom(this.messageForm, this.MockPrincipal);
 		
-		verify(mockMessage).setReceiver(this.mockUser);
-		verify(mockMessage).setSender(this.mockUser);
-		verify(mockMessage).setTimestamp(any(Timestamp.class));
-		verify(mockMessage).setMessage(anyString());
-		verify(mockMessage).setSubject(anyString());
+		Message verifyMessage = new Message();
+		verifyMessage.setMessage(this.messageForm.getMessage());
+		verifyMessage.setSubject(this.messageForm.getSubject());
+		verifyMessage.setReceiver(this.mockUser);
+		verifyMessage.setSender(this.mockSender);
+		verifyMessage.setTimestamp(new Timestamp((new Date()).getTime()));
+		
+		verify(messageDao).save(verifyMessage);
 		assertEquals(this.mockMessage, tmpMessage);
+		
 	}
 	
 	@Test(expected=AssertionError.class)
@@ -193,20 +196,6 @@ public class MessageServiceImplTest {
 	@Test(expected=AssertionError.class)
 	public void testSaveFromWhenPrincipalIsNull() {
 		messageService.saveFrom(this.messageForm, null);
-	}
-	
-	@Test
-	public void testGetMessageById() {
-		when(messageDao.findOne(anyLong())).thenReturn(this.mockMessage);
-		
-		Message tmpMessage = messageService.getMessageById(Long.valueOf(1));
-		
-		assertEquals(this.mockMessage, tmpMessage);
-	}
-	
-	@Test(expected=AssertionError.class)
-	public void testGetMessageByNullId() {
-		messageService.getMessageById(null);
 	}
 	
 }

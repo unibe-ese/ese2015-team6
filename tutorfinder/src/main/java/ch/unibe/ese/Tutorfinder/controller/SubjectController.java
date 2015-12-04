@@ -114,7 +114,7 @@ public class SubjectController {
 	 * @param binder
 	 */
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	private void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 }

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidTimetableException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
+import ch.unibe.ese.Tutorfinder.model.Timetable;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -47,13 +47,8 @@ public class TimetableController {
 			Principal authUser, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("redirect:/editProfile");
 		if (!result.hasErrors()) {
-			try {
-				timetableService.saveFrom(updateTimetableForm, authUser);
-				redirectAttributes.addFlashAttribute("timetable_msg", "Your availability has been updated");
-			} catch (InvalidTimetableException e) {
-				result.reject("error", e.getMessage());
-				redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateTimetableForm", result);
-			}
+			timetableService.saveFrom(updateTimetableForm, authUser);
+			redirectAttributes.addFlashAttribute("timetable_msg", "Your availability has been updated");
 		}
 		redirectAttributes.addFlashAttribute("updateTimetableForm", updateTimetableForm);
 		return model;

@@ -29,9 +29,9 @@ import ch.unibe.ese.Tutorfinder.model.User;
 public class PictureController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	PrepareFormService prepareFormService;
+	private PrepareFormService prepareFormService;
 	
 	/**
 	 * Upload single file using Spring Controller

@@ -1,6 +1,6 @@
 package unitTest.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.AdditionalAnswers.returnsSecondArg;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -30,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.unibe.ese.Tutorfinder.controller.UpdateProfileController;
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidProfileException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.PasswordConfirmationForm;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateProfileForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
@@ -122,21 +121,6 @@ public class UpdateProfileControllerUnitTests {
 				this.mockBindingResult, this.mockRedirectAttributes);
 		
 		verify(mockRedirectAttributes).addFlashAttribute(eq("updateProfileForm"), eq(this.updateProfileForm));
-	}
-	
-	@Test
-	public void testUpdateWhenThrowInvalidProfileException() {
-		when(mockUserService.getUserByPrincipal(eq(mockAuthUser))).thenReturn(this.mockUser);
-		when(mockProfileService.saveFrom(any(UpdateProfileForm.class), eq(mockUser))).thenThrow(new InvalidProfileException("TestException"));
-		when(mockPrepareFormService.prepareForm(eq(mockAuthUser), any(ModelAndView.class))).then(returnsSecondArg());
-		when(mockBindingResult.hasErrors()).thenReturn(false);
-		
-		controller.update(this.mockAuthUser, this.updateProfileForm, 
-				this.mockBindingResult, this.mockRedirectAttributes);
-		
-		verify(mockProfileService).saveFrom(eq(this.updateProfileForm), eq(mockUser));
-		verify(mockRedirectAttributes).addFlashAttribute(eq("page_error"), any(String.class));
-		verify(mockRedirectAttributes).addFlashAttribute(eq("updateProfileForm"), any(Object.class));
 	}
 	
 	@Test

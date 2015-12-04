@@ -14,7 +14,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
 	
 	public UserServiceImpl() {
 	}
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	public User getUserById(Long id) {
 		assert(id != null);
 		
-		User tmpUser = userDao.findById(id);
+		User tmpUser = userDao.findOne(id);
 		assert(tmpUser != null);
 		
 		return tmpUser;

@@ -19,9 +19,9 @@ import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 public class FindTutorFilterForm {
 	
 	@NotNull
-	SortCriteria criteria;
+	private SortCriteria criteria;
 	@NotNull
-	SortOrder order;
+	private SortOrder order;
 	
 	public FindTutorFilterForm() {
 		criteria=SortCriteria.RATING;

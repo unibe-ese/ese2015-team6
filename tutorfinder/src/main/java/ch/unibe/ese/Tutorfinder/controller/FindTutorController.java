@@ -35,7 +35,6 @@ public class FindTutorController {
 	private FindTutorService findTutorService;
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private FindTutorFilterForm filterForm;
 

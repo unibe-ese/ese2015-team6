@@ -18,6 +18,7 @@ public class AppointmentPlaceholder {
 	private DayOfWeek dow;
 	private int timeslot; 
 	
+	/* Constructors */
 	public AppointmentPlaceholder() {
 		availability = Availability.UNAVAILABLE;
 	}

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidEmailException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.SignupForm;
 import ch.unibe.ese.Tutorfinder.controller.service.RegisterService;
-import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
+import ch.unibe.ese.Tutorfinder.model.User;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -30,9 +30,7 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 public class LoginController {
 
 	@Autowired
-	RegisterService registerService;
-	@Autowired	
-	UserDao userDao;
+	private RegisterService registerService;
 	
 	/**
 	 * Constructor for testing purposes

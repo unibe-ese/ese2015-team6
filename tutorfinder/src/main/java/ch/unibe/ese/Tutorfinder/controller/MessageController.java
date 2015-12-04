@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ch.unibe.ese.Tutorfinder.controller.exceptions.InvalidMessageException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MessageForm;
 import ch.unibe.ese.Tutorfinder.controller.service.MessageService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
@@ -30,9 +29,9 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class MessageController {
 
 	@Autowired
-	MessageService messageService;
+	private MessageService messageService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	/**
 	 * Constructor for testing purposes
@@ -86,7 +85,7 @@ public class MessageController {
 		if (show != null) {
 			if (show < tmpMessageList.size()) {
 				Message tmpMessage = tmpMessageList.get(show.intValue());
-				if (tmpUser != tmpMessage.getReceiver()) {
+				if (tmpUser.equals(tmpMessage.getReceiver())) {
 					tmpMessage = messageService.markMessageAsRead(tmpMessage.getId(), tmpUser);
 					tmpMessageList.set(show.intValue(), tmpMessage);
 				}
@@ -130,7 +129,7 @@ public class MessageController {
 			model = new ModelAndView("newMessage");
 			model.addObject("messageForm", messageForm);
 		} else {
-			model = new ModelAndView("findTutor");
+			model = new ModelAndView("redirect:findTutor");
 		}
 
 		return model;
@@ -153,23 +152,14 @@ public class MessageController {
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model;
 		if (!result.hasErrors()) {
-			try {
-				messageService.saveFrom(messageForm, authUser);
-				model = new ModelAndView("redirect:messages?view=" + ConstantVariables.OUTBOX + "&show=0");
-
-			} catch (InvalidMessageException e) {
-				model = new ModelAndView("newMessage");
-				model.addObject("messageForm", messageForm);
-				model.addObject("authUser", userService.getUserByPrincipal(authUser));
-				model.addObject("page_error", e.getMessage());
-				// TODO show error message
-			}
+			messageService.saveFrom(messageForm, authUser);
+			model = new ModelAndView("redirect:messages?view=" + ConstantVariables.OUTBOX + "&show=0");
 		} else {
 			model = new ModelAndView("newMessage");
 
 			User tmpUser = userService.getUserByPrincipal(authUser);
 			model.addObject("authUser", tmpUser);
-
+			messageForm.setReceiver(userService.getUserById(messageForm.getReceiverId()));
 			model.addObject("messageForm", messageForm);
 		}
 
@@ -182,7 +172,7 @@ public class MessageController {
 	 * @param binder
 	 */
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	private void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 

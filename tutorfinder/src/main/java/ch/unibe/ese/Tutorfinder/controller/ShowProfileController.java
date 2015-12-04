@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,10 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
-import ch.unibe.ese.Tutorfinder.controller.service.ProfileService;
-import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
 import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
+import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 
@@ -38,41 +38,31 @@ import ch.unibe.ese.Tutorfinder.model.User;
 public class ShowProfileController {
 
 	@Autowired
-	AppointmentService appointmentService;
+	private AppointmentService appointmentService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	ProfileService profileService;
+	private TimetableService timetableService;
 	@Autowired
-	TimetableService timetableService;
-	@Autowired
-	SubjectService subjectService;
-	@Autowired
-	PrepareFormService prepareService;
+	private PrepareFormService prepareService;
 
 	/**
 	 * Constructor for testing purposes
 	 * 
 	 * @param appointmentService
 	 * @param userService
-	 * @param profileService
 	 * @param timetableService
-	 * @param subjectService
 	 * @param prepareService
 	 */
 	@Autowired
 	public ShowProfileController(AppointmentService appointmentService, UserService userService,
-			ProfileService profileService, TimetableService timetableService, SubjectService subjectService,
-			PrepareFormService prepareService) {
+			TimetableService timetableService, PrepareFormService prepareService) {
 		this.appointmentService = appointmentService;
 		this.userService = userService;
-		this.profileService = profileService;
 		this.timetableService = timetableService;
-		this.subjectService = subjectService;
 		this.prepareService = prepareService;
 	}
 
-	// TODO Implement date as a parameter
 	/**
 	 * Maps the /showProfile page to the {@code showProfile.html}.
 	 * 

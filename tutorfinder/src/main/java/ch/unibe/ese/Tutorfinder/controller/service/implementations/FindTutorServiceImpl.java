@@ -26,9 +26,9 @@ import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 public class FindTutorServiceImpl implements FindTutorService {
 
 	@Autowired
-	SubjectDao subjectDao;
-	
-	@Autowired SubjectService subjectService;
+	private SubjectDao subjectDao;
+	@Autowired 
+	private SubjectService subjectService;
 
 	private Comparator<User> comparator;
 	
@@ -40,7 +40,6 @@ public class FindTutorServiceImpl implements FindTutorService {
 
 	@Override
 	public Map<User, List<Subject>> getSubjectsFrom(String query) {
-		// TODO (maybe) implement search engine by hibernate
 		LinkedList<Subject> subjectList = new LinkedList<Subject>();
 		Iterable<Subject> subjectIterable = subjectDao.findAll();
 		for (Subject subject : subjectIterable) {
@@ -132,7 +131,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 	 * @param o1 
 	 * @return compareTo of two users IDs
 	 */
-	protected int fallback(User o1, User o2) {
+	private int fallback(User o1, User o2) {
 		Long id1 = o1.getId();
 		Long id2 = o2.getId();
 		int compared = id1.compareTo(id2);

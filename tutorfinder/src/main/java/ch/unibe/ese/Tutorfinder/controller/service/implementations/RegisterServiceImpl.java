@@ -26,7 +26,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class RegisterServiceImpl implements RegisterService {
 
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
 
 	public RegisterServiceImpl() {
 	}

@@ -29,13 +29,13 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class PrepareFormServiceImpl implements PrepareFormService {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	ProfileService profileService;
+	private ProfileService profileService;
 	@Autowired
-	SubjectService subjectService;
+	private SubjectService subjectService;
 	@Autowired
-	TimetableService timetableService;
+	private TimetableService timetableService;
 
 	// Constructor for testing purposes
 	@Autowired
