@@ -10,8 +10,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 //import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-import java.security.Principal;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,13 +47,6 @@ public class LoginControllerTest {
 	private User testUser = TestUtility.testUser;
 	
 	private MockMvc mockMvc;
-
-	Principal principal = new Principal() {
-        @Override
-        public String getName() {
-            return "TEST_PRINCIPAL";
-        }
-    };
 	
     @BeforeClass
     public static void baseSetUp() {
