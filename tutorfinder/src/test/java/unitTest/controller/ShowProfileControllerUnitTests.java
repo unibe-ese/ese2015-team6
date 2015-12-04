@@ -85,7 +85,7 @@ public class ShowProfileControllerUnitTests {
 
 		ModelAndView gotMav = controller.profile(mockAuthUser, mockTutor.getId(), null, mockRedirectAttributes);
 		
-		assertTrue(gotMav.getViewName().contains("redirect:"));
+		assertTrue(gotMav.getViewName().contains("forward:"));
 	}
 	
 	@Test
