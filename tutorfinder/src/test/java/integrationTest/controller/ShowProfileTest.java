@@ -2,7 +2,7 @@ package integrationTest.controller;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -86,8 +86,18 @@ public class ShowProfileTest {
 		mockMvc.perform(get("/showProfile")
 			.param("userId", String.valueOf(userDao.findByEmail(TestUtility.SECOND_USER_USERNAME).getId())))
 				.andExpect(status().isOk())
-				.andExpect(forwardedUrl("showProfile?userId="+TestUtility.testUserTwo.getId()+"&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE)))
-				.andDo(print());
+				.andExpect(forwardedUrl("showProfile?userId="+TestUtility.testUserTwo.getId()+"&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE)));
+	}
+	
+	//TODO Make it work @Test
+	@WithMockUser(username=TestUtility.FIRST_USER_USERNAME, roles=ConstantVariables.TUTOR)
+	public void redirectShowProfileWithIdAndFlashAttribute() throws Exception {
+		mockMvc.perform(get("/showProfile")
+				.param("userId", String.valueOf(userDao.findByEmail(TestUtility.SECOND_USER_USERNAME).getId()))
+				.flashAttr("testAttribute", "test"))
+					.andExpect(status().isOk())
+					.andExpect(forwardedUrl("showProfile?userId="+TestUtility.testUserTwo.getId()+"&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE)))
+					.andExpect(flash().attributeExists("testAttribute"));
 	}
 
 }
