@@ -55,7 +55,9 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		model.addObject("updateSubjectsForm", getUpdateSubjectWithValues(subjectService.getAllSubjectsByUser(dbUser)));
 		model.addObject("updateProfileForm", getFormWithValues(authUser));
 		model.addObject("updateTimetableForm", getUpdateTimetableFormWithValues(dbUser));
-		model.addObject("passwordConfirmationForm", new PasswordConfirmationForm());
+		if (dbUser.getRole().equals(ConstantVariables.STUDENT)) {
+			model.addObject("passwordConfirmationForm", new PasswordConfirmationForm());
+		}
 		model.addObject("authUser", dbUser);
 		return model;
 	}

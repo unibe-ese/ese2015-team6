@@ -37,6 +37,7 @@ import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
+import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/test.xml" })
@@ -110,6 +111,7 @@ public class PrepareFormServiceImplTest {
 		when(mockProfileService.getProfileById(mockUser.getId())).thenReturn(mockProfile);
 		when(mockTimetableService.findAllByUser(mockUser)).thenReturn(timetableList);
 		when(mockTimetable.getDay()).thenReturn(DayOfWeek.MONDAY);
+		when(mockUser.getRole()).thenReturn(ConstantVariables.STUDENT);
 		
 		ModelAndView gotMav = prepareFormService.prepareForm(mockAuthUser, new ModelAndView());
 		
@@ -225,6 +227,5 @@ public class PrepareFormServiceImplTest {
 		assertTrue(gotMav.getModel().containsKey("DisplayedUser"));
 		assertTrue(gotMav.getModel().containsKey("Subjects"));
 		assertTrue(gotMav.getModel().containsKey("Profile"));
-		
 	}
 }
