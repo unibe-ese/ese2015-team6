@@ -18,11 +18,14 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 public class TestUtility {
 	public static final String FIRST_USER_USERNAME="user@provider.tld";
 	public static final String SECOND_USER_USERNAME="userTwo@provider.tld";
+	public static final String THIRD_USER_USERNAME="userThree@provider.tld";
 	
 	public static User testUser;
 	public static User testUserTwo;
+	public static User testUserThree;
 	public static Profile testProfile;
 	public static Profile testProfileTwo;
+	public static Profile testProfileThree;
 	
 	public static void initialize() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -46,6 +49,15 @@ public class TestUtility {
 		testUserTwo.setRole(ConstantVariables.TUTOR);
 		testProfileTwo = new Profile(testUserTwo.getEmail());
 		testProfileTwo.setWage(ConstantVariables.MIN_WAGE);
+		
+		/* Test user number three */
+		testUserThree = new User();
+		testUserThree.setEmail(THIRD_USER_USERNAME);
+		testUserThree.setPassword(encoder.encode("password"));
+		testUserThree.setFirstName("FirstNameThree");
+		testUserThree.setLastName("LastNameThree");
+		testUserThree.setRole(ConstantVariables.STUDENT);
+		testProfileThree = new Profile(testUserTwo.getEmail());
 	}
 	
 	public static void setUp(UserDao userDao, ProfileDao profileDao) {
@@ -58,6 +70,11 @@ public class TestUtility {
 		testProfileTwo = profileDao.save(testProfileTwo);
 		testUserTwo.setProfile(testProfileTwo);
 		testUserTwo = userDao.save(testUserTwo);
+		
+		/* Test user number three */
+		testProfileThree = profileDao.save(testProfileThree);
+		testUserThree.setProfile(testProfileThree);
+		testUserThree = userDao.save(testUserThree);
 	}
 	
 	public static Principal createPrincipal(String username, String password, String authoritie) {
