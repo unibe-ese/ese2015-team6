@@ -144,6 +144,7 @@ function closePopup() {
 										<div class="Cell">
 											<span th:text="${rowStat.index} + ':00'">00:00</span>
 										</div>
+										<!-- FIXME maybe implement that clicking on the cell will also change the checkbox -->
 										<div class="Cell" th:each="columns,colStat : ${rows}">
 											<input type="checkbox"
 												th:field="*{timetable[__${rowStat.index}__][__${colStat.index}__]}" />
@@ -217,6 +218,7 @@ function closePopup() {
 					<div>
 						<label>Biography</label>
 						<div>
+						<!-- FIXME add a max length for type @Lob, else the Biography is cut by saving it and the user does not know it untill he sees it! -->
 							<textarea rows="5" cols="50" tabindex="5"
 								th:value="*{biography}" th:field="*{biography}">
 						</textarea>

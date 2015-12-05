@@ -101,7 +101,7 @@ public class UpdateProfileController {
 	public ModelAndView update(Principal authUser, @Valid UpdateProfileForm updateProfileForm, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("redirect:/editProfile");
-		
+		//FIXME when only confirmPassword is set, the update_msg is shown, but the password is still the old one
 		if (!result.hasErrors()) {
 			profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
 			redirectAttributes.addFlashAttribute("update_msg","Your profile information has been updated");

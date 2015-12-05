@@ -75,7 +75,7 @@ public class ShowProfileController {
 	public ModelAndView profile(Principal authUser, @RequestParam(value = "userId", required = false) Long userId,
 			@RequestParam(value = "date", required = false) LocalDate date, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("showProfile");
-
+		//FIXME when userId does not exist a problem is caused in userService.getUserById (AssertionError)
 		MakeAppointmentsForm appForm = new MakeAppointmentsForm();
 		if (date != null) {
 			User user = userService.getUserById(userId);

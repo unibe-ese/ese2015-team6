@@ -41,6 +41,7 @@ public class PictureController {
 		ModelAndView model;
 		if (!file.isEmpty()) {
 			try {
+				//FIXME controll first the size of the picture and return a message when it's to big
 				byte[] bytes = file.getBytes();
 
 				// Creating the directory to store file
