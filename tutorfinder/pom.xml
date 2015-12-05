@@ -335,6 +335,7 @@
 							<threshold>Low</threshold>
 							<!-- Produces XML report -->
 							<xmlOutput>true</xmlOutput>
+							<findbugsXmlOutput>true</findbugsXmlOutput>
 						</configuration>
 					</plugin>
 				</plugins>
