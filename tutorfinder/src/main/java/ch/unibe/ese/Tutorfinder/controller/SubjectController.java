@@ -63,7 +63,6 @@ public class SubjectController {
 				redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateSubjectsForm", result);
 			}
 			redirectAttributes.addFlashAttribute("updateSubjectsForm", updateSubjectsForm);
-		} else {
 		}
 		return model;
 	}
