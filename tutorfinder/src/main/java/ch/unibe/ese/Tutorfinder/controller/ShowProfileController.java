@@ -77,18 +77,18 @@ public class ShowProfileController {
 		ModelAndView model = new ModelAndView("showProfile");
 		//FIXME when userId does not exist a problem is caused in userService.getUserById (AssertionError)
 		MakeAppointmentsForm appForm = new MakeAppointmentsForm();
-		if (date != null) {
-			User user = userService.getUserById(userId);
-			DayOfWeek dow = date.getDayOfWeek();
-			List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
-			appForm.setDate(date);
-			appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
-		} else if (userId != null) {
-			model = new ModelAndView("forward:showProfile?userId=" + userId + "&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE));
-			return model; //TODO Test that flashAttributes persist over this redirection
-		}
-
-		if (userId == null) {
+		if (userId != null) {
+			if (date != null) {
+				User user = userService.getUserById(userId);
+				DayOfWeek dow = date.getDayOfWeek();
+				List<Timetable> slots = timetableService.findAllByUserAndDay(user, dow);
+				appForm.setDate(date);
+				appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
+			} else {
+				model = new ModelAndView("forward:showProfile?userId=" + userId + "&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+				return model; //TODO Test that flashAttributes persist over this redirection
+			}
+		} else {
 			userId = userService.getUserByPrincipal(authUser).getId();
 		}
 		model = prepareService.prepareModelByUserId(authUser, userId, model);

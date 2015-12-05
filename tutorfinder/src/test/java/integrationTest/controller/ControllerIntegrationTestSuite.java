@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	BillControllerTest.class,
 	TimetableControllerTest.class,
 	SubjectControllerTest.class,
-	UpdateProfileControllerTest.class
+	UpdateProfileControllerTest.class,
+	ShowProfileControllerTest.class
 })
 /**
  * Test suite including all controller integration tests

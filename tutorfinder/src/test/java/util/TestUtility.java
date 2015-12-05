@@ -57,7 +57,8 @@ public class TestUtility {
 		testUserThree.setFirstName("FirstNameThree");
 		testUserThree.setLastName("LastNameThree");
 		testUserThree.setRole(ConstantVariables.STUDENT);
-		testProfileThree = new Profile(testUserTwo.getEmail());
+		testProfileThree = new Profile(testUserThree.getEmail());
+		testProfileThree.setWage(ConstantVariables.MIN_WAGE);
 	}
 	
 	public static void setUp(UserDao userDao, ProfileDao profileDao) {
