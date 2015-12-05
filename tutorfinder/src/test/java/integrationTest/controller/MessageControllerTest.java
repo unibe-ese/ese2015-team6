@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,9 +44,9 @@ import util.TestUtility;
 public class MessageControllerTest {
 
 	@Autowired private WebApplicationContext wac; 
-	@Autowired UserDao userDao;
-	@Autowired ProfileDao profileDao;
-	@Autowired MessageDao messageDao;
+	@Autowired private UserDao userDao;
+	@Autowired private ProfileDao profileDao;
+	@Autowired private MessageDao messageDao;
 
 	private MockMvc mockMvc;
 	private Principal authUser;
@@ -176,7 +175,6 @@ public class MessageControllerTest {
 					get("/messages").principal(this.authUser)
 				.param("view", ConstantVariables.OUTBOX)
 				.param("show", "1"))
-			.andDo(print())
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:messages?view=" + ConstantVariables.OUTBOX + "&show=0"))
 			.andExpect(redirectedUrl("messages?view=" + ConstantVariables.OUTBOX + "&show=0"));
