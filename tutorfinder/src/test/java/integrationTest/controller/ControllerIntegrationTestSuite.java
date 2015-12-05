@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	MessageControllerTest.class,
 	BillControllerTest.class,
 	TimetableControllerTest.class,
-	SubjectControllerTest.class
+	SubjectControllerTest.class,
+	EditProfileControllerTest.class
 })
 /**
  * Test suite including all controller integration tests
