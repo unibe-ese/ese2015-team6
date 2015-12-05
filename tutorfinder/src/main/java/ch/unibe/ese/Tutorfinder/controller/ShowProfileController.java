@@ -86,6 +86,7 @@ public class ShowProfileController {
 				appForm.setAppointments(appointmentService.loadAppointments(slots, user, date));
 			} else {
 				model = new ModelAndView("forward:showProfile?userId=" + userId + "&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+				model.addAllObjects(redirectAttributes.getFlashAttributes());
 				return model; //TODO Test that flashAttributes persist over this redirection
 			}
 		} else {
