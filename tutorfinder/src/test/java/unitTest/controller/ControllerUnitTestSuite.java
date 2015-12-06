@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	LoginControllerUnitTests.class,
 	AppointmentsOverviewUnitTests.class,
 	UpdateProfileControllerUnitTests.class,
-	MessagesControllerUnitTests.class
+	MessagesControllerUnitTests.class,
+	FindTutorControllerUnitTests.class
 })
 /**
  * Test suite including all controller unit tests
