@@ -87,7 +87,7 @@ public class ShowProfileController {
 			} else {
 				model = new ModelAndView("forward:showProfile?userId=" + userId + "&date="+LocalDate.now().format(DateTimeFormatter.ISO_DATE));
 				model.addAllObjects(redirectAttributes.getFlashAttributes());
-				return model; //TODO Test that flashAttributes persist over this redirection
+				return model;
 			}
 		} else {
 			userId = userService.getUserByPrincipal(authUser).getId();

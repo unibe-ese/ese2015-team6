@@ -1,9 +1,9 @@
 package integrationTest.controller;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -13,7 +13,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -29,8 +31,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
+import ch.unibe.ese.Tutorfinder.model.Appointment;
+import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
+import ch.unibe.ese.Tutorfinder.util.Availability;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 import util.TestUtility;
 
@@ -47,6 +53,8 @@ public class ShowProfileControllerTest {
 	private UserDao userDao;
 	@Autowired
 	private ProfileDao profileDao;
+	@Autowired
+	private AppointmentDao appointmentDao;
 
 	private MockMvc mockMvc;
 	private Principal authUser;
@@ -135,29 +143,48 @@ public class ShowProfileControllerTest {
 		.andExpect(model().attributeExists("testAttribute"));
 	}
 
-	//TODO fix it with correct paramenters and right input in the database @Test
+	@Test
 	@WithMockUser(roles = ConstantVariables.TUTOR)
 	public void testRequestAppointment() throws Exception {
 		this.mockMvc.perform(
 			post("/updateForm").principal(this.authUser)
 			.param("userId", String.valueOf(TestUtility.testUserTwo.getId()))
-			.param("request", "1"))
-		.andDo(print());
+			.param("request", String.valueOf(LocalTime.now().getHour()))
+			.param("date", String.valueOf(LocalDate.now().format(DateTimeFormatter.ISO_DATE))))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("makeAppointmentsForm"))
+		.andExpect(view().name("showProfile"))
+		.andExpect(model().attribute("DisplayedUser", TestUtility.testUserTwo));
+		
+		List<Appointment> tmpAppointmentList = appointmentDao.findAllByTutor(TestUtility.testUserTwo);
+		assertFalse(tmpAppointmentList.isEmpty());
+		assertEquals(1, tmpAppointmentList.size());
+		
+		Appointment tmpAppointment = tmpAppointmentList.get(0);
+		assertEquals(TestUtility.testUserTwo, tmpAppointment.getTutor());
+		assertEquals(TestUtility.testUser, tmpAppointment.getStudent());
+		assertEquals(Availability.RESERVED, tmpAppointment.getAvailability());
+		assertEquals(LocalDate.now().getDayOfWeek(), tmpAppointment.getDay());
+		assertEquals(ConstantVariables.MIN_WAGE, tmpAppointment.getWage());
+		assertEquals(LocalDate.now(), tmpAppointment.getTimestamp().toLocalDateTime().toLocalDate());
+		assertEquals(LocalTime.now().getHour(), tmpAppointment.getTimestamp().toLocalDateTime().getHour());
 	}
 	
-	//TODO make it works with date... @Test
+	@Test
 	@WithMockUser(roles = ConstantVariables.TUTOR)
 	public void testGetDate() throws Exception {
+		MakeAppointmentsForm appForm = new MakeAppointmentsForm();
+		appForm.setDate(LocalDate.now());
 		this.mockMvc.perform(
 				post("/updateForm").principal(this.authUser)
 				.param("userId", String.valueOf(TestUtility.testUserTwo.getId()))
 				.param("getDate", "true")
-				.param("appForm.date", String.valueOf(LocalDate.now().format(DateTimeFormatter.ISO_DATE))))
-		.andDo(print())
+				.param("date", String.valueOf(LocalDate.now().format(DateTimeFormatter.ISO_DATE))))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("showProfile?userId=" + TestUtility.testUserTwo.getId() + "&date="
 				+ LocalDate.now().format(DateTimeFormatter.ISO_DATE)))
-		.andExpect(view().name("redirect:showProfile?userId=" + TestUtility.testUserTwo.getId()));
+		.andExpect(view().name("redirect:showProfile?userId=" + TestUtility.testUserTwo.getId() + "&date="
+				+ LocalDate.now().format(DateTimeFormatter.ISO_DATE)));
 	}
 	
 	@Test
@@ -166,7 +193,8 @@ public class ShowProfileControllerTest {
 		this.mockMvc.perform(
 				post("/updateForm").principal(this.authUser)
 				.param("userId", String.valueOf(TestUtility.testUserTwo.getId()))
-				.param("getDate", "true"))
+				.param("getDate", "true")
+				.param("date", "wrong input"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("showProfile?userId=" + TestUtility.testUserTwo.getId()))
 		.andExpect(view().name("redirect:showProfile?userId=" + TestUtility.testUserTwo.getId()))
