@@ -14,7 +14,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	UpdateProfileControllerTest.class,
 	ShowProfileControllerTest.class,
 	AppointmentsOverviewControllerTest.class,
-	FindTutorControllerTest.class
+	FindTutorControllerTest.class,
+	PictureControllerTest.class
 
 })
 /**
