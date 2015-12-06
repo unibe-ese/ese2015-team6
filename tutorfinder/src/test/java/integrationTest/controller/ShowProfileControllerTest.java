@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
 import ch.unibe.ese.Tutorfinder.model.dao.AppointmentDao;
 import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
@@ -173,8 +172,6 @@ public class ShowProfileControllerTest {
 	@Test
 	@WithMockUser(roles = ConstantVariables.TUTOR)
 	public void testGetDate() throws Exception {
-		MakeAppointmentsForm appForm = new MakeAppointmentsForm();
-		appForm.setDate(LocalDate.now());
 		this.mockMvc.perform(
 				post("/updateForm").principal(this.authUser)
 				.param("userId", String.valueOf(TestUtility.testUserTwo.getId()))
