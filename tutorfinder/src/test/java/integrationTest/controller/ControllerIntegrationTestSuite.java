@@ -13,7 +13,9 @@ import org.junit.runners.Suite.SuiteClasses;
 	SubjectControllerTest.class,
 	UpdateProfileControllerTest.class,
 	ShowProfileControllerTest.class,
-	AppointmentsOverviewControllerTest.class
+	AppointmentsOverviewControllerTest.class,
+	FindTutorControllerTest.class
+
 })
 /**
  * Test suite including all controller integration tests

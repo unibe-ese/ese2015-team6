@@ -3,8 +3,10 @@ package integrationTest.controller;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 
 import org.junit.Before;
@@ -69,13 +71,15 @@ public class UpdateProfileControllerTest {
 		mockMvc.perform(post("/update").principal(this.authUser)
 				.param("firstName", "newFirstName")
 				.param("lastName", "newLastName")
-				.param("wage", "10.0"))
-		.andExpect(status().is3xxRedirection());
+				.param("wage", "10.00"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(flash().attributeExists("update_msg"));
 		
 		User referenceUser = userDao.findByEmail(TestUtility.testUser.getEmail());
 		
 		assertEquals("newFirstName" , referenceUser.getFirstName());
 		assertEquals("newLastName" , referenceUser.getLastName());
+		assertEquals(BigDecimal.TEN.setScale(2),referenceUser.getProfile().getWage());
 	}	
 	
 	@Test
@@ -88,8 +92,20 @@ public class UpdateProfileControllerTest {
 		
 		User referenceUser = userDao.findByEmail(TestUtility.testUserThree.getEmail());
 		
-		assertEquals(ConstantVariables.TUTOR , referenceUser.getRole());
+		assertEquals(ConstantVariables.TUTOR , referenceUser.getRole());	
+	}
+	
+	@Test
+	@WithMockUser(roles="Student")
+	public void changeRoleWithWrongPW() throws Exception {
 		
+		mockMvc.perform(post("/changeRole").principal(authUserStudent)
+				.param("password", "WrongPW"))
+		.andExpect(status().isOk());
+		
+		User referenceUser = userDao.findByEmail(TestUtility.testUserThree.getEmail());
+		
+		assertEquals(ConstantVariables.STUDENT , referenceUser.getRole());		
 	}
 	
 }
