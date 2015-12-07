@@ -83,6 +83,18 @@ public class UpdateProfileControllerTest {
 	}	
 	
 	@Test
+	@WithMockUser(roles="Tutor")
+	public void validUpdateButWrongPasswords() throws Exception {
+		mockMvc.perform(post("/update").principal(this.authUser)
+				.param("firstName", "newFirstName")
+				.param("lastName", "newLastName")
+				.param("wage", "10.00")
+				.param("confirmPassword", "test"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(flash().attribute("update_msg", "The password and confirm password needs to be equals!"));
+	}
+	
+	@Test
 	@WithMockUser(roles="Student")
 	public void changeRole() throws Exception {
 		
