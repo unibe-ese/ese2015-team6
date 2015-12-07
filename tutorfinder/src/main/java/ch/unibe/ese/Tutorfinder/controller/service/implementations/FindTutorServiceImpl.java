@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class FindTutorServiceImpl implements FindTutorService {
 		Iterable<Subject> subjectIterable = subjectDao.findAll();
 		for (Subject subject : subjectIterable) {
 			if (subject != null) {
-				if (subject.getName().toLowerCase().contains(query.toLowerCase()))
+				if (subject.getName().toLowerCase(Locale.ENGLISH).contains(query.toLowerCase(Locale.ENGLISH)))
 					subjectList.add(subject);
 			}
 		}
