@@ -2,7 +2,6 @@ package ch.unibe.ese.Tutorfinder.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
@@ -21,8 +20,8 @@ import ch.unibe.ese.Tutorfinder.model.User;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
- * the upload picture process.
- * Solves the saving and overwriting process for the users profile picture.
+ * the upload picture process. Solves the saving and overwriting process for the
+ * users profile picture.
  * 
  * @version 1.0
  *
@@ -34,17 +33,20 @@ public class PictureController {
 	private UserService userService;
 	@Autowired
 	private PrepareFormService prepareFormService;
-	
+
 	/**
 	 * Upload single file using Spring Controller
 	 */
 	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
 	public ModelAndView uploadFileHandler(Principal authUser, @RequestParam("file") MultipartFile file) {
-		ModelAndView model;
+		ModelAndView model = new ModelAndView("updateProfile");
 		if (!file.isEmpty()) {
+			//FIXME check size of image, return msg when too large
+			byte[] bytes = null;
+			File serverFile = null;
+
 			try {
-				//FIXME controll first the size of the picture and return a message when it's to big
-				byte[] bytes = file.getBytes();
+				bytes = file.getBytes();
 
 				// Creating the directory to store file
 				String rootPath = System.getProperty("user.dir");
@@ -55,24 +57,21 @@ public class PictureController {
 					boolean directoryCreation = dir.mkdirs();
 					assert directoryCreation : "Directory is not created!";
 				}
+				serverFile = new File(dir.getAbsolutePath() + File.separator + tmpUser.getId() + ".png");
 
-				// Create the file on server
-				File serverFile = new File(dir.getAbsolutePath() + File.separator + tmpUser.getId() + ".png");
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-
-				model = new ModelAndView("updateProfile");
-				
-			} catch (FileNotFoundException e) {
-				model = new ModelAndView("updateProfile");
-				model.addObject("page_error", e.getMessage());
 			} catch (IOException e) {
-				model = new ModelAndView("updateProfile");
 				model.addObject("page_error", e.getMessage());
 			}
-		} else {
-			model = new ModelAndView("updateProfile");
+			// Try only if the first try block was successful
+			if (bytes != null && serverFile != null) {
+				try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));) {
+					// Create the file on server
+					stream.write(bytes);
+
+				} catch (IOException e) {
+					model.addObject("page_error", e.getMessage());
+				}
+			}
 		}
 		model = prepareFormService.prepareForm(authUser, model);
 		return model;
