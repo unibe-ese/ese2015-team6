@@ -41,7 +41,6 @@ public class PictureController {
 	public ModelAndView uploadFileHandler(Principal authUser, @RequestParam("file") MultipartFile file) {
 		ModelAndView model = new ModelAndView("updateProfile");
 		if (!file.isEmpty()) {
-			//FIXME check size of image, return msg when too large
 			byte[] bytes = null;
 			File serverFile = null;
 

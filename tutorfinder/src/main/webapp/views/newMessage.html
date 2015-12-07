@@ -49,8 +49,7 @@
 							th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></span>
 					</fieldset>
 					<fieldset>
-					<!-- FIXME add a max length for type @Lob, else the message is cut by saving it and the user does not know it untill he sees it! -->
-						<textarea rows="5" cols="50" tabindex="2" th:value="*{message}"
+						<textarea rows="5" cols="50" tabindex="2" maxlength="190000" th:value="*{message}"
 							th:field="*{message}" placeholder="Message" wrap="hard" required="required">
 						</textarea>
 						<span class="error" th:if="${#fields.hasErrors('message')}"
