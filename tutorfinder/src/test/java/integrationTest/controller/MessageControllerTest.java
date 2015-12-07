@@ -231,6 +231,17 @@ public class MessageControllerTest {
 	
 	@Test
 	@WithMockUser(roles="TUTOR")
+	public void testNewMessageWhenUserDoesNotExist() throws Exception {
+		this.mockMvc
+			.perform(
+					get("/newMessage").principal(this.authUser)
+					.param("receiver", "0"))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(view().name("redirect:findTutor"));
+	}
+	
+	@Test
+	@WithMockUser(roles="TUTOR")
 	public void testNewMessageToMySelf() throws Exception {
 		String receiverId = "" + TestUtility.testUser.getId();
 		this.mockMvc

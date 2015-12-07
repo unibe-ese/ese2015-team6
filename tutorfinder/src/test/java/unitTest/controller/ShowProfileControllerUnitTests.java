@@ -81,6 +81,7 @@ public class ShowProfileControllerUnitTests {
 	@Test
 	public void testProfile() {
 		when(mockTutor.getId()).thenReturn(1l);
+		when(mockUserService.getUserById(anyLong())).thenReturn(this.mockTutor);
 		when(mockPrepareService.prepareModelByUserId(eq(mockAuthUser), anyLong(), any(ModelAndView.class))).thenReturn(new ModelAndView());
 
 		ModelAndView gotMav = controller.profile(mockAuthUser, mockTutor.getId(), null, mockRedirectAttributes);

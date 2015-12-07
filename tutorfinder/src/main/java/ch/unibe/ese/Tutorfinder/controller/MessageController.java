@@ -117,12 +117,14 @@ public class MessageController {
 	@RequestMapping(value = "/newMessage", params = "receiver", method = RequestMethod.GET)
 	public ModelAndView newMessage(Principal authUser, final HttpServletRequest req) {
 		ModelAndView model;
-		//FIXME when the receiverId does not exist an error is caused userService.getUserById (assertionError)
 		User tmpUser = userService.getUserByPrincipal(authUser);
 
 		final Long receiverId = Long.valueOf(req.getParameter("receiver"));
 
 		if (tmpUser.getId() != receiverId) {
+			if (userService.getUserById(receiverId)== null) {
+				return new ModelAndView("redirect:findTutor");
+			}
 			MessageForm messageForm = new MessageForm();
 			messageForm.setReceiver(userService.getUserById(receiverId));
 			messageForm.setReceiverId(receiverId);

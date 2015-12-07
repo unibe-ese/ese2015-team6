@@ -92,6 +92,16 @@ public class ShowProfileControllerTest {
 		.andExpect(view().name("showProfile")).andExpect(model().attributeExists("makeAppointmentsForm"))
 		.andExpect(model().attribute("DisplayedUser", TestUtility.testUserTwo));
 	}
+	
+	@Test
+	@WithMockUser(roles = ConstantVariables.TUTOR)
+	public void showProfileWithIdButUserDoesNotExist() throws Exception {
+		this.mockMvc.perform(
+			get("/showProfile").principal(this.authUser)
+			.param("userId", "0"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:showProfile"));
+	}
 
 	@Test
 	@WithMockUser(roles = ConstantVariables.TUTOR)

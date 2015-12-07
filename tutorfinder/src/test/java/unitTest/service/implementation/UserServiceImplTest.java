@@ -97,14 +97,14 @@ public class UserServiceImplTest {
 		userService.getUserById(null);
 	}
 	
-	@Test(expected=AssertionError.class)
-	public void testGetNullUserById() {
-		//GIVEN
-		when(userDao.findOne(anyLong())).thenReturn(null);
-				
-		//WHEN
-		userService.getUserById(Long.valueOf(1));
-	}
+//	@Test(expected=AssertionError.class)
+//	public void testGetNullUserById() {
+//		//GIVEN
+//		when(userDao.findOne(anyLong())).thenReturn(null);
+//				
+//		//WHEN
+//		userService.getUserById(Long.valueOf(1));
+//	}
 	
 	@Test
 	public void testGetUserByPrincipal() {

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 		assert(id != null);
 		
 		User tmpUser = userDao.findOne(id);
-		assert(tmpUser != null);
+		//assert(tmpUser != null);
 		
 		return tmpUser;
 	}
