@@ -103,7 +103,14 @@ public class UpdateProfileController {
 		ModelAndView model = new ModelAndView("redirect:/editProfile");
 
 		if (!result.hasErrors()) {
-			if (!updateProfileForm.getPassword().equals(updateProfileForm.getConfirmPassword())) {
+			if (updateProfileForm.getPassword() != null) {
+				if(updateProfileForm.getPassword().equals(updateProfileForm.getConfirmPassword())) {
+					profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
+					redirectAttributes.addFlashAttribute("update_msg","Your profile information has been updated");
+				} else {
+					redirectAttributes.addFlashAttribute("update_msg","The password and confirm password needs to be equals!");
+				}
+			} else if (updateProfileForm.getConfirmPassword() != null) {
 				redirectAttributes.addFlashAttribute("update_msg","The password and confirm password needs to be equals!");
 			} else {
 				profileService.saveFrom(updateProfileForm, userService.getUserByPrincipal(authUser));
