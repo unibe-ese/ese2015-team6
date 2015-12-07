@@ -37,11 +37,15 @@ public class UpdateTimetableForm {
 	}
 
 	public Boolean[][] getTimetable() {
-		return timetable;
+		return timetable.clone();
 	}
 
 	public void setTimetable(Boolean[][] timetable) {
-		this.timetable = timetable;
+		assert (timetable.length == ConstantVariables.TIMESLOTS);
+		for( int i=0; i < ConstantVariables.TIMESLOTS; i++) {
+			assert (timetable[i].length == ConstantVariables.DAYS);
+		}
+		this.timetable = timetable.clone();
 	}
 	
 }

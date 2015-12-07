@@ -71,11 +71,17 @@ public class Appointment {
 	}
 	
 	public Appointment(User tutor, User student, DayOfWeek day, Timestamp timestamp, Availability availability, BigDecimal wage) {
+		assert tutor != null : "Appointments tutor is not allowed to be null!";
 		this.tutor = tutor;
+		assert student != null : "Appointments student is not allowed to be null!";
 		this.student = student;
+		assert day != null : "Appointments day is not allowed to be null!";
 		this.day = day;
-		this.timestamp = timestamp;
+		assert timestamp != null : "Appointments timestamp is not allowed to be null!";
+		this.timestamp = new Timestamp(timestamp.getTime());
+		assert availability != null : "Appointments availability is not allowed to be null!";
 		this.availability = availability;
+		assert wage != null : "Appointments wage is not allowed to be null!";
 		this.wage = wage;
 	}
 

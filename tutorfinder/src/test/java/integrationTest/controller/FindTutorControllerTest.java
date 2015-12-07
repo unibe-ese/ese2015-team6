@@ -40,7 +40,6 @@ public class FindTutorControllerTest {
 	private ProfileDao profileDao;
 	
 	private MockMvc mockMvc;
-	Principal authUser;
 	private Principal authUserStudent;
 
 	@Before 
@@ -49,7 +48,6 @@ public class FindTutorControllerTest {
 				.webAppContextSetup(this.wac).build();
 		TestUtility.initialize();
 		TestUtility.setUp(userDao, profileDao);
-		this.authUser = TestUtility.createPrincipal(TestUtility.testUser.getEmail(), "password", "ROLE_TUTOR");
 		this.authUserStudent = TestUtility.createPrincipal(TestUtility.testUserThree.getEmail(), "password", "ROLE_STUDENT");
 	} 
 	
