@@ -335,6 +335,10 @@
 							<threshold>Low</threshold>
 							<!-- Produces XML report -->
 							<xmlOutput>true</xmlOutput>
+							<!-- Omit some detectors in order to prevent unresolvable warnings
+								FindUncalledPrivateMethods:
+								produces warnings for code that is called by framework and therefore is not unused -->
+							<omitVisitors>FindUncalledPrivateMethods</omitVisitors>
 						</configuration>
 					</plugin>
 				</plugins>
