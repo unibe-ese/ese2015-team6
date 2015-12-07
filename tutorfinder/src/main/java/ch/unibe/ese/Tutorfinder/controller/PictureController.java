@@ -2,7 +2,9 @@ package ch.unibe.ese.Tutorfinder.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,10 @@ public class PictureController {
 
 				model = new ModelAndView("updateProfile");
 				
-			} catch (Exception e) {
+			} catch (FileNotFoundException e) {
+				model = new ModelAndView("updateProfile");
+				model.addObject("page_error", e.getMessage());
+			} catch (IOException e) {
 				model = new ModelAndView("updateProfile");
 				model.addObject("page_error", e.getMessage());
 			}
