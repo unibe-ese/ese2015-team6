@@ -9,6 +9,11 @@
 	href="../css/style.css" />
 
 <script>
+
+function showTimetableBox() {
+	document.getElementById('timetableBox').style.display='block';
+	document.getElementById('fade').style.display='block'
+	
 /*<![CDATA[*/
 function closePopup() {
 	document.getElementById('fade').style.display='none';
@@ -124,7 +129,8 @@ function closePopup() {
 						<div sec:authorize="hasRole('ROLE_TUTOR')">
 							<!-- 
 					Timetable
-				-->
+				-->			
+							<p>Please specify at what time you are available for tutoring</p>
 							<div class="Table">
 								<div class="Heading">
 									<div class="Row">

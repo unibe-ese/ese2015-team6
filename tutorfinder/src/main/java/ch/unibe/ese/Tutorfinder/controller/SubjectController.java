@@ -1,6 +1,7 @@
 package ch.unibe.ese.Tutorfinder.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,7 +22,10 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.PrepareFormService;
 import ch.unibe.ese.Tutorfinder.controller.service.SubjectService;
+import ch.unibe.ese.Tutorfinder.controller.service.TimetableService;
 import ch.unibe.ese.Tutorfinder.controller.service.UserService;
+import ch.unibe.ese.Tutorfinder.model.Subject;
+import ch.unibe.ese.Tutorfinder.model.Timetable;
 
 /**
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
@@ -39,6 +43,8 @@ public class SubjectController {
 	PrepareFormService prepareFormService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	TimetableService timetableService;
 
 	/**
 	 * Handles the action to save the subjects which currently are in the form.
@@ -53,11 +59,14 @@ public class SubjectController {
 	public ModelAndView updateSubjects(Principal authUser, @Valid UpdateSubjectsForm updateSubjectsForm,
 			BindingResult result, RedirectAttributes redirectAttributes) {
 		ModelAndView model = new ModelAndView("redirect:/editProfile");
-
+		List<Timetable> tmpList = timetableService.findAllByUser(userService.getUserByPrincipal(authUser));
+		if (tmpList != null && tmpList.isEmpty()) {
+			redirectAttributes.addFlashAttribute("switch", true); }
 		if (!result.hasErrors()) {
 			try {
 				subjectService.saveFrom(updateSubjectsForm, authUser);
 				redirectAttributes.addFlashAttribute("subject_msg", "Your subjects have been updated");
+			
 			} catch (InvalidSubjectException e) {
 				result.reject("error", e.getMessage());
 				redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateSubjectsForm", result);
