@@ -285,5 +285,9 @@ function closePopup() {
 
 	</div>
 	<div th:replace="fragments/footer::footer"></div>
+	
+	<script th:if="${switch} == true" type="text/javascript">
+	     showTimetableBox();
+	</script>
 </body>
 </html>
