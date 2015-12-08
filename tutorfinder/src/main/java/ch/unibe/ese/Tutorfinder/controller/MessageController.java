@@ -75,7 +75,7 @@ public class MessageController {
 		User tmpUser = userService.getUserByPrincipal(authUser);
 
 		if (view == null) {
-			return new ModelAndView("redirect:messages?view=" + ConstantVariables.UNREAD);
+			return new ModelAndView("redirect:messages?view=" + ConstantVariables.INBOX);
 		}
 		
 		List<Message> tmpMessageList;

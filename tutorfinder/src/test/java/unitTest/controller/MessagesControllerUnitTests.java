@@ -142,7 +142,7 @@ public class MessagesControllerUnitTests {
 		
 		ModelAndView gotMav = controller.messages(mockAuthUser, null, null);
 		
-		assertEquals("redirect:messages?view="+ ConstantVariables.UNREAD, gotMav.getViewName());
+		assertEquals("redirect:messages?view="+ ConstantVariables.INBOX, gotMav.getViewName());
 	}
 	
 	@Test

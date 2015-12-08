@@ -75,7 +75,7 @@ public class MessageControllerTest {
 			.perform(
 					get("/messages").principal(this.authUser))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:messages?view=" + ConstantVariables.UNREAD));
+			.andExpect(view().name("redirect:messages?view=" + ConstantVariables.INBOX));
 	}
 	
 	@Test
