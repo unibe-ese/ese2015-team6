@@ -66,7 +66,5 @@ public class ConstantVariables {
 	
 	public static final BigDecimal MAX_RATING = BigDecimal.valueOf(5.0);
 	
-	public static final String RATING_ERRORMESSAGE = "Please enter a rating between {min} and {max}!";
-	
 }
 
