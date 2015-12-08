@@ -10,6 +10,19 @@ import javax.validation.constraints.NotNull;
 
 import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 
+/**
+ *  Entity for bill, holding following values:<br>
+ *  {@code id} is the id of the appointment and is generated automatically<br>
+ *  {@code tutor} is the tutor that the bill belongs to<br>
+ *  {@code month} String representation of the accounting month<br>
+ *  {@code monthValue} int representation of the accounting month<br>
+ *  {@code year} int representation of the accounting month<br>
+ *  {@code amount} represents how much money the tutor owes to the service provider<br>
+ *	{@code paymentStatus} indicates whether the bill has been paid or not<br>
+ *	{@code total} how much money the tutor earned from tutoring for the accounting month<br>
+ *	{@code percentage} indicates what percentage of the total money earned has to
+ *						be paid to the service provider
+ */
 @Entity
 public class Bill {
 

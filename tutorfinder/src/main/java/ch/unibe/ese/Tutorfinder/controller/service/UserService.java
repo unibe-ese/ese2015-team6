@@ -3,6 +3,7 @@ package ch.unibe.ese.Tutorfinder.controller.service;
 import java.security.Principal;
 
 import ch.unibe.ese.Tutorfinder.model.User;
+
 /**
  * @version	1.0
  */
