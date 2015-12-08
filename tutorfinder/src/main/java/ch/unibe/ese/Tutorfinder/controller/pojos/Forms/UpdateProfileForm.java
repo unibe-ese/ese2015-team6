@@ -17,7 +17,8 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
  *
  */
 @ScriptAssert(lang = "javascript", 
-script = "if(_this.password !== null) {_this.password.equals(_this.confirmPassword)} else {true}", 
+script = "if(_this.password !== null) {_this.password.equals(_this.confirmPassword)} else {"
+		+ "if(_this.confirmPassword !== null) {_this.confirmPassword.equals(_this.password)} else {true}}", 
 message = ConstantVariables.CONFIRMPASSWORD_ERRORMESSAGE)
 public class UpdateProfileForm {
 

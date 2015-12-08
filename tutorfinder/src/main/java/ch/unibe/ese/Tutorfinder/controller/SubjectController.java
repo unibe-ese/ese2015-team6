@@ -91,6 +91,7 @@ public class SubjectController {
 		updateSubjectsForm.getRows().add(new Row());
 		model = prepareFormService.prepareForm(user, model);
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
+		model.addObject("updateProfileForm", prepareFormService.getFormWithValues(user));
 		return model;
 	}
 
@@ -113,6 +114,7 @@ public class SubjectController {
 		updateSubjectsForm.getRows().remove(rowId.intValue());
 		model = prepareFormService.prepareForm(authUser, model);
 		model.addObject("updateSubjectsForm", updateSubjectsForm);
+		model.addObject("updateProfileForm", prepareFormService.getFormWithValues(authUser));
 		return model;
 	}
 	

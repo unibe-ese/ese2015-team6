@@ -1,4 +1,7 @@
 # ese2015-team6
+##Live preview:
+http://team6.ddns.net:7070/tutorfinder/
+
 ##Prototype: 
 https://www.fluidui.com/editor/live/preview/p_11b002272439085d2f39b9f67bd5014e.1444673932913
 
@@ -26,7 +29,7 @@ https://www.fluidui.com/editor/live/preview/p_11b002272439085d2f39b9f67bd5014e.1
 
 ## Sample Data:
 Import the tutorfinderdb.sql file from the Sample Data folder into you database and you will 
-have the follow profiles as demo.
+have the following profiles as demo.
 
 * ##### Email / Password / Role
   * ese@example.ch / 123456789 / Tutor

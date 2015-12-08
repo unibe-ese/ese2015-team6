@@ -49,7 +49,7 @@ public class MessageServiceImplTest {
 	@Mock
 	private User mockSender;
 	@Mock
-	private Principal MockPrincipal;
+	private Principal mockPrincipal;
 	@Mock
 	private UserService mockUserService;
 	
@@ -172,9 +172,9 @@ public class MessageServiceImplTest {
 
 		when(messageDao.save(any(Message.class))).thenReturn(this.mockMessage);
 		when(mockUserService.getUserById(anyLong())).thenReturn(this.mockUser);
-		when(mockUserService.getUserByPrincipal(eq(MockPrincipal))).thenReturn(this.mockSender);
+		when(mockUserService.getUserByPrincipal(eq(mockPrincipal))).thenReturn(this.mockSender);
 		
-		Message tmpMessage = messageService.saveFrom(this.messageForm, this.MockPrincipal);
+		Message tmpMessage = messageService.saveFrom(this.messageForm, this.mockPrincipal);
 		
 		Message verifyMessage = new Message();
 		verifyMessage.setMessage(this.messageForm.getMessage());
@@ -190,7 +190,7 @@ public class MessageServiceImplTest {
 	
 	@Test(expected=AssertionError.class)
 	public void testSaveFromWhenFormIsNull() {
-		messageService.saveFrom(null, this.MockPrincipal);
+		messageService.saveFrom(null, this.mockPrincipal);
 	}
 	
 	@Test(expected=AssertionError.class)

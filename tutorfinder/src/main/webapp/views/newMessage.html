@@ -49,7 +49,7 @@
 							th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></span>
 					</fieldset>
 					<fieldset>
-						<textarea rows="5" cols="50" tabindex="2" maxlength="190000" th:value="*{message}"
+						<textarea rows="5" cols="50" tabindex="2" maxlength="10000" th:value="*{message}"
 							th:field="*{message}" placeholder="Message" wrap="hard" required="required">
 						</textarea>
 						<span class="error" th:if="${#fields.hasErrors('message')}"
