@@ -68,6 +68,7 @@
 	position: relative;
 	z-index: 2;
 	font-size: small;
+	cursor: help;
 }
 
 #results #subjects {
@@ -76,6 +77,10 @@
 	font-size: medium;
 	max-height: 80px;
 	overflow-y: auto;
+}
+
+#results #subjects > .subject {
+	cursor: help;
 }
 
 #filter {
