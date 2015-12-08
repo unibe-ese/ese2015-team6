@@ -32,17 +32,27 @@ public class BillServiceImpl implements BillService {
 	@Autowired
 	private UserDao userDao;
 	
-	
-	
-	// Constructor for testing purposes
-		@Autowired
-		public BillServiceImpl(AppointmentService appointmentService, BillDao billDao,
-								UserDao userDao){
-			this.appointmentService = appointmentService;
-			this.billDao = billDao;
-			this.userDao = userDao;
-		}
+	public BillServiceImpl() {
+		super();
+	}
 
+	/**
+	 * Constructor for testing purposes
+	 * @param appointmentService
+	 * @param billDao
+	 * @param userDao
+	 */
+	@Autowired
+	public BillServiceImpl(AppointmentService appointmentService, BillDao billDao,
+			UserDao userDao){
+		this.appointmentService = appointmentService;
+		this.billDao = billDao;
+		this.userDao = userDao;
+	}
+		
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BigDecimal getBillForCurrentMonth(User user) {
 		
@@ -74,6 +84,9 @@ public class BillServiceImpl implements BillService {
 		return totalWage;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Bill> getBills(User user, PaymentStatus paymentStatus) {
 		assert(user != null);
@@ -82,6 +95,9 @@ public class BillServiceImpl implements BillService {
 		return billDao.findAllByTutorAndPaymentStatus(user, paymentStatus);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Scheduled(cron="0 0 1 1 * ?") //execute method first of every month
 	public void updateMonthlyBills() {
@@ -140,6 +156,9 @@ public class BillServiceImpl implements BillService {
 	    return new DateFormatSymbols().getMonths()[monthValue-1];
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override 
 	public void pay(User user, long billId) {
 		assert user != null : "User should not be null";

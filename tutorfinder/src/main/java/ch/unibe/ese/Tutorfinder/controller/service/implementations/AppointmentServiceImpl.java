@@ -34,6 +34,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Autowired
 	private ProfileService profileService;
 
+	public AppointmentServiceImpl() {
+		super();
+	}
+
 	/**
 	 * Constructor for testing purposes
 	 * 
@@ -46,6 +50,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 		this.profileService = profileService;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@Transactional
 	public MakeAppointmentsForm saveFrom(MakeAppointmentsForm appForm, Integer slot, User tutor, User student) {
 		BigDecimal wage = tutor.getProfile().getWage();
@@ -61,6 +69,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return appForm;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Appointment findByTutorAndTimestamp(User user, Timestamp timestamp) {
 		assert (user != null && timestamp != null);
@@ -70,6 +81,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return returnValue;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<AppointmentPlaceholder> findByTutorAndDate(User user, LocalDate date) {
 		assert (user != null && date != null);
@@ -97,6 +111,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return tmpList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<AppointmentPlaceholder> loadAppointments(List<Timetable> slots, User tutor, LocalDate date) {
 
 		List<AppointmentPlaceholder> tmpList = this.findByTutorAndDate(tutor, date);
@@ -117,6 +135,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return tmpList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Appointment> getPastAppointments(User tutor, Availability availability) {
 		assert (tutor != null && availability != null);
@@ -140,6 +161,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return pastAppointments;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Appointment> getFutureAppointments(User tutor, Availability availability) {
 		assert (tutor != null && availability != null);
@@ -163,6 +187,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return newAppointments;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Appointment updateAppointment(Availability availability, Long appointmentId) {
 		assert (availability != null && appointmentId != null);
@@ -178,6 +205,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 	}
 	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Appointment> getAppointmentsForMonthAndYear(User tutor, Availability availability, int month,
 			int year) {
@@ -201,6 +232,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return newAppointments;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Appointment> getPendingAppointments(User student) {
 		assert (student != null);
@@ -224,6 +258,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return newAppointments;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Appointment> getFutureAppointmentsAsStudent(User student) {
 		assert (student != null);
@@ -247,6 +284,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return visitedAppointments;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Appointment> getPastAppointmentsAsStudent(User student) {
 		assert (student != null);
@@ -270,6 +310,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return visitedAppointments;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void rateTutorForAppointment(Long appointmentId, BigDecimal rating) {
 		assert (appointmentId != null && rating != null);

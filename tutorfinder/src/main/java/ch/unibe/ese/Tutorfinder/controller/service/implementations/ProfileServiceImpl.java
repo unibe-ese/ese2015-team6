@@ -24,9 +24,12 @@ public class ProfileServiceImpl implements ProfileService {
 	private ProfileDao profileDao;
 
 	public ProfileServiceImpl() {
-
+		super();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Profile getProfileById(Long id) {
 		assert (id != null);
@@ -38,6 +41,9 @@ public class ProfileServiceImpl implements ProfileService {
 		return tmpProfile;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Profile getProfileByEmail(String email) {
 		assert (email != null);
@@ -49,6 +55,10 @@ public class ProfileServiceImpl implements ProfileService {
 		return tmpProfile;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@Transactional
 	public UpdateProfileForm saveFrom(UpdateProfileForm updateProfileForm, User user) {
 
@@ -112,6 +122,9 @@ public class ProfileServiceImpl implements ProfileService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateRating(User tutor, BigDecimal rating, BigDecimal countedRating) {
 		assert (tutor != null);

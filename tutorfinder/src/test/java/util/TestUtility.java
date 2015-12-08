@@ -15,21 +15,29 @@ import ch.unibe.ese.Tutorfinder.model.dao.ProfileDao;
 import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
+/**
+ * Utility for Spring integration testing. Provides static methods for creating
+ * test users and accessing their values. 
+ *
+ */
 public class TestUtility {
-	public static final String FIRST_USER_USERNAME="user@provider.tld";
-	public static final String SECOND_USER_USERNAME="userTwo@provider.tld";
-	public static final String THIRD_USER_USERNAME="userThree@provider.tld";
-	
+	public static final String FIRST_USER_USERNAME = "user@provider.tld";
+	public static final String SECOND_USER_USERNAME = "userTwo@provider.tld";
+	public static final String THIRD_USER_USERNAME = "userThree@provider.tld";
+
 	public static User testUser;
 	public static User testUserTwo;
 	public static User testUserThree;
 	public static Profile testProfile;
 	public static Profile testProfileTwo;
 	public static Profile testProfileThree;
-	
+
+	/**
+	 * Initializes all test users so they can be used in testing. Must be called before {@code setUp}
+	 */
 	public static void initialize() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
+
 		/* Test user number one */
 		testUser = new User();
 		testUser.setEmail(FIRST_USER_USERNAME);
@@ -39,7 +47,7 @@ public class TestUtility {
 		testUser.setRole(ConstantVariables.TUTOR);
 		testProfile = new Profile(testUser.getEmail());
 		testProfile.setWage(ConstantVariables.MIN_WAGE);
-		
+
 		/* Test user number two */
 		testUserTwo = new User();
 		testUserTwo.setEmail(SECOND_USER_USERNAME);
@@ -49,7 +57,7 @@ public class TestUtility {
 		testUserTwo.setRole(ConstantVariables.TUTOR);
 		testProfileTwo = new Profile(testUserTwo.getEmail());
 		testProfileTwo.setWage(ConstantVariables.MIN_WAGE);
-		
+
 		/* Test user number three */
 		testUserThree = new User();
 		testUserThree.setEmail(THIRD_USER_USERNAME);
@@ -61,28 +69,41 @@ public class TestUtility {
 		testProfileThree.setWage(ConstantVariables.MIN_WAGE);
 	}
 	
+	/**
+	 * Saves test users to given Dao's. {@code initialize} has to be called first for this to work 
+	 * @param userDao
+	 * @param profileDao
+	 */
 	public static void setUp(UserDao userDao, ProfileDao profileDao) {
+		assert testUser != null : "Please call initialize() before calling setUp!";
+			
 		/* Test user number one */
 		testProfile = profileDao.save(testProfile);
 		testUser.setProfile(testProfile);
 		testUser = userDao.save(testUser);
-		
+
 		/* Test user number two */
 		testProfileTwo = profileDao.save(testProfileTwo);
 		testUserTwo.setProfile(testProfileTwo);
 		testUserTwo = userDao.save(testUserTwo);
-		
+
 		/* Test user number three */
 		testProfileThree = profileDao.save(testProfileThree);
 		testUserThree.setProfile(testProfileThree);
 		testUserThree = userDao.save(testUserThree);
 	}
-	
-	public static Principal createPrincipal(String username, String password, String authoritie) {
-		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(authoritie);
-		Authentication authentication = 
-		        new UsernamePasswordAuthenticationToken(username,password, authorities);
+
+	/**
+	 * Creates a test principal to be used in tests which require a specific principal
+	 * @param username
+	 * @param password
+	 * @param authority
+	 * @return
+	 */
+	public static Principal createPrincipal(String username, String password, String authority) {
+		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(authority);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(username, password, authorities);
 		return authentication;
 	}
-	
+
 }

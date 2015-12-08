@@ -36,7 +36,15 @@ public interface FindTutorService {
 	 */
 	public Map<User, List<Subject>> getSubjectsSorted(String query);
 
-	void setComparator(Comparator<User> comparator);
+	/**
+	 * Set the comparator for sorting the map
+	 * @param comparator
+	 */
+	public void setComparator(Comparator<User> comparator);
 
-	Comparator<User> getComparator();
+	/**
+	 * Get comparator for sorting the map
+	 * @return {@link Comparator}
+	 */
+	public Comparator<User> getComparator();
 }

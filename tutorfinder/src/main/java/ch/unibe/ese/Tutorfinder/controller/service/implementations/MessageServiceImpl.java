@@ -26,8 +26,9 @@ public class MessageServiceImpl implements MessageService {
 	private UserService userService;
 	
 	public MessageServiceImpl() {
-		
+		super();
 	}
+
 	/**
 	 * Constructor for testing purposes
 	 * 
@@ -38,7 +39,10 @@ public class MessageServiceImpl implements MessageService {
 		this.messageDao = messageDao;
 		this.userService = userService;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */	
 	@Override
 	public List<Message> getMessageByBox(String box, User authUser) {
 		assert (box != null && !box.isEmpty());
@@ -53,6 +57,9 @@ public class MessageServiceImpl implements MessageService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Message markMessageAsRead(Long messageId, User authUser) {
 		assert (messageId != null);
@@ -68,6 +75,9 @@ public class MessageServiceImpl implements MessageService {
 		return tmpMessage;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Message saveFrom(MessageForm messageForm, Principal authUser){

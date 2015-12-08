@@ -31,6 +31,11 @@ public interface SubjectService {
 	 */
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal user) throws InvalidSubjectException;
 	
+	/**
+	 * Calculates the average value for all subjects of a given user
+	 * @param {@link User} to calculate average from
+	 * @return average as double
+	 */
 	public double getAverageGradeByUser(User user);
 
 }

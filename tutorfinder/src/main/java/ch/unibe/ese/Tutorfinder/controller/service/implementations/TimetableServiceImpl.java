@@ -28,9 +28,15 @@ public class TimetableServiceImpl implements TimetableService {
 	private UserDao userDao;
 	@Autowired	
 	private TimetableDao timetableDao;
-	
-	public TimetableServiceImpl() {}
-	
+
+	public TimetableServiceImpl() {
+		super();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@Transactional
 	public UpdateTimetableForm saveFrom(UpdateTimetableForm updateTimetableForm, Principal authUser) {
 		assert(updateTimetableForm != null && authUser != null);
@@ -62,7 +68,10 @@ public class TimetableServiceImpl implements TimetableService {
 		
 		return updateTimetableForm;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Timetable> findAllByUser(User user) {
 		assert (user != null);
@@ -71,6 +80,9 @@ public class TimetableServiceImpl implements TimetableService {
 		return returnList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Timetable> findAllByUserAndDay(User user, DayOfWeek dow) {
 		assert (user != null && dow != null);

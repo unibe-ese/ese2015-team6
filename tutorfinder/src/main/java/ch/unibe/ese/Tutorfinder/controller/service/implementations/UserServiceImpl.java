@@ -15,10 +15,14 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	public UserServiceImpl() {
+		super();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User getUserByPrincipal(Principal user) {
 		assert(user != null);
@@ -29,6 +33,9 @@ public class UserServiceImpl implements UserService {
 		return tmpUser;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User getUserById(Long id) {
 		assert(id != null);
@@ -38,6 +45,9 @@ public class UserServiceImpl implements UserService {
 		return tmpUser;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User save(User user) {
 		assert (user != null);
@@ -46,6 +56,9 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User changeToTutor(User user) {
 		assert (user != null);

@@ -37,7 +37,17 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 	@Autowired
 	private TimetableService timetableService;
 
-	// Constructor for testing purposes
+	public PrepareFormServiceImpl() {
+		super();
+	}
+
+	/**
+	 * Constructor for testing purposes
+	 * @param userService
+	 * @param profileService
+	 * @param subjectService
+	 * @param timetableService
+	 */
 	@Autowired
 	public PrepareFormServiceImpl(UserService userService, ProfileService profileService, SubjectService subjectService, TimetableService timetableService) {
 		this.userService = userService;
@@ -46,7 +56,9 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		this.timetableService = timetableService;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ModelAndView prepareForm(Principal authUser, ModelAndView model) {
 		assert(authUser != null && model != null);
@@ -61,7 +73,9 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		return model;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public UpdateTimetableForm getUpdateTimetableFormWithValues(User dbUser) {
 		assert(dbUser != null);
@@ -80,6 +94,9 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		return tmpForm;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public UpdateSubjectsForm getUpdateSubjectWithValues(ArrayList<Subject> subjectList) {
 		assert(subjectList != null);
@@ -92,7 +109,10 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		tmpForm.setRows(rowList);
 		return tmpForm;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */	
 	@Override
 	public UpdateProfileForm getFormWithValues(Principal authUser) {
 		assert(authUser != null);
@@ -109,7 +129,10 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 
 		return tmpForm;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */	
 	@Override
 	public ModelAndView prepareModelByUserId(Principal authUser, long userId, ModelAndView model) {
 		User tmpAuthUser = userService.getUserByPrincipal(authUser);
@@ -122,6 +145,9 @@ public class PrepareFormServiceImpl implements PrepareFormService {
 		return model;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Profile getUsersProfile(Principal user) {
 		assert(user != null);

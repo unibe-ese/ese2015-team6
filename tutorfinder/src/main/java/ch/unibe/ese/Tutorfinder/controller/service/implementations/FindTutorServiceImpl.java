@@ -33,12 +33,19 @@ public class FindTutorServiceImpl implements FindTutorService {
 
 	private Comparator<User> comparator;
 	
+	public FindTutorServiceImpl() {
+		super();
+	}
+
 	@Autowired
 	public FindTutorServiceImpl(SubjectService subjectService, SubjectDao subjectDao) {
 		this.subjectService = subjectService;
 		this.subjectDao = subjectDao;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<User, List<Subject>> getSubjectsFrom(String query) {
 		LinkedList<Subject> subjectList = new LinkedList<Subject>();
@@ -55,6 +62,9 @@ public class FindTutorServiceImpl implements FindTutorService {
 		return groupedMap;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<User, List<Subject>> getSubjectsSorted(String query) {
 		assert comparator != null:"Comparator was not initialized";
@@ -64,6 +74,9 @@ public class FindTutorServiceImpl implements FindTutorService {
 		return sortedResult;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void generateComparatorFrom(FindTutorFilterForm form) {
 		assert (SortCriteria.values().length == 3);
@@ -140,11 +153,17 @@ public class FindTutorServiceImpl implements FindTutorService {
 		return compared;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Comparator<User> getComparator() {
 		return comparator;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setComparator(Comparator<User> comparator) {
 		this.comparator = comparator;

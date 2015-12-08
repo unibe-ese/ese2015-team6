@@ -35,12 +35,14 @@ public class SubjectServiceImpl implements SubjectService {
 	private UserDao userDao;
 
 	public SubjectServiceImpl() {
+		super();
 	}
 
 	/**
 	 * Replaces all currently saved subjects for one tutor with the subjects
 	 * currently in the form by deleting and re-adding them
 	 */
+	@Override
 	@Transactional
 	public UpdateSubjectsForm saveFrom(UpdateSubjectsForm updateSubjectsForm, Principal authUser)
 			throws InvalidSubjectException {
@@ -69,7 +71,6 @@ public class SubjectServiceImpl implements SubjectService {
 		updateSubjectsForm.setId(user.getId());
 		return updateSubjectsForm;
 	}
-
 	
 	@Override
 	public ArrayList<Subject> getAllSubjectsByUser(User user) {
