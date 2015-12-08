@@ -73,6 +73,7 @@ public class PictureController {
 			}
 		}
 		model = prepareFormService.prepareForm(authUser, model);
+		model.addObject("updateProfileForm", prepareFormService.getFormWithValues(authUser));
 		return model;
 	}
 
