@@ -214,7 +214,7 @@ h2 {
 .appointmentCell {
 	padding-left: 10px;
 	vertical-align: top;
-	display: inline-block;
+	display: table-cell;
 	width: 50%;
 	max-height: 185px;
 	overflow-y: auto;
