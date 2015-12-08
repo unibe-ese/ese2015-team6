@@ -23,6 +23,7 @@
 				<div class="appointmentCell" th:if="${!arranged.isEmpty()}">
 				
 					<h3>Teaching</h3>
+					<div class="scrollOnOverflow">
 					<div class="appointmentContent" th:each="appointment:${arranged}" th:if="${appointment != null}">
 						
 						<span th:text="|${appointment.getDay().getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}, |"></span>
@@ -36,10 +37,12 @@
 							<span th:text="|${appointment.student.firstName} ${appointment.student.lastName}|">Max Muster</span>
 						</a>
 					</div>
+					</div>
 				</div>
 				<div class="appointmentCell" th:if="${!confirmed.isEmpty()}">
 					
 					<h3>Learning</h3>
+					<div class="scrollOnOverflow">
 					<div class="appointmentContent" th:each="appointment:${confirmed}" th:if="${appointment != null}">
 						
 						<span th:text="|${appointment.getDay().getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}, |"></span>
@@ -56,6 +59,7 @@
 								Muster</span>
 						</a>
 					</div>
+					</div>
 				</div>
 			</div>
 
@@ -64,6 +68,7 @@
 				<div class="appointmentCell" sec:authorize="hasAnyRole('ROLE_TUTOR')" th:if="${!reserved.isEmpty()}">
 					<form id="appointmentDecision" action="#" method="post" th:action="@{/editAppointments}">
 						<h3>Teaching</h3>
+						<div class="scrollOnOverflow">
 						<div class="appointmentContent" th:each="appointment:${reserved}" th:if="${appointment != null}">
 							
 						<span th:text="|${appointment.getDay().getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}, |"></span>
@@ -83,11 +88,13 @@
 							<button id="confirm" type="submit" name="confirm"
 								th:value="${appointment.id}">Confirm</button>
 						</div>
+						</div>
 					</form>
 				</div>
 
 				<div class="appointmentCell" th:if="${!pending.isEmpty()}">
 					<h3>Learning</h3>
+					<div class="scrollOnOverflow">
 					<div class="appointmentContent" th:each="appointment:${pending}"
 						th:if="${appointment != null}">
 						
@@ -106,6 +113,7 @@
 								Muster</span>
 						</a>
 					</div>
+					</div>
 				</div>
 			</div>
 
@@ -113,6 +121,7 @@
 			<div class="appointmentRow last">
 				<div class="appointmentCell" th:if="${!past.isEmpty()}">
 					<h3>Teaching</h3>
+					<div class="scrollOnOverflow">
 					<div class="appointmentContent" th:each="appointment:${past}"
 						th:if="${appointment != null}">
 						<span th:text="|${appointment.getDay().getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}, |"></span>
@@ -130,9 +139,11 @@
 								Muster</span>
 						</a>
 					</div>
+					</div>
 				</div>
 				<div class="appointmentCell" th:if="${!visited.isEmpty()}">
 					<h3>Learning</h3>
+					<div class="scrollOnOverflow">
 					<div class="appointmentContent" th:each="appointment:${visited}"
 						th:if="${appointment != null}">
 						<form id="rateAppointment" action="#" th:object="${rateTutorForm}"
@@ -157,6 +168,7 @@
 							</span> <span th:if="${appointment.rating != null}"
 								th:text="|Rating: ${appointment.rating}|">Rating: 4.5</span>
 						</form>
+					</div>
 					</div>
 				</div>
 			</div>

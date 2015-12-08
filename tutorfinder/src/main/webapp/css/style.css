@@ -225,7 +225,10 @@ h2 {
 	vertical-align: top;
 	display: table-cell;
 	width: 50%;
-	max-height: 185px;
+}
+
+.appointmentCell > .scrollOnOverflow {
+	max-height: 150px;
 	overflow-y: auto;
 }
 
