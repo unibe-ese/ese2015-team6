@@ -25,6 +25,12 @@ import ch.unibe.ese.Tutorfinder.model.Message;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 
+/**
+ * Provides ModelAndView objects for the Spring MVC to load pages relevant to
+ * the messaging process.
+ * @version 1.0.1
+ *
+ */
 @Controller
 public class MessageController {
 
