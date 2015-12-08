@@ -8,7 +8,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateTimetableForm;
 import ch.unibe.ese.Tutorfinder.model.Timetable;
 import ch.unibe.ese.Tutorfinder.model.User;
 /**
- * @version	1.0
+ * @version	2.0
  */
 public interface TimetableService {
 	

@@ -6,7 +6,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.SignupForm;
 
 
 /**
- * @version	1.0
+ * @version	2.0
  */
 public interface RegisterService {
 

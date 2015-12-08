@@ -22,6 +22,8 @@ import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
  *	{@code total} how much money the tutor earned from tutoring for the accounting month<br>
  *	{@code percentage} indicates what percentage of the total money earned has to
  *						be paid to the service provider
+ *
+ *@version 2.0
  */
 @Entity
 public class Bill {

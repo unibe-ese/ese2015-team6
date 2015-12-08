@@ -8,6 +8,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 /**
  * Class for validating the users input in the {@code message.html}.
  * 
+ * @version 2.0
  */
 public class MessageForm {
 

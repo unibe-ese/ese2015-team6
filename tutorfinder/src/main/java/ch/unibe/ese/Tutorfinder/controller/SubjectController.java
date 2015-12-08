@@ -31,7 +31,7 @@ import ch.unibe.ese.Tutorfinder.model.Timetable;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the edit or update Subjects process
  * 
- * @version 1.0
+ * @version 2.0
  *
  */
 @Controller

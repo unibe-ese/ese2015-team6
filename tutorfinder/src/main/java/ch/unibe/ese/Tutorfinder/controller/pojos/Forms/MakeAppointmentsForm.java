@@ -14,7 +14,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
  * Is needed to get the actual status of all possible {@code Timeslots} 
  * from and user in the {@code showProfile.html} view.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 public class MakeAppointmentsForm {

@@ -7,7 +7,7 @@ import ch.unibe.ese.Tutorfinder.model.Profile;
 import ch.unibe.ese.Tutorfinder.model.User;
 
 /**
- * @version	1.0
+ * @version	2.0
  *
  */
 public interface ProfileService {

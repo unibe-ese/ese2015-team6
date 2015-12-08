@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * Holds all constant variables of the project,
  * so they need only to be changed in one location.
  * 
- * @version	1.0
+ * @version	2.0
  * 
  */
 public class ConstantVariables {

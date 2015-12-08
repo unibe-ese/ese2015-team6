@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
  * Class for validating the users input in the 
  * {@code appointmentOverview.html} rating field.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 public class RateTutorForm {

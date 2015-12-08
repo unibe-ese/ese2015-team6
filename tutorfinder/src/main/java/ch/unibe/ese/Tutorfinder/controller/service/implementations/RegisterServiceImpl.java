@@ -19,8 +19,6 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
  * to the user-table on the database. This service is used for
  * create a new user.
  * 
- * @author Antonio, Florian, Nicola, Lukas
- *
  */
 @Service
 public class RegisterServiceImpl implements RegisterService {

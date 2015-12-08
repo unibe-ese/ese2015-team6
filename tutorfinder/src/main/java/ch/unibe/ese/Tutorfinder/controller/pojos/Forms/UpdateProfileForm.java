@@ -13,7 +13,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 /**
  * Class for validating the users input in the {@code updateProfile.html}.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 @ScriptAssert(lang = "javascript", 

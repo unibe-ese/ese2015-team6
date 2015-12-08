@@ -20,8 +20,6 @@ import ch.unibe.ese.Tutorfinder.model.dao.UserDao;
  * to the timetable-table on the database. This service is used for
  * update the tutors availability information.
  * 
- * @author Antonio, Florian, Nicola, Lukas
- *
  */
 @Service
 public class TimetableServiceImpl implements TimetableService {

@@ -29,7 +29,7 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  * {@code availability} enumeration to difference between the tutors availability<br>
  * {@code wage} holds the wage at this date from the tutor<br>
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 @Entity

@@ -10,7 +10,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Row;
 /**
  * Builds the base of a Form containing a lit of {@link Row} objects.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 public class UpdateSubjectsForm {

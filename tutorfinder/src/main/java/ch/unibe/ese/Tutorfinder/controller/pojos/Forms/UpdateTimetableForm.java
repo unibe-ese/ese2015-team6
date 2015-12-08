@@ -9,7 +9,7 @@ import ch.unibe.ese.Tutorfinder.util.ConstantVariables;
 /**
  * Builds the base of a Form containing a list of {@link TimetableRow} objects.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 public class UpdateTimetableForm {

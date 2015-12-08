@@ -5,6 +5,7 @@ import ch.unibe.ese.Tutorfinder.controller.exceptions.PaymentStatusException;
 /**
  * Enumeration of the Payment Status of a bill
  *
+ *@version 2.0
  */
 public enum PaymentStatus {
 

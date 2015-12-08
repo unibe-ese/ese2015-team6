@@ -23,7 +23,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
  * the upload picture process. Solves the saving and overwriting process for the
  * users profile picture.
  * 
- * @version 1.0
+ * @version 2.0
  *
  */
 @Controller

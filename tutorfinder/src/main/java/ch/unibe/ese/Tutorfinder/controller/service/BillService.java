@@ -11,7 +11,8 @@ import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
  * Service that is capable of calculating the current months billing amount
  * Furthermore the service can calculate the billing amount for the past month and
  * store it into the Database
- *
+ * 
+ *@version 2.0
  */
 public interface BillService {
 	

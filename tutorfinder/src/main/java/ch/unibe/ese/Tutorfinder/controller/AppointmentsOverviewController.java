@@ -23,6 +23,8 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the appointments process.
  * 
+ * @version 2.0
+ * 
  */
 @Controller
 public class AppointmentsOverviewController {

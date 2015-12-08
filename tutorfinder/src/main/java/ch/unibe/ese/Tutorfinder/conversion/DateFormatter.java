@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * Converts formatted strings to java.time.LocalDate objects and vice versa.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 @Service

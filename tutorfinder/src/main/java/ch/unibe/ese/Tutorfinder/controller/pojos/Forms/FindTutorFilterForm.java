@@ -11,7 +11,7 @@ import ch.unibe.ese.Tutorfinder.util.SortCriteria;
 /**
  * Class for handling the users input in the {@code findTutor.html}.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 @Component

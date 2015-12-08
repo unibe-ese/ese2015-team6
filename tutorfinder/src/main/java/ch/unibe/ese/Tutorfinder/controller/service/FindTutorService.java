@@ -10,7 +10,8 @@ import ch.unibe.ese.Tutorfinder.model.User;
 
 /**
  * Service to find tutors with the selected subject.
- * @version	1.1
+ * 
+ * @version	2.0
  *
  */
 public interface FindTutorService {

@@ -32,7 +32,7 @@ import ch.unibe.ese.Tutorfinder.model.User;
  * Provides ModelAndView objects for the Spring MVC to load pages relevant to
  * the edit or update profile process
  * 
- * @version 1.0
+ * @version 2.0
  *
  */
 @Controller

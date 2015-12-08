@@ -10,7 +10,7 @@ import ch.unibe.ese.Tutorfinder.util.Availability;
  * Object to save temporarily the basic {@link Timetable} of 
  * an {@link User} and the reserved or arranged {@link Appointments}.
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 public class AppointmentPlaceholder {

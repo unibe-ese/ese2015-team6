@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
  * {@code password} is need to identify the right user to the right email<br>
  * {@code role} to difference between students and tutors
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 @Entity

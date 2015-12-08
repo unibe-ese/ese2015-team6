@@ -6,7 +6,7 @@ import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.UpdateSubjectsForm;
  * Is used to make up an {@link UpdateSubjectsForm} and contains it's subject 
  * and respective grading values
  * 
- * @version 1.0
+ * @version 2.0
  *
  */
 public class Row {

@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  * {@code message} contains a message of the length 1048<br>
  * {@code isRead} indicates whether the message is read by the receiver or not<br>
  * 
- * @version	1.0
+ * @version	2.0
  *
  */
 @Entity
