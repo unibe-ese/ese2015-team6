@@ -21,7 +21,7 @@
 	<p th:text="|${balance} Fr.|">0 Fr.</p>
 	<br />
 	<div th:unless="${UnpaidBills.isEmpty()}">
-		<h1>unpaid bills:</h1>
+		<h1>Unpaid bills:</h1>
 	</div>
 	<div th:each="bill : ${UnpaidBills}" th:if="${bill != null}"> 
 		<span th:text="|${bill.year} ${bill.month}|"></span> <span class="small"  th:text="|(${bill.total} Fr. x ${bill.percentage})|"></span> 
