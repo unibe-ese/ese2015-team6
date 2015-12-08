@@ -22,6 +22,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import ch.unibe.ese.Tutorfinder.controller.exceptions.PaymentStatusException;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
 import ch.unibe.ese.Tutorfinder.controller.service.implementations.BillServiceImpl;
 import ch.unibe.ese.Tutorfinder.model.Appointment;
@@ -145,6 +146,11 @@ public class BillServiceImplTest {
 		
 		//THEN
 		verify(mockBill, times(1)).setPaymentStatus(PaymentStatus.PAID);
+	}
+	
+	@Test(expected=PaymentStatusException.class)
+	public void testPaymentStatusException() {
+		this.mockBill.setPaymentStatus(PaymentStatus.of(5));
 	}
 	
 	@Test

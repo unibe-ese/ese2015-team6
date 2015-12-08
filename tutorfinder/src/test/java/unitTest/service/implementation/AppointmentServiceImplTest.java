@@ -30,6 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import ch.unibe.ese.Tutorfinder.controller.exceptions.AvailabilityException;
 import ch.unibe.ese.Tutorfinder.controller.pojos.AppointmentPlaceholder;
 import ch.unibe.ese.Tutorfinder.controller.pojos.Forms.MakeAppointmentsForm;
 import ch.unibe.ese.Tutorfinder.controller.service.AppointmentService;
@@ -108,6 +109,11 @@ public class AppointmentServiceImplTest {
 		
 		//THEN
 		assertEquals(makeAppointmentsForm, gotForm);
+	}
+	
+	@Test(expected=AvailabilityException.class)
+	public void testAvailabilityException() {
+		this.mockAppointmentPlaceholder.setAvailability(Availability.of(5));
 	}
 		
 	@Test

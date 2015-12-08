@@ -3,7 +3,6 @@ package integrationTest.controller;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -91,7 +90,6 @@ public class UpdateProfileControllerTest {
 				.param("lastName", "newLastName")
 				.param("wage", "10.00")
 				.param("confirmPassword", "test"))
-		.andDo(print())
 		.andExpect(status().is3xxRedirection())
 		.andExpect(flash().attributeExists("org.springframework.validation.BindingResult.updateProfileForm"))
 		.andExpect(flash().attributeExists("updateProfileForm"));
