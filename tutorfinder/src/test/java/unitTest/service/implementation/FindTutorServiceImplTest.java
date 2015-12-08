@@ -125,12 +125,6 @@ public class FindTutorServiceImplTest {
 		assertEquals(1, testVal);
 	}
 	
-	//@Test //FIXME won't be inverse on comparing...
-	public void testSortingByRatingDesc() {
-		form.setCriteria(SortCriteria.RATING);
-		form.setOrder(SortOrder.DESCENDING);
-	}
-	
 	@Test
 	public void testSortingByGradeAsc() {
 		form.setCriteria(SortCriteria.GRADE);
@@ -208,21 +202,5 @@ public class FindTutorServiceImplTest {
 		when(mockUser.getId()).thenReturn(1l,1l);
 		testVal = testComparator.compare(mockUser, mockUser);
 		assertEquals(0, testVal);
-	}
-	
-	//@Test //TODO Can't mock equals so some cases can't be tested
-	public void testFallbackException() {
-		form.setCriteria(SortCriteria.RATING);
-		form.setOrder(SortOrder.ASCENDING);
-		
-		findTutorService.generateComparatorFrom(form);
-		@SuppressWarnings("unused")
-		Comparator<User> testComparator = findTutorService.getComparator();
-		when(mockUser.getProfile()).thenReturn(mockProfile);
-		
-		when(mockProfile.getRating()).thenReturn(BigDecimal.ZERO);
-		when(mockProfile.getCountedRatings()).thenReturn(0l);
-		
-		when(mockUser.getId()).thenReturn(0l,0l);
 	}
 }
