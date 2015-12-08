@@ -14,6 +14,10 @@ import ch.unibe.ese.Tutorfinder.controller.service.UserService;
 import ch.unibe.ese.Tutorfinder.model.User;
 import ch.unibe.ese.Tutorfinder.util.PaymentStatus;
 
+/**
+ * Provides ModelAndView objects for the Spring MVC to load pages relevant to
+ * the billing process.
+ */
 @Controller
 public class BillController {
 	
