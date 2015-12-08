@@ -61,5 +61,12 @@ public class ConstantVariables {
 	
 	public static final String UNREAD = "unread";
 	
+	/* Rating Values */
+	public static final BigDecimal MIN_RATING = BigDecimal.valueOf(1.0);
+	
+	public static final BigDecimal MAX_RATING = BigDecimal.valueOf(5.0);
+	
+	public static final String RATING_ERRORMESSAGE = "Please enter a rating between {min} and {max}!";
+	
 }
 

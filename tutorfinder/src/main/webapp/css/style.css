@@ -269,12 +269,14 @@ h2 {
 	margin-bottom: 0;
 }
 
-#Bio p {
+#Bio textarea {
 	margin-top: 0;
 	display: inline-block;
-	border: solid lightgray 3px;
+	border: none;
 	white-space: normal;
 	padding: 5px;
+	resize: none;
+	font-family: Helvetica, sans-serif;
 }
 
 #welcome {
