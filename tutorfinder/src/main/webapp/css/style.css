@@ -270,6 +270,7 @@ h2 {
 }
 
 #Bio textarea {
+	width: 100%;
 	margin-top: 0;
 	display: inline-block;
 	border: none;
