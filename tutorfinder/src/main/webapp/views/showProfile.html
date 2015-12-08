@@ -26,6 +26,16 @@
 			});
 		}
 	};
+	
+	window.onload= function() {
+		var area = document.getElementById("bioArea");
+		auto_grow(area);
+	}
+	
+	function auto_grow(element) {
+	    element.style.height = "5px";
+	    element.style.height = (element.scrollHeight)+"px";
+	}
 </script>
 
 </head>
@@ -61,7 +71,7 @@
 
 				<div id="Bio" class="breakable" th:if="${Profile.biography} != null">
 					<h3>Short biography</h3>
-					<textarea readonly="readonly" rows="25" th:text="${Profile.biography}">Lorem ipsum dolor sit amet,
+					<textarea id="bioArea" readonly="readonly" rows="25" th:text="${Profile.biography}">Lorem ipsum dolor sit amet,
 						consetetur sadipscing elitr, sed diam nonumy eirmod tempor
 						invidunt ut labore et dolore magna aliquyam erat, sed diam
 						voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
