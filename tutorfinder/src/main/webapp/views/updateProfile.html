@@ -178,7 +178,7 @@ function closePopup() {
 						<label>First name</label>
 						<div>
 							<input type="text" th:name="firstName" tabindex="1"
-								maxlength="255" th:value="*{firstName}" /> <span class="error"
+								maxlength="255" th:value="*{firstName}" required="required"/> <span class="error"
 								th:if="${#fields.hasErrors('firstName')}"
 								th:errors="*{firstName}"> </span>
 						</div>
@@ -188,7 +188,7 @@ function closePopup() {
 						<label>Last name</label>
 						<div>
 							<input type="text" th:name="lastName" tabindex="2"
-								maxlength="255" th:value="*{lastName}" /> <span class="error"
+								maxlength="255" th:value="*{lastName}" required="required"/> <span class="error"
 								th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
 							</span>
 						</div>
